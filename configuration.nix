@@ -96,22 +96,22 @@
     git
   ];
 
-  environment.persistence."/persist" = {
-    enable = true;  # NB: Defaults to true, not needed
-    hideMounts = true;
-    directories = [
-      "/var/log"
-      "/var/lib/bluetooth"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
-      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
-    ];
-    files = [
-      "/etc/machine-id"
-      { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
-    ];
-  };
+#  environment.persistence."/persist" = {
+#    enable = true;  # NB: Defaults to true, not needed
+#    hideMounts = true;
+#    directories = [
+#      "/var/log"
+#      "/var/lib/bluetooth"
+#      "/var/lib/nixos"
+#      "/var/lib/systemd/coredump"
+#      "/etc/NetworkManager/system-connections"
+#      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
+#    ];
+#    files = [
+#      "/etc/machine-id"
+#      { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
+#    ];
+#  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -155,6 +155,8 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.05"; # Did you read the comment?
+
+  nixpkgs.config.allowUnfree = true;
 
   nix = {
     package = pkgs.nixFlakes;

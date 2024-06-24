@@ -92,6 +92,8 @@
     };
   };
 
+  programs.vscode.enable = true;
+
   programs.ssh.enable = true;
 
   # Let Home Manager install and manage itself.
