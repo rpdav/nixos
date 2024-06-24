@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, impermanence, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -51,6 +51,30 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+  };
+
+  # Impermanence
+  home.persistence."/persistent/home/ryan" = {
+    directories = [
+      "Downloads"
+      "Music"
+      "Pictures"
+      "Documents"
+      "Videos"
+#      ".gnupg"
+#      ".ssh"
+#      ".nixops"
+#      ".local/share/keyrings"
+#      ".local/share/direnv"
+      {
+        directory = ".local/share/Steam";
+        method = "symlink";
+      }
+    ];
+    files = [
+#      ".screenrc"
+    ];
+    allowOther = true;
   };
 
   # Home Manager can also manage your environment variables through
