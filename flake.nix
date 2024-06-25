@@ -8,10 +8,7 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";    
     };
-    impermanence = {
-      url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs"; #this may not be needed
-    };
+    impermanence.url = "github:nix-community/impermanence";
   };
 
   outputs = { self, nixpkgs, home-manager, impermanence, ... }:
@@ -34,13 +31,6 @@
           }
         ];
       };
-#      nixbook = nixpkgs.lib.nixosSystem {
-#        inherit system;
-#        modules = [
-#          impermanence.nixosModules.impermanence
-#          .configuration.nix
-#        ];
-#      };
     };
   };
 }
