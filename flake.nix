@@ -4,10 +4,14 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.05";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    impermanence.url = "github:nix-community/impermanence";
-    impermanence.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";    
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs"; #this may not be needed
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, impermanence, ... }:
@@ -17,11 +21,11 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
     nixosConfigurations = {
-      nixbook = lib.nixosSystem {
+      nixbook = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [ 
-          impermanence.nixosModules.impermanence
           ./configuration.nix 
+          impermanence.nixosModules.impermanence
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -30,6 +34,13 @@
           }
         ];
       };
+#      nixbook = nixpkgs.lib.nixosSystem {
+#        inherit system;
+#        modules = [
+#          impermanence.nixosModules.impermanence
+#          .configuration.nix
+#        ];
+#      };
     };
   };
 }
