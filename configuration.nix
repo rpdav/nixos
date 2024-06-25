@@ -113,6 +113,27 @@
       # "/etc/machine-id"
       # { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
+    users.ryan = {
+      directories = [
+        "Downloads"
+        "Music"
+        "Pictures"
+        "Documents"
+        "Videos"
+        ".gnupg"
+        ".ssh"
+        ".nixops"
+        ".local/share/keyrings"
+        ".local/share/direnv"
+#        {
+#          directory = ".local/share/Steam";
+#          method = "symlink";
+#        };
+      ];
+      files = [
+        ".screenrc"
+      ];
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are

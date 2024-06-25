@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, impermanence, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -53,29 +53,8 @@
     # '';
   };
 
-  # Impermanence
-  home.persistence."/persist/home/ryan" = {
-    directories = [
-      "Downloads"
-      "Music"
-      "Pictures"
-      "Documents"
-      "Videos"
-      ".gnupg"
-      ".ssh"
-      ".nixops"
-      ".local/share/keyrings"
-      ".local/share/direnv"
-#      {
-#        directory = ".local/share/Steam";
-#        method = "symlink";
-#      }
-    ];
-    files = [
-      ".screenrc"
-    ];
-    allowOther = true;
-  };
+  # Impermanence: see configuration.nix. Couldn't get it to work here :\
+
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
