@@ -47,6 +47,9 @@
 #    desktopManager.gnome.enable = true;
 #  };
 
+## Enable gnome on wayland
+  programs.sway.enable = true;
+
   # Enable sound.
   hardware.pulseaudio.enable = true;
   # OR
