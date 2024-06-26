@@ -29,7 +29,7 @@
     };
     initrd.luks.devices = {
       enc = {
-        device = "/dev/disk/by-uuid/9987f6a6-9368-41db-9815-176c57bf8cfa";
+        device = "/dev/disk/by-uuid/9987f6a6-9368-41db-9815-176c57bf8cfa"; #this is the UUID of the boot partition
         preLVM = true;
       };
     };
@@ -40,13 +40,13 @@
 
   time.timeZone = "America/Indiana/Indianapolis";
 
-## Display
-  services.xserver.enable = true;
+## Enable gnome on X11
+#  services.xserver = {
+#    enable = true;
+#    displayManager.gdm.enable = true;
+#    desktopManager.gnome.enable = true;
+#  };
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  
   # Enable sound.
   hardware.pulseaudio.enable = true;
   # OR
