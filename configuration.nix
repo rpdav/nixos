@@ -61,9 +61,7 @@
   services.xserver = {
 	enable = true;
 	displayManager.lightdm.enable = true;
-	desktopManager = {
-		cinnamon.enable = true;
-	};
+	desktopManager.cinnamon.enable = true;
   };
   services.libinput.enable = true;
   services.displayManager.defaultSession = "cinnamon";
@@ -125,7 +123,7 @@
         "Documents"
         "Videos"
         ".gnupg"
-        ".ssh"
+#        ".ssh"
         ".nixops"
         ".local/share/keyrings"
         ".local/share/direnv"

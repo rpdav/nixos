@@ -97,7 +97,10 @@
 
 #  programs.vscode.enable = true;
 
-  programs.ssh.enable = true;
+  programs.ssh = {
+    enable = true;
+    userKnownHostsFile = "/persist/home/ryan/.ssh/known_hosts";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
