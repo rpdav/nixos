@@ -40,15 +40,33 @@
 
   time.timeZone = "America/Indiana/Indianapolis";
 
-## Enable gnome on X11
+## Gnome X11
 #  services.xserver = {
-#    enable = true;
+#	enable = true;
 #    displayManager.gdm.enable = true;
 #    desktopManager.gnome.enable = true;
 #  };
 
-## Enable gnome on wayland
-  programs.sway.enable = true;
+## Gnome wayland
+#  programs.sway.enable = true;
+#  services.xserver.displayManager.gdm.wayland = true;
+
+## Plasma 6 wayland
+#  services.xserver.enable = true;
+#  services.displayManager.sddm.enable = true;
+#  services.displayManager.sddm.wayland.enable = true;
+#  services.desktopManager.plasma6.enable = true;
+
+## Cinnamon
+  services.xserver = {
+	enable = true;
+	displayManager.lightdm.enable = true;
+	desktopManager = {
+		cinnamon.enable = true;
+	};
+  };
+  services.libinput.enable = true;
+  services.displayManager.defaultSession = "cinnamon";
 
   # Enable sound.
   hardware.pulseaudio.enable = true;
