@@ -81,8 +81,7 @@
     shellAliases = {
       ".." = "cd ..";
       ll = "ls -la";
-      home-switch = "home-manager switch --flake /home/ryan/.dotfiles";
-      nix-switch = "sudo nixos-rebuild switch --flake /home/ryan/.dotfiles";
+      nix-switch = "sudo nixos-rebuild switch --flake /home/ryan/.nixops";
     };
   };
 
