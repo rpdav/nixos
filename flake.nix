@@ -9,10 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";    
     };
     impermanence.url = "github:nix-community/impermanence";
-    inputs.nur.url = "github:nix-community/NUR"
+    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, home-manager, imermanence, nur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, impermanence, nur, ... }@inputs:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
