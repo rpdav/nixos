@@ -101,6 +101,36 @@
     userKnownHostsFile = "/persist/home/ryan/.ssh/known_hosts";
   };
 
+  programs.bash.historyFile = "/persist/home/ryan/.bash_history";
+
+  programs.firefox = {
+    enable = true;
+    profiles.ryan = {
+	  id = 0
+	  name = "ryan default";
+	  settings = {
+	    "browser.startup.homepage" = "https://start.***REMOVED***";
+	    "browser.search.region" = "US";
+	    "browser.search.isUS" = true;
+	    "extensions.autoDisableScopes" = 0; #automatically enable added extensions
+	    "browser.newtabpage.pinned" = [{
+	      title = "NixOS";
+	      url = "https://nixos.org";
+	    }];
+	  };
+	  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+	    privacy-badger
+	  ]
+	  search = {
+	    force = true;
+	    default = "DuckDuckGo"
+	    order = [ "DuckDuckGo" "Google" ];
+	    
+	  };
+	};
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
+
