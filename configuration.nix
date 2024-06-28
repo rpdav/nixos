@@ -117,6 +117,7 @@
     ## User persistence is here since I couldn't get it to work in home-manager
     users.ryan = {
       directories = [
+        "Desktop"
         "Downloads"
         "Music"
         "Pictures"
