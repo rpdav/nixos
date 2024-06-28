@@ -9,9 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";    
     };
     impermanence.url = "github:nix-community/impermanence";
+    inputs.nur.url = "github:nix-community/NUR"
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, imermanence, nur, ... }@inputs:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -23,6 +24,7 @@
         modules = [ 
           ./configuration.nix 
           impermanence.nixosModules.impermanence
+          nur.nixosModules.nur
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
