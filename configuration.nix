@@ -6,7 +6,11 @@
 
 {
   imports =
-    [ ./hardware-configuration.nix ];
+    [ ./hardware-configuration.nix 
+      cinnamon.nix
+      #gnome.nix
+      #kde.nix
+    ];
 
 ## Enable flakes
   nix = {
@@ -40,29 +44,6 @@
 
   time.timeZone = "America/Indiana/Indianapolis";
 
-## Gnome X11
-#  services.xserver = {
-#	enable = true;
-#    displayManager.gdm.enable = true;
-#    desktopManager.gnome.enable = true;
-#  };
-
-## Gnome wayland
-#  programs.sway.enable = true;
-#  services.xserver.displayManager.gdm.wayland = true;
-
-## Plasma 6 wayland
-#  services.xserver.enable = true;
-#  services.displayManager.sddm.enable = true;
-#  services.displayManager.sddm.wayland.enable = true;
-#  services.desktopManager.plasma6.enable = true;
-
-## Cinnamon
-  services.xserver = {
-	enable = true;
-	displayManager.lightdm.enable = true;
-	desktopManager.cinnamon.enable = true;
-  };
   services.libinput.enable = true;
   services.displayManager.defaultSession = "cinnamon";
 
