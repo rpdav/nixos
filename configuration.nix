@@ -135,6 +135,7 @@
       ];
       files = [
         ".screenrc"
+        ".mozilla/firefox/ryan/cookies.sqlite"
       ];
     };
   };
