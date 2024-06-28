@@ -7,9 +7,9 @@
 {
   imports =
     [ ./hardware-configuration.nix 
-      cinnamon.nix
-      #gnome.nix
-      #kde.nix
+      ./cinnamon.nix
+      #./gnome.nix
+      #./kde.nix
     ];
 
 ## Enable flakes
