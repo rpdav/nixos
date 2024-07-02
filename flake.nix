@@ -17,11 +17,22 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in rec {
+
     nixosConfigurations = {
       nixbook = nixpkgs.lib.nixosSystem {
         inherit system;
-        modules = [ 
+        modules = [
+          { nixpkgs.overlays = [ nur.overlay ]; }
+          ({ pkgs, ... }:
+            let
+              nur-no-pkgs = import nur {
+                nurpkgs = import nixpkgs { inherit system; };
+              };
+            in {
+              imports = [ nur-no-pkgs.repos.iopq.modules.xraya  ];
+              services.xraya.enable = true;
+            })
           ./configuration.nix 
           impermanence.nixosModules.impermanence
           nur.nixosModules.nur

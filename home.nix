@@ -1,4 +1,4 @@
-{ config, pkgs, impermanence, ... }:
+{ config, pkgs, impermanence, nur, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -122,9 +122,9 @@
 	    "extensions.formautofill.creditCards.enabled" = false; #disable payment autofill	    
 	  };
 	  ## these need added to flake to work
-	  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-	    privacy-badger
-	  ];
+	  #extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+	  #  privacy-badger
+	  #];
 	  search = {
 	    force = true;
 	    default = "DuckDuckGo";
