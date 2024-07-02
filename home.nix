@@ -86,7 +86,8 @@ in {
 	  ## these need added to flake to work
 	  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 	   bitwarden
-           ublock-origin 
+     ublock-origin 
+     metamask
 	  ];
 	  search = {
 	    force = true;
