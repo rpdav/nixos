@@ -110,6 +110,7 @@
         ".local/share/keyrings"
         ".local/share/direnv"
         ".mozilla"
+        ".thunderbird"
 #        {
 #          directory = ".local/share/Steam";
 #          method = "symlink";
@@ -117,7 +118,6 @@
       ];
       files = [
         ".screenrc"
-        ".mozilla/firefox/ryan/cookies.sqlite"
       ];
     };
   };
