@@ -50,8 +50,12 @@ in {
       number = true;
       relativenumber = true;
       tabstop = 2;
-      autoindent = true;
     };
+    extraConfig =
+    ''
+      set autoindent
+      set smartindent
+    '';
   };
 
   programs.ssh = {
