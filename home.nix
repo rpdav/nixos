@@ -1,6 +1,8 @@
 { config, pkgs, impermanence, nur, ... }:
 
-{
+let
+  nur-no-pkgs = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {};
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ryan";
@@ -122,9 +124,10 @@
 	    "extensions.formautofill.creditCards.enabled" = false; #disable payment autofill	    
 	  };
 	  ## these need added to flake to work
-	  #extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-	  #  privacy-badger
-	  #];
+	  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+	   bitwarden
+           ublock-origin 
+	  ];
 	  search = {
 	    force = true;
 	    default = "DuckDuckGo";
