@@ -109,6 +109,7 @@
         ".nixops"
         ".local/share/keyrings"
         ".local/share/direnv"
+        ".mozilla"
 #        {
 #          directory = ".local/share/Steam";
 #          method = "symlink";
