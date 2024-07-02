@@ -105,7 +105,7 @@
         "Documents"
         "Videos"
         ".gnupg"
-#        ".ssh"
+        ".ssh"
         ".nixops"
         ".local/share/keyrings"
         ".local/share/direnv"
