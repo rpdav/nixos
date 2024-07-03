@@ -120,13 +120,16 @@ in {
 	};
   };
 
-  accounts.calendar.accounts.nextcloud = {
-    name = "Family";
-    remote = {
-      type = "caldav";
-      url = "https://cloud.***REMOVED***/remote.php/dav";
-      userName = "ryan";
-      passwordCommand = "${secrets.calendar.password}";
+  accounts.calendar = (
+    basePath = ".calendar";
+    accounts.nextcloud = {
+      name = "Family";
+      remote = {
+        type = "caldav";
+        url = "https://cloud.***REMOVED***/remote.php/dav";
+        userName = "ryan";
+        passwordCommand = "${secrets.calendar.password}";
+      };
     };
   };
 
