@@ -1,4 +1,4 @@
-{ config, pkgs, impermanence, nur, ... }:
+{ config, pkgs, impermanence, nur, secrets, ... }:
 
 let
   nur-no-pkgs = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {};
@@ -118,6 +118,16 @@ in {
 	    order = [ "DuckDuckGo" "Google" "Nix Packages" "MyNixOS" ];
 	  };
 	};
+  };
+
+  accounts.calendar.accounts.nextcloud = {
+    name = Family;
+    remote = {
+      type = "caldav";
+      url = "https://cloud.***REMOVED***/remote.php/dav";
+      userName = "ryan";
+      passwordCommand = "${secrets.calendar.password}";
+    };
   };
 
   # Let Home Manager install and manage itself.

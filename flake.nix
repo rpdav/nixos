@@ -17,11 +17,12 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
     in rec {
-
     nixosConfigurations = {
       nixbook = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { secrets };
         modules = [
           { nixpkgs.overlays = [ nur.overlay ]; }
           ({ pkgs, ... }:
