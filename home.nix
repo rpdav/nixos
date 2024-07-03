@@ -120,15 +120,17 @@ in {
 	};
   };
 
-  accounts.calendar = (
+  ## can't get this to work
+  accounts.calendar = {
     basePath = ".calendar";
     accounts.nextcloud = {
-      name = "Family";
+      primary = true;
+      name = "nextcloud";
       remote = {
         type = "caldav";
-        url = "https://cloud.***REMOVED***/remote.php/dav";
+        url = "https://cloud.***REMOVED***/remote.php/dav/";
         userName = "ryan";
-        passwordCommand = "${secrets.calendar.password}";
+        passwordCommand = "echo ${secrets.calendar.password}";
       };
     };
   };
