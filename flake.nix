@@ -22,7 +22,9 @@
     nixosConfigurations = {
       nixbook = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { secrets };
+        specialArgs = { 
+          inherit secrets;
+        };
         modules = [
           { nixpkgs.overlays = [ nur.overlay ]; }
           ({ pkgs, ... }:

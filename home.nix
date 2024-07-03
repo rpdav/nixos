@@ -121,7 +121,7 @@ in {
   };
 
   accounts.calendar.accounts.nextcloud = {
-    name = Family;
+    name = "Family";
     remote = {
       type = "caldav";
       url = "https://cloud.***REMOVED***/remote.php/dav";
