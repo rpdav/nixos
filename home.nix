@@ -31,6 +31,7 @@ in {
       ".." = "cd ..";
       ll = "ls -la";
       nix-switch = "sudo nixos-rebuild switch --flake /home/ryan/.nixops";
+      rebuild = "bash ~/scripts/rebuild.sh";
     };
   };
 
