@@ -112,6 +112,7 @@
         ".local/share/direnv"
         ".mozilla"
         ".thunderbird"
+        "scripts"
 #        {
 #          directory = ".local/share/Steam";
 #          method = "symlink";
