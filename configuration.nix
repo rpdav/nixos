@@ -98,6 +98,7 @@
     ];
     ## User persistence is here since I couldn't get it to work in home-manager
     users.ryan = {
+      hideMounts = true;
       directories = [
         "Desktop"
         "Downloads"
