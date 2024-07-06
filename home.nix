@@ -15,7 +15,8 @@ in {
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
-  home.packages = [
+  home.packages = with pkgs [
+    protonmail-bridge-gui
   ];
 
   # Impermanence: see configuration.nix. Couldn't get it to work here :\
