@@ -1,6 +1,6 @@
 { config, ... }:
 
-#{
+{
 #  fileSystems."/" = {
 #    device = "/dev/lvm/root";
 #    fsType = "btrfs";
