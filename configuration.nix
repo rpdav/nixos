@@ -123,7 +123,7 @@
         ".gnupg"
         ".ssh"
         ".nixops"
-        ".local/share"
+        ".local"
         ".mozilla"
         ".thunderbird"
         "scripts"
