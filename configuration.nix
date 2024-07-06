@@ -8,6 +8,7 @@
   imports =
     [ ./hardware-configuration.nix 
       ./cinnamon.nix
+      ./rollback.nix
       #./gnome.nix
       #./kde.nix
     ];
