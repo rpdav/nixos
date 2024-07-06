@@ -34,6 +34,7 @@ in {
       nix-switch = "sudo nixos-rebuild switch --flake /home/ryan/.nixops";
       rebuild = "bash ~/scripts/rebuild.sh";
       fs-diff = "bash ~/scripts/fs-diff.sh";
+#      v = "${secrets.test.alias}";}
     };
   };
 
@@ -123,62 +124,62 @@ in {
 	};
   };
 
-  programs.thunderbird = {
-    enable = true;
-    settings = {
-      "privacy.donottrackheader.enabled" = true;
-    };
-    profiles.ryan = {
-      name = "ryan";
-      isDefault = "true";
-    };
-  };
+#  programs.thunderbird = {
+#    enable = true;
+#    settings = {
+#      "privacy.donottrackheader.enabled" = true;
+#    };
+#    profiles.ryan = {
+#      name = "ryan";
+#      isDefault = true;
+#    };
+#  };
 
-  accounts.email.accounts = {
-    ${secrets.personal-mail.account} = {
-      address = "${secrets.personal-mail.address}";
-      username = "${secrets.personal-mail.address}";
-      realName = "${secrets.personal-mail.realName}";
-      primary = true;
-      passwordCommand = "echo ${secrets.personal-mail.password}";
-      imap = {
-        host = "127.0.0.1";
-        tls.enable = true;
-        tls.useStartTls = true;
-        port = 1143;
-      };
-      smtp = {
-        host = "127.0.0.1";
-        port = 1025;
-        tls.enable = true;
-        tls.UseStartTls = true;
-      };
-      thunderbird = {
-        enable = true;
-        profiles = [ "ryan" ];
-      };
-    };
-    ${secrets.admin-mail.account} = {
-      address = "${secrets.admin-mail.address}";
-      username = "${secrets.admin-mail.address}";
-      realName = "${secrets.admin-mail.realName}";
-      passwordCommand = "echo ${secrets.admin-mail.password}";
-      imap = {
-        host = "${secrets.admin-mail.host}";
-        tls.enable = true;
-        port = 993;
-      };
-      smtp = {
-        host = "${secrets.admin-mail.host}";
-        port = 465;
-        tls.enable = true;
-      };
-      thunderbird = {
-        enable = true;
-        profiles = [ "ryan" ];
-      };
-    };
-  };
+#  accounts.email.accounts = {
+#    personal = {
+#      address = "${secrets.personal-mail.address}";
+#      username = "${secrets.personal-mail.address}";
+#      realName = "${secrets.personal-mail.realName}";
+#      primary = true;
+#      passwordCommand = "echo ${secrets.personal-mail.password}";
+#      imap = {
+#        host = "127.0.0.1";
+#        tls.enable = true;
+#        tls.useStartTls = true;
+#        port = 1143;
+#      };
+#      smtp = {
+#        host = "127.0.0.1";
+#        port = 1025;
+#        tls.enable = true;
+#        tls.UseStartTls = true;
+#      };
+#      thunderbird = {
+#        enable = true;
+#        profiles = [ "ryan" ];
+#      };
+#    };
+#    admin = {
+#      address = "${secrets.admin-mail.address}";
+#      username = "${secrets.admin-mail.address}";
+#      realName = "${secrets.admin-mail.realName}";
+#      passwordCommand = "echo ${secrets.admin-mail.password}";
+#      imap = {
+#        host = "${secrets.admin-mail.host}";
+#        tls.enable = true;
+#        port = 993;
+#      };
+#      smtp = {
+#        host = "${secrets.admin-mail.host}";
+#        port = 465;
+#        tls.enable = true;
+#      };
+#      thunderbird = {
+#        enable = true;
+#        profiles = [ "ryan" ];
+#      };
+#    };
+#  };
 
   ## can't get this to work
   accounts.calendar = {
