@@ -34,7 +34,7 @@ in {
       nix-switch = "sudo nixos-rebuild switch --flake /home/ryan/.nixops";
       rebuild = "bash ~/scripts/rebuild.sh";
       fs-diff = "bash ~/scripts/fs-diff.sh";
-#      v = "${secrets.test.alias}";}
+#      v = "${secrets.test.alias}";
     };
   };
 
