@@ -20,6 +20,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
     in rec {
+
     nixosConfigurations = {
       nixbook = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -27,6 +28,8 @@
           inherit secrets;
         };
         modules = [
+
+          ./configuration.nix 
 
           # nur overlay
           { nixpkgs.overlays = [ nur.overlay ]; }
@@ -42,6 +45,7 @@
 
           impermanence.nixosModules.impermanence
           nur.nixosModules.nur
+
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -51,7 +55,6 @@
               inherit secrets;
             };
           }
-          ./configuration.nix 
         ];
       };
     };
