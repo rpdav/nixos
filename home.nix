@@ -171,8 +171,8 @@ in {
       };
       smtp = {
         host = "${secrets.admin-mail.host}";
-        port = 465;
         tls.enable = true;
+        port = 465;
       };
       thunderbird = {
         enable = true;
