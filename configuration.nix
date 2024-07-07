@@ -97,7 +97,6 @@
     hideMounts = true;
     directories = [
       "/var/log"
-#      "${secrets.test.alias}"
       "/var/lib/bluetooth"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
