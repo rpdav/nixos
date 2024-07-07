@@ -181,7 +181,7 @@ in {
 #    };
 #  };
 
-  ## can't get this to work
+  ## can't get this to talk to any calendar apps. not sure if it's even authenticating with the server.
   accounts.calendar = {
     basePath = ".calendar";
     accounts.nextcloud = {

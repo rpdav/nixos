@@ -27,6 +27,8 @@
           inherit secrets;
         };
         modules = [
+
+          # nur overlay
           { nixpkgs.overlays = [ nur.overlay ]; }
           ({ pkgs, ... }:
             let
@@ -37,7 +39,7 @@
               imports = [ nur-no-pkgs.repos.iopq.modules.xraya  ];
               services.xraya.enable = true;
             })
-          ./configuration.nix 
+
           impermanence.nixosModules.impermanence
           nur.nixosModules.nur
           home-manager.nixosModules.home-manager
@@ -45,7 +47,11 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./home.nix;
+            home-manager.extraSpecialArgs = {
+              inherit secrets;
+            };
           }
+          ./configuration.nix 
         ];
       };
     };
