@@ -137,6 +137,7 @@ in {
 
   accounts.email.accounts = {
     personal = {
+      name = "personal";
       address = "${secrets.personal-mail.address}";
       username = "${secrets.personal-mail.address}";
       realName = "${secrets.personal-mail.realName}";
@@ -160,8 +161,9 @@ in {
       };
     };
     admin = {
+      name = "admin";
       address = "${secrets.admin-mail.address}";
-      username = "${secrets.admin-mail.address}";
+      userName = "${secrets.admin-mail.address}";
       realName = "${secrets.admin-mail.realName}";
       passwordCommand = "echo ${secrets.admin-mail.password}";
       imap = {
