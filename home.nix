@@ -41,7 +41,7 @@ in {
   programs.git = {
     enable = true;
     userName = "ryan";
-    userEmail = "***REMOVED***";
+    userEmail = "${secrets.personal-mail.address}";
     extraConfig = {
       init.defaultBranch = "main";
     };
