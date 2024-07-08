@@ -135,53 +135,53 @@ in {
 #    };
 #  };
 
-  accounts.email.accounts = {
-    personal = {
-      name = "personal";
-      address = "${secrets.personal-mail.address}";
-      userName = "${secrets.personal-mail.address}";
-      realName = "${secrets.personal-mail.realName}";
-      primary = true;
-      passwordCommand = "echo ${secrets.personal-mail.password}";
-      imap = {
-        host = "127.0.0.1";
-        tls.enable = true;
-        tls.useStartTls = true;
-        port = 1143;
-      };
-      smtp = {
-        host = "127.0.0.1";
-        port = 1025;
-        tls.enable = true;
-        tls.useStartTls = true;
-      };
-      thunderbird = {
-        enable = true;
-        profiles = [ "ryan" ];
-      };
-    };
-    admin = {
-      name = "admin";
-      address = "${secrets.admin-mail.address}";
-      userName = "${secrets.admin-mail.address}";
-      realName = "${secrets.admin-mail.realName}";
-      passwordCommand = "echo ${secrets.admin-mail.password}";
-      imap = {
-        host = "${secrets.admin-mail.host}";
-        tls.enable = true;
-        port = 993;
-      };
-      smtp = {
-        host = "${secrets.admin-mail.host}";
-        tls.enable = true;
-        port = 465;
-      };
-      thunderbird = {
-        enable = true;
-        profiles = [ "ryan" ];
-      };
-    };
-  };
+#  accounts.email.accounts = {
+#    personal = {
+#      name = "personal";
+#      address = "${secrets.personal-mail.address}";
+#      userName = "${secrets.personal-mail.address}";
+#      realName = "${secrets.personal-mail.realName}";
+#      primary = true;
+#      passwordCommand = "echo ${secrets.personal-mail.password}";
+#      imap = {
+#        host = "127.0.0.1";
+#        tls.enable = true;
+#        tls.useStartTls = true;
+#        port = 1143;
+#      };
+#      smtp = {
+#        host = "127.0.0.1";
+#        port = 1025;
+#        tls.enable = true;
+#        tls.useStartTls = true;
+#      };
+#      thunderbird = {
+#        enable = true;
+#        profiles = [ "ryan" ];
+#      };
+#    };
+#    admin = {
+#      name = "admin";
+#      address = "${secrets.admin-mail.address}";
+#      userName = "${secrets.admin-mail.address}";
+#      realName = "${secrets.admin-mail.realName}";
+#      passwordCommand = "echo ${secrets.admin-mail.password}";
+#      imap = {
+#        host = "${secrets.admin-mail.host}";
+#        tls.enable = true;
+#        port = 993;
+#      };
+#      smtp = {
+#        host = "${secrets.admin-mail.host}";
+#        tls.enable = true;
+#        port = 465;
+#      };
+#      thunderbird = {
+#        enable = true;
+#        profiles = [ "ryan" ];
+#      };
+#    };
+#  };
 
   ## can't get this to talk to any calendar apps. not sure if it's even authenticating with the server.
   accounts.calendar = {
