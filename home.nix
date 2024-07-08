@@ -136,7 +136,6 @@ in {
 
   accounts.email.accounts = {
     personal = {
-      name = "personal";
       address = "${secrets.personal-mail.address}";
       userName = "${secrets.personal-mail.address}";
       realName = "${secrets.personal-mail.realName}";
@@ -159,7 +158,6 @@ in {
       };
     };
     admin = {
-      name = "admin";
       address = "${secrets.admin-mail.address}";
       userName = "${secrets.admin-mail.address}";
       realName = "${secrets.admin-mail.realName}";
