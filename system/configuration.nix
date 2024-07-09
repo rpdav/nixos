@@ -7,9 +7,10 @@
 {
   imports =
     [ ./hardware-configuration.nix 
-      ./wm/cinnamon.nix
       ./persistence/rollback.nix
       ./persistence/persist.nix
+      ./security/wireguard.nix
+      ./wm/cinnamon.nix
       #./wm/gnome.nix
       #./wm/kde.nix
     ];
