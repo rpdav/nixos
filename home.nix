@@ -69,6 +69,11 @@ in {
 
   programs.bash.historyFile = "/persist/home/ryan/.bash_history";
 
+  services.nextcloud-client = {
+    enable = true;
+    startInBackground = true;
+  };
+
   programs.firefox = {
     enable = true;
     profiles.ryan = {
@@ -87,7 +92,6 @@ in {
 	    "extensions.formautofill.addresses.enabled" = false; #disable address autofill
 	    "extensions.formautofill.creditCards.enabled" = false; #disable payment autofill	    
 	  };
-	  ## these need added to flake to work
 	  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 	   bitwarden
      ublock-origin 
