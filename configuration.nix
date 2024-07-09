@@ -119,6 +119,7 @@
         "Music"
         "Pictures"
         "Documents"
+        "Nextcloud"
         "Videos"
         ".gnupg"
         ".ssh"
