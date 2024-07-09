@@ -29,7 +29,7 @@
         };
         modules = [
 
-          ./configuration.nix 
+          ./system/configuration.nix 
 
           # nur overlay
           { nixpkgs.overlays = [ nur.overlay ]; }
@@ -50,7 +50,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./home.nix;
+            home-manager.users.ryan = import ./user/home.nix;
             home-manager.extraSpecialArgs = {
               inherit secrets;
             };
