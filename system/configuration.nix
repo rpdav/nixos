@@ -9,7 +9,7 @@
     [ ./hardware-configuration.nix 
       ./persistence/rollback.nix
       ./persistence/persist.nix
-#      ./security/wireguard.nix
+      ./security/wireguard.nix
       ./wm/cinnamon.nix
       #./wm/gnome.nix
       #./wm/kde.nix
