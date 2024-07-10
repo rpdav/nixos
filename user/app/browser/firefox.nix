@@ -1,4 +1,4 @@
-{ config, pkgs, n ur, ...}:
+{ config, pkgs, nur, ...}:
 
 {
   
