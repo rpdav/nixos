@@ -3,7 +3,7 @@
 {
   networking.wg-quick.interfaces = {
     home = {
-      autostart = true;
+      autostart = false; #this doesn't seem to work on VM; rebuilding reconnects it which kills network. change to true on bare metal
       address = [ "10.10.10.5/32" ];
       dns = [ "10.10.1.1" ];
       privateKey = "${secrets.wireguard.privateKey}";

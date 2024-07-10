@@ -10,6 +10,7 @@ in {
 
   imports =
     [ ./app/browser/firefox.nix
+      ./app/browser/chromium.nix
     ];
 
   home.packages = with pkgs; [
