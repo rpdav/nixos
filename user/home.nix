@@ -20,9 +20,6 @@ in {
     thunderbird
   ];
 
-  # Impermanence: see configuration.nix. Couldn't get it to work here :\
-
-
   home.sessionVariables = {
     EDITOR = "vim";
   };
@@ -32,9 +29,13 @@ in {
     shellAliases = {
       ".." = "cd ..";
       ll = "ls -la";
+      ## nix commands
       nix-switch = "sudo nixos-rebuild switch --flake /home/ryan/.nixops";
       rebuild = "bash ~/scripts/rebuild.sh";
       fs-diff = "bash ~/scripts/fs-diff.sh";
+      ## wireguard
+      wgup = "bash ~/scripts/wgup.sh";
+      wgdown = "bash ~/scripts/wgdown.sh";
     };
   };
 
