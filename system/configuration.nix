@@ -26,16 +26,20 @@
 # Copied from hadilq guide
   boot = {
     loader = {
-      efi.canTouchEfiVariables = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/efi";
+      };
       grub = {
         enable = true;
         device = "nodev";
         efiSupport = true;
+        useOSProber = true;
       };
     };
     initrd.luks.devices = {
       enc = {
-        device = "/dev/disk/by-uuid/9987f6a6-9368-41db-9815-176c57bf8cfa"; #this is the UUID of the boot partition
+        device = "/dev/disk/by-uuid/fda2cb5e-6df8-4f9c-a56a-35898a496ad1"; #this is the UUID of the encrypted partition 
         preLVM = true;
       };
     };
