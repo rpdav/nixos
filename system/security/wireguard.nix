@@ -3,7 +3,7 @@
 {
   networking.wg-quick.interfaces = {
     home = {
-      autostart = true;
+      autostart = false;
       address = [ "10.10.10.5/32" ];
       dns = [ "10.10.1.1" ];
       privateKey = "${secrets.wireguard.privateKey}";
