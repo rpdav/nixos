@@ -77,6 +77,7 @@
     packages = with pkgs; [
       firefox
       tree
+      onlyoffice-bin
     ];
   };
 
