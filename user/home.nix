@@ -16,6 +16,9 @@ in {
   home.packages = with pkgs; [
     protonmail-bridge-gui
     thunderbird
+    firefox
+    tree
+    onlyoffice-bin
   ];
 
   home.sessionVariables = {

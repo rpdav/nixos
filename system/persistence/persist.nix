@@ -58,4 +58,10 @@
       ];
     };
   };
+
+  security.sudo.extraConfig = ''
+    # rollback results in sudo lectures after reboot
+    Defaults lecture = never
+    '';
+    
 }
