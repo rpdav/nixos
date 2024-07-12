@@ -12,6 +12,7 @@
     enable = true;  # NB: Defaults to true, not needed
     hideMounts = true;
     directories = [
+      "/etc/wireguard"
       "/var/log"
       "/var/lib/bluetooth"
       "/var/lib/nixos"
@@ -19,15 +20,15 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/NetworkManager"
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
-#      "/etc/.updated" #systemd file with timestamp for when it was updated
-#      "/var/.updated" #systemd file with timestamp for when it was updated
-#      "/var/lib/sddm" # something to do with KDE
+      "/etc/.updated" #systemd file with timestamp for when it was updated
+      "/var/.updated" #systemd file with timestamp for when it was updated
+      "/var/lib/sddm" # something to do with KDE
     ];
     files = [
        "/etc/machine-id"
        { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
-    ## User persistence is here since I couldn't get it to work in home-manager
+  ## User persistence is here since I couldn't get it to work in home-manager
     users.ryan = {
       directories = [
         ".config"

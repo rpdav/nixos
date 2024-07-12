@@ -9,7 +9,6 @@
     [ ./hardware-configuration.nix 
       ./persistence/rollback.nix
       ./persistence/persist.nix
-      ./security/wireguard.nix
       ./wm/cinnamon.nix
       #./wm/gnome.nix
       #./wm/kde.nix
@@ -89,6 +88,7 @@
     wget
     git
     git-crypt
+    wireguard-tools
   ];
 
 ## Default apps
