@@ -13,6 +13,7 @@
     hideMounts = true;
     directories = [
       "/etc/wireguard"
+      "/var/lib/tailscale"
       "/var/log"
       "/var/lib/bluetooth"
       "/var/lib/nixos"
