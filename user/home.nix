@@ -18,6 +18,7 @@ in {
       ./app/git/git.nix
       ./app/editor/vim.nix
       ./app/shell/bash.nix
+      (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
 
   home.packages = with pkgs; [
