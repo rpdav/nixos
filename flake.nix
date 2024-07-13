@@ -3,28 +3,41 @@
 
   description = "My first flake!";
 
-  inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";    
-    };
-    impermanence.url = "github:nix-community/impermanence";
-    nur.url = "github:nix-community/NUR";
-  };
-
   outputs = { self, nixpkgs, home-manager, impermanence, nur, ... }@inputs:
     let
+      # ---- SYSTEM SETTINGS ---- #
+      systemSettings = {
+        system = "x86_64-linux"; # system arch
+        hostname = "nixbook"; # hostname
+        timezone = "America/Indiana/Indianapolis"; # select timezone
+        locale = "en_US.UTF-8"; # select locale
+      };
+      # ----- USER SETTINGS ----- #
+      userSettings = rec {
+        username = "ryan"; # username
+        name = "Ryan"; # name/identifier
+        configDir = "~/.nixops"; # absolute path of the local repo
+        theme = "io"; # selcted theme from my themes directory (./themes/)
+        wm = "hyprland"; # Selected window manager or desktop environment; must select one in both ./user/wm/ and ./system/wm/
+        # window manager type (hyprland or x11) translator
+        wmType = if (wm == "hyprland") then "wayland" else "x11";
+        browser = "firefox"; # Default browser; must select one from ./user/app/browser/
+        term = ""; # Default terminal command;
+        font = "Intel One Mono"; # Selected font
+        fontPkg = pkgs.intel-one-mono; # Font package
+        editor = "vim"; # Default editor;
+      };
       lib = nixpkgs.lib;
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.${systemSettings.system};
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
     in rec {
 
     nixosConfigurations = {
       nixbook = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = systemSettings.system;
         specialArgs = { 
+          inherit systemSettings;
+          inherit userSettings;
           inherit secrets;
         };
         modules = [
@@ -36,7 +49,7 @@
           ({ pkgs, ... }:
             let
               nur-no-pkgs = import nur {
-                nurpkgs = import nixpkgs { inherit system; };
+                nurpkgs = import nixpkgs { system = systemSettings.system; };
               };
             in {
               imports = [ nur-no-pkgs.repos.iopq.modules.xraya  ];
@@ -52,6 +65,8 @@
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./user/home.nix;
             home-manager.extraSpecialArgs = {
+              inherit systemSettings;
+              inherit userSettings;
               inherit secrets;
             };
           }
@@ -59,4 +74,15 @@
       };
     };
   };
+
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-24.05";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";    
+    };
+    impermanence.url = "github:nix-community/impermanence";
+    nur.url = "github:nix-community/NUR";
+  };
+
 }
