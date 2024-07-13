@@ -25,8 +25,6 @@
     files = [
       "/etc/machine-id"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
-      "/etc/.updated" #systemd file with timestamp for when it was updated
-      "/var/.updated" #systemd file with timestamp for when it was updated
     ];
   ## User persistence is here since I couldn't get it to work in home-manager
     users.ryan = {
