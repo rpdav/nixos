@@ -7,6 +7,7 @@
       ./persistence/persist.nix
       ./app/defaultapps.nix
       ./wm/cinnamon.nix
+      ./security/tailscale.nix
       #./wm/gnome.nix
       #./wm/kde.nix
     ];
