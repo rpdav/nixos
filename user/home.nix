@@ -1,4 +1,4 @@
-{ config, pkgs, impermanence, nur, secrets, ... }:
+{ config, pkgs, impermanence, nur, secrets, systemSettings, userSettings, ... }:
 
 let
   nur-no-pkgs = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {};
