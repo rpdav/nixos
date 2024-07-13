@@ -18,9 +18,9 @@
         name = "Ryan"; # name/identifier
         configDir = "~/.nixops"; # absolute path of the local repo
         theme = "io"; # selcted theme from my themes directory (./themes/)
-        wm = "hyprland"; # Selected window manager or desktop environment; must select one in both ./user/wm/ and ./system/wm/
+        wm = "cinnamon"; # Selected window manager or desktop environment; must select one in both ./user/wm/ and ./system/wm/
         # window manager type (hyprland or x11) translator
-        wmType = if (wm == "hyprland") then "wayland" else "x11";
+        wmType = if (wm == "cinnamon") then "x11" else "wayland";
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = ""; # Default terminal command;
         font = "Intel One Mono"; # Selected font
