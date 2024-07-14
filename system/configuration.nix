@@ -8,6 +8,7 @@
       ./app/defaultapps.nix
       ./wm/cinnamon.nix
       ./security/tailscale.nix
+      ./services/backup.nix
       #./wm/gnome.nix
       #./wm/kde.nix
     ];
