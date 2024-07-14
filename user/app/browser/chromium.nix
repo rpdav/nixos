@@ -10,7 +10,6 @@
     enable = true;
     extensions = [
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } #ublock origin
-      { id = "dcpihecpambacapedldabdbpakmachpb"; } #bypass paywalls
       { id = "nngceckbapebfimnlniiiahkandclblb"; } #bitwarden
     ];
   };

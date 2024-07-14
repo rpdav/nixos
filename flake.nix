@@ -3,7 +3,7 @@
 
   description = "My first flake!";
 
-  outputs = { self, nixpkgs, home-manager, impermanence, nur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, impermanence, ... }@inputs:
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
@@ -44,20 +44,7 @@
 
           ./system/configuration.nix 
 
-          # nur overlay
-          { nixpkgs.overlays = [ nur.overlay ]; }
-          ({ pkgs, ... }:
-            let
-              nur-no-pkgs = import nur {
-                nurpkgs = import nixpkgs { system = systemSettings.system; };
-              };
-            in {
-              imports = [ nur-no-pkgs.repos.iopq.modules.xraya  ];
-              services.xraya.enable = true;
-            })
-
           impermanence.nixosModules.impermanence
-          nur.nixosModules.nur
 
           home-manager.nixosModules.home-manager
           {
@@ -82,7 +69,6 @@
       inputs.nixpkgs.follows = "nixpkgs";    
     };
     impermanence.url = "github:nix-community/impermanence";
-    nur.url = "github:nix-community/NUR";
   };
 
 }

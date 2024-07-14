@@ -1,4 +1,4 @@
-{ config, pkgs, nur, ... }:
+{ config, pkgs, ... }:
 
 {
   
@@ -20,11 +20,6 @@
   	    "extensions.formautofill.addresses.enabled" = false; #disable address autofill
   	    "extensions.formautofill.creditCards.enabled" = false; #disable payment autofill	    
   	  };
-  	  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-  	   bitwarden
-       ublock-origin 
-       metamask
-  	  ];
   	  search = {
   	    force = true;
   	    default = "DuckDuckGo";
