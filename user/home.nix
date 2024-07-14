@@ -25,6 +25,8 @@ in {
     protonmail-bridge-gui
     thunderbird
     firefox
+    librewolf
+    brave
     tree
     onlyoffice-bin
   ];
