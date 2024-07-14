@@ -75,6 +75,7 @@
     git
     git-crypt
     wireguard-tools
+    borgbackup
   ];
 
 }
