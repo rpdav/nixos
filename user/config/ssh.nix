@@ -1,4 +1,4 @@
-{config, pkgs, ... }
+{config, pkgs, ... }:
 {
   
   programs.ssh = {
@@ -25,7 +25,7 @@
       	Hostname 10.10.1.18
       	User root
       	Port 22
-    ''
+    '';
   };
 
 }
