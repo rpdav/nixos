@@ -18,6 +18,7 @@ in {
       ./app/git/git.nix
       ./app/editor/vim.nix
       ./app/shell/bash.nix
+      ./config/ssh.nix
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
 
@@ -30,11 +31,6 @@ in {
     tree
     onlyoffice-bin
   ];
-
-  programs.ssh = {
-    enable = true;
-    userKnownHostsFile = "/persist/home/ryan/.ssh/known_hosts";
-  };
 
   services.nextcloud-client = {
     enable = true;
