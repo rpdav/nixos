@@ -13,6 +13,7 @@
     hideMounts = true;
     directories = [
       "/etc/wireguard"
+      "/root/.ssh"
       "/var/lib/tailscale"
       "/var/log"
       "/var/lib/bluetooth"
