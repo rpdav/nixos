@@ -61,7 +61,7 @@
 
 ## User definitions
   users.users.ryan = {
-    hashedPassword = "***REMOVED***";
+    hashedPassword = "${secrets.ryan.passwordhash}";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
