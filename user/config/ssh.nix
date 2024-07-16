@@ -25,6 +25,11 @@
       	Hostname 10.10.1.18
       	User root
       	Port 22
+
+      Host borg
+        Hostname 10.10.1.17
+        User borg
+        Port 2222
     '';
   };
 

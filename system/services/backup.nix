@@ -1,8 +1,6 @@
 {config, pkgs, lib, secrets, systemSettings, ... }:
 {
 
-## Root ssh setup to access NAS
-
 ## Backup definition
   services.borgbackup.jobs."nas-test" = {
     paths = [ "/persist/home/ryan/Documents" ];
