@@ -13,8 +13,8 @@
   services.borgbackup.jobs."nas-test" = {
     paths = [ "/persist/home/ryan/Documents" ];
     exclude = [
-      "/persist/home/ryan/OpenTTD"
-      "/persist/home/ryan/medical"
+      "/persist/home/ryan/Documents/OpenTTD"
+      "/persist/home/ryan/Documents/medical"
     ];
     user = "root";
     repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname)); #Borg server creates directories at /backup/<pubkey> for all pubkeys in /sshkeys/clients/<pubkey>
