@@ -21,7 +21,7 @@
     user = "root";
     repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname));
     doInit = true;
-    startAt = [ daily ];
+    startAt = [ "daily" ];
 #    preHook = placeholder for snapshotting/mounting command
 #    postHook = placeholder for snapshot deletion/unmount
     encryption = {
