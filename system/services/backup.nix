@@ -1,6 +1,14 @@
 {config, pkgs, lib, secrets, systemSettings, ... }:
 {
 
+## Extra root ssh config 
+  programs.ssh.extraConfig = ''
+    Host borg
+      HostName 10.10.1.17
+      User borg
+      Port 2222
+  '';
+
 ## Backup definition
   services.borgbackup.jobs."nas-test" = {
     paths = [ "/persist/home/ryan/Documents" ];
