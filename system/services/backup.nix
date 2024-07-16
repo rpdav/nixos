@@ -19,7 +19,7 @@
       "/persist/home/${userSettings.username}/Nextcloud"
     ];
     user = "root";
-    repo = ("borg@10.10.1.17:2222:/backup" + ("/" + systemSettings.hostname));
+    repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname));
     doInit = true;
     startAt = [ "daily" ];
 #    preHook = placeholder for snapshotting/mounting command
