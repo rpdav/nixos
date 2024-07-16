@@ -1,5 +1,7 @@
-{config, pkgs, lib, secrets, systemSettings, ... }:
+{config, pkgs, lib, secrets, systemSettings, userSettings, ... }:
 {
+
+# This config assumes this machine's root user public key is copied to the borg server as /sshkeys/clients/$hostname. The server will create a backup directory under /backup/$hostname
 
 ## Extra root ssh config 
   programs.ssh.extraConfig = ''
@@ -10,21 +12,21 @@
   '';
 
 ## Backup definition
-  services.borgbackup.jobs."nas-test" = {
-    paths = [ "/persist/home/ryan/Documents" ];
+  services.borgbackup.jobs."local" = {
+    paths = [ "/persist/home/${userSettings.username}" ];
     exclude = [
-      "/persist/home/ryan/Documents/OpenTTD"
-      "/persist/home/ryan/Documents/medical"
+      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail"
+      "/persist/home/${userSettings.username}/Nextcloud"
     ];
     user = "root";
-    repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname)); #Borg server creates directories at /backup/<pubkey> for all pubkeys in /sshkeys/clients/<pubkey>
+    repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname));
     doInit = true;
-    startAt = [ ]; #replace with daily or whatver. this is for manual running
-##    preHook = optional snapshotting/mounting command
-##    postHook = optional snapshot deletion/unmount
+    startAt = [ daily ];
+#    preHook = placeholder for snapshotting/mounting command
+#    postHook = placeholder for snapshot deletion/unmount
     encryption = {
       mode = "repokey-blake2";
-      passphrase = "${secrets.borg.testpassphrase}";
+      passphrase = "${secrets.borg.passphrase}"; #This is also in password manager under entry "Borg backup"
     };
     compression = "auto,lzma";
     prune.keep = {
