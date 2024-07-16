@@ -76,6 +76,7 @@
     git-crypt
     wireguard-tools
     borgbackup
+    rclone
   ];
 
 }

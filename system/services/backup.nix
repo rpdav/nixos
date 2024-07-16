@@ -11,7 +11,7 @@
       Port 2222
   '';
 
-## Backup definition
+## Local backup definition
   services.borgbackup.jobs."local" = {
     paths = [ "/persist/home/${userSettings.username}" ];
     exclude = [
@@ -36,5 +36,8 @@
       yearly = 1;
     };
   };
+
+## Remote backup definition
+
 
 }
