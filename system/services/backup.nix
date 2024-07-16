@@ -17,7 +17,7 @@
       "/persist/home/ryan/medical"
     ];
     user = "root";
-    repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname + "/") + "test");
+    repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname)); #Borg server creates directories at /backup/<pubkey> for all pubkeys in /sshkeys/clients/<pubkey>
     doInit = true;
     startAt = [ ]; #replace with daily or whatver. this is for manual running
 ##    preHook = optional snapshotting/mounting command
