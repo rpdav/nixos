@@ -17,7 +17,7 @@
       "/persist/home/ryan/medical"
     ];
     user = "root";
-    repo = ("root@10.10.1.17:/tank/backups" + ("/" + systemSettings.hostname + "/") + "./test");
+    repo = ("borg@borg:/backups" + ("/" + systemSettings.hostname + "/") + "test");
     doInit = true;
     startAt = [ ]; #replace with daily or whatver. this is for manual running
 ##    preHook = optional snapshotting/mounting command
