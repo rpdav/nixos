@@ -52,7 +52,7 @@
       echo "creating mount directory"
       mkdir -p /mnt/backup/${systemSettings.hostname}
       echo "mounting remote"
-      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --allow-non-empty --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --daemon --allow-non-empty --config /home/${userSettings.username}/.config/rclone/rclone.conf
     '';
     postHook = ''
       echo "unmounting remote"
