@@ -48,12 +48,13 @@
     repo = "/mnt/backup/${systemSettings.hostname}";
     doInit = true;
     startAt = [ "weekly" ];
-    preHook = ''
-      mkdir -p /mnt/backup/${systemSettings.hostname} && rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
-    '';
-    postHook = ''
-      umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf && rm -r /mnt/backup
-    '';
+#    preHook = ''
+#      mkdir -p /mnt/backup/${systemSettings.hostname} && rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+#    '';
+    preHook = '' touch /testprehook '';
+#    postHook = ''
+#      umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf && rm -r /mnt/backup
+#    '';
     encryption = {
       mode = "repokey-blake2";
       passphrase = "${secrets.borg.passphrase}"; #This is also in password manager under entry "Borg backup"
