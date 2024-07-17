@@ -53,6 +53,7 @@
       mkdir -p /mnt/backup/${systemSettings.hostname}
       echo "mounting remote"
       ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --daemon --allow-non-empty --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      echo "starting backup..."
     '';
     postHook = ''
       echo "unmounting remote"
