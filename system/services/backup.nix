@@ -52,7 +52,7 @@
       mkdir /mnt/backup/${systemSettings.hostname} && rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rcone/rclone.conf
     '';
     postHook = ''
-      rclone umount /mnt/backup/${systemSettings.hostname} && rm -r /mnt/backup
+      rclone umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf && rm -r /mnt/backup
     '';
     encryption = {
       mode = "repokey-blake2";
