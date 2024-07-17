@@ -50,13 +50,13 @@
     startAt = [ "weekly" ];
     preHook = ''
       echo "creating mount directory"
-      /bin/sh mkdir -p /mnt/backup/${systemSettings.hostname}
+      mkdir -p /mnt/backup/${systemSettings.hostname}
       echo "mounting remote"
-      /bin/sh rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
     '';
     postHook = ''
       echo "unmounting remote"
-      /bin/sh umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
       echo "removing backup directory"
       rm -r /mnt/backup
     '';
