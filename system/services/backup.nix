@@ -19,7 +19,7 @@
       "/persist/home/${userSettings.username}/Nextcloud"
     ];
     user = "root";
-    repo = ("borg@borg:/backup" + ("/" + systemSettings.hostname));
+    repo = ("ssh://borg@10.10.1.17:2222/backup" + ("/" + systemSettings.hostname));
     doInit = true;
     startAt = [ "daily" ];
 #    preHook = placeholder for snapshotting/mounting command
@@ -49,10 +49,16 @@
     doInit = true;
     startAt = [ "weekly" ];
     preHook = ''
-      /bin/sh mkdir -p /mnt/backup/${systemSettings.hostname} && /bin/sh rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      echo "creating mount directory"
+      /bin/sh mkdir -p /mnt/backup/${systemSettings.hostname}
+      echo "mounting remote"
+      /bin/sh rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
     '';
     postHook = ''
-      /bin/sh umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf && rm -r /mnt/backup
+      echo "unmounting remote"
+      /bin/sh umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      echo "removing backup directory"
+      rm -r /mnt/backup
     '';
     encryption = {
       mode = "repokey-blake2";
