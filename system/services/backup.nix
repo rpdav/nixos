@@ -56,7 +56,7 @@
     '';
     postHook = ''
       echo "unmounting remote"
-      ${pkgs.umount}/bin/umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      ${pkgs.umount}/bin/umount /mnt/backup/${systemSettings.hostname} 
       echo "removing backup directory"
       rm -r /mnt/backup
     '';
