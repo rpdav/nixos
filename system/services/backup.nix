@@ -49,10 +49,10 @@
     doInit = true;
     startAt = [ "weekly" ];
     preHook = ''
-      mkdir /mnt/backup/${systemSettings.hostname} && rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rcone/rclone.conf
+      mkdir -p /mnt/backup/${systemSettings.hostname} && rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
     '';
     postHook = ''
-      rclone umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf && rm -r /mnt/backup
+      umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf && rm -r /mnt/backup
     '';
     encryption = {
       mode = "repokey-blake2";
