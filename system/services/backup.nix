@@ -52,11 +52,11 @@
       echo "creating mount directory"
       mkdir -p /mnt/backup/${systemSettings.hostname}
       echo "mounting remote"
-      rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
     '';
     postHook = ''
       echo "unmounting remote"
-      umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      ${pkgs.umount}/bin/umount /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rclone/rclone.conf
       echo "removing backup directory"
       rm -r /mnt/backup
     '';
