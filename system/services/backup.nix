@@ -38,6 +38,34 @@
   };
 
 ## Remote backup definition
-
+  services.borgbackup.jobs."remote-test" = {
+    paths = [ "/persist/home/${userSettings.username}/Documents" ];
+    exclude = [
+#      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail"
+#      "/persist/home/${userSettings.username}/Nextcloud"
+    ];
+    user = "root";
+    repo = "/mnt/backup/${systemSettings.hostname}";
+    doInit = true;
+    startAt = [ "weekly" ];
+    preHook = ''
+      mkdir /mnt/backup/${systemSettings.hostname}
+      rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname} /mnt/backup/${systemSettings.hostname} --config /home/${userSettings.username}/.config/rcone/rclone.conf
+    '';
+    postHook = ''
+      rclone umount /mnt/backup/${systemSettings.hostname}
+      rm -r /mnt/backup
+    '';
+    encryption = {
+      mode = "repokey-blake2";
+      passphrase = "${secrets.borg.passphrase}"; #This is also in password manager under entry "Borg backup"
+    };
+    compression = "auto,lzma";
+    prune.keep = {
+      weekly = 4;
+      monthly = 12;
+      yearly = 1;
+    };
+  };
 
 }
