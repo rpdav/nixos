@@ -30,6 +30,7 @@ in {
     librewolf
     brave
     tree
+    remmina
     onlyoffice-bin
   ];
 
