@@ -4,7 +4,10 @@
 
   environment.systemPackages = [ pkgs.tailscale ];
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    extraUpFlags = [ "--accept-dns=false" ]; #tailscale dns messes with resolution of selfhosted services
+  };
 
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
