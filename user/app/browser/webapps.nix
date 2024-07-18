@@ -18,6 +18,6 @@
 
   xdg.desktopEntries.nirvana= {
     name = "Nirvana";
-    exec = "${userSettings.browser} --app=https://focus.nirvanahq.com";
+    exec = "chromium --app=https://focus.nirvanahq.com";
   };
 }
