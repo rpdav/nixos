@@ -58,10 +58,10 @@
       ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname}-test /mnt/rclone/${systemSettings.hostname}-test --daemon --config /home/${userSettings.username}/.config/rclone/rclone.conf
       echo "Starting backup..."
     '';
-    postHook = ''
-      echo "Unmounting remote"
-      ${pkgs.umount}/bin/umount /mnt/rclone/${systemSettings.hostname}-test 
-    '';
+#    postHook = ''
+#      echo "Unmounting remote"
+#      ${pkgs.umount}/bin/umount /mnt/rclone/${systemSettings.hostname}-test 
+#    '';
     encryption = {
       mode = "repokey-blake2";
       passphrase = "${secrets.borg.passphrase}"; #This is also in password manager under entry "Borg backup"
