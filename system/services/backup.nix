@@ -37,25 +37,30 @@
     };
   };
 
+## Create rclone mount target on boot. Could not get this to work in borg preHook script
+  systemd.tmpfiles.rules = [
+    "d /mnt/rclone/${systemSettings.hostname} 0755 root root"
+  ];
+
 ## Remote backup definition
   services.borgbackup.jobs."remote-test" = {
     paths = [ "/persist/home/${userSettings.username}/Documents" ];
-    exclude = [
+#    exclude = [
 #      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail"
 #      "/persist/home/${userSettings.username}/Nextcloud"
-    ];
+#    ];
     user = "root";
-    repo = "/mnt/backup/${systemSettings.hostname}-test";
+    repo = "/mnt/rclone/${systemSettings.hostname}-test";
     doInit = true;
     startAt = [ "weekly" ];
     preHook = ''
-      echo "mounting remote"
-      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname}-test /mnt/backup/${systemSettings.hostname}-test --daemon --allow-non-empty --config /home/${userSettings.username}/.config/rclone/rclone.conf
-      echo "starting backup..."
+      echo "Mounting remote"
+      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname}-test /mnt/rclone/${systemSettings.hostname}-test --daemon --config /home/${userSettings.username}/.config/rclone/rclone.conf
+      echo "Starting backup..."
     '';
     postHook = ''
-      echo "unmounting remote"
-      ${pkgs.umount}/bin/umount /mnt/backup/${systemSettings.hostname}-test 
+      echo "Unmounting remote"
+      ${pkgs.umount}/bin/umount /mnt/rclone/${systemSettings.hostname}-test 
     '';
     encryption = {
       mode = "repokey-blake2";
