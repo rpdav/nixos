@@ -37,41 +37,43 @@
     };
   };
 
-## Create rclone mount target on boot. Could not get this to work in borg preHook script
-  systemd.tmpfiles.rules = [
-    "d /mnt/rclone/${systemSettings.hostname} 0755 root root"
-  ];
+## Gave up on the remote backup section below. Couldn't get it to reliably mount before backup. Might try making a manual systemd timer with own script.
 
-## Remote backup definition
-  services.borgbackup.jobs."remote-test" = {
-    paths = [ "/persist/home/${userSettings.username}/Documents" ];
-#    exclude = [
-#      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail"
-#      "/persist/home/${userSettings.username}/Nextcloud"
-#    ];
-    user = "root";
-    repo = "/mnt/rclone/${systemSettings.hostname}-test";
-    doInit = true;
-    startAt = [ "weekly" ];
-    preHook = ''
-      echo "Mounting remote"
-      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname}-test /mnt/rclone/${systemSettings.hostname}-test --daemon --config /home/${userSettings.username}/.config/rclone/rclone.conf
-      echo "Starting backup..."
-    '';
-#    postHook = ''
-#      echo "Unmounting remote"
-#      ${pkgs.umount}/bin/umount /mnt/rclone/${systemSettings.hostname}-test 
+### Create rclone mount target on boot. Could not get this to work in borg preHook script
+#  systemd.tmpfiles.rules = [
+#    "d /mnt/rclone/${systemSettings.hostname} 0755 root root"
+#  ];
+#
+### Remote backup definition
+#  services.borgbackup.jobs."remote-test" = {
+#    paths = [ "/persist/home/${userSettings.username}/Documents" ];
+##    exclude = [
+##      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail"
+##      "/persist/home/${userSettings.username}/Nextcloud"
+##    ];
+#    user = "root";
+#    repo = "/mnt/rclone/${systemSettings.hostname}-test";
+#    doInit = true;
+#    startAt = [ "weekly" ];
+#    preHook = ''
+#      echo "Mounting remote"
+#      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname}-test /mnt/rclone/${systemSettings.hostname}-test --daemon --config /home/${userSettings.username}/.config/rclone/rclone.conf
+#      echo "Starting backup..."
 #    '';
-    encryption = {
-      mode = "repokey-blake2";
-      passphrase = "${secrets.borg.passphrase}"; #This is also in password manager under entry "Borg backup"
-    };
-    compression = "auto,lzma";
-    prune.keep = {
-      weekly = 4;
-      monthly = 12;
-      yearly = 1;
-    };
-  };
+##    postHook = ''
+##      echo "Unmounting remote"
+##      ${pkgs.umount}/bin/umount /mnt/rclone/${systemSettings.hostname}-test 
+##    '';
+#    encryption = {
+#      mode = "repokey-blake2";
+#      passphrase = "${secrets.borg.passphrase}"; #This is also in password manager under entry "Borg backup"
+#    };
+#    compression = "auto,lzma";
+#    prune.keep = {
+#      weekly = 4;
+#      monthly = 12;
+#      yearly = 1;
+#    };
+#  };
 
 }
