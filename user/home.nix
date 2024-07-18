@@ -14,6 +14,7 @@ in {
   imports =
     [ ./app/browser/firefox.nix
       ./app/browser/chromium.nix
+      ./app/browser/webapps.nix
       ./app/email/thunderbird.nix
       ./app/git/git.nix
       ./app/editor/vim.nix
