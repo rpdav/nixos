@@ -7,6 +7,7 @@
       ./persistence/rollback.nix
       ./persistence/persist.nix
       ./app/defaultapps.nix
+      ./app/games/steam.nix
       ./wm/cinnamon.nix
       ./security/tailscale.nix
       ./services/backup.nix
