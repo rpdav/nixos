@@ -1,15 +1,49 @@
-{ config, pkgs-unstable, userSettings, ... }:
+{ pkgs, config, ... }:
 
 {
-  hardware.graphics = {
+## Enable Nvidia hardware acceleration
+  hardware.opengl = {
     enable = true;
-    enable32bit = true;
     };
-
   services.xserver.videoDrivers = ["nvidia"];
 
-#  hardware.nvidia.modesetting.enable = true; #probably only needed for wayland
+## General Nvidia config - taken from https://nixos.wiki/wiki/Nvidia
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = false;
+    nvidiaSettings = true; # accessible via `nvidia-settings`.
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
+	hardware.nvidia.prime = {
+		# Integrated
+    amdgpuBusId = "PCI:01:00:0";
 
+    # Dedicated
+    nvidiaBusId = "PCI:04:00:0";
+
+    # Enable iGPU/dGPU switching
+		offload = {
+			enable = true;
+			enableOffloadCmd = true;
+		};
+	};
+
+## Enable option to boot into sync mode (dGPU always on)
+#  specialisation = {
+#    gaming-time.configuration = {
+#
+#      hardware.nvidia = {
+#        prime.sync.enable = lib.mkForce true;
+#        prime.offload = {
+#          enable = lib.mkForce false;
+#          enableOffloadCmd = lib.mkForce false;
+#        };
+#      };
+#
+#    };
+#  };
 
 }
