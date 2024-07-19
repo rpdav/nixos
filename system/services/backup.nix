@@ -17,6 +17,7 @@
     exclude = [
       "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail"
       "/persist/home/${userSettings.username}/Nextcloud"
+      "/persist/home/${userSettings.username}/.local/share/Steam/steamapps"
     ];
     user = "root";
     repo = ("ssh://borg@10.10.1.17:2222/backup" + ("/" + systemSettings.hostname));
