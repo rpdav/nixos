@@ -79,6 +79,7 @@
     wireguard-tools
     borgbackup
     rclone
+    qdirstat
   ];
 
 }
