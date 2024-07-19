@@ -46,6 +46,7 @@
         ".nixops"
         ".local"
         ".mozilla"
+        ".steam"
         ".thunderbird"
         "scripts"
 #        {
