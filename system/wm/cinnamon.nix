@@ -6,7 +6,7 @@
   
   services.xserver = {
 	enable = true;
-	displayManager.lightdm.enable = true;
+	displayManager.sddm.enable = true;
 	desktopManager.cinnamon.enable = true;
   };
 }
