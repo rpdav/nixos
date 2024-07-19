@@ -25,10 +25,10 @@
 
 	hardware.nvidia.prime = {
 		# Integrated
-    amdgpuBusId = "PCI:01:00:0";
+    amdgpuBusId = "PCI:04:00:0";
 
     # Dedicated
-    nvidiaBusId = "PCI:04:00:0";
+    nvidiaBusId = "PCI:01:00:0";
 
     # Run dGPU always
 #    offload.enable = false;
