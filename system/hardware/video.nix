@@ -30,9 +30,6 @@
     # Dedicated
     nvidiaBusId = "PCI:01:00:0";
 
-    # Run dGPU always
-#    offload.enable = false;
-
     # Enable iGPU/dGPU switching
 		offload = {
 			enable = true;
@@ -41,18 +38,18 @@
 	};
 
 ## Enable option to boot into sync mode (dGPU always on)
-#  specialisation = {
-#    gaming-time.configuration = {
-#
-#      hardware.nvidia = {
-#        prime.sync.enable = lib.mkForce true;
-#        prime.offload = {
-#          enable = lib.mkForce false;
-#          enableOffloadCmd = lib.mkForce false;
-#        };
-#      };
-#
-#    };
-#  };
+  specialisation = {
+    gaming-time.configuration = {
+
+      hardware.nvidia = {
+        prime.sync.enable = lib.mkForce true;
+        prime.offload = {
+          enable = lib.mkForce false;
+          enableOffloadCmd = lib.mkForce false;
+        };
+      };
+
+    };
+  };
 
 }
