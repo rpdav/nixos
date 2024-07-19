@@ -20,6 +20,7 @@ in {
       ./app/editor/vim.nix
       ./app/shell/bash.nix
       ./app/games/games.nix
+      ./app/games/steam.nix
       ./config/ssh.nix
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
