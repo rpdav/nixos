@@ -3,7 +3,7 @@
 
   description = "My first flake!";
 
-  outputs = { self, nixpkgs, home-manager, impermanence, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, impermanence, ... }@inputs:
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
@@ -12,6 +12,7 @@
         timezone = "America/Indiana/Indianapolis"; # select timezone
         locale = "en_US.UTF-8"; # select locale
       };
+
       # ----- USER SETTINGS ----- #
       userSettings = rec {
         username = "ryan"; # username
@@ -27,8 +28,10 @@
         fontPkg = pkgs.intel-one-mono; # Font package
         editor = "vim"; # Default editor;
       };
+
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${systemSettings.system};
+      pkgs-unstable = nixpkgs.legacyPackages.${systemSettings.system};
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
     in rec {
 
@@ -36,6 +39,7 @@
       nixbook = nixpkgs.lib.nixosSystem {
         system = systemSettings.system;
         specialArgs = { 
+          inherit pkgs-unstable;
           inherit systemSettings;
           inherit userSettings;
           inherit secrets;
@@ -52,6 +56,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./user/home.nix;
             home-manager.extraSpecialArgs = {
+              inherit pkgs-unstable;
               inherit systemSettings;
               inherit userSettings;
               inherit secrets;
@@ -64,10 +69,14 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.05";
+
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";    
     };
+
     impermanence.url = "github:nix-community/impermanence";
   };
 
