@@ -2,7 +2,8 @@
 
 {
   imports =
-    [ ./hardware-configuration.nix 
+    [ ./hardware/hardware-configuration.nix
+      ./hardware/video.nix
       ./persistence/rollback.nix
       ./persistence/persist.nix
       ./app/defaultapps.nix
