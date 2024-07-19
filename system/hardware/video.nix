@@ -24,11 +24,14 @@
     # Dedicated
     nvidiaBusId = "PCI:04:00:0";
 
+    # Run dGPU always
+    offload.enable = false;
+
     # Enable iGPU/dGPU switching
-		offload = {
-			enable = true;
-			enableOffloadCmd = true;
-		};
+#		offload = {
+#			enable = true;
+#			enableOffloadCmd = true;
+#		};
 	};
 
 ## Enable option to boot into sync mode (dGPU always on)
