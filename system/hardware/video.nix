@@ -1,7 +1,7 @@
 { config, pkgs-unstable, userSettings, ... }:
 
 {
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     enable32bit = true;
     };
