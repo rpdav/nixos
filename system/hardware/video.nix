@@ -7,6 +7,10 @@
     };
   services.xserver.videoDrivers = ["nvidia"];
 
+## Add Nvidia kernel module
+  boot.initrd.kernelModules = [ "nvidia" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+
 ## General Nvidia config - taken from https://nixos.wiki/wiki/Nvidia
   hardware.nvidia = {
     modesetting.enable = true;
@@ -15,7 +19,7 @@
     open = false;
     nvidiaSettings = true; # accessible via `nvidia-settings`.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
+  }; 
 
 	hardware.nvidia.prime = {
 		# Integrated
@@ -25,13 +29,13 @@
     nvidiaBusId = "PCI:04:00:0";
 
     # Run dGPU always
-    offload.enable = false;
+#    offload.enable = false;
 
     # Enable iGPU/dGPU switching
-#		offload = {
-#			enable = true;
-#			enableOffloadCmd = true;
-#		};
+		offload = {
+			enable = true;
+			enableOffloadCmd = true;
+		};
 	};
 
 ## Enable option to boot into sync mode (dGPU always on)
