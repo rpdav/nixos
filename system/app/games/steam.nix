@@ -6,6 +6,7 @@
   programs.steam.gamescopeSession.enable = true;
 
   environment.systemPackages = with pkgs; [
+    lutris
     mangohud
   ];
 
