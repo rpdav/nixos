@@ -34,6 +34,7 @@ in {
     tree
     remmina
     onlyoffice-bin
+    bibletime
   ];
 
   services.nextcloud-client = {
