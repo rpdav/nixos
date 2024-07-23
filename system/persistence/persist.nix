@@ -47,12 +47,9 @@
         ".local"
         ".mozilla"
         ".steam"
+        ".sword"
         ".thunderbird"
         "scripts"
-#        {
-#          directory = ".local/share/Steam";
-#          method = "symlink";
-#        };
       ];
       files = [
         ".Xauthority"
