@@ -35,6 +35,7 @@ in {
     remmina
     onlyoffice-bin
     bibletime
+    xiphos
   ];
 
   services.nextcloud-client = {
