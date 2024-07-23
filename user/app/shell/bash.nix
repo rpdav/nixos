@@ -16,6 +16,7 @@
       ## git
       gs = "git status";
       gc = "git commit -am";
+      gp = "git push";
       ## wireguard
       wgup = "bash ~/scripts/wgup.sh";
       wgdown = "bash ~/scripts/wgdown.sh";
