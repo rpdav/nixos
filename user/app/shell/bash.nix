@@ -13,7 +13,7 @@
       nix-switch = "sudo nixos-rebuild switch --flake /home/ryan/.nixops";
       rebuild = "bash ~/scripts/rebuild.sh";
       fs-diff = "bash ~/scripts/fs-diff.sh";
-      gc = "git commit -am"
+      gc = "git commit -am";
       ## wireguard
       wgup = "bash ~/scripts/wgup.sh";
       wgdown = "bash ~/scripts/wgdown.sh";
