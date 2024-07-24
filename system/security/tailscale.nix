@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, secrets, ... }:
 
 {
 
@@ -6,7 +6,9 @@
 
   services.tailscale = {
     enable = true;
-    extraUpFlags = [ "--accept-dns=false" ]; #tailscale dns messes with resolution of selfhosted services
+    extraUpFlags = [ 
+      "--accept-dns=false"  #tailscale dns messes with resolution of selfhosted services
+    ];
   };
 
   systemd.services.tailscale-autoconnect = {
@@ -32,7 +34,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-examplekeyhere
+      ${tailscale}/bin/tailscale up --authkey ${secrets.tailscale.authkey} --accept-dns=false
     '';
   };
 
