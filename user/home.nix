@@ -22,7 +22,7 @@ in {
       ./app/games/games.nix
       ./app/games/proton.nix
       ./config/ssh.nix
-      (./wm +("/"+userSettings.wm)+".nix")
+      (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
 
   home.packages = with pkgs; [

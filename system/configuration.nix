@@ -10,7 +10,7 @@
       ./app/games/steam.nix
       ./security/tailscale.nix
       ./services/backup.nix
-       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
+      (./wm +("/"+userSettings.wm)+".nix")
    ];
 
 ## This should not be changed unless doing a fresh install
