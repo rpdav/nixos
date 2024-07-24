@@ -33,7 +33,7 @@
         exit 0
       fi
 
-      # otherwise authenticate with tailscale
+      # otherwise authenticate with tailscale server
       ${tailscale}/bin/tailscale up --authkey ${secrets.tailscale.authkey} --accept-dns=false
     '';
   };
