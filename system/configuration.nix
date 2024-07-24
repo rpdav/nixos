@@ -8,12 +8,10 @@
       ./persistence/persist.nix
       ./app/defaultapps.nix
       ./app/games/steam.nix
-      ./wm/cinnamon.nix
       ./security/tailscale.nix
       ./services/backup.nix
-      #./wm/gnome.nix
-      #./wm/kde.nix
-    ];
+       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
+   ];
 
 ## This should not be changed unless doing a fresh install
   system.stateVersion = "24.05"; # Did you read the comment?
