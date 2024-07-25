@@ -7,7 +7,6 @@
     clinfo
     pciutils
     wayland-utils
-    krohnkite
   ];
 
 }
