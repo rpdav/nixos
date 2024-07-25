@@ -31,7 +31,6 @@ in {
     firefox
     librewolf
     brave
-    tor-browser
     tree
     remmina
     onlyoffice-bin
