@@ -3,7 +3,7 @@
 
   description = "My first flake!";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, impermanence, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, impermanence, plasma-manager, ... }@inputs:
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
@@ -55,6 +55,9 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./user/home.nix;
+            home-manager.sharedModules = [ 
+              plasma-manager.homeManagerModules.plasma-manager 
+            ];
             home-manager.extraSpecialArgs = {
               inherit pkgs-unstable;
               inherit systemSettings;
@@ -78,6 +81,12 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
 }
