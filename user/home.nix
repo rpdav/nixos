@@ -44,7 +44,7 @@ in {
     killbots
     kdePackages.kgoldrunner
     kmines
-    kdePackages.kpatience
+    kdePackages.kpat
   ];
 
   services.nextcloud-client = {
