@@ -34,8 +34,17 @@ in {
     tree
     remmina
     onlyoffice-bin
+    ghostwriter
     bibletime
     xiphos
+    audacity
+
+    # games
+    knights
+    killbots
+    kgoldrunner
+    kmines
+    kpatience
   ];
 
   services.nextcloud-client = {
