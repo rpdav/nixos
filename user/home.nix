@@ -42,9 +42,9 @@ in {
     # games
     knights
     killbots
-    kgoldrunner
+    kdePackages.kgoldrunner
     kmines
-    kpatience
+    kdePackages.kpatience
   ];
 
   services.nextcloud-client = {
