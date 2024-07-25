@@ -4,9 +4,9 @@
 
   home.packages = with pkgs; [
     aha
-    lspci
     clinfo
-    wayland-info
+    pciutils
+    wayland-utils
   ];
 
 }
