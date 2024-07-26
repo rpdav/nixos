@@ -23,7 +23,7 @@
         size = 24;
       };
       lookAndFeel = "org.kde.default.desktop"; # this is "Plasma Style" in settings
-      iconTheme = "Breeze";
+      iconTheme = "breeze-dark"; # breeze, breeze-dark, or oxygen
 #      soundTheme = "ocean";
 #      splashScreen = {
 #        engine = "";
