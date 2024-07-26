@@ -16,13 +16,13 @@
 
     workspace = {
       wallpaper = "/persist/home/${userSettings.username}/Documents/wallpaper.png";
-#      theme = "breeze-dark";
-#      colorScheme = "BreezeDark";
+      theme = "breeze-dark";
+      colorScheme = "BreezeDark";
 #      cursor = {
 #        theme = "Breeze";
 #        size = 24;
 #      };
-#      lookAndFeel = "org.kde.breezedark.desktop";
+      lookAndFeel = "org.kde.default.desktop"; # this is "Plasma Style" in settings
 #      iconTheme = "Breeze_Dark";
 #      soundTheme = "ocean";
 #      splashScreen = {
