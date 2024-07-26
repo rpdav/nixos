@@ -32,7 +32,7 @@
 #      windowDecorations = {
 #        library = "org.kde.breeze";
 #        theme = "Breeze";
-      };
+#      };
     };
 
     shortcuts = {
