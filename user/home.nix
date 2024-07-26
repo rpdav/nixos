@@ -39,6 +39,7 @@ in {
     bibletime
     xiphos
     audacity
+    fastfetch
 
     # games
     knights
