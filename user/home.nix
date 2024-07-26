@@ -39,6 +39,7 @@ in {
     bibletime
     xiphos
     audacity
+    gimp
     fastfetch
 
     # games

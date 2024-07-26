@@ -1,6 +1,39 @@
 {
   programs.plasma = {
     enable = true;
+    configFile = {
+      "baloofilerc"."General"."dbVersion" = 2;
+      "baloofilerc"."General"."exclude filters" = "*~,*.part,*.o,*.la,*.lo,*.loT,*.moc,moc_*.cpp,qrc_*.cpp,ui_*.h,cmake_install.cmake,CMakeCache.txt,CTestTestfile.cmake,libtool,config.status,confdefs.h,autom4te,conftest,confstat,Makefile.am,*.gcode,.ninja_deps,.ninja_log,build.ninja,*.csproj,*.m4,*.rej,*.gmo,*.pc,*.omf,*.aux,*.tmp,*.po,*.vm*,*.nvram,*.rcore,*.swp,*.swap,lzo,litmain.sh,*.orig,.histfile.*,.xsession-errors*,*.map,*.so,*.a,*.db,*.qrc,*.ini,*.init,*.img,*.vdi,*.vbox*,vbox.log,*.qcow2,*.vmdk,*.vhd,*.vhdx,*.sql,*.sql.gz,*.ytdl,*.tfstate*,*.class,*.pyc,*.pyo,*.elc,*.qmlc,*.jsc,*.fastq,*.fq,*.gb,*.fasta,*.fna,*.gbff,*.faa,po,CVS,.svn,.git,_darcs,.bzr,.hg,CMakeFiles,CMakeTmp,CMakeTmpQmake,.moc,.obj,.pch,.uic,.npm,.yarn,.yarn-cache,__pycache__,node_modules,node_packages,nbproject,.terraform,.venv,venv,core-dumps,lost+found";
+      "baloofilerc"."General"."exclude filters version" = 9;
+      "dolphinrc"."General"."ViewPropsTimestamp" = "2024,7,24,13,22,40.941";
+      "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
+      "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
+      "kactivitymanagerdrc"."activities"."8e58ac99-4e94-43b4-8deb-064c3c0e1563" = "Default";
+      "kactivitymanagerdrc"."main"."currentActivity" = "8e58ac99-4e94-43b4-8deb-064c3c0e1563";
+      "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Mouse"."NaturalScroll" = false;
+      "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Touchpad"."Enabled" = true;
+      "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Touchpad"."NaturalScroll" = true;
+      "kded5rc"."Module-browserintegrationreminder"."autoload" = false;
+      "kded5rc"."Module-device_automounter"."autoload" = false;
+      "kdeglobals"."WM"."activeBackground" = "49,54,59";
+      "kdeglobals"."WM"."activeBlend" = "252,252,252";
+      "kdeglobals"."WM"."activeForeground" = "252,252,252";
+      "kdeglobals"."WM"."inactiveBackground" = "42,46,50";
+      "kdeglobals"."WM"."inactiveBlend" = "161,169,177";
+      "kdeglobals"."WM"."inactiveForeground" = "161,169,177";
+      "kiorc"."Confirmations"."ConfirmDelete" = true;
+      "kwalletrc"."Wallet"."First Use" = false;
+      "kwinrc"."Desktops"."Id_1" = "995ee569-f268-4a73-8bb4-24c6f24bb5ae";
+      "kwinrc"."Desktops"."Number" = 1;
+      "kwinrc"."Desktops"."Rows" = 1;
+      "kwinrc"."Plugins"."poloniumEnabled" = true;
+      "kwinrc"."Script-polonium"."MaximizeSingle" = true;
+      "kwinrc"."Tiling"."padding" = 4;
+      "kwinrc"."Tiling/4e19036e-a301-5842-b852-e483947c3a5a"."tiles" = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.5},{\"width\":0.5}]}";
+      "kwinrc"."Xwayland"."Scale" = 1.25;
+      "plasma-localerc"."Formats"."LANG" = "en_US.UTF-8";
+      "plasmanotifyrc"."Applications/thunderbird"."Seen" = true;
+    };
     shortcuts = {
       "ActivityManager"."switch-to-activity-8e58ac99-4e94-43b4-8deb-064c3c0e1563" = [ ];
       "KDE Keyboard Layout Switcher"."Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
@@ -243,39 +276,6 @@
       "plasmashell"."switch to next activity" = "none,,Switch to Next Activity";
       "plasmashell"."switch to previous activity" = "none,,Switch to Previous Activity";
       "plasmashell"."toggle do not disturb" = "none,,Toggle do not disturb";
-    };
-    configFile = {
-      "baloofilerc"."General"."dbVersion" = 2;
-      "baloofilerc"."General"."exclude filters" = "*~,*.part,*.o,*.la,*.lo,*.loT,*.moc,moc_*.cpp,qrc_*.cpp,ui_*.h,cmake_install.cmake,CMakeCache.txt,CTestTestfile.cmake,libtool,config.status,confdefs.h,autom4te,conftest,confstat,Makefile.am,*.gcode,.ninja_deps,.ninja_log,build.ninja,*.csproj,*.m4,*.rej,*.gmo,*.pc,*.omf,*.aux,*.tmp,*.po,*.vm*,*.nvram,*.rcore,*.swp,*.swap,lzo,litmain.sh,*.orig,.histfile.*,.xsession-errors*,*.map,*.so,*.a,*.db,*.qrc,*.ini,*.init,*.img,*.vdi,*.vbox*,vbox.log,*.qcow2,*.vmdk,*.vhd,*.vhdx,*.sql,*.sql.gz,*.ytdl,*.tfstate*,*.class,*.pyc,*.pyo,*.elc,*.qmlc,*.jsc,*.fastq,*.fq,*.gb,*.fasta,*.fna,*.gbff,*.faa,po,CVS,.svn,.git,_darcs,.bzr,.hg,CMakeFiles,CMakeTmp,CMakeTmpQmake,.moc,.obj,.pch,.uic,.npm,.yarn,.yarn-cache,__pycache__,node_modules,node_packages,nbproject,.terraform,.venv,venv,core-dumps,lost+found";
-      "baloofilerc"."General"."exclude filters version" = 9;
-      "dolphinrc"."General"."ViewPropsTimestamp" = "2024,7,24,13,22,40.941";
-      "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
-      "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
-      "kactivitymanagerdrc"."activities"."8e58ac99-4e94-43b4-8deb-064c3c0e1563" = "Default";
-      "kactivitymanagerdrc"."main"."currentActivity" = "8e58ac99-4e94-43b4-8deb-064c3c0e1563";
-      "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Mouse"."NaturalScroll" = false;
-      "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Touchpad"."Enabled" = true;
-      "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Touchpad"."NaturalScroll" = true;
-      "kded5rc"."Module-browserintegrationreminder"."autoload" = false;
-      "kded5rc"."Module-device_automounter"."autoload" = false;
-      "kdeglobals"."WM"."activeBackground" = "49,54,59";
-      "kdeglobals"."WM"."activeBlend" = "252,252,252";
-      "kdeglobals"."WM"."activeForeground" = "252,252,252";
-      "kdeglobals"."WM"."inactiveBackground" = "42,46,50";
-      "kdeglobals"."WM"."inactiveBlend" = "161,169,177";
-      "kdeglobals"."WM"."inactiveForeground" = "161,169,177";
-      "kiorc"."Confirmations"."ConfirmDelete" = true;
-      "kwalletrc"."Wallet"."First Use" = false;
-      "kwinrc"."Desktops"."Id_1" = "995ee569-f268-4a73-8bb4-24c6f24bb5ae";
-      "kwinrc"."Desktops"."Number" = 1;
-      "kwinrc"."Desktops"."Rows" = 1;
-      "kwinrc"."Plugins"."poloniumEnabled" = true;
-      "kwinrc"."Script-polonium"."MaximizeSingle" = true;
-      "kwinrc"."Tiling"."padding" = 4;
-      "kwinrc"."Tiling/4e19036e-a301-5842-b852-e483947c3a5a"."tiles" = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.5},{\"width\":0.5}]}";
-      "kwinrc"."Xwayland"."Scale" = 1.25;
-      "plasma-localerc"."Formats"."LANG" = "en_US.UTF-8";
-      "plasmanotifyrc"."Applications/thunderbird"."Seen" = true;
     };
   };
 }
