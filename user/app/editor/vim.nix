@@ -14,6 +14,7 @@
       relativenumber = true;
       tabstop = 2;
     };
+    plugins = [ pkgs.vimPlugins.vim-nix ];
     extraConfig =
     ''
       set autoindent
