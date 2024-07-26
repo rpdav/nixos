@@ -25,14 +25,14 @@
       lookAndFeel = "org.kde.default.desktop"; # this is "Plasma Style" in settings
       iconTheme = "breeze-dark"; # breeze, breeze-dark, or oxygen
 #      soundTheme = "ocean";
-#      splashScreen = {
+#      splashScreen = { # not recommended to set this along with lookAndFeel
 #        engine = "";
 #        theme = "breeze";
 #      };
-      windowDecorations = {
-        library = "org.kde.breeze";
-        theme = "Breeze";
-      };
+#      windowDecorations = { # not recommended to set this along with lookAndFeel
+#        library = "org.kde.breeze";
+#        theme = "Breeze";
+#      };
     };
 
     shortcuts = {
