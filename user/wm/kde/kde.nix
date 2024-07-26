@@ -18,21 +18,21 @@
       wallpaper = "/persist/home/${userSettings.username}/Documents/wallpaper.png";
       theme = "breeze-dark";
       colorScheme = "BreezeDark";
-#      cursor = {
-#        theme = "Breeze";
-#        size = 24;
-#      };
+      cursor = {
+        theme = "Breeze_Light";
+        size = 24;
+      };
       lookAndFeel = "org.kde.default.desktop"; # this is "Plasma Style" in settings
-#      iconTheme = "Breeze_Dark";
+      iconTheme = "Breeze";
 #      soundTheme = "ocean";
 #      splashScreen = {
 #        engine = "";
 #        theme = "breeze";
 #      };
-#      windowDecorations = {
-#        library = "org.kde.breeze";
-#        theme = "Breeze";
-#      };
+      windowDecorations = {
+        library = "org.kde.breeze";
+        theme = "Breeze";
+      };
     };
 
     shortcuts = {
