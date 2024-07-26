@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, userSettings, ... }:
 
 {
 
@@ -23,6 +23,16 @@
       };
       lookAndFeel = "org.kde.breezedark.desktop";
       iconTheme = "Breeze_Dark";
+      wallpaper = "/persist/home/${userSettings.username}/Documents/wallpaper.png";
+      soundTheme = "ocean";
+      splashScreen = {
+        engine = "";
+        theme = "breeze";
+      };
+      windowDecorations = {
+        library = "org.kde.breeze";
+        theme = "Breeze";
+      };
     };
 
     shortcuts = {
