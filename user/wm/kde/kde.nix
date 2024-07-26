@@ -10,4 +10,10 @@
     #libsForQt5.polonium
   ];
 
+  programs.plasma = {
+    enable = true;
+    overrideConfig = true;
+
+  };
+
 }
