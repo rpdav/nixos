@@ -15,23 +15,23 @@
     overrideConfig = true;
 
     workspace = {
-      theme = "breeze-dark";
-      colorScheme = "BreezeDark";
-      cursor = {
-        theme = "Breeze";
-        size = 24;
-      };
-      lookAndFeel = "org.kde.breezedark.desktop";
-      iconTheme = "Breeze_Dark";
       wallpaper = "/persist/home/${userSettings.username}/Documents/wallpaper.png";
-      soundTheme = "ocean";
-      splashScreen = {
-        engine = "";
-        theme = "breeze";
-      };
-      windowDecorations = {
-        library = "org.kde.breeze";
-        theme = "Breeze";
+#      theme = "breeze-dark";
+#      colorScheme = "BreezeDark";
+#      cursor = {
+#        theme = "Breeze";
+#        size = 24;
+#      };
+#      lookAndFeel = "org.kde.breezedark.desktop";
+#      iconTheme = "Breeze_Dark";
+#      soundTheme = "ocean";
+#      splashScreen = {
+#        engine = "";
+#        theme = "breeze";
+#      };
+#      windowDecorations = {
+#        library = "org.kde.breeze";
+#        theme = "Breeze";
       };
     };
 
