@@ -38,6 +38,58 @@
 
     };
 
+    panels = [
+      {
+        location = "top";
+        hiding = "none";
+        widgets = [
+          {
+            name = "org.kde.plasma.kickerdash";
+          }
+          {
+            name = "org.kde.plasma.icontasks";
+            config = {
+              General = {
+                fill = false;
+              };
+            };
+          }
+          {
+            name = "org.kde.plasma.marginsseparator";
+          }
+          {
+            name = "org.kde.plasma.pager";
+          }
+          {
+            name = "org.kde.plasma.marginsseparator";
+          }
+          {
+            systemTray.items = {
+              hidden = [
+                "org.kde.plasma.printmanager";
+                "kded6"; #kde browser integration
+                "org.kde.plasma.keyboardlayout";
+              ];
+              shown = [
+                "org.kde.plasma.volume";
+                "org.kde.plasma.brightness";
+                "org.kde.plasma.battery";
+              ];
+            }
+          }
+          {
+            name = "org.kde.plasma.digitalclock";
+            config = {
+              Appearance = {
+                use24hFormat = true;
+              };
+            };
+          }
+        ];
+        hiding = "none";
+      }
+    ];
+
     shortcuts = {
 
     };
