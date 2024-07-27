@@ -55,7 +55,7 @@
                 launchers = [
                   "applications:org.kde.dolphin.desktop"
                   "applications:org.kde.konsole.desktop"
-                  "/nix/store/42jrfkijgwnap63n13af8rpbhz809k4q-home-manager-path/share/applications/firefox.desktop"
+                  "applications:/nix/store/42jrfkijgwnap63n13af8rpbhz809k4q-home-manager-path/share/applications/firefox.desktop"
                 ];
               };
             };
