@@ -42,6 +42,7 @@
       {
         location = "top";
         hiding = "none";
+        height = 30;
         widgets = [
           {
             name = "org.kde.plasma.kickerdash";
@@ -55,13 +56,13 @@
             };
           }
           {
-            name = "org.kde.plasma.marginsseparator";
+            name = "org.kde.plasma.panelspacer";
           }
           {
             name = "org.kde.plasma.pager";
           }
           {
-            name = "org.kde.plasma.marginsseparator";
+            name = "org.kde.plasma.panelspacer";
           }
           {
             systemTray.items = {
