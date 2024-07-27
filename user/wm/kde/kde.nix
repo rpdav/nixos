@@ -66,14 +66,14 @@
           {
             systemTray.items = {
               hidden = [
-                "org.kde.plasma.printmanager";
-                "kded6"; #kde browser integration
-                "org.kde.plasma.keyboardlayout";
+                "org.kde.plasma.printmanager"
+                "kded6" #kde browser integration
+                "org.kde.plasma.keyboardlayout"
               ];
               shown = [
-                "org.kde.plasma.volume";
-                "org.kde.plasma.brightness";
-                "org.kde.plasma.battery";
+                "org.kde.plasma.volume"
+                "org.kde.plasma.brightness"
+                "org.kde.plasma.battery"
               ];
             }
           }
