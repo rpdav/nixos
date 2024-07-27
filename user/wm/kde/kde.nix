@@ -42,7 +42,7 @@
       {
         location = "top";
         hiding = "none";
-        height = 30;
+        height = 40;
         widgets = [
           {
             name = "org.kde.plasma.kickerdash";
@@ -52,6 +52,10 @@
             config = {
               General = {
                 fill = false;
+                launchers = [
+                  "applications:org.kde.dolphin.desktop"
+                  "applications:org.kde.konsole.desktop"
+                ];
               };
             };
           }
