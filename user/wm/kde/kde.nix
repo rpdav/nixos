@@ -75,7 +75,7 @@
                 "org.kde.plasma.brightness"
                 "org.kde.plasma.battery"
               ];
-            }
+            };
           }
           {
             name = "org.kde.plasma.digitalclock";
