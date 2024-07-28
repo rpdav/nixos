@@ -55,7 +55,7 @@
                 launchers = [
                   "applications:org.kde.dolphin.desktop"
                   "applications:org.kde.konsole.desktop"
-                  "applications:${pkgs.firefox}/share/applications/firefox.desktop"
+                  "applications:${pkgs.firefox}"
                 ];
               };
             };
