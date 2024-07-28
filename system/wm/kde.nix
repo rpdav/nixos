@@ -1,14 +1,13 @@
-{ config, ... }:
+{ config, stablePlasma, ... }:
 
 
 {
 
   disabledModules = [
-    <nixos/nixos/modules/services/desktop-managers/plasma6.nix>
+    "services/desktop-managers/plasma6.nix"
   ];
-  imports = [
-    <nixos-stable/nixos/modules/services/desktop-managers/plasma6.nix>
-  ];
+
+  imports = [ stablePlasma  ];
 
 #  services.xserver.enable = true;
   services.displayManager.sddm = {
@@ -17,7 +16,7 @@
   };
   services.desktopManager.plasma6.enable = true;
 
-## Disable packegs if desired
+## Disable packages if desired
 #  environment.plasma6.excludePackages = with pkgs.kdePackages; [
 #    plasma-browser-integration
 #    konsole

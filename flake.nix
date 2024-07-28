@@ -1,4 +1,4 @@
-# Generation 125
+# Generation 126
 {
 
   description = "My first flake!";
@@ -29,12 +29,15 @@
         editor = "vim"; # Default editor;
       };
 
+      # ----- MODULE OVERRIDES ----- #
+      stablePlasma = "${nixpkgs-stable}/nixos/modules/services/desktop-managers/plasma6.nix";
+
       lib = nixpkgs.lib;
-      pkgs-stable = nixpkgs.legacyPackages.${systemSettings.system};
+      pkgs-stable = nixpkgs-stable.legacyPackages.${systemSettings.system};
       pkgs = nixpkgs.legacyPackages.${systemSettings.system};
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
-    in rec {
 
+    in rec {
     nixosConfigurations = {
       nixbook = nixpkgs.lib.nixosSystem {
         system = systemSettings.system;
@@ -43,6 +46,7 @@
           inherit systemSettings;
           inherit userSettings;
           inherit secrets;
+          inherit stablePlasma;
         };
         modules = [
 
