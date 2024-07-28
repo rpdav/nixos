@@ -1,7 +1,7 @@
 # Generation 126
 {
 
-  description = "My first flake!";
+  description = "Zenbook config";
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, impermanence, plasma-manager, ... }@inputs:
     let
@@ -30,7 +30,6 @@
       };
 
       # ----- MODULE OVERRIDES ----- #
-      stablePlasma = "${nixpkgs-stable}/nixos/modules/services/desktop-managers/plasma6.nix";
 
       lib = nixpkgs.lib;
       pkgs-stable = nixpkgs-stable.legacyPackages.${systemSettings.system};
@@ -46,7 +45,6 @@
           inherit systemSettings;
           inherit userSettings;
           inherit secrets;
-          inherit stablePlasma;
         };
         modules = [
 
