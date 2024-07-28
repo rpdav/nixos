@@ -3,7 +3,7 @@
 
   description = "My first flake!";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, impermanence, plasma-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, impermanence, plasma-manager, ... }@inputs:
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
@@ -30,8 +30,8 @@
       };
 
       lib = nixpkgs.lib;
+      pkgs-stable = nixpkgs.legacyPackages.${systemSettings.system};
       pkgs = nixpkgs.legacyPackages.${systemSettings.system};
-      pkgs-unstable = nixpkgs.legacyPackages.${systemSettings.system};
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
     in rec {
 
@@ -39,7 +39,7 @@
       nixbook = nixpkgs.lib.nixosSystem {
         system = systemSettings.system;
         specialArgs = { 
-          inherit pkgs-unstable;
+          inherit pkgs-stable;
           inherit systemSettings;
           inherit userSettings;
           inherit secrets;
@@ -59,7 +59,7 @@
               plasma-manager.homeManagerModules.plasma-manager 
             ];
             home-manager.extraSpecialArgs = {
-              inherit pkgs-unstable;
+              inherit pkgs-stable;
               inherit systemSettings;
               inherit userSettings;
               inherit secrets;
@@ -71,9 +71,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-24.05";
 
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
