@@ -28,7 +28,7 @@ in {
   home.packages = with pkgs; [
     protonmail-bridge-gui
     thunderbird
-    firefox
+    #firefox
     librewolf
     brave
     tor-browser
