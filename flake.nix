@@ -76,7 +76,7 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-master";
+      url = "github:nix-community/home-manager/release/master";
       inputs.nixpkgs.follows = "nixpkgs";    
     };
 
