@@ -1,13 +1,15 @@
 { config, ... }:
 
-disabledModules = [
-<nixos/nixos/modules/services/desktop-managers/plasma6.nix>
-];
-imports = [
-<nixos-stable/nixos/modules/services/desktop-managers/plasma6.nix>
-];
 
 {
+
+  disabledModules = [
+    <nixos/nixos/modules/services/desktop-managers/plasma6.nix>
+  ];
+  imports = [
+    <nixos-stable/nixos/modules/services/desktop-managers/plasma6.nix>
+  ];
+
 #  services.xserver.enable = true;
   services.displayManager.sddm = {
     enable = true;
