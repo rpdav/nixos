@@ -2,7 +2,7 @@
 
 {
 ## Enable Nvidia hardware acceleration
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     };
   services.xserver.videoDrivers = [ "nvidia" ];
