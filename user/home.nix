@@ -1,4 +1,4 @@
-{ config, pkgs, impermanence, secrets, systemSettings, userSettings, ... }:
+{ config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
 
 let
   nur-no-pkgs = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {};
@@ -28,7 +28,7 @@ in {
   home.packages = with pkgs; [
     protonmail-bridge-gui
     thunderbird
-    #firefox
+    # firefox #enabling this causes collisions, at least in kde
     librewolf
     brave
     tor-browser
