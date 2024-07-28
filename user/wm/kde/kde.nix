@@ -1,8 +1,8 @@
-{ config, pkgs-unstable, userSettings, ... }:
+{ config, pkgs, userSettings, ... }:
 
 {
 
-  home.packages = with pkgs-unstable; [
+  home.packages = with pkgs; [
     aha
     clinfo
     pciutils
