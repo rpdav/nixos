@@ -60,8 +60,8 @@
   hardware.pulseaudio.enable = true;
 
 ## User definitions
-  users.users.ryan = {
-    hashedPassword = "${secrets.ryan.passwordhash}";
+  users.users.${userSettings.username} = {
+    hashedPassword = "${secrets.${userSettings.username}.passwordhash}";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };

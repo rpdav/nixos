@@ -3,8 +3,8 @@
 let
   nur-no-pkgs = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {};
 in {
-  home.username = "ryan";
-  home.homeDirectory = "/home/ryan";
+  home.username = "${userSettings.username}";
+  home.homeDirectory = "/home/${userSettings.username}";
 
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
@@ -28,7 +28,7 @@ in {
   home.packages = with pkgs; [
     protonmail-bridge-gui
     thunderbird
-    # firefox #enabling this causes collisions, at least in kde
+    firefox
     librewolf
     brave
     tor-browser
