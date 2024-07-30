@@ -1,4 +1,4 @@
-# Generation 130
+# Generation 131
 {
 
   description = "Zenbook config";
@@ -59,6 +59,7 @@
             home-manager.users.ryan = import ./user/home.nix;
             home-manager.sharedModules = [ 
               plasma-manager.homeManagerModules.plasma-manager 
+              impermanence.nixosModules.home-manager.impermanence
             ];
             home-manager.extraSpecialArgs = {
               inherit pkgs-stable;

@@ -56,6 +56,12 @@ in {
     startInBackground = true;
   };
 
+  home.persistence."/persist/home/${userSettings.username}" = {
+    directories = [
+      "test"
+    ];
+  };
+
 ## can't get this to talk to any calendar apps. not sure if it's even authenticating with the server.
   accounts.calendar = {
     basePath = ".calendar";
