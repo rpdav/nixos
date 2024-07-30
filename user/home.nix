@@ -41,6 +41,7 @@ in {
     audacity
     gimp
     fastfetch
+    lazygit
 
     # games
     knights
