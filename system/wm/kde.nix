@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, lib, ... }:
 
 
 {
@@ -11,8 +11,7 @@
   services.desktopManager.plasma6.enable = true;
 
 ## Disable packages
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    firefox # already in home.nix
-  ];
+#  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+#  ];
 
 }
