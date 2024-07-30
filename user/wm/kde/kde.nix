@@ -47,6 +47,11 @@
         widgets = [
           {
             name = "org.kde.plasma.kickerdash";
+            config = {
+              General = {
+                icon = "nix-snowflake-white";
+              };
+            };
           }
           {
             name = "org.kde.plasma.icontasks";
