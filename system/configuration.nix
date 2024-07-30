@@ -58,6 +58,7 @@
 
 ## Enable sound.
   hardware.pulseaudio.enable = true;
+  hardware.bluetooth.enable = true;
 
 ## User definitions
   users.users.${userSettings.username} = {
