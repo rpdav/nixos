@@ -50,7 +50,7 @@
 ## Networking
   networking.hostName = "nixbook";
   networking.networkmanager.enable = true;
-  services.resolved.enable = true; # needed for kde?
+  services.resolved.enable = true; # needed for wireguard on kde?
 
 ## Time
   time.timeZone = "America/Indiana/Indianapolis";
