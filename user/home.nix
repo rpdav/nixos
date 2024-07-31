@@ -44,6 +44,11 @@ in {
     fastfetch
     lazygit
 
+    # terminals
+    kitty
+    alacritty
+    yakuake
+
     # games
     knights
     killbots
