@@ -33,18 +33,9 @@
     users.${userSettings.username} = {
       directories = [
         ".config"
-        ".gnupg"
-        ".ssh"
-        ".nixops"
         ".local"
-        ".mozilla"
-        ".steam"
-        ".sword"
-        ".thunderbird"
       ];
-  
       files = [
-        ".Xauthority"
       ];
     };
   };

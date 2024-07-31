@@ -15,9 +15,19 @@
       "Nextcloud"
       "Videos"
       "scripts"
+#      ".config"
+      ".gnupg"
+      ".ssh"
+      ".nixops"
+#      ".local"
+      ".mozilla"
+      ".steam"
+      ".sword"
+      ".thunderbird"
     ];
     files = [
       "testfile1"
+      ".Xauthority"
     ];
     allowOther = true;
   };
