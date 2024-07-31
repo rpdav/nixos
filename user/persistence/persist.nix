@@ -15,7 +15,7 @@
       "Nextcloud"
       "Videos"
       "scripts"
-#      ".config"
+#      ".config" # this only seems to work in the system config
       ".gnupg"
       ".ssh"
       ".nixops"

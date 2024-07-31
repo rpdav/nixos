@@ -30,6 +30,8 @@
       "/etc/machine-id"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
+
+    ## user persistence is in user/persistence/persist.nix. .config only works in the system config so that's why it's here.here
     users.${userSettings.username} = {
       directories = [
         ".config"
