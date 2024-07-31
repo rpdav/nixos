@@ -50,13 +50,14 @@
 ## Networking
   networking.hostName = "nixbook";
   networking.networkmanager.enable = true;
+  services.resolved.enable = true; # needed for kde?
 
 ## Time
   time.timeZone = "America/Indiana/Indianapolis";
 
   services.libinput.enable = true;
 
-## Enable sound.
+## Enable sound and bluetooth.
   hardware.pulseaudio.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;

@@ -22,6 +22,7 @@ in {
       ./app/games/games.nix
       ./app/games/proton.nix
       ./config/ssh.nix
+      ./persistence/persist.nix
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
 
@@ -54,12 +55,6 @@ in {
   services.nextcloud-client = {
     enable = true;
     startInBackground = true;
-  };
-
-  home.persistence."/persist/home/${userSettings.username}" = {
-    directories = [
-      "test"
-    ];
   };
 
 ## can't get this to talk to any calendar apps. not sure if it's even authenticating with the server.
