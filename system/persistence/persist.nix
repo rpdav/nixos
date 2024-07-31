@@ -28,33 +28,6 @@
       "/etc/machine-id"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
-  ## User persistence is here since I couldn't get it to work in home-manager
-    users.ryan = {
-      directories = [
-        ".config"
-        "Desktop"
-        "Downloads"
-        "Games"
-        "Music"
-        "Pictures"
-        "projects"
-        "Documents"
-        "Nextcloud"
-        "Videos"
-        ".gnupg"
-        ".ssh"
-        ".nixops"
-        ".local"
-        ".mozilla"
-        ".steam"
-        ".sword"
-        ".thunderbird"
-        "scripts"
-      ];
-      files = [
-        ".Xauthority"
-      ];
-    };
   };
 
   security.sudo.extraConfig = ''
