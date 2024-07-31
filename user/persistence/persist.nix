@@ -9,5 +9,6 @@
     files = [
       "testfile1"
     ];
+    allowOther = true;
   };
 }
