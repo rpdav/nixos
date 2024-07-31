@@ -33,15 +33,6 @@
     users.${userSettings.username} = {
       directories = [
         ".config"
-        "Desktop"
-        "Downloads"
-        "Games"
-        "Music"
-        "Pictures"
-        "projects"
-#        "Documents"
-        "Nextcloud"
-        "Videos"
         ".gnupg"
         ".ssh"
         ".nixops"
@@ -50,7 +41,6 @@
         ".steam"
         ".sword"
         ".thunderbird"
-        "scripts"
       ];
   
       files = [
