@@ -22,7 +22,7 @@ in {
       ./app/games/games.nix
       ./app/games/proton.nix
       ./config/ssh.nix
-      ./persistence/persist.nix
+#      ./persistence/persist.nix
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
 

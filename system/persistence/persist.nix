@@ -1,4 +1,4 @@
-{ config, lib, secrets, ... }:
+{ config, lib, secrets, userSettings, ... }:
 
 {
   
@@ -28,6 +28,33 @@
       "/etc/machine-id"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
+    users.${userSettings.username} = {
+      directories = [
+        ".config"
+        "Desktop"
+        "Downloads"
+        "Games"
+        "Music"
+        "Pictures"
+        "projects"
+        "Documents"
+        "Nextcloud"
+        "Videos"
+        ".gnupg"
+        ".ssh"
+        ".nixops"
+        ".local"
+        ".mozilla"
+        ".steam"
+        ".sword"
+        ".thunderbird"
+        "scripts"
+      ];
+  
+      files = [
+        ".Xauthority"
+      ];
+    };
   };
 
   security.sudo.extraConfig = ''
