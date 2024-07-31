@@ -83,6 +83,7 @@
                 "org.kde.plasma.printmanager"
                 "kded6" #kde browser integration
                 "org.kde.plasma.keyboardlayout"
+                "blueman"
               ];
               shown = [
                 "org.kde.plasma.volume"
