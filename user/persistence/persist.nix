@@ -19,7 +19,7 @@
       ".gnupg"
       ".ssh"
       ".nixops"
-#      ".local"
+      ".local"
       ".mozilla"
       ".steam"
       ".sword"

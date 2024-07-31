@@ -33,7 +33,6 @@
     users.${userSettings.username} = {
       directories = [
         ".config"
-        ".local"
       ];
       files = [
       ];
