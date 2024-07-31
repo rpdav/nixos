@@ -7,7 +7,7 @@
     clinfo
     pciutils
     wayland-utils
-    #libsForQt5.polonium
+    kdePackages.yakuake
   ];
 
   programs.plasma = {
