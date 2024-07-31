@@ -2,7 +2,7 @@
 
 {
   
-  home.persistence."/persistent/home/${userSettings.username}" = {
+  home.persistence."/persist/home/${userSettings.username}" = {
     directories = [
       "testdir1"
     ];
