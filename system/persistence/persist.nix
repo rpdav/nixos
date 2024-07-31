@@ -39,7 +39,7 @@
         "Music"
         "Pictures"
         "projects"
-        "Documents"
+#        "Documents"
         "Nextcloud"
         "Videos"
         ".gnupg"
