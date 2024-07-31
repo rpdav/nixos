@@ -8,6 +8,8 @@
     adjtime.source = "/persist/etc/adjtime";
   };
 
+  programs.fuse.userAllowOther = true;
+
   environment.persistence."/persist" = {
     enable = true;  # NB: Defaults to true, not needed
     hideMounts = true;
