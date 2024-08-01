@@ -7,7 +7,7 @@
     clinfo
     pciutils
     wayland-utils
-#    kdePackages.yakuake
+    kdePackages.yakuake
   ];
 
   programs.plasma = {
