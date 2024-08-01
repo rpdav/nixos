@@ -7,7 +7,7 @@
     clinfo
     pciutils
     wayland-utils
-    kdePackages.yakuake
+#    kdePackages.yakuake
   ];
 
   programs.plasma = {
@@ -63,7 +63,7 @@
                   "applications:firefox.desktop"
                   "applications:thunderbird.desktop"
                   "applications:onlyoffice-desktopeditors.desktop"
-                  "applications:org.kde.konsole.desktop"
+                  "applications:kitty.desktop"
                 ];
               };
             };
