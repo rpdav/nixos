@@ -72,6 +72,9 @@
           }
           {
             name = "org.kde.plasma.pager";
+            config = {
+              General.displayedText = "name";
+            };
           }
           {
             name = "org.kde.plasma.panelspacer";
@@ -117,7 +120,13 @@
 
     configFile = {
       "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Touchpad"."NaturalScroll" = true;
-      kwinrc.Desktops.Number.value = 2;
+      kwinrc.Desktops = {
+        Name_1.value = "browse";
+        Name_2.value = "dev";
+        Name_3.value = "write";
+        Number.value = 3;
+        Rows.value = 1;
+      };
     };
 
   };
