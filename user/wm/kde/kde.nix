@@ -105,7 +105,11 @@
     ];
 
     shortcuts = {
-
+      services = {
+        kitty.desktop = {
+          "_launch" = "Ctrl+Alt+L";
+        };
+      };
     };
 
     configFile = {
