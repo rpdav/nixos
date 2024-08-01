@@ -73,7 +73,7 @@
           {
             name = "org.kde.plasma.pager";
             config = {
-              General.displayedText = "name";
+              General.displayedText = "Name";
             };
           }
           {
