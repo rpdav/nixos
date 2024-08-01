@@ -127,8 +127,10 @@
         Number.value = 3;
         Rows.value = 1;
       };
+      kscreenlockerrc = {
+        Greeter.WallpaperPlugin = "/persist/home/${userSettings.username}/Documents/wallpaper.png";
+      };
     };
-
   };
 
 }
