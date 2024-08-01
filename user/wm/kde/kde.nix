@@ -106,10 +106,13 @@
 
     shortcuts = {
       "kitty.desktop" = {
-        "_launch" = "Ctrl+Alt+L";
+        "_launch" = "Ctrl+Alt+T";
       };
       "org.kde.konsole.desktop" = {
         "_launch" = "none";
+      };
+      "yakuake" = {
+        "toggle-window-state" = "Meta+Space";
       };
     };
 
