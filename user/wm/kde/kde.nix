@@ -105,10 +105,11 @@
     ];
 
     shortcuts = {
-      services = {
-        kitty.desktop = {
-          "_launch" = "Ctrl+Alt+L";
-        };
+      "kitty.desktop" = {
+        "_launch" = "Ctrl+Alt+L";
+      };
+      "org.kde.konsole.desktop" = {
+        "_launch" = "none";
       };
     };
 
