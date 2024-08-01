@@ -47,7 +47,6 @@ in {
     # terminals
     kitty
     alacritty
-    yakuake
 
     # games
     knights
