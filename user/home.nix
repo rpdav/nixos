@@ -21,6 +21,7 @@ in {
       ./app/shell/bash.nix
       ./app/games/games.nix
       ./app/games/proton.nix
+      ./app/terminal/${userSettings.term}.nix
       ./config/ssh.nix
       ./persistence/persist.nix
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")

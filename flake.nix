@@ -23,7 +23,7 @@
         # window manager type (hyprland or x11) translator
         wmType = if (wm == "cinnamon") then "x11" else "wayland";
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
-        term = ""; # Default terminal command;
+        term = "kitty"; # Default terminal command;
         font = "Intel One Mono"; # Selected font
         fontPkg = pkgs.intel-one-mono; # Font package
         editor = "vim"; # Default editor;
