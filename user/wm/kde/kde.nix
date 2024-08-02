@@ -7,6 +7,7 @@
     clinfo
     pciutils
     wayland-utils
+    partition-manager
   ];
 
   programs.plasma = {
