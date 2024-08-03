@@ -48,7 +48,7 @@
         };
         modules = [
 
-          ./system/configuration.nix 
+          ./nixbook/system/configuration.nix 
 
           impermanence.nixosModules.impermanence
 
@@ -56,7 +56,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./user/home.nix;
+            home-manager.users.ryan = import ./nixbook/user/home.nix;
             home-manager.sharedModules = [ 
               plasma-manager.homeManagerModules.plasma-manager 
               impermanence.nixosModules.home-manager.impermanence
