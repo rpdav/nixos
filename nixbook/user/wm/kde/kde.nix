@@ -7,8 +7,6 @@
     clinfo
     pciutils
     wayland-utils
-    partition-manager
-    plasma5Packages.kpmcore
   ];
 
   programs.plasma = {
