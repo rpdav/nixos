@@ -22,7 +22,7 @@
       "/persist/home/${userSettings.username}/.local/share/protonmail"
     ];
     user = "root";
-    repo = ("ssh://borg@10.10.1.17:2222/backup" + ("/" + systemSettings.hostname));
+    repo = ("ssh://borg@10.10.1.17:2222/backup" + ("/" + ${config.networking.hostName}));
     doInit = true;
     startAt = [ "daily" ];
 #    preHook = placeholder for snapshotting/mounting command
@@ -44,7 +44,7 @@
 
 ### Create rclone mount target on boot. Could not get this to work in borg preHook script
 #  systemd.tmpfiles.rules = [
-#    "d /mnt/rclone/${systemSettings.hostname} 0755 root root"
+#    "d /mnt/rclone/${config.networking.hostName} 0755 root root"
 #  ];
 #
 ### Remote backup definition
@@ -55,17 +55,17 @@
 ##      "/persist/home/${userSettings.username}/Nextcloud"
 ##    ];
 #    user = "root";
-#    repo = "/mnt/rclone/${systemSettings.hostname}-test";
+#    repo = "/mnt/rclone/${config.networking.hostName}-test";
 #    doInit = true;
 #    startAt = [ "weekly" ];
 #    preHook = ''
 #      echo "Mounting remote"
-#      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${systemSettings.hostname}-test /mnt/rclone/${systemSettings.hostname}-test --daemon --config /home/${userSettings.username}/.config/rclone/rclone.conf
+#      ${pkgs.rclone}/bin/rclone mount B2:${secrets.rclone.bucket}/${config.networking.hostName}-test /mnt/rclone/${config.networking.hostName}-test --daemon --config /home/${userSettings.username}/.config/rclone/rclone.conf
 #      echo "Starting backup..."
 #    '';
 ##    postHook = ''
 ##      echo "Unmounting remote"
-##      ${pkgs.umount}/bin/umount /mnt/rclone/${systemSettings.hostname}-test 
+##      ${pkgs.umount}/bin/umount /mnt/rclone/${config.networking.hostName}-test 
 ##    '';
 #    encryption = {
 #      mode = "repokey-blake2";

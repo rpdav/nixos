@@ -7,7 +7,6 @@
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
-        hostname = "nixbook"; # hostname
         timezone = "America/Indiana/Indianapolis"; # select timezone
         locale = "en_US.UTF-8"; # select locale
       };
@@ -16,8 +15,6 @@
       userSettings = rec {
         username = "ryan"; # username
         name = "Ryan"; # name/identifier
-        configDir = "~/.nixops"; # absolute path of the local repo
-        theme = "io"; # selcted theme from my themes directory (./themes/)
         wm = "kde"; # Selected window manager or desktop environment; must select one in both ./user/wm/ and ./system/wm/
         # window manager type (hyprland or x11) translator
         wmType = if (wm == "cinnamon") then "x11" else "wayland";
