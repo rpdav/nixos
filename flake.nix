@@ -1,7 +1,7 @@
 # Generation 174
 {
 
-  description = "Zenbook config";
+  description = "Ryan's Nixos configs";
 
   outputs = { self, nixpkgs-unstable, nixpkgs-stable, home-manager-unstable, home-manager-stable, impermanence, plasma-manager, ... }@inputs:
     let
@@ -55,6 +55,43 @@
             ];
             home-manager.extraSpecialArgs = {
               pkgs-stable = import nixpkgs-stable {
+                inherit system;
+                config.allowUnfree = true;
+              };
+              inherit systemSettings;
+              inherit userSettings;
+              inherit secrets;
+            };
+          }
+        ];
+      };
+      nixos-vm = nixpkgs-stable.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        specialArgs = { 
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          inherit systemSettings;
+          inherit userSettings;
+          inherit secrets;
+        };
+        modules = [
+
+          ./nixos-vm/configuration.nix 
+
+          impermanence.nixosModules.impermanence
+
+          home-manager-stable.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${userSettings.username} = import ./nixbook/user/home.nix;
+            home-manager.sharedModules = [ 
+              impermanence.nixosModules.home-manager.impermanence
+            ];
+            home-manager.extraSpecialArgs = {
+              pkgs-unstable = import nixpkgs-unstable {
                 inherit system;
                 config.allowUnfree = true;
               };
