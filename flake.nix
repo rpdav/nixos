@@ -1,9 +1,9 @@
-# Generation 173
+# Generation 172
 {
 
   description = "Zenbook config";
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-stable, home-manager, impermanence, plasma-manager, ... }@inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs-stable, home-manager-unstable, home-manager-stable, impermanence, plasma-manager, ... }@inputs:
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
@@ -44,7 +44,7 @@
 
           impermanence.nixosModules.impermanence
 
-          home-manager.nixosModules.home-manager
+          home-manager-unstable.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -73,9 +73,14 @@
 
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";    
+    };
+
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";    
     };
 
     impermanence.url = "github:nix-community/impermanence";
@@ -83,7 +88,7 @@
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.home-manager.follows = "home-manager";
+      inputs.home-manager.follows = "home-manager-unstable";
     };
   };
 
