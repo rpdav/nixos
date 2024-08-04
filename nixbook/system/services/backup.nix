@@ -22,7 +22,7 @@
       "/persist/home/${userSettings.username}/.local/share/protonmail"
     ];
     user = "root";
-    repo = ("ssh://borg@10.10.1.17:2222/backup" + ("/" + ${config.networking.hostName}));
+    repo = ("ssh://borg@10.10.1.17:2222/backup" + ("/" + config.networking.hostName));
     doInit = true;
     startAt = [ "daily" ];
 #    preHook = placeholder for snapshotting/mounting command
