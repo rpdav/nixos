@@ -3,7 +3,7 @@
 
   description = "Zenbook config";
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, impermanence, plasma-manager, ... }@inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs-stable, home-manager, impermanence, plasma-manager, ... }@inputs:
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
@@ -23,8 +23,6 @@
         wmType = if (wm == "cinnamon") then "x11" else "wayland";
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
-        font = "Intel One Mono"; # Selected font
-        fontPkg = pkgs.intel-one-mono; # Font package
         editor = "vim"; # Default editor;
       };
 
@@ -59,7 +57,10 @@
               impermanence.nixosModules.home-manager.impermanence
             ];
             home-manager.extraSpecialArgs = {
-              inherit pkgs-stable;
+              pkgs-stable = import nixpkgs-stable {
+                inherit system;
+                config.allowUnfree = true;
+              };
               inherit systemSettings;
               inherit userSettings;
               inherit secrets;
