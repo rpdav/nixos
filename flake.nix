@@ -7,7 +7,6 @@
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
-        system = "x86_64-linux"; # system arch
         hostname = "nixbook"; # hostname
         timezone = "America/Indiana/Indianapolis"; # select timezone
         locale = "en_US.UTF-8"; # select locale
@@ -29,19 +28,17 @@
         editor = "vim"; # Default editor;
       };
 
-      # ----- MODULE OVERRIDES ----- #
-
-      lib = nixpkgs.lib;
-      pkgs-stable = nixpkgs-stable.legacyPackages.${systemSettings.system};
-      pkgs = nixpkgs.legacyPackages.${systemSettings.system};
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
 
     in rec {
     nixosConfigurations = {
-      nixbook = nixpkgs.lib.nixosSystem {
-        system = systemSettings.system;
+      nixbook = nixpkgs-unstable.lib.nixosSystem rec {
+        system = "x86_64-linux";
         specialArgs = { 
-          inherit pkgs-stable;
+          pkgs-stable = import nixpkgs-stable {
+            inherit system;
+            config.allowUnfree = true;
+          };
           inherit systemSettings;
           inherit userSettings;
           inherit secrets;
@@ -56,7 +53,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./nixbook/user/home.nix;
+            home-manager.users.${userSettings.username} = import ./nixbook/user/home.nix;
             home-manager.sharedModules = [ 
               plasma-manager.homeManagerModules.plasma-manager 
               impermanence.nixosModules.home-manager.impermanence
@@ -76,18 +73,18 @@
   inputs = {
     nixpkgs-stable.url = "nixpkgs/nixos-24.05";
 
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";    
+      inputs.nixpkgs.follows = "nixpkgs-unstable";    
     };
 
     impermanence.url = "github:nix-community/impermanence";
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.home-manager.follows = "home-manager";
     };
   };
