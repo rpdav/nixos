@@ -80,6 +80,8 @@
 
           ./nixos-vm/configuration.nix 
 
+          disko.nixosmodules.disko
+
           impermanence.nixosModules.impermanence
 
           home-manager-stable.nixosModules.home-manager
@@ -118,6 +120,11 @@
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";    
+    };
+
+    inputs.disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     impermanence.url = "github:nix-community/impermanence";
