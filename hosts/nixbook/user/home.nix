@@ -1,8 +1,6 @@
-{ config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
+{ lib, config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
 
-let
-  nur-no-pkgs = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {};
-in {
+{
   home.username = "${userSettings.username}";
   home.homeDirectory = "/home/${userSettings.username}";
 
@@ -28,10 +26,10 @@ in {
     ];
 
   home.file.testfile = {
-    target = "~/testfile.txt";
+    target = "/home/${userSettings.username}/testfile.txt";
     text = ''
-      contents below:
-      ${userSettings.test}
+      updated contents below:
+      config.systemVars.asdf
       '';
   };
 
