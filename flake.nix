@@ -22,6 +22,7 @@
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
         editor = "vim"; # Default editor;
+        test = lib.mkDefault "default value";
       };
 
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
@@ -41,7 +42,7 @@
         };
         modules = [
 
-          ./nixbook/system/configuration.nix 
+          ./hosts/nixbook/system/configuration.nix 
 
           impermanence.nixosModules.impermanence
 
@@ -49,7 +50,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${userSettings.username} = import ./nixbook/user/home.nix;
+            home-manager.users.${userSettings.username} = import ./hosts/nixbook/user/home.nix;
             home-manager.sharedModules = [ 
               plasma-manager.homeManagerModules.plasma-manager 
               impermanence.nixosModules.home-manager.impermanence
@@ -79,7 +80,7 @@
         };
         modules = [
 
-          ./nixos-vm/configuration.nix 
+          ./hosts/nixos-vm/configuration.nix 
 
           disko.nixosModules.disko
 
@@ -89,7 +90,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${userSettings.username} = import ./nixos-vm/home.nix;
+            home-manager.users.${userSettings.username} = import ./hosts/nixos-vm/home.nix;
             home-manager.sharedModules = [ 
               impermanence.nixosModules.home-manager.impermanence
             ];

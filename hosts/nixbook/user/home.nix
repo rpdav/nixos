@@ -27,6 +27,8 @@ in {
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
 
+
+
   home.packages = with pkgs; [
     protonmail-bridge-gui
     thunderbird
