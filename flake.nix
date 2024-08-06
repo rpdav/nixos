@@ -22,7 +22,7 @@
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
         editor = "vim"; # Default editor;
-        test = lib.mkDefault "default value";
+        test = "default value";
       };
 
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
