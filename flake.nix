@@ -3,7 +3,8 @@
 
   description = "Ryan's Nixos configs";
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-stable, home-manager-unstable, home-manager-stable, impermanence, plasma-manager, ... }@inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs-stable, home-manager-unstable, home-manager-stable, 
+              impermanence, plasma-manager, disko, ... }@inputs:
     let
       # ---- SYSTEM SETTINGS ---- #
       systemSettings = {
@@ -80,7 +81,7 @@
 
           ./nixos-vm/configuration.nix 
 
-          disko.nixosmodules.disko
+          disko.nixosModules.disko
 
           impermanence.nixosModules.impermanence
 
@@ -88,7 +89,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${userSettings.username} = import ./nixbook/user/home.nix;
+            home-manager.users.${userSettings.username} = import ./nixos-vm/home.nix;
             home-manager.sharedModules = [ 
               impermanence.nixosModules.home-manager.impermanence
             ];
@@ -122,7 +123,7 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";    
     };
 
-    inputs.disko = {
+    disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };

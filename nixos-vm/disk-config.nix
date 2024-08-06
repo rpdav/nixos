@@ -1,13 +1,16 @@
-{ lib, ... }:
-
 {
   disko.devices = {
     disk.disk1 = {
-      device = lib.mkDefault "/dev/vda";
+      device = "/dev/sda";
       type = "disk";
       content = {
         type = "gpt";
         partitions = {
+          boot = {
+            name = "boot";
+            size = "1M";
+            type = "EF02";
+          };
           ESP = {
             name = "ESP";
             size = "1G";
@@ -16,14 +19,6 @@
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-            };
-          };
-          swap = {
-            name = "swap";
-            size = "4G";
-            content = {
-              type = "swap";
-              resumeDevice = "false";
             };
           };
           root = {
@@ -37,11 +32,15 @@
                 };
                 "/nix" = {
                   mountpoint = "/nix";
-                  mountOptions = [ "compress = zstd" "noatime" ]
+                  mountOptions = [ "compress=zstd" "noatime" ];
                 };
                 "/persist" = {
                   mountpoint = "/persist";
-                  mountOptions = [ "compress = zstd" "noatime" ]
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+                "/swap" = {
+                  mountpoint = "/.swap";
+                  swap.swapfile.size = "4G";
                 };
               };
             };
