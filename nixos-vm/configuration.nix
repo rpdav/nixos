@@ -28,7 +28,6 @@
   services.openssh.enable = true;
 
   users.users.root.openssh.authorizedKeys.keys = [
-    # change this to your ssh key
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSJJDvRzZbvzKyA6JiI0vYfQcMaNgu699BNGJ6CE7D/ ryan@nixbook"
   ];
 
@@ -43,6 +42,9 @@
     hashedPassword = "${secrets.${userSettings.username}.passwordhash}";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSJJDvRzZbvzKyA6JiI0vYfQcMaNgu699BNGJ6CE7D/ ryan@nixbook"
+    ];
   };
 
 ## Packages
