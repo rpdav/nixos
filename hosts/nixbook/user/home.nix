@@ -27,7 +27,13 @@ in {
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
     ];
 
-
+  home.file.testfile = {
+    target = "~/testfile.txt";
+    text = ''
+      contents below:
+      ${userSettings.test}
+      '';
+  };
 
   home.packages = with pkgs; [
     protonmail-bridge-gui
