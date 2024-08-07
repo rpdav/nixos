@@ -1,5 +1,8 @@
-{ lib, config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
+{ lib, config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, systemVars, ... }:
 
+#let
+#  config.systemVars.asdf = lib.mkOverride "override";
+#in
 {
   home.username = "${userSettings.username}";
   home.homeDirectory = "/home/${userSettings.username}";
@@ -23,13 +26,15 @@
       ./config/ssh.nix
       ./persistence/persist.nix
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
+      ../../../variables.nix
     ];
 
+#  systemVars.asdf = "normalvalue"; #throws error when uncommented
+
   home.file.testfile = {
-    target = "/home/${userSettings.username}/testfile.txt";
+    target = "/home/${userSettings.username}/${systemVars.asdf}.txt";
     text = ''
-      updated contents below:
-      config.systemVars.asdf
+      text
       '';
   };
 
