@@ -1,4 +1,4 @@
-{ lib, config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, systemVars, ... }:
+{ lib, config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
 
 #let
 #  config.systemVars.asdf = lib.mkOverride "override";
@@ -28,15 +28,6 @@
       (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
       ../../../variables.nix
     ];
-
-#  systemVars.asdf = "normalvalue"; #throws error when uncommented
-
-  home.file.testfile = {
-    target = "/home/${userSettings.username}/${systemVars.asdf}.txt";
-    text = ''
-      text
-      '';
-  };
 
   home.packages = with pkgs; [
     protonmail-bridge-gui
