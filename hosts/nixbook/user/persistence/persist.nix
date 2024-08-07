@@ -4,7 +4,6 @@
   
   home.persistence."/persist/home/${userSettings.username}" = {
     directories = [
-      "testdir1"
       "Documents"
       "Desktop"
       "Downloads"
@@ -26,7 +25,6 @@
       ".thunderbird"
     ];
     files = [
-      "testfile1"
       ".Xauthority"
     ];
     allowOther = true;
