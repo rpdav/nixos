@@ -1,11 +1,11 @@
-{ modulesPath, config, pkgs, systemSettings, userSettings, secrets, ... }:
+{ lib, modulesPath, config, pkgs, systemSettings, userSettings, secrets, ... }:
 
 {
   
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
-    ./disk-config.nix
+    ../../modules/disk-config.nix
     ../../variables.nix
   ];
 
@@ -19,15 +19,17 @@
     '';
   };
 
+## System-specific disk config
+  systemSettings.swapSize = lib.mkForce "4G";
+  systemSettings.diskDevice = lib.mkForce "/dev/vda";
+
   boot.loader.grub = {
-    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
 
+## SSH
   services.openssh.enable = true;
-
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSJJDvRzZbvzKyA6JiI0vYfQcMaNgu699BNGJ6CE7D/ ryan@nixbook"
   ];
@@ -38,7 +40,7 @@
 ## Time
   time.timeZone = "systemSettings.timezone";
 
-## User definitions
+## User definition
   users.users.${userSettings.username} = {
     hashedPassword = "${secrets.${userSettings.username}.passwordhash}";
     isNormalUser = true;

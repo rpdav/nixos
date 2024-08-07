@@ -1,7 +1,9 @@
+{ systemSettings, ... }:
+
 {
   disko.devices = {
     disk.disk1 = {
-      device = "/dev/vda";
+      device = systemSettings.diskDevice;
       type = "disk";
       content = {
         type = "gpt";
@@ -40,7 +42,7 @@
                 };
                 "/swap" = {
                   mountpoint = "/.swap";
-                  swap.swapfile.size = "4G";
+                  swap.swapfile.size = systemSettings.swapSize;
                 };
               };
             };

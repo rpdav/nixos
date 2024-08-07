@@ -12,6 +12,14 @@
         type = lib.types.str;
         default = "en_US.UTF-8";
       };
+      swapSize = lib.mkOption {
+        type = lib.types.str;
+        default = "8G";
+      };
+      diskDevice = lib.mkOption {
+        type = lib.types.str;
+        default = "/dev/nvme01n1";
+      };
     };
 
     # ---- USER SETTINGS ---- #
