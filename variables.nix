@@ -36,11 +36,6 @@
         type = lib.types.str;
         default = "kde";
       };
-      ##TODO: add logic to set wmType based on wm
-      wmType = lib.mkOption {
-        type = lib.types.str;
-        default = "wayland";
-      };
     };
   };
 
