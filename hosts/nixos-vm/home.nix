@@ -1,6 +1,9 @@
 { config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
 
 {
+  imports = [
+    ../../variables.nix
+  ];
   home.username = "${userSettings.username}";
   home.homeDirectory = "/home/${userSettings.username}";
 

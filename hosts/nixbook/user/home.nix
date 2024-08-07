@@ -22,10 +22,10 @@
       ./app/shell/bash.nix
       ./app/games/games.nix
       ./app/games/proton.nix
-      ./app/terminal/${userSettings.term}.nix
+      ./app/terminal/kitty.nix
       ./config/ssh.nix
       ./persistence/persist.nix
-      (./wm +("/"+userSettings.wm+"/"+userSettings.wm)+".nix")
+      ./wm/kde/kde.nix
       ../../../variables.nix
     ];
 

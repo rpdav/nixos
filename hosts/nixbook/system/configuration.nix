@@ -10,7 +10,8 @@
       ./app/games/steam.nix
       ./security/tailscale.nix
       ./services/backup.nix
-      (./wm +("/"+userSettings.wm)+".nix")
+      ./wm/kde.nix
+      ../../../variables.nix
    ];
 
 ## This should not be changed unless doing a fresh install
@@ -63,8 +64,8 @@
   services.blueman.enable = true;
 
 ## User definitions
-  users.users.${userSettings.username} = {
-    hashedPassword = "${secrets.${userSettings.username}.passwordhash}";
+  users.users.ryan = {
+    hashedPassword = "${secrets.ryan.passwordhash}";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };

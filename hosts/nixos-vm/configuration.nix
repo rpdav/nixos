@@ -6,6 +6,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
+    ../../variables.nix
   ];
 
   system.stateVersion = "24.05";
