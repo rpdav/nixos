@@ -7,7 +7,10 @@
 ############################################################################
 
 deploy:
-  nixos-rebuild switch --flake . --use-remote-sudo
+  nixos-rebuild switch --flake .
+
+dry:
+  nixos-rebuild switch --flake . --dry-run
 
 debug:
   nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
@@ -32,35 +35,43 @@ clean:
 
 gc:
   # garbage collect all unused nix store entries
-  sudo nix-collect-garbage --delete-old
+  sudo nix-collect-garbage --delete-older-than 30d
 
 ############################################################################
 #
-#  Idols, Commands related to my remote distributed building cluster
+#  Nix commands for remote systems
 #
 ############################################################################
 
-add-idols-ssh-key:
-  ssh-add ~/.ssh/ai-idols
+nixos-vm: 
+  nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch 
 
-aqua: add-idols-ssh-key
-  nixos-rebuild --flake .#aquamarine --target-host aquamarine --build-host aquamarine switch --use-remote-sudo
+nixos-vm-dry: 
+  nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm dry-activate
 
-aqua-debug: add-idols-ssh-key
-  nixos-rebuild --flake .#aquamarine --target-host aquamarine --build-host aquamarine switch --use-remote-sudo --show-trace --verbose
+nixos-vm-debug: 
+  nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch --show-trace -v
 
-ruby: add-idols-ssh-key
-  nixos-rebuild --flake .#ruby --target-host ruby --build-host ruby switch --use-remote-sudo
+pi: 
+  nixos-rebuild --flake .#pi --target-host root@pi switch 
 
-ruby-debug: add-idols-ssh-key
-  nixos-rebuild --flake .#ruby --target-host ruby --build-host ruby switch --use-remote-sudo --show-trace --verbose
+pi-dry: 
+  nixos-rebuild --flake .#pi --target-host root@pi dry-activate
 
-kana: add-idols-ssh-key
-  nixos-rebuild --flake .#kana --target-host kana --build-host kana switch --use-remote-sudo
+pi-debug: 
+  nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
 
-kana-debug: add-idols-ssh-key
-  nixos-rebuild --flake .#kana --target-host kana --build-host kana switch --use-remote-sudo --show-trace --verbose
+vps: 
+  nixos-rebuild --flake .#vps --target-host root@nixos-vm switch 
 
-idols: aqua ruby kana
+vps-dry: 
+  nixos-rebuild --flake .#vps --target-host root@nixos-vm dry-activate
 
-idols-debug: aqua-debug ruby-debug kana-debug
+vps-debug: 
+  nixos-rebuild --flake .#vps --target-host root@nixos-vm switch --show-trace -v
+
+machines: nixos-vm 
+
+machines-debug: nixos-vm-debug
+
+machines-dry: nixos-vm-dry
