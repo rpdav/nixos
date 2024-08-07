@@ -2,7 +2,6 @@
 {
 
   options = {
-
     # ---- SYSTEM SETTINGS ---- #
     systemSettings = {
       timezone = lib.mkOption {
@@ -47,8 +46,8 @@
 
   config = {
     _module.args = {
-      systemSettings = config.systemVars;
-      userSettings = config.userVars;
+      systemSettings = config.systemSettings;
+      userSettings = config.userSettings;
     };
   };
 
