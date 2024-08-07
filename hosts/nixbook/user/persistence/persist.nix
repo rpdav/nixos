@@ -18,7 +18,6 @@
 #      ".config" # this only seems to work in the system config
       ".gnupg"
       ".ssh"
-      ".nixops"
       ".local"
       ".mozilla"
       ".steam"
