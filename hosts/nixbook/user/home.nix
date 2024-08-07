@@ -46,6 +46,7 @@
     gimp
     fastfetch
     lazygit
+    just
 
     # terminals
     kitty
