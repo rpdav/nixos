@@ -23,6 +23,20 @@
               mountpoint = "/boot";
             };
           };
+          primary = {
+            size = "100%";
+            content = {
+              type = "lvm_pv";
+              vg = "lvm";
+            };
+          };
+        };
+      };
+    };
+    lvm_vg = {
+      lvm = {
+        type = "lvm_vg";
+        lvs = {
           root = {
             size = "100%";
             content = {
