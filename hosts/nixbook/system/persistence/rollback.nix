@@ -1,11 +1,6 @@
 { config, lib, ... }:
 
 {
-#  fileSystems."/" = {
-#    device = "/dev/lvm/root";
-#    fsType = "btrfs";
-#    options = [ "subvol=root" ];
-#  };
 
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
