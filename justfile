@@ -6,14 +6,14 @@
 #
 ############################################################################
 
-deploy:
-  nixos-rebuild switch --flake .
+switch:
+  sudo nixos-rebuild switch --flake .
 
 dry:
-  nixos-rebuild switch --flake . --dry-run
+  sudo nixos-rebuild dry-activate --flake . 
 
 debug:
-  nixos-rebuild switch --flake . --use-remote-sudo --show-trace --verbose
+  sudo nixos-rebuild switch --flake . --show-trace --verbose
 
 up:
   nix flake update
@@ -44,34 +44,47 @@ gc:
 ############################################################################
 
 nixos-vm: 
-  nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch 
+  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch 
 
 nixos-vm-dry: 
-  nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm dry-activate
+  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm dry-activate
 
 nixos-vm-debug: 
-  nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch --show-trace -v
+  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch --show-trace -v
 
 pi: 
-  nixos-rebuild --flake .#pi --target-host root@pi switch 
+  sudo nixos-rebuild --flake .#pi --target-host root@pi switch 
 
 pi-dry: 
-  nixos-rebuild --flake .#pi --target-host root@pi dry-activate
+  sudo nixos-rebuild --flake .#pi --target-host root@pi dry-activate
 
 pi-debug: 
-  nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
+  sudo nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
 
 vps: 
-  nixos-rebuild --flake .#vps --target-host root@nixos-vm switch 
+  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch 
 
 vps-dry: 
-  nixos-rebuild --flake .#vps --target-host root@nixos-vm dry-activate
+  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm dry-activate
 
 vps-debug: 
-  nixos-rebuild --flake .#vps --target-host root@nixos-vm switch --show-trace -v
+  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch --show-trace -v
 
 machines: nixos-vm 
 
 machines-debug: nixos-vm-debug
 
 machines-dry: nixos-vm-dry
+
+
+############################################################################
+#
+#  Nixos-anywhere commands
+#
+############################################################################
+
+anywhere-test:
+  nix run github:nix-community/nixos-anywhere -- --flake .#nixos-vm --vm-test
+
+anywhere-deploy:
+  nix run github:nix-community/nixos-anywhere -- --flake .#nixos-vm root@ubuntu
