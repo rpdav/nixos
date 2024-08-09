@@ -20,6 +20,10 @@
         type = lib.types.str;
         default = "/dev/nvme01n1";
       };
+      hibernate = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
     };
 
     # ---- USER SETTINGS ---- #
