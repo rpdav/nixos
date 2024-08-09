@@ -88,3 +88,12 @@ anywhere-test:
 
 anywhere-deploy:
   nix run github:nix-community/nixos-anywhere -- --flake .#nixos-vm root@ubuntu
+
+############################################################################
+#
+#  Nixos-anywhere commands
+#
+############################################################################
+
+nsearch:
+  nix run github:niksingh710/nsearch
