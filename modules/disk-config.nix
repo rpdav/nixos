@@ -26,7 +26,7 @@
           primary = {
             size = "100%";
             content = {
-              type = "lvm_pv";
+              type = "lvm_pv"; #rollback script assumes lvm is used
               vg = "lvm";
             };
           };
@@ -43,7 +43,7 @@
               type = "btrfs";
               extraArgs = [ "-f" ];
               subvolumes = {
-                "rootfs" = {
+                "root" = { #rollback script assumes root subvol is "root"
                   mountpoint = "/";
                 };
                 "/nix" = {
