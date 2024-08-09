@@ -1,4 +1,4 @@
-{ config, lib, secrets, userSettings, ... }:
+{ config, lib, userSettings, ... }:
 
 {
   
@@ -24,14 +24,13 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/NetworkManager"
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
-#      "/var/lib/sddm" # something to do with KDE
     ];
     files = [
       "/etc/machine-id"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
 
-    ## user persistence is in user/persistence/persist.nix. .config only works in the system config so that's why it's here.here
+    ## user persistence is in home-manager config. .config only works in the system config so that's why it's here
     users.${userSettings.username} = {
       directories = [
         ".config"

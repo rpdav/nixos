@@ -7,6 +7,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../modules/disk-config.nix
     ../../variables.nix
+    ../../modules/persistence
   ];
 
   system.stateVersion = "24.05";

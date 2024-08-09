@@ -4,8 +4,7 @@
   imports =
     [ ./hardware/hardware-configuration.nix
       ./hardware/video.nix
-      ./persistence/rollback.nix
-      ./persistence/persist.nix
+      ../../../modules/persistence
       ./app/defaultapps.nix
       ./app/games/steam.nix
       ./security/tailscale.nix
