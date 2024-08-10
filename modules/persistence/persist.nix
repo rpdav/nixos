@@ -15,6 +15,7 @@
     hideMounts = true;
     directories = [
       "/etc/wireguard"
+      "/etc/ssh"
       "/root/.ssh"
       "/var/lib/tailscale"
       "/var/log"
