@@ -35,6 +35,7 @@
     users.${userSettings.username} = {
       directories = [
         ".config"
+        ".ssh" #this is only here until I get HM set up for VM
       ];
       files = [
       ];
