@@ -35,7 +35,6 @@
         enable = true;
         device = "nodev";
         efiSupport = true;
-        useOSProber = true;
       };
     };
     initrd.luks.devices = {
