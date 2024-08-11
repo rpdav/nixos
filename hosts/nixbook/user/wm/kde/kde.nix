@@ -7,6 +7,7 @@
     clinfo
     pciutils
     wayland-utils
+    kdePackages.kalk
   ];
 
   programs.plasma = {
