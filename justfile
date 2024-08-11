@@ -91,9 +91,12 @@ anywhere-deploy:
 
 ############################################################################
 #
-#  Nixos-anywhere commands
+#  Misc utilities
 #
 ############################################################################
 
 nsearch:
   nix run github:niksingh710/nsearch
+
+search expression:
+  grep -Rnw . -e {{expression}}
