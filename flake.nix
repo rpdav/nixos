@@ -32,9 +32,7 @@
     };
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-stable, 
-              home-manager-unstable, home-manager-stable, 
-              impermanence, plasma-manager, disko, ... }@inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
     let
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
 
@@ -53,15 +51,14 @@
 
           ./hosts/nixbook/system/configuration.nix 
 
-          impermanence.nixosModules.impermanence
+          inputs.impermanence.nixosModules.impermanence
 
-          home-manager-unstable.nixosModules.home-manager
-          #TODO can this block be moved out of flake?
+          inputs.home-manager-unstable.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./hosts/nixbook/user/home.nix;
-            home-manager.sharedModules = [ 
+            home-manager.sharedModules = with inputs; [ 
               plasma-manager.homeManagerModules.plasma-manager 
               impermanence.nixosModules.home-manager.impermanence
             ];
@@ -88,17 +85,16 @@
 
           ./hosts/nixos-vm/configuration.nix 
 
-          disko.nixosModules.disko
+          inputs.disko.nixosModules.disko
 
-          impermanence.nixosModules.impermanence
+          inputs.impermanence.nixosModules.impermanence
 
-          home-manager-stable.nixosModules.home-manager
-          #TODO can this block be moved out of flake?
+          inputs.home-manager-stable.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./hosts/nixos-vm/home.nix;
-            home-manager.sharedModules = [ 
+            home-manager.sharedModules = with inputs; [ 
               impermanence.nixosModules.home-manager.impermanence
             ];
             home-manager.extraSpecialArgs = {
