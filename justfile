@@ -10,7 +10,7 @@ switch:
   sudo nixos-rebuild switch --flake .
 
 dry:
-  sudo nixos-rebuild dry-activate --flake . 
+  sudo nixos-rebuild dry-build --flake . 
 
 debug:
   sudo nixos-rebuild switch --flake . --show-trace --verbose
@@ -47,7 +47,7 @@ nixos-vm:
   sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch 
 
 nixos-vm-dry: 
-  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm dry-activate
+  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm dry-build
 
 nixos-vm-debug: 
   sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch --show-trace -v
@@ -56,7 +56,7 @@ pi:
   sudo nixos-rebuild --flake .#pi --target-host root@pi switch 
 
 pi-dry: 
-  sudo nixos-rebuild --flake .#pi --target-host root@pi dry-activate
+  sudo nixos-rebuild --flake .#pi --target-host root@pi dry-build
 
 pi-debug: 
   sudo nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
@@ -65,7 +65,7 @@ vps:
   sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch 
 
 vps-dry: 
-  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm dry-activate
+  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm dry-build
 
 vps-debug: 
   sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch --show-trace -v
