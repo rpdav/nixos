@@ -37,19 +37,4 @@
 		};
 	};
 
-## Enable option to boot into sync mode (dGPU always on)
-#  specialisation = {
-#    gaming-mode.configuration = {
-#
-#      hardware.nvidia = {
-#        prime.sync.enable = lib.mkForce true;
-#        prime.offload = {
-#          enable = lib.mkForce false;
-#          enableOffloadCmd = lib.mkForce false;
-#        };
-#      };
-#
-#    };
-#  };
-
 }

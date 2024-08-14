@@ -49,7 +49,7 @@
           inherit inputs;
         };
         modules = [
-          ./hosts/nixbook/system/configuration.nix 
+          ./hosts/nixbook/configuration.nix 
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-unstable.nixosModules.home-manager
         ];

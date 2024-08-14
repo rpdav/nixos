@@ -2,15 +2,14 @@
 
 {
   imports =
-    [ ./hardware/hardware-configuration.nix
-      ./hardware/video.nix
-      ../../../modules/persistence
-      ./app/defaultapps.nix
-      ./app/games/steam.nix
-      ./security/tailscale.nix
-      ./services/backup.nix
-      ./wm/kde.nix
-      ../../../variables.nix
+    [ ./hardware-configuration.nix
+      ../../modules/nixos/hybridgpu.nix
+      ../../modules/nixos/persistence
+      ../../modules/nixos/steam.nix
+      ../../modules/nixos/tailscale.nix
+      ../../modules/nixos/localbackup.nix
+      ../../modules/nixos/wm/kde.nix
+      ../../variables.nix
    ];
 
 ## This should not be changed unless doing a fresh install
@@ -72,7 +71,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.ryan = import ../user/home.nix;
+    users.ryan = import ./user/home.nix;
     sharedModules = with inputs; [ 
       plasma-manager.homeManagerModules.plasma-manager 
       impermanence.nixosModules.home-manager.impermanence
