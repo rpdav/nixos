@@ -1,4 +1,4 @@
-{ config, lib, pkgs, secrets, systemSettings, userSettings, ... }:
+{ config, lib, pkgs, pkgs-stable, secrets, inputs, systemSettings, userSettings, ... }:
 
 {
   imports =
@@ -68,10 +68,26 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
 
-  nixpkgs.config.allowUnfree = true;
+## Home Manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.ryan = import ../user/home.nix;
+    sharedModules = with inputs; [ 
+      plasma-manager.homeManagerModules.plasma-manager 
+      impermanence.nixosModules.home-manager.impermanence
+    ];
+    extraSpecialArgs = {
+      inherit pkgs-stable;
+      inherit secrets;
+      inherit inputs;
+    };
+  };
 
-## Packages
-  environment.systemPackages = with pkgs; [
+
+## System packages
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs-stable; [
     vim
     wget
     htop

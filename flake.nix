@@ -35,8 +35,8 @@
   outputs = { self, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
     let
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
-
     in rec {
+
     nixosConfigurations = {
       nixbook = nixpkgs-unstable.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -46,30 +46,12 @@
             config.allowUnfree = true;
           };
           inherit secrets;
+          inherit inputs;
         };
         modules = [
-
           ./hosts/nixbook/system/configuration.nix 
-
           inputs.impermanence.nixosModules.impermanence
-
           inputs.home-manager-unstable.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./hosts/nixbook/user/home.nix;
-            home-manager.sharedModules = with inputs; [ 
-              plasma-manager.homeManagerModules.plasma-manager 
-              impermanence.nixosModules.home-manager.impermanence
-            ];
-            home-manager.extraSpecialArgs = {
-              pkgs-stable = import nixpkgs-stable {
-                inherit system;
-                config.allowUnfree = true;
-              };
-              inherit secrets;
-            };
-          }
         ];
       };
       nixos-vm = nixpkgs-stable.lib.nixosSystem rec {
@@ -80,31 +62,13 @@
             config.allowUnfree = true;
           };
           inherit secrets;
+          inherit inputs;
         };
         modules = [
-
           ./hosts/nixos-vm/configuration.nix 
-
           inputs.disko.nixosModules.disko
-
           inputs.impermanence.nixosModules.impermanence
-
           inputs.home-manager-stable.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./hosts/nixos-vm/home.nix;
-            home-manager.sharedModules = with inputs; [ 
-              impermanence.nixosModules.home-manager.impermanence
-            ];
-            home-manager.extraSpecialArgs = {
-              pkgs-unstable = import nixpkgs-unstable {
-                inherit system;
-                config.allowUnfree = true;
-              };
-              inherit secrets;
-            };
-          }
         ];
       };
     };
