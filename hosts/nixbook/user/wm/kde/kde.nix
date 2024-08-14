@@ -26,16 +26,6 @@
       iconTheme = "breeze-dark"; # breeze, breeze-dark, or oxygen
       soundTheme = "ocean";
 
-      ## not recommended to set splashScreen or windowDecorations along with lookAndFeel
-#      splashScreen = { 
-#        engine = "";
-#        theme = "breeze";
-#      };
-#      windowDecorations = { 
-#        library = "org.kde.breeze";
-#        theme = "Breeze";
-#      };
-
     };
 
     panels = [

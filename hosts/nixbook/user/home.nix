@@ -32,7 +32,7 @@
   home.packages = with pkgs; [
     protonmail-bridge-gui
     thunderbird
-    # firefox disabled due to collision - not sure from what
+    #firefox #disabled due to collision - not sure from what
     librewolf
     brave
     tor-browser
@@ -64,20 +64,6 @@
   services.nextcloud-client = {
     enable = true;
     startInBackground = true;
-  };
-
-## can't get this to talk to any calendar apps. not sure if it's even authenticating with the server.
-  accounts.calendar = {
-    basePath = ".calendar";
-    accounts.nextcloud = {
-      primary = true;
-      name = "nextcloud";
-      remote = {
-        type = "caldav";
-        url = "https://cloud.***REMOVED***/remote.php/dav/";
-        userName = "ryan";
-      };
-    };
   };
 
 }
