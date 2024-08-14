@@ -3,7 +3,6 @@
   
   programs.ssh = {
     enable = true;
-    userKnownHostsFile = "/persist/home/ryan/.ssh/known_hosts";
     extraConfig = ''
       Host nas
       	HostName 10.10.1.17
