@@ -17,7 +17,7 @@
       "scripts"
 #      ".config" # this only seems to work in the system config
       ".gnupg"
-      ".ssh"
+      #".ssh"
       ".local"
       ".mozilla"
       ".steam"
