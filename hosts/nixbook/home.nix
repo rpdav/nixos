@@ -13,20 +13,17 @@
   programs.home-manager.enable = true;
 
   imports =
-    [ ./app/browser/firefox.nix
-      ./app/browser/chromium.nix
-      ./app/browser/webapps.nix
-      ./app/email/thunderbird.nix
-      ./app/git/git.nix
-      ./app/editor/vim.nix
-      ./app/shell/bash.nix
-      ./app/games/games.nix
-      ./app/games/proton.nix
-      ./app/terminal/kitty.nix
-      ./config/ssh.nix
-      ./persistence/persist.nix
-      ./wm/kde/kde.nix
-      ../../../variables.nix
+    [  ../../variables.nix
+      ../../modules/home-manager/app/bash.nix
+      ../../modules/home-manager/app/browser
+      ../../modules/home-manager/app/games
+      ../../modules/home-manager/app/git.nix
+      ../../modules/home-manager/app/kitty.nix
+      ../../modules/home-manager/app/thunderbird.nix
+      ../../modules/home-manager/app/vim.nix
+      ../../modules/home-manager/config/persist.nix
+      ../../modules/home-manager/config/ssh.nix
+      ../../modules/home-manager/wm/kde.nix
     ];
 
   home.packages = with pkgs; [

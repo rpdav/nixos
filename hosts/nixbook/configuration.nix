@@ -3,13 +3,13 @@
 {
   imports =
     [ ./hardware-configuration.nix
+      ../../variables.nix
       ../../modules/nixos/hybridgpu.nix
+      ../../modules/nixos/localbackup.nix
       ../../modules/nixos/persistence
       ../../modules/nixos/steam.nix
       ../../modules/nixos/tailscale.nix
-      ../../modules/nixos/localbackup.nix
       ../../modules/nixos/wm/kde.nix
-      ../../variables.nix
    ];
 
 ## This should not be changed unless doing a fresh install
@@ -71,7 +71,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.ryan = import ./user/home.nix;
+    users.ryan = import ./home.nix;
     sharedModules = with inputs; [ 
       plasma-manager.homeManagerModules.plasma-manager 
       impermanence.nixosModules.home-manager.impermanence
@@ -82,7 +82,6 @@
       inherit inputs;
     };
   };
-
 
 ## System packages
   nixpkgs.config.allowUnfree = true;
