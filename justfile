@@ -35,7 +35,7 @@ clean:
 
 gc:
   # garbage collect all unused nix store entries
-  sudo nix-collect-garbage --delete-older-than 30d
+  sudo nix-collect-garbage --delete-older-than 14d
 
 ############################################################################
 #
