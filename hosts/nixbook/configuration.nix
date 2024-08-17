@@ -96,6 +96,9 @@
     rclone
     qdirstat
     killall
+    (import ../../modules/nixos/scripts/fs-diff.nix { inherit pkgs; })
+    (import ../../modules/nixos/scripts/wgdown.nix { inherit pkgs; })
+    (import ../../modules/nixos/scripts/wgup.nix { inherit pkgs; })
   ];
 
 }
