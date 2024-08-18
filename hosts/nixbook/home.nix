@@ -16,6 +16,7 @@
     [  ../../variables.nix
       ../../modules/home-manager/app/bash.nix
       ../../modules/home-manager/app/browser
+      ../../modules/home-manager/app/defaultapps.nix
       ../../modules/home-manager/app/games
       ../../modules/home-manager/app/git.nix
       ../../modules/home-manager/app/kitty.nix
