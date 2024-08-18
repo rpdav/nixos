@@ -89,7 +89,7 @@
     vim
     wget
     htop
-    nvtop
+    nvtopPackages.full
     git
     git-crypt
     wireguard-tools
