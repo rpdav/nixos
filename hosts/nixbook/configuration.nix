@@ -9,7 +9,8 @@
       ../../modules/nixos/persistence
       ../../modules/nixos/steam.nix
       ../../modules/nixos/tailscale.nix
-      ../../modules/nixos/wm/kde.nix
+#      ../../modules/nixos/wm/kde.nix
+      ../../modules/nixos/wm/cosmic.nix
    ];
 
 ## This should not be changed unless doing a fresh install
@@ -56,7 +57,7 @@
   services.libinput.enable = true;
 
 ## Enable sound and bluetooth.
-  hardware.pulseaudio.enable = true;
+#  hardware.pulseaudio.enable = true; #disabling to test cosmic
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 

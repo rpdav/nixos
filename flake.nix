@@ -30,6 +30,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.home-manager.follows = "home-manager-unstable";
     };
+
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -56,6 +62,13 @@
           ./hosts/nixbook/configuration.nix 
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-unstable.nixosModules.home-manager
+          {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
+          inputs.nixos-cosmic.nixosModules.default
         ];
       };
       nixos-vm = nixpkgs-stable.lib.nixosSystem rec {
