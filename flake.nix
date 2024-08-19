@@ -25,6 +25,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    stylix.url = "github:danth/stylix";
+
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -69,6 +71,7 @@
             };
           }
           inputs.nixos-cosmic.nixosModules.default
+          inputs.stylix.nixosModules.stylix
         ];
       };
       nixos-vm = nixpkgs-stable.lib.nixosSystem rec {

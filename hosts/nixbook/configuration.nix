@@ -8,6 +8,7 @@
       ../../modules/nixos/localbackup.nix
       ../../modules/nixos/persistence
       ../../modules/nixos/steam.nix
+      ../../modules/nixos/stylix.nix
       ../../modules/nixos/tailscale.nix
       ../../modules/nixos/wm/kde.nix
 #      ../../modules/nixos/wm/cosmic.nix
