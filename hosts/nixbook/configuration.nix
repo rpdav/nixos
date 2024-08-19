@@ -61,7 +61,7 @@
   services.blueman.enable = true;
 
 ## User definitions
-  users.users.ryan = {
+  users.users.${userSettings.username} = {
     hashedPassword = "${secrets.ryan.passwordhash}";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -71,7 +71,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.ryan = import ./home.nix;
+    users.${userSettings.username} = import ./home.nix;
     sharedModules = with inputs; [ 
       plasma-manager.homeManagerModules.plasma-manager 
       impermanence.nixosModules.home-manager.impermanence
