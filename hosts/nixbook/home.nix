@@ -24,7 +24,7 @@
       ../../modules/home-manager/app/vim.nix
       ../../modules/home-manager/config/persist.nix
       ../../modules/home-manager/config/ssh.nix
-#      ../../modules/home-manager/wm/kde.nix
+      ../../modules/home-manager/wm/kde.nix
     ];
 
   home.packages = with pkgs; [

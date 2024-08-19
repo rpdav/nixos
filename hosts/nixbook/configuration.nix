@@ -9,8 +9,8 @@
       ../../modules/nixos/persistence
       ../../modules/nixos/steam.nix
       ../../modules/nixos/tailscale.nix
-#      ../../modules/nixos/wm/kde.nix
-      ../../modules/nixos/wm/cosmic.nix
+      ../../modules/nixos/wm/kde.nix
+#      ../../modules/nixos/wm/cosmic.nix
    ];
 
 ## This should not be changed unless doing a fresh install
