@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, systemSettings, ... }:
 
 {
   
@@ -19,7 +19,12 @@
   	    "dom.security.https_only_mode" = true;
   	    "extensions.formautofill.addresses.enabled" = false; #disable address autofill
   	    "extensions.formautofill.creditCards.enabled" = false; #disable payment autofill	    
-  	  };
+      };
+      extensions = with inputs.firefox-addons.packages."${systemSettings.arch}"; [
+        bitwarden
+        ublock-origin
+        metamask
+      ];
   	  search = {
   	    force = true;
   	    default = "DuckDuckGo";
