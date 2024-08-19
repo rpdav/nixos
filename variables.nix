@@ -24,6 +24,10 @@
         type = lib.types.bool;
         default = false;
       };
+      arch = lib.mkOption {
+        type = lib.types.str;
+        default = "x86_64-linux";
+      };
     };
 
     # ---- USER SETTINGS ---- #
