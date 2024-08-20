@@ -15,7 +15,7 @@
    ];
 
 ## Variable overrides
-  userSettings.theme = lib.mkForce "snowflake";
+  userSettings.theme = lib.mkForce "snowflake-blue";
 
 ## This should not be changed unless doing a fresh install
   system.stateVersion = "24.05"; # Did you read the comment?
