@@ -30,7 +30,6 @@
   home.packages = with pkgs; [
     protonmail-bridge-gui
     thunderbird
-    #firefox #disabled due to collision - not sure from what
     librewolf
     brave
     tor-browser

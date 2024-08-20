@@ -14,6 +14,9 @@
 #      ../../modules/nixos/wm/cosmic.nix
    ];
 
+## Variable overrides
+  userSettings.theme = lib.mkForce "snowflake";
+
 ## This should not be changed unless doing a fresh install
   system.stateVersion = "24.05"; # Did you read the comment?
 

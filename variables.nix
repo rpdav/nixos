@@ -52,6 +52,10 @@
         type = lib.types.str;
         default = "kde";
       };
+      theme = lib.mkOption {
+        type = lib.types.str;
+        default = "mountain";
+      };
     };
   };
 
