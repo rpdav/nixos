@@ -61,7 +61,7 @@
   services.libinput.enable = true;
 
 ## Enable sound and bluetooth.
-#  hardware.pulseaudio.enable = true; #disabling to test cosmic
+  hardware.pulseaudio.enable = true; 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
