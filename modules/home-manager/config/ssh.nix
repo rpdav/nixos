@@ -14,7 +14,7 @@
       	User pi
       	Port 22
       
-      Host vps.***REMOVED*** vps
+      Host vps.dfrp.xyz vps
       	HostName 10.100.94.1 #wireguard IP
       #	HostName 170.187.148.177 #direct IP
       	User root

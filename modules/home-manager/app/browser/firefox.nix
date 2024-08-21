@@ -8,7 +8,7 @@
   	  id = 0;
   	  name = "ryan default";
   	  settings = {
-  	    "browser.startup.homepage" = "https://start.***REMOVED***";
+  	    "browser.startup.homepage" = "https://start.dfrp.xyz";
   	    "browser.search.region" = "US";
   	    "browser.search.isUS" = true;
   	    "extensions.autoDisableScopes" = 0; #automatically enable added extensions
