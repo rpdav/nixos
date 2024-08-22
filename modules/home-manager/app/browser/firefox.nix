@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, systemSettings, ... }:
+{ config, pkgs, inputs, systemSettings, secrets, ... }:
 
 {
   
@@ -8,7 +8,7 @@
   	  id = 0;
   	  name = "ryan default";
   	  settings = {
-  	    "browser.startup.homepage" = "https://start.dfrp.xyz";
+  	    "browser.startup.homepage" = "https://start.${secrets.selfhosting.domain}";
   	    "browser.search.region" = "US";
   	    "browser.search.isUS" = true;
   	    "extensions.autoDisableScopes" = 0; #automatically enable added extensions

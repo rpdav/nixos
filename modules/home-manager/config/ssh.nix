@@ -1,4 +1,4 @@
-{config, pkgs, ... }:
+{config, pkgs, secrets, ... }:
 {
   
   programs.ssh = {
@@ -14,9 +14,8 @@
       	User pi
       	Port 22
       
-      Host vps.dfrp.xyz vps
+      Host vps.${secrets.selfhosting.domain} vps
       	HostName 10.100.94.1 #wireguard IP
-      #	HostName 170.187.148.177 #direct IP
       	User root
       	Port 44422
       
