@@ -4,6 +4,7 @@
   description = "Ryan's Nixos configs";
 
   inputs = {
+
     nixpkgs-stable.url = "nixpkgs/nixos-24.05";
 
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
@@ -21,6 +22,11 @@
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";    
     };
 
     impermanence.url = "github:nix-community/impermanence";

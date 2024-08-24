@@ -2,7 +2,8 @@
 
 {
   imports =
-    [ ./hardware-configuration.nix
+    [ inputs.sops-nix.nixosModules.sops
+      ./hardware-configuration.nix
       ../../variables.nix
       ../../modules/nixos/hybridgpu.nix
       ../../modules/nixos/localbackup.nix
