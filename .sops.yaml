@@ -4,7 +4,7 @@ keys:
   - &hosts:
     - &nixbook age1g5tk5d9sdykgt0xcyujaxtpsv2a3zt6r73ud60rxkfjraw2wvc3sc3df4z
 creation_rules:
-  - path_regex: secrets.yaml$
+  - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
         - *ryan

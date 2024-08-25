@@ -54,7 +54,15 @@
 ## Networking
   networking.hostName = "nixbook";
   networking.networkmanager.enable = true;
-  services.resolved.enable = true; # needed for wireguard on kde?
+  services.resolved.enable = true; # needed for wireguard on kde
+
+## Secrets
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;   
+  sops.defaultSopsFormat = "yaml";
+  sops.age.keyFile = "/home/${userSettings.username}/.config/sops/age/keys.txt";
+
+  sops.secrets.example-key = { };
+#  sops.secrets."myservice/my_subdir/my_secret" = { };
 
 ## Time
   time.timeZone = "America/Indiana/Indianapolis";
@@ -116,6 +124,7 @@
     wireguard-tools
     borgbackup
     rclone
+    sops
     qdirstat
     killall
   ];
