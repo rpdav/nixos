@@ -62,7 +62,7 @@
   sops.age.keyFile = "/home/${userSettings.username}/.config/sops/age/keys.txt";
 
   sops.secrets.example-key = { };
-#  sops.secrets."myservice/my_subdir/my_secret" = { };
+  sops.secrets."myservice/my_subdir/my_secret" = { };
 
 ## Time
   time.timeZone = "America/Indiana/Indianapolis";
