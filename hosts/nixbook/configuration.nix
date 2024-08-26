@@ -2,12 +2,12 @@
 
 {
   imports =
-    [ inputs.sops-nix.nixosModules.sops
-      ./hardware-configuration.nix
+   [  ./hardware-configuration.nix
       ../../variables.nix
       ../../modules/nixos/hybridgpu.nix
       ../../modules/nixos/localbackup.nix
       ../../modules/nixos/persistence
+      ../../modules/nixos/sops.nix
       ../../modules/nixos/sshd.nix
       ../../modules/nixos/steam.nix
       ../../modules/nixos/stylix.nix
@@ -57,14 +57,6 @@
   networking.networkmanager.enable = true;
   services.resolved.enable = true; # needed for wireguard on kde
 
-## Secrets
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;   
-  sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/${userSettings.username}/.config/sops/age/keys.txt";
-
-  sops.secrets.example-key = { };
-  sops.secrets."myservice/my_subdir/my_secret" = { };
-
 ## Time
   time.timeZone = "America/Indiana/Indianapolis";
 
@@ -75,9 +67,13 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+
 ## User definitions
+  users.mutableUsers = false;
+  sops.secrets."${userSettings.username}/passwordhash".neededForUsers = true;
+
   users.users.${userSettings.username} = {
-    hashedPassword = "${secrets.ryan.passwordhash}";
+    hashedPasswordFile = config.sops.secrets."${userSettings.username}/passwordhash".path;
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
