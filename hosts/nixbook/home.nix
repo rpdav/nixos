@@ -1,8 +1,5 @@
-{ lib, config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
+{ lib, config, pkgs, pkgs-stable, systemSettings, userSettings, ... }:
 
-#let
-#  config.systemVars.asdf = lib.mkOverride "override";
-#in
 {
   home.username = "${userSettings.username}";
   home.homeDirectory = "/home/${userSettings.username}";
@@ -24,6 +21,7 @@
       ../../modules/home-manager/app/vim.nix
       ../../modules/home-manager/config/persist.nix
       ../../modules/home-manager/config/ssh.nix
+      ../../modules/home-manager/sops.nix
       ../../modules/home-manager/wm/kde.nix
     ];
 
