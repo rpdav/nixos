@@ -1,2 +1,2 @@
-./**secrets.json filter=git-crypt diff=git-crypt
-./secrets/secrets.yaml diff=sopsdiffer
+./secrets.json filter=git-crypt diff=git-crypt
+./secrets.yaml diff=sopsdiffer
