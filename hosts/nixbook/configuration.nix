@@ -10,7 +10,7 @@
       ../../modules/nixos/sops.nix
       ../../modules/nixos/sshd.nix
       ../../modules/nixos/steam.nix
-      ../../modules/nixos/stylix.nix
+#      ../../modules/nixos/stylix.nix #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
       ../../modules/nixos/tailscale.nix
       ../../modules/nixos/wm/kde.nix
 #      ../../modules/nixos/wm/cosmic.nix
