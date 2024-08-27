@@ -1,6 +1,7 @@
-{ config, pkgs, secrets, ... }:
+{ config, pkgs, ... }:
 
 {
+  config.sops.secrets."tailscale/authekey" = { };
 
   environment.systemPackages = [ pkgs.tailscale ];
 
@@ -34,7 +35,7 @@
       fi
 
       # otherwise authenticate with tailscale server
-      ${tailscale}/bin/tailscale up --authkey ${secrets.tailscale.authkey} --accept-dns=false
+      ${tailscale}/bin/tailscale up --authkey $(cat ${config.sops.secrets."tailscale/authkey".path}) --accept-dns=false
     '';
   };
 
