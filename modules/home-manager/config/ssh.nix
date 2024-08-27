@@ -1,6 +1,9 @@
-{config, pkgs, secrets, ... }:
+{config, pkgs, userSettings, ... }:
 {
-  
+  sops.secrets = {
+    "${userSettings.username}/sshkey".path = "/home/${userSettings.username}/.ssh/id_ed25519";
+  };
+
   programs.ssh = {
     enable = true;
     extraConfig = ''
@@ -14,7 +17,7 @@
       	User pi
       	Port 22
       
-      Host vps.${secrets.selfhosting.domain} vps
+      Host vps
       	HostName 10.100.94.1 #wireguard IP
       	User root
       	Port 44422
