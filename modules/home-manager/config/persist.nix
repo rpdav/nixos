@@ -13,6 +13,7 @@
       "projects"
       "Nextcloud"
       "nixos"
+      "nix-secrets"
       "Videos"
 #      ".config" # this only seems to work in the system config
       ".gnupg"
