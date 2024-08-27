@@ -1,4 +1,4 @@
-{config, pkgs, lib, secrets, userSettings, ... }:
+{config, pkgs, lib, userSettings, ... }:
 
 let
 ## Set up notifications in case of failure
@@ -51,6 +51,8 @@ in {
   '';
 
 ## Local backup definition
+  sops.secrets."borg/passphrase" = { };
+
   services.borgbackup.jobs."local" = {
     paths = [ "/persist/home/${userSettings.username}" ];
     exclude = [
@@ -68,7 +70,7 @@ in {
 #    postHook = placeholder for snapshot deletion/unmount
     encryption = {
       mode = "repokey-blake2";
-      passphrase = "${secrets.borg.passphrase}"; #This is also in password manager under entry "Borg backup"
+      passCommand = "cat ${config.sops.secrets."borg/passphrase".path}"; #This is also in password manager under entry "Borg backup"
     };
     compression = "auto,lzma";
     prune.keep = {
