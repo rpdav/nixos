@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  config.sops.secrets."tailscale/authekey" = { };
+  sops.secrets."tailscale/authkey" = { };
 
   environment.systemPackages = [ pkgs.tailscale ];
 
