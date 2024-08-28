@@ -1,2 +1,2 @@
-.secret-key
 *.swp
+nix-secrets/**
