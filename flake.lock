@@ -315,6 +315,18 @@
         "type": "github"
       }
     },
+    "mysecrets": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ZlMhxkmoDkLFrKjWW41jvY7L7u2ZK4ov/A778+Tt7gY=",
+        "type": "file",
+        "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?shallow=1"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?shallow=1"
+      }
+    },
     "nixos-cosmic": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -446,6 +458,7 @@
         "home-manager-stable": "home-manager-stable",
         "home-manager-unstable": "home-manager-unstable",
         "impermanence": "impermanence",
+        "mysecrets": "mysecrets",
         "nixos-cosmic": "nixos-cosmic",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",

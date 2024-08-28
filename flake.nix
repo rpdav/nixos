@@ -1,4 +1,3 @@
-# Generation 193
 {
 
   description = "Ryan's Nixos configs";
@@ -27,6 +26,11 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";    
+    };
+
+    mysecrets = {
+      url = "https://git.dfrp.xyz/ryan/nix-secrets.git?shallow=1";
+      flake = false;
     };
 
     impermanence.url = "github:nix-community/impermanence";
