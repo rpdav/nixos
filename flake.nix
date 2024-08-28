@@ -56,7 +56,7 @@
 
   outputs = { self, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
     let
-      secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
+      secrets = builtins.fromJSON (builtins.readFile "${inputs.mysecrets}/secrets.json");
     in rec {
 
     nixosConfigurations = {
