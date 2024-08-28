@@ -20,8 +20,8 @@ up:
 
 # Update specific input
 # usage: make upp i=home-manager
-upp:
-  nix flake update $(i)
+upp input:
+  nix flake lock --update-input {{input}}
 
 history:
   nix profile history --profile /nix/var/nix/profiles/system
