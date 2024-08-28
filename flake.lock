@@ -318,7 +318,7 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ZlMhxkmoDkLFrKjWW41jvY7L7u2ZK4ov/A778+Tt7gY=",
+        "narHash": "sha256-ENNznsnxRoJiAokDZSG4K2TeCwEBl5On+WdqvW73dUA=",
         "type": "file",
         "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?shallow=1"
       },
