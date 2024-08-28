@@ -1,14 +1,13 @@
-{ config, pkgs, inputs, systemSettings, secrets, ... }:
+{ config, pkgs, inputs, systemSettings, ... }:
 
 {
-  
   programs.firefox = {
     enable = true;
     profiles.ryan = {
   	  id = 0;
   	  name = "ryan default";
   	  settings = {
-  	    "browser.startup.homepage" = "https://start.${secrets.selfhosting.domain}";
+  	    "browser.startup.homepage" = "https://start.dfrp.xyz";
   	    "browser.search.region" = "US";
   	    "browser.search.isUS" = true;
   	    "extensions.autoDisableScopes" = 0; #automatically enable added extensions
