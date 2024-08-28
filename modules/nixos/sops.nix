@@ -1,9 +1,12 @@
 { inputs, config, ... }:
+let 
+  secretspath = builtins.toString inputs.mysecrets;
+in
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;   
+    defaultSopsFile = "${secretspath}/secrets.yaml"; 
     defaultSopsFormat = "yaml";
     age = {
       # Automatically import ssh keys as age keys

@@ -29,7 +29,7 @@
     };
 
     mysecrets = {
-      url = "https://git.dfrp.xyz/ryan/nix-secrets.git?shallow=1";
+      url = "git+ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1";
       flake = false;
     };
 
