@@ -58,7 +58,6 @@
   networking.hostName = "nixbook";
   networking.networkmanager.enable = true;
   services.resolved.enable = true; # needed for wireguard on kde
-  systemd.services.NetworkManager-wait-online.enable = false;
 
 ## Time
   time.timeZone = "America/Indiana/Indianapolis";
