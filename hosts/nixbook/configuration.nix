@@ -30,6 +30,8 @@
     '';
   };
 
+  services.nixos-cli.enable = true;
+
 ## Boot config with dual-boot and luks
   boot = {
     loader = {

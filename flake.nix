@@ -35,6 +35,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    nixos-cli.url = "github:water-sucks/nixos";
+
     stylix.url = "github:danth/stylix";
 
     plasma-manager = {
@@ -81,6 +83,7 @@
             };
           }
           inputs.nixos-cosmic.nixosModules.default
+          inputs.nixos-cli.nixosModules.nixos-cli
           inputs.stylix.nixosModules.stylix
         ];
       };
