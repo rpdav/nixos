@@ -5,7 +5,7 @@
    [  ./hardware-configuration.nix
       ../../variables.nix
       ../../modules/nixos/hybridgpu.nix
-      ../../modules/nixos/localbackup.nix
+#      ../../modules/nixos/localbackup.nix
       ../../modules/nixos/persistence
       ../../modules/nixos/sops.nix
       ../../modules/nixos/sshd.nix
