@@ -6,6 +6,7 @@
 
   programs.bash = {
     enable = true;
+    enableCompletion = true;
     shellAliases = {
       ".." = "cd ..";
       ll = "ls -la";
