@@ -30,8 +30,6 @@
     '';
   };
 
-  services.nixos-cli.enable = true;
-  programs.bash.completion.enable = true;
 
 ## Boot config with dual-boot and luks
   boot = {
@@ -63,7 +61,6 @@
 ## Time
   time.timeZone = "America/Indiana/Indianapolis";
 
-  services.libinput.enable = true;
 
 ## Enable sound and bluetooth.
   hardware.pulseaudio.enable = true; 
@@ -113,6 +110,14 @@
     qdirstat
     killall
   ];
+
+## Misc
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+  ];
+  services.libinput.enable = true;
+  services.nixos-cli.enable = true;
+  programs.bash.completion.enable = true;
 
 }
 

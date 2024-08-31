@@ -49,8 +49,18 @@
   			iconUpdateURL = "https://mynixos.com/favicon.png";
   			definedAliases = [ "@mn" ];
   		  };
+  		  "Wikipedia" = {
+  			urls = [{
+  			  template = "https://en.wikipedia.org/wiki/Special:Search";
+  			  params = [
+  				{ name = "search"; value = "{searchTerms}"; }
+  			  ];
+  			}];
+  			iconUpdateURL = "https://mynixos.com/favicon.png";
+  			definedAliases = [ "@wik" ];
+  		  };
   		};
-  	    order = [ "DuckDuckGo" "Google" "Nix Packages" "MyNixOS" ];
+  	    order = [ "DuckDuckGo" "Google" "Nix Packages" "MyNixOS" "Wikipedia" ];
   	  };
   	};
   };
