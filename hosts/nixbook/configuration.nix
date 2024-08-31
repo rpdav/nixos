@@ -31,6 +31,7 @@
   };
 
   services.nixos-cli.enable = true;
+  programs.bash.completion.enable = true;
 
 ## Boot config with dual-boot and luks
   boot = {
