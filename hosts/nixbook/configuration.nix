@@ -12,6 +12,7 @@
       ../../modules/nixos/steam.nix
 #      ../../modules/nixos/stylix.nix #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
       ../../modules/nixos/tailscale.nix
+      ../../modules/nixos/wireguard.nix
       ../../modules/nixos/wm/kde.nix
 #      ../../modules/nixos/wm/cosmic.nix
    ];
@@ -103,7 +104,6 @@
     nvtopPackages.full
     git
     git-crypt
-    wireguard-tools
     borgbackup
     rclone
     sops
