@@ -1,5 +1,5 @@
 { pkgs }:
 
   pkgs.writeShellScriptBin "wgup" ''
-    sudo ${pkgs.wireguard-tools}/bin/wg-quick up $1
+    sudo systemctl restart wg-quick-$1.service
   ''
