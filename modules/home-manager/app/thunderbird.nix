@@ -55,4 +55,16 @@
       };
     };
   };
+
+  accounts.contact = {
+    basePath = "contacts";
+    accounts.nextcloud = {
+      remote = {
+        type = "carddav";
+        url = "${secrets.calendar.url}";
+        userName = "${secrets.calendar.user}";
+        passwordCommand = "echo ${secrets.calendar.password}";
+      };
+    };
+  };
 }
