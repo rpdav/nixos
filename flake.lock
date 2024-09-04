@@ -413,10 +413,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1725454873,
-        "narHash": "sha256-+cAc/Rwurfkvo/hbKcRr91xqk5Y29HTeJFN/dhNOdCY=",
+        "lastModified": 1725455331,
+        "narHash": "sha256-djTi2baJqmUUlAHH57eNfywX11C37uSFNg8Vd6WWVvA=",
         "ref": "main",
-        "rev": "fa2a418e60f72da444851e091328736de7a50f4e",
+        "rev": "b9cefb1a23691a25d55387dd8c49f7f6066412e7",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git"
