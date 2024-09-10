@@ -64,7 +64,7 @@
 
 
 ## Enable sound and bluetooth.
-  hardware.pulseaudio.enable = true; 
+  services.pipewire.audio.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
