@@ -34,7 +34,7 @@
         location = "top";
         hiding = "none";
         height = 40;
-        floating = true;
+        floating = false;
         widgets = [
           {
             name = "org.kde.plasma.kickerdash";
