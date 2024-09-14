@@ -73,7 +73,7 @@
           inherit inputs;
         };
         modules = [
-          ./hosts/nixbook/configuration.nix 
+          ./hosts/nixbook
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-unstable.nixosModules.home-manager
           {
@@ -98,7 +98,7 @@
           inherit inputs;
         };
         modules = [
-          ./hosts/nixos-vm/configuration.nix 
+          ./hosts/nixos-vm
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-stable.nixosModules.home-manager
