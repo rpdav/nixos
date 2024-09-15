@@ -5,8 +5,8 @@
    [  ./hardware-configuration.nix
       ../../variables.nix
       ../common/core
-      ../common/optional/hybridgpu.nix
-#      ../common/optional/modules/nixos/localbackup.nix
+      ../common/optional/nvidia.nix
+#      ../common/optional/localbackup.nix
       ../common/optional/persistence
       ../common/optional/sops.nix
       ../common/optional/sshd.nix
@@ -98,7 +98,6 @@
 ## System packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    nvtopPackages.full
     borgbackup
     qdirstat
   ];
