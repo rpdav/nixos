@@ -4,6 +4,11 @@
 
 ## See https://nixos.wiki/wiki/Nvidia
 
+## Tools
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.full
+  ];
+
 ## Enable Nvidia hardware acceleration
   hardware.graphics = {
     enable = true;
