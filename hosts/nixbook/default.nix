@@ -4,17 +4,17 @@
   imports =
    [  ./hardware-configuration.nix
       ../../variables.nix
-      ../../modules/nixos/hybridgpu.nix
-#      ../../modules/nixos/localbackup.nix
-      ../../modules/nixos/persistence
-      ../../modules/nixos/sops.nix
-      ../../modules/nixos/sshd.nix
-      ../../modules/nixos/steam.nix
-#      ../../modules/nixos/stylix.nix #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
-      ../../modules/nixos/tailscale.nix
-      ../../modules/nixos/wireguard.nix
-      ../../modules/nixos/wm/kde.nix
-#      ../../modules/nixos/wm/cosmic.nix
+      ../common/core
+      ../common/optional/hybridgpu.nix
+#      ../common/optional/modules/nixos/localbackup.nix
+      ../common/optional/persistence
+      ../common/optional/sops.nix
+      ../common/optional/sshd.nix
+      ../common/optional/steam.nix
+#      ../common/optional/stylix.nix #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
+      ../common/optional/wireguard.nix
+      ../common/optional/wm/kde.nix
+#      ../common/optional/wm/cosmic.nix
    ];
 
 ## Variable overrides
@@ -97,18 +97,10 @@
 
 ## System packages
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs-stable; [
-    vim
-    wget
-    htop
+  environment.systemPackages = with pkgs; [
     nvtopPackages.full
-    git
-    git-crypt
     borgbackup
-    rclone
-    sops
     qdirstat
-    killall
   ];
 
 ## Misc
