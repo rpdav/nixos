@@ -56,9 +56,10 @@
     kdePackages.kpat
 
     # scripts
-    (import ../../modules/nixos/scripts/fs-diff.nix { inherit pkgs; })
-    (import ../../modules/nixos/scripts/wgdown.nix { inherit pkgs; })
-    (import ../../modules/nixos/scripts/wgup.nix { inherit pkgs; })
+    # TODO these should be moved to home dir, not hosts
+    (import ../common/optional/scripts/fs-diff.nix { inherit pkgs; })
+    (import ../common/optional/scripts/wgdown.nix { inherit pkgs; })
+    (import ../common/optional/scripts/wgup.nix { inherit pkgs; })
   ];
 
   services.nextcloud-client = {
