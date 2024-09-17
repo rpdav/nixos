@@ -3,7 +3,7 @@
 ## Structure
 
 * `flake.nix` contains inputs and outputs (currently just NixOS configs)
-* `justfile` is a config file for (just)[https://github.com/casey/just]. Several commands were borrowed from (Ryan Lin)[https://nixos-and-flakes.thiscute.world/best-practices/simplify-nixos-related-commands]
+* `justfile` is a config file for [just](https://github.com/casey/just). Several commands were borrowed from [Ryan Lin](https://nixos-and-flakes.thiscute.world/best-practices/simplify-nixos-related-commands)
 * `variables.nix` contains common system-related attributes like default usernames, architecture, and swap file size. The default values in this file can be overridden in each system's config. This lets me put more of my config in the `home/common` and `system/common` directories while still tailoring to each system. (NB these really aren't variables like are used in `let/in` bindings. They're actually custom options.)
 * `home` contains home-manager configurations
   * `common/core` contains submodules that **all** home configurations should include
