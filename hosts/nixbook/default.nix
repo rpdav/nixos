@@ -60,24 +60,13 @@
   services.resolved.enable = true; # needed for wireguard on kde
 
 ## Time
-  time.timeZone = "America/Indiana/Indianapolis";
+  time.timeZone = "systemSettings.timezone";
 
-
-## Enable sound and bluetooth.
+## Host-specific hardware config
   services.pipewire.audio.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-
-
-## User definitions
-  users.mutableUsers = false;
-  sops.secrets."${userSettings.username}/passwordhash".neededForUsers = true;
-
-  users.users.${userSettings.username} = {
-    hashedPasswordFile = config.sops.secrets."${userSettings.username}/passwordhash".path;
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  };
+  services.libinput.enable = true;
 
 ## Home Manager
   home-manager = {
@@ -96,7 +85,6 @@
   };
 
 ## System packages
-  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     borgbackup
     qdirstat
@@ -106,9 +94,6 @@
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
-  services.libinput.enable = true;
-  services.nixos-cli.enable = true;
-  programs.bash.completion.enable = true;
 
 }
 

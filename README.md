@@ -28,14 +28,19 @@
 
 Not everything can be fully declared in the NixOS config, so some critical files in `/etc` and `var` are symlinked to files in `/persist` using the impermanence module. There is a NixOS module (for persisting everything outside `/home`) and a home-manager module for dotfiles in `/home`.
 
-### Methods of wiping /
+### Methods of wiping `/`
+The impermanence module does not include a function to wipe the non-persistent directories. This config uses btrfs subvolumes and wipes them using a script taken from the [impermanence repo](https://github.com/nix-community/impermanence?tab=readme-ov-file#btrfs-subvolumes). This script is also in this repo under `hosts/common/optional/persistence/rollback.nix`. This has the advantage of keeping a handful of recently deleted roots as btrfs snapshots. If I forget to persist something and reboot, it can be recovered by mounting that snapshot.
 
+The other method is to use a tmpfs for `/`. This is simpler but takes up a lot of RAM.
 
-### To persist /home or not
-persisting .config versus its contents
-plasma-manager
+### To persist `/home` or not
+WIP: persisting .config versus its contents
+
+## Disko
+WIP
 
 ## Initial Install
+WIP
 
 ## Acknowledgements
 * [LibrePhoenix](https://github.com/librephoenix/nixos-config) - Phoenix's videos were a big help in setting up my initial system.
