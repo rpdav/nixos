@@ -14,7 +14,6 @@
     enable = true;  # NB: Defaults to true, not needed
     hideMounts = true;
     directories = [
-      "/etc/wireguard"
       "/etc/ssh"
       "/root/.ssh"
       "/var/lib/tailscale"
@@ -31,7 +30,7 @@
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
 
-    ## user persistence is in home-manager config. .config only works in the system config so that's why it's here
+    ## user persistence is in home-manager config. ~/.config only works in the system config for some reason so that's why it's here
     users.${userSettings.username} = {
       directories = [
         ".config"
