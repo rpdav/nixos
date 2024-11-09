@@ -46,9 +46,9 @@
       };
     };
     initrd.luks.devices = {
-      enc = {
+      crypt = {
                  ## UUID of the encrypted partition 
-        device = "/dev/disk/by-uuid/fda2cb5e-6df8-4f9c-a56a-35898a496ad1";
+        device = "/dev/disk/by-uuid/b784e938-236e-4fde-b97a-ec4b23b4814a";
         preLVM = true;
       };
     };
