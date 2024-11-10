@@ -54,18 +54,19 @@ in {
   sops.secrets."borg/passphrase" = { };
 
   services.borgbackup.jobs."local" = {
-    paths = [ "/persist/home/${userSettings.username}" ];
+    paths = [ "/persist" ];
     exclude = [
-      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail"
-      "/persist/home/${userSettings.username}/Nextcloud"
-      "/persist/home/${userSettings.username}/.local/share/Steam/steamapps"
+      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail" #email doesn't need backup
+      "/persist/home/${userSettings.username}/Nextcloud" #already on server
+      "/persist/home/${userSettings.username}/.local/share/Steam" #lots of small files and big games
       "/persist/home/${userSettings.username}/.local/share/lutris"
-      "/persist/home/${userSettings.username}/.local/share/protonmail"
+      "/persist/home/${userSettings.username}/.local/share/protonmail" #email
+      "/persist/home/${userSettings.username}/Downloads" #usually has some big temporary files that don't need backed up
     ];
     user = "root";
     repo = ("ssh://borg@borg/backup" + ("/" + config.networking.hostName));
     doInit = true;
-    startAt = [ "daily" ];
+    startAt = [ ];
 #    preHook = placeholder for snapshotting/mounting command
 #    postHook = placeholder for snapshot deletion/unmount
     encryption = {

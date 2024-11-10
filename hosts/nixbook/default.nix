@@ -6,7 +6,7 @@
       ../../variables.nix
       ../common/core
       ../common/optional/nvidia.nix
-#      ../common/optional/localbackup.nix
+      ../common/optional/localbackup.nix
       ../common/optional/persistence
       ../common/optional/sops.nix
       ../common/optional/sshd.nix
