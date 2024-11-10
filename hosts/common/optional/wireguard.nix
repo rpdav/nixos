@@ -7,6 +7,7 @@
 
   networking.wg-quick.interfaces = {
     home = {
+      autostart = false;
       address = [ "10.10.10.3/32" ];
       dns = [ "10.10.1.1" ];
       privateKeyFile = "${config.sops.secrets."wireguard/home/privateKey".path}";
@@ -19,6 +20,7 @@
       ];
     };
     vps = {
+      autostart = false;
       address = [ "10.100.94.11/32" ];
       privateKeyFile = "${config.sops.secrets."wireguard/vps/privateKey".path}";
       peers = [
