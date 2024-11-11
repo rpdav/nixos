@@ -37,6 +37,9 @@ gc:
   # garbage collect all unused nix store entries
   sudo nix-collect-garbage --delete-older-than 14d
 
+backup:
+  sudo systemctl restart borgbackup-job-local.service
+
 ############################################################################
 #
 #  Nix commands for remote systems
