@@ -66,7 +66,7 @@ in {
     user = "root";
     repo = ("ssh://borg@borg/backup" + ("/" + config.networking.hostName));
     doInit = true;
-    startAt = [ ];
+    startAt = [ "daily"  ];
 #    preHook = placeholder for snapshotting/mounting command
 #    postHook = placeholder for snapshot deletion/unmount
     encryption = {
