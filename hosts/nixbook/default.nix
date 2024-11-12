@@ -47,7 +47,7 @@
     initrd.luks.devices = {
       crypt = {
                  ## UUID of the encrypted partition 
-        device = "/dev/disk/by-uuid/b784e938-236e-4fde-b97a-ec4b23b4814a";
+        device = "/dev/disk/by-uuid/58d1a163-40f1-4aed-8f6f-cadf1b180e57";
         preLVM = true;
       };
     };
