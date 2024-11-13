@@ -40,7 +40,7 @@ WIP: persisting .config versus its contents
 WIP
 
 ## Initial Install
-WIP
+See readme files in each host's subfolder.
 
 ## Acknowledgements
 * [LibrePhoenix](https://github.com/librephoenix/nixos-config) - Phoenix's videos were a big help in setting up my initial system.

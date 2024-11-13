@@ -1,4 +1,6 @@
-I would prefer to do disk partitioning and installation declaratively using disko, but the nixbook host (an Asus Zenbook) dual boots with Windows and I’m not sure of the best way to do this with disko without wiping the Windows install. Plus, I haven’t figured out a good way to bootstrap secrets during install (particularly for the LUKS passphrase), so for now I just install imperatively.
+I would prefer to do disk partitioning and installation declaratively using disko, but the nixbook host (an Asus Zenbook) dual boots with Windows and I’m not sure of the best way to do this with disko without wiping the Windows install. Plus, I haven’t figured out a good way to bootstrap secrets during install (particularly for the LUKS passphrase), so for now I just reinstall imperatively.
+
+Some of these are unique to my setup, and are as much a reminder to myself as anything else.
 
 This is adapted from [hadilq’s guide](https://gist.githubusercontent.com/hadilq/f12f5378b74f1bdd440144373dfc5687/raw/5854600045b568107c9cd21b07a0b607329980e3/NixOS-guide.md) and includes:
 1. Encrypted swap and root volumes using LUKS and lvm
@@ -10,7 +12,7 @@ This guide assumes the following disk partitioning:
 3. Partition 5 will be used for /boot
 4. Partition 6 will include everything else
 
-# Disk Partitioning
+# Disk partitioning
 
 Create a NixOS live image and boot into it. Connect to wifi if needed and close the install wizard.
 
@@ -46,7 +48,7 @@ btrfs subvolume create /mnt/persist
 
 umount /mnt
 ```
-## Mount subvolumes and generate config
+## Mount subvolumes
 ```
 mount -o subvol=root,compress=zstd,noatime /dev/lvm/root /mnt
 
@@ -55,72 +57,24 @@ mount -o subvol=nix,compress=zstd,noatime /dev/lvm/root /mnt/nix
 mount -o subvol=persist,compress=zstd,noatime /dev/lvm/root /mnt/persist
 mount "$DISK"p5 /mnt/boot
 mount "$DISK"p1 /mnt/efi
-
-nixos-generate-config --root /mnt
-
 ```
+
+# Install
+Run
+```
+nixos-generate-config --root /mnt
+```
+This will place a `hardware-configuration.nix` and `configuration.nix` file in `/mnt/etc/nixos`.
 
 ## hardware-configuration.nix tweaks
 Make these tweaks to the generated hardware-configuration.nix file.
 * btrfs subvolumes usually are missing the "compress=zstd" and "noatime" options - add those back in.
 * `neededForBoot = true;` needs to be added as an option for the /persist volume.
 
-## configuration.nix tweaks
-Add these lines to the generated configuration.nix file. use `lsblk -f` to find uuids
+## configuration.nix
+Edit the `configuration.nix` file in this directory as needed. At a minimum, the UUID of the encrypted volume (p6 for me) must be updated. Use `lsblk -f` to find UUIDs.
 
-```
-## Enable flakes
-  nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
-## Enable support for encrypted partition
-## Remove any other auto-generated boot.loader lines
-  boot = {
-    loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/efi";
-      };
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-      };
-    };
-    initrd.luks.devices = {
-      crypt = {
-                 ## UUID of the encrypted partition 
-        device = "/dev/disk/by-uuid/xxxxx";
-        preLVM = true;
-      };
-    };
-  };
-
-## Useful packages for intial reinstall
-  environment.systemPackages = with pkgs; [
-    firefox
-    git
-    vim
-    borgbackup
-    tree
-    sops
-    ssh-to-age
-  ];
-
-## Define primary user
-  users.users.yourname = {
-    hashedPassword = "Run mkpasswd -m sha-512 to generate";
-    isNormalUser = true; 
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  };
-
-```
-You can also make any extra tweaks you’d like to be in place before doing the final config restore (like setting timezone)
-
-Finally you can run:
+Install:
 
 ```
 nixos-install
@@ -129,8 +83,8 @@ reboot
 
 You will be prompted to add a root password during install.
 
-# Restore /persist from backup
-The /persist volume is backed up to my local server using borg. Since borg must authenticate using ssh keys, we’ll need to either:
+# Restore data
+The /persist volume is backed up to my local server using borg. Since borg must authenticate using ssh keys, I’ll need to either:
 
 1. Restore the ssh private key from another location (like a password manager), or
 2. Create a temporary ssh key and add its public key to the borg server’s authorized keys file
@@ -145,20 +99,20 @@ mkdir ~/backup
 borg mount ssh://borg@serverip/backup/hostname ~/backup
 ```
 
-Restore the backup to /persist - be mindful of keeping the right permissions for /etc and /home
+Restore the backup to /persist - be mindful of keeping the right permissions for `/etc` and `/home`.
 
 # Bootstrap secrets
-There are 2 sops keys - a standalone key in ~/.config (restored through /persist/home backup) for user secrets and a key derived from the host ssh key (restored through /persist/etc backup) for system secrets. System rebuild should work fine with keys in /persist, but if you need to edit sops.yaml, sops expects those keys to be in ~/.config and /etc/ssh, not persist. If you have to update secrets before enabling impermanence, just copy those keys to the default location temporarily.
+There are 2 sops keys - a standalone key in `~/.config` (restored through `/persist/home` backup) for user secrets and a key derived from the host ssh key (restored through `/persist/etc` backup) for system secrets. System rebuild should work fine with keys in `/persist`, but if you need to edit sops.yaml, sops expects those keys to be in ~/.config and /etc/ssh, not persist. If you have to update secrets before enabling impermanence during rebuild, just copy those keys to the default location temporarily.
 
 If you update secrets, don’t forget to update the flake input for the secrets repo.
 
 # Rebuild config
-clone the nixos repo and cd into it
-rm
-Replace the hardware-configuration.nix file with the auto-generated one in etc/nixos and change file ownership to non-root.
+Clone this repo and replace the hardware-configuration.nix file with the auto-generated one in etc/nixos and change file ownership to non-root.
 
-Replace the UUID in the main configuration’s initrd.luks.devices block with the UUID of your encrypted partition (nvme0n1p6 for this guide).
+In the main configuration file (`hosts/<hostname>/default.nix`), replace the UUID in the main configuration’s `initrd.luks.devices` block with the UUID of your encrypted partition (p6 for this guide).
 
-NOTE initial rebuild requires root ssh key added to git. makes sense to use the same root temp ssh key to pull down persist backup and initial rebuild.
-
-`sudo nixos-rebuild boot --flake .#hostname`
+Finally run:
+```
+sudo nixos-rebuild boot --flake .#hostname
+```
+You can run `nixos-rebuild switch` instead but I find it smoother to activate the config on boot since a lot of services have to be restarted.
