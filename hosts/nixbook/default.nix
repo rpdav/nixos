@@ -15,6 +15,9 @@
       ../common/optional/wireguard.nix
       ../common/optional/wm/kde.nix
 #      ../common/optional/wm/cosmic.nix
+
+      # users
+      ../common/users/ryan/nixbook.nix
    ];
 
 ## Variable overrides
@@ -63,22 +66,6 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   services.libinput.enable = true;
-
-## Home Manager
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.${userSettings.username} = import ./home.nix;
-    sharedModules = with inputs; [ 
-      plasma-manager.homeManagerModules.plasma-manager 
-      impermanence.nixosModules.home-manager.impermanence
-    ];
-    extraSpecialArgs = {
-      inherit pkgs-stable;
-      inherit secrets;
-      inherit inputs;
-    };
-  };
 
 ## System packages
   environment.systemPackages = with pkgs; [

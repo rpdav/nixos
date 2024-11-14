@@ -14,6 +14,11 @@
 * `nix-secrets` see [Secrets](#Secrets)
 * `themes` placeholder to build out stylix themes and wallpapers; currently just has wallpapers since I'm still building this out
 
+Temporary notes on home-manager buildout:
+Each host's default.nix imports the users that will be enabled in hosts/common/users/user.nix
+That user.nix includes that user's initial home config block and points to home/user/${config.networking.hostName}.nix for the actual home config. It also contains any user-specific nixos config (like the user's password and permissions).
+That hostname.nix home config has any host-specific config for that user. It also imports all the core and optional home modules for that user.
+
 ## Secrets
 
 `nix-secrets` is a root-level directory excluded from this repo. It is managed in a private nix-secrets repo defined in `flake.nix`. Even though contents are encrypted, I prefer they stay [reasonably private](https://github.com/getsops/sops?tab=readme-ov-file#weak-aes-cryptography). It contains 2 sources of secrets:
