@@ -1,6 +1,8 @@
 { config, lib, pkgs, pkgs-stable, inputs, systemSettings, userSettings, secrets, ... }:
 
 {
+## This file contains host-specific NixOS configuration
+
   imports =
    [  ./hardware-configuration.nix
       ../../variables.nix
@@ -21,18 +23,10 @@
    ];
 
 ## Variable overrides
-  userSettings.theme = lib.mkForce "snowflake-blue";
+  userSettings.theme = lib.mkForce "snowflake-blue"; #this doesn't really matter, just put here for
 
 ## https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05"; 
-
-## Enable flakes
-  nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
 
 ## Boot config with dual-boot and luks
   boot = {
