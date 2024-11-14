@@ -17,7 +17,7 @@
 #      ../common/optional/wm/cosmic.nix
 
       # users
-      ../common/users/ryan/nixbook.nix
+      ../common/users/ryan
    ];
 
 ## Variable overrides
