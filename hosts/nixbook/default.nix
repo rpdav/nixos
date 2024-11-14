@@ -20,8 +20,8 @@
 ## Variable overrides
   userSettings.theme = lib.mkForce "snowflake-blue";
 
-## This should not be changed unless doing a fresh install
-  system.stateVersion = "24.05"; # Did you read the comment?
+## https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "24.05"; 
 
 ## Enable flakes
   nix = {
@@ -46,8 +46,8 @@
     };
     initrd.luks.devices = {
       crypt = {
-                 ## UUID of the encrypted partition 
-        device = "/dev/disk/by-uuid/58d1a163-40f1-4aed-8f6f-cadf1b180e57";
+                 
+        device = "/dev/disk/by-uuid/58d1a163-40f1-4aed-8f6f-cadf1b180e57"; ## UUID of the encrypted partition 
         preLVM = true;
       };
     };
@@ -57,9 +57,6 @@
   networking.hostName = "nixbook";
   networking.networkmanager.enable = true;
   services.resolved.enable = true; # needed for wireguard on kde
-
-## Time
-  time.timeZone = "systemSettings.timezone";
 
 ## Host-specific hardware config
   services.pipewire.audio.enable = true;
