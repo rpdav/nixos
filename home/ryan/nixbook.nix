@@ -26,8 +26,9 @@
     ./common/optional/wm/kde.nix
   ];
 
-  home.packages = with pkgs; [
-    protonmail-bridge-gui
+  home.packages = 
+    (with pkgs; [
+    #protonmail-bridge-gui
     thunderbird
     librewolf
     brave
@@ -55,7 +56,13 @@
     # scripts
     (import ./common/optional/scripts/wgdown.nix { inherit pkgs; })
     (import ./common/optional/scripts/wgup.nix { inherit pkgs; })
-  ];
+  ])
+
+  ++
+
+  (with pkgs-stable; [
+    protonmail-bridge-gui #bridge is throwing QML component error
+  ]);
 
   services.nextcloud-client = {
     enable = true;
