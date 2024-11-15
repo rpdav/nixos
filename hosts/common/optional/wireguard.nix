@@ -10,7 +10,7 @@
       autostart = false;
       address = [ "10.10.10.3/32" ];
       dns = [ "10.10.1.1" ];
-      privateKeyFile = "${config.sops.secrets."nixbook/home/wgPrivateKey".path}";
+      privateKeyFile = "${config.sops.secrets."${config.networking.hostName}/home/wgPrivateKey".path}";
       peers = [
         { #router 
           publicKey = "gy5zJPgMgC5ZBLScN7Wqiu0KXNL+rYGAnYs7c7wS72g=";
@@ -22,7 +22,7 @@
     vps = {
       autostart = false;
       address = [ "10.100.94.11/32" ];
-      privateKeyFile = "${config.sops.secrets."nixbook/vps/wgPrivateKey".path}";
+      privateKeyFile = "${config.sops.secrets."${config.networking.hostName}/vps/wgPrivateKey".path}";
       peers = [
         { 
           publicKey = "K+ROdMPjS4eUA804orSk9Vl8NryfvaiWUfPzqBEFbVw=";
