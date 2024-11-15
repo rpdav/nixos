@@ -2,18 +2,12 @@
 
 {
   
-  environment.etc = {
-    nixos.source = "/persist/etc/nixos";
-    NIXOS.source = "/persist/etc/NIXOS";
-    adjtime.source = "/persist/etc/adjtime";
-  };
-
   programs.fuse.userAllowOther = true;
 
   environment.persistence."/persist" = {
-    enable = true;  # NB: Defaults to true, not needed
     hideMounts = true;
     directories = [
+      "/etc/nixos"
       "/etc/ssh"
       "/root/.ssh"
       "/var/lib/tailscale"
@@ -26,11 +20,14 @@
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
     ];
     files = [
+      "/etc/adjtime"
       "/etc/machine-id"
+      "/etc/NIXOS"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
 
     ## user persistence is in home-manager config. ~/.config only works in the system config for some reason so that's why it's here
+    #TODO get rid of blanket .config persist and only do subfolders/files
     users.${userSettings.username} = {
       directories = [
         ".config"
