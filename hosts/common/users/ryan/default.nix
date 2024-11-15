@@ -1,6 +1,10 @@
-{config, inputs, secrets, pkgs-stable, ...}:
+{config, lib, inputs, secrets, pkgs-stable, ...}:
 {
 ## This file contains all NixOS config for user ryan
+
+## Variable overrides
+  userSettings.theme = lib.mkForce "snowflake-blue";
+  userSettings.base16theme = lib.mkForce "3024"; 
 
 ## user definition
   users.mutableUsers = false;
