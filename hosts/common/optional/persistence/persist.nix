@@ -26,13 +26,9 @@
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
 
-    ## user persistence is in home-manager config. ~/.config only works in the system config for some reason so that's why it's here
-    #TODO get rid of blanket .config persist and only do subfolders/files
     users.${userSettings.username} = {
       directories = [
-        ".config"
-      ];
-      files = [
+       ".config/systemd" # ~/.config/systemd must be persisted using the NixOS module. Remaining user persistence is in home-manager config.
       ];
     };
   };
