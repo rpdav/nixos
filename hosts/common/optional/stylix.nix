@@ -4,7 +4,7 @@
 
   stylix.enable = true;
   stylix.targets.grub.enable = false;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/3024.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.base16theme}.yaml"; #comment out this line to base scheme on wallpaper below
   stylix.image = ../../themes/${userSettings.theme}/wallpaper.png;
 
   stylix.fonts.sizes = {

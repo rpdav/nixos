@@ -1,4 +1,7 @@
 { inputs, config, ... }:
+
+# This config uses sshd keys - sshd must be enabled for system-level sops to work
+
 let 
   secretspath = builtins.toString inputs.mysecrets;
 in

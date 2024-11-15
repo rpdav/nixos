@@ -43,30 +43,24 @@ in {
 
 # This config assumes this machine's root user public key is copied to the borg server as /sshkeys/clients/$hostname. The server will create a backup directory under /backup/$hostname
 
-## Extra root ssh config 
-  programs.ssh.extraConfig = ''
-    Host borg
-      HostName 10.10.1.16
-      User borg
-  '';
-
 ## Local backup definition
   sops.secrets."borg/passphrase" = { };
 
   services.borgbackup.jobs."local" = {
     paths = [ "/persist" ];
     exclude = [
-      "/persist/home/${userSettings.username}/.thunderbird/${userSettings.username}/ImapMail" #email doesn't need backup
-      "/persist/home/${userSettings.username}/Nextcloud" #already on server
-      "/persist/home/${userSettings.username}/.local/share/Steam" #lots of small files and big games
-      "/persist/home/${userSettings.username}/.local/share/lutris"
-      "/persist/home/${userSettings.username}/.local/share/protonmail" #email
-      "/persist/home/${userSettings.username}/Downloads" #usually has some big temporary files that don't need backed up
+      # Run `borg help patterns` for guidance on exclusion patterns
+      "/persist/*/.thunderbird/*/ImapMail" #email doesn't need backup
+      "/persist/home/*/Nextcloud" #already on server
+      "/persist/home/*/.local/share/Steam" #lots of small files and big games
+      "/persist/home/*/.local/share/lutris"
+      "/persist/home/*/.local/share/protonmail" #email
+      "/persist/home/*/Downloads" #usually has some big temporary files that don't need backed up
     ];
     user = "root";
-    repo = ("ssh://borg@borg/backup" + ("/" + config.networking.hostName));
+    repo = ("ssh://borg@10.10.1.16/backup" + ("/" + config.networking.hostName));
     doInit = true;
-    startAt = [ "daily"  ];
+    startAt = [ "daily" ];
 #    preHook = placeholder for snapshotting/mounting command
 #    postHook = placeholder for snapshot deletion/unmount
     encryption = {

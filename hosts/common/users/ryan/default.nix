@@ -1,5 +1,6 @@
 {config, inputs, secrets, pkgs-stable, ...}:
 {
+## This file contains all NixOS config for user ryan
 
 ## user definition
   users.mutableUsers = false;
@@ -9,6 +10,7 @@
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    home = "/home/ryan"; # Setting this to point local backup to persisted home directory. Not sure this will actually work
   };
 
 ## home-manager config

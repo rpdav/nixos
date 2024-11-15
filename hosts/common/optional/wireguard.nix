@@ -1,8 +1,8 @@
 { config, secrets, ... }:
 {
   sops.secrets = {
-    "wireguard/home/privateKey" = { };
-    "wireguard/vps/privateKey" = { };
+    "${config.networking.hostName}/home/wgPrivateKey" = { };
+    "${config.networking.hostName}/vps/wgPrivateKey" = { };
   };
 
   networking.wg-quick.interfaces = {
@@ -10,7 +10,7 @@
       autostart = false;
       address = [ "10.10.10.3/32" ];
       dns = [ "10.10.1.1" ];
-      privateKeyFile = "${config.sops.secrets."wireguard/home/privateKey".path}";
+      privateKeyFile = "${config.sops.secrets."nixbook/home/wgPrivateKey".path}";
       peers = [
         { #router 
           publicKey = "gy5zJPgMgC5ZBLScN7Wqiu0KXNL+rYGAnYs7c7wS72g=";
@@ -22,7 +22,7 @@
     vps = {
       autostart = false;
       address = [ "10.100.94.11/32" ];
-      privateKeyFile = "${config.sops.secrets."wireguard/vps/privateKey".path}";
+      privateKeyFile = "${config.sops.secrets."nixbook/vps/wgPrivateKey".path}";
       peers = [
         { 
           publicKey = "K+ROdMPjS4eUA804orSk9Vl8NryfvaiWUfPzqBEFbVw=";

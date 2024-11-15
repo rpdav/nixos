@@ -11,5 +11,7 @@
     rclone
     sops
     killall
+    pciutils
+    usbutils
   ];
 }

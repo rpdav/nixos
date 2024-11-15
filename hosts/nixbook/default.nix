@@ -10,8 +10,6 @@
       ../common/optional/nvidia.nix
       ../common/optional/localbackup.nix
       ../common/optional/persistence
-      ../common/optional/sops.nix
-      ../common/optional/sshd.nix
       ../common/optional/steam.nix
 #      ../common/optional/stylix.nix #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
       ../common/optional/wireguard.nix
@@ -23,7 +21,7 @@
    ];
 
 ## Variable overrides
-  userSettings.theme = lib.mkForce "snowflake-blue"; #this doesn't really matter, just put here for
+  userSettings.username = lib.mkForce "ryan"; #primary user (not necessarily only user)
 
 ## https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05"; 

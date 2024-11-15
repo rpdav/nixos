@@ -3,8 +3,10 @@
 {
   sops.secrets."tailscale/authkey" = { };
 
+  # Install tailscale package
   environment.systemPackages = [ pkgs.tailscale ];
 
+  # Enable tailscale
   services.tailscale = {
     enable = true;
     extraUpFlags = [ 
@@ -12,6 +14,7 @@
     ];
   };
 
+  # Auto-connect service
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
 

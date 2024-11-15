@@ -6,6 +6,8 @@
   imports = [
     ./tailscale.nix
     ./packages.nix
+    ./sops.nix
+    ./sshd.nix #needed for sops keys
   ];
 
 ## Enable flakes

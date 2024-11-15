@@ -13,7 +13,7 @@
   hardware.graphics = {
     enable = true;
     };
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ]; #this covers wayland too
 
 ## Add Nvidia kernel module if system boots to text
 #  boot.initrd.kernelModules = [ "nvidia" ];
@@ -22,6 +22,8 @@
 #  boot.kernelParams = [ "module_blacklist=amdgpu" ];
 
 ## General Nvidia config
+  # Version pinned to 535 due to kernel panics on nixbook
+  # See https://nixos.wiki/wiki/Nvidia#Running_the_new_RTX_SUPER_on_nixos_stable
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
@@ -44,6 +46,7 @@ in  config.boot.kernelPackages.nvidiaPackages.mkDriver {
     };
   }; 
 
+  # This is specific to nixbook; will need custom options if other systems need hybrid Nvidia graphics
 	hardware.nvidia.prime = {
 		# Integrated
     amdgpuBusId = "PCI:04:00:0";
