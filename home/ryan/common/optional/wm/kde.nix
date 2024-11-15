@@ -5,14 +5,13 @@
   home.packages = with pkgs; [
     aha
     clinfo
-    pciutils
     wayland-utils
     kdePackages.kalk
   ];
 
   programs.plasma = {
     enable = true;
-    overrideConfig = true;
+    overrideConfig = true; # delete existing config on reload
 
 ## Theming is handled by stylix
 #    workspace = {
@@ -87,6 +86,7 @@
             };
           }
           {
+            #TODO clock broken in kde 6.2.2
             name = "org.kde.plasma.digitalclock";
             config = {
               Appearance = {

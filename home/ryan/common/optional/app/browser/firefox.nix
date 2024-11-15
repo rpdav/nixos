@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, systemSettings, ... }:
+{ config, pkgs, inputs, systemSettings, secrets, ... }:
 
 {
   programs.firefox = {
@@ -7,7 +7,7 @@
   	  id = 0;
   	  name = "ryan default";
   	  settings = {
-  	    "browser.startup.homepage" = "https://start.dfrp.xyz";
+  	    "browser.startup.homepage" = "${secrets.selfhosting.startpage}";
   	    "browser.search.region" = "US";
   	    "browser.search.isUS" = true;
   	    "extensions.autoDisableScopes" = 0; #automatically enable added extensions
@@ -19,11 +19,15 @@
   	    "extensions.formautofill.addresses.enabled" = false; #disable address autofill
   	    "extensions.formautofill.creditCards.enabled" = false; #disable payment autofill	    
       };
+
+      # Extensions
       extensions = with inputs.firefox-addons.packages."${systemSettings.arch}"; [
         bitwarden
         ublock-origin
         metamask
       ];
+
+      # Search engines
   	  search = {
   	    force = true;
   	    default = "DuckDuckGo";

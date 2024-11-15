@@ -12,21 +12,19 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  imports =
-    [  ../../variables.nix
-      ./common/app/bash.nix
-      ./common/app/browser
-      ./common/app/defaultapps.nix
-      ./common/app/games
-      ./common/app/git.nix
-      ./common/app/kitty.nix
-      ./common/app/thunderbird.nix
-      ./common/app/vim.nix
-      ./common/config/persist.nix
-      ./common/config/ssh.nix
-      ./common/sops.nix
-      ./common/wm/kde.nix
-    ];
+  imports = [
+    ../../variables.nix
+
+    ./common/core
+
+    ./common/optional/app/browser
+    ./common/optional/app/defaultapps.nix
+    ./common/optional/app/games
+    ./common/optional/app/kitty.nix
+    ./common/optional/app/thunderbird.nix
+    ./common/optional/config/persist.nix
+    ./common/optional/wm/kde.nix
+  ];
 
   home.packages = with pkgs; [
     protonmail-bridge-gui
@@ -34,7 +32,6 @@
     librewolf
     brave
     tor-browser
-    tree
     remmina
     onlyoffice-bin
     ghostwriter
@@ -42,9 +39,6 @@
     xiphos
     audacity
     gimp
-    fastfetch
-    lazygit
-    just
 
     # terminals
     kitty
@@ -59,10 +53,8 @@
     kdePackages.kpat
 
     # scripts
-    # TODO these should be moved to home dir, not hosts
-    (import ./common/scripts/fs-diff.nix { inherit pkgs; })
-    (import ./common/scripts/wgdown.nix { inherit pkgs; })
-    (import ./common/scripts/wgup.nix { inherit pkgs; })
+    (import ./common/optional/scripts/wgdown.nix { inherit pkgs; })
+    (import ./common/optional/scripts/wgup.nix { inherit pkgs; })
   ];
 
   services.nextcloud-client = {

@@ -56,6 +56,7 @@
     };
   };
 
+  #TODO this isn't working
   accounts.contact = {
     basePath = "contacts";
     accounts.nextcloud = {
