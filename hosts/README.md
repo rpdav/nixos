@@ -18,5 +18,5 @@ This is where all other common modules go. Even if it's only being used on one h
 ## hosts/common/users
 This contains a folder for each user in use in my config. It contains any user-specific **NixOS** config (not home-manager config). At a minimum, it defines the user and, if they use it, enables home-manager and points to their config in the home directory at `home/username/hostname.nix`
 
-# hosts/<hostname>
+# hosts/\<hostname\>
 This is where all host-specific NixOS config lives, like boot devices, hostname, hardware config, and system stateVersion. Any config that can be reused across hosts goes into `common`.
