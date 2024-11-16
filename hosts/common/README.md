@@ -3,7 +3,7 @@ This is where all modules live that are used by multiple hosts. If any host-spec
 
 For instance, two machines with different swap sizes can use a single disk config file by setting their own `systemSettings.swapSize = lib.mkForce "16G"`.
 
-Similarly, they can all do backups to their own repository by defining the backup path as something like `borg:backups/${config.networking.hostname}`.
+Similarly, they can all do backups to their own repository using the same backup config by defining the backup target as something like `borg:backups/${config.networking.hostname}`.
 
 If a module has to be truly host-specific, it goes in that host's directory.
 
