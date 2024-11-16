@@ -13,7 +13,7 @@
       ../common/optional/steam.nix
 #      ../common/optional/stylix.nix #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
       ../common/optional/wireguard.nix #TODO replace vanilla wireguard with tailscale
-      ../common/optional/wm/kde.nix
+      ../common/optional/wm/gnome.nix
 #      ../common/optional/wm/cosmic.nix
 
       # users

@@ -23,7 +23,7 @@
     ./common/optional/app/kitty.nix
     ./common/optional/app/thunderbird.nix
     ./common/optional/config/persist.nix
-    ./common/optional/wm/kde.nix
+    ./common/optional/wm/gnome.nix
   ];
 
   home.packages = 
