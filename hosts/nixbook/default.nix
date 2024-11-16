@@ -38,6 +38,7 @@
         device = "nodev";
         efiSupport = true;
       };
+      timeout = 2;
     };
     initrd.luks.devices = {
       crypt = {
