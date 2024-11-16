@@ -28,7 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";    
     };
 
-    mysecrets = {
+    nix-secrets = {
       url = "git+ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1";
       flake = false;
     };
@@ -58,7 +58,7 @@
 
   outputs = { self, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
     let
-      secrets = builtins.fromJSON (builtins.readFile "${inputs.mysecrets}/secrets.json");
+      secrets = builtins.fromJSON (builtins.readFile "${inputs.nix-secrets}/secrets.json");
     in rec {
 
     nixosConfigurations = {

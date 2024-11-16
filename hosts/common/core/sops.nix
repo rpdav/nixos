@@ -3,7 +3,7 @@
 # This config uses sshd keys - sshd must be enabled for system-level sops to work
 
 let 
-  secretspath = builtins.toString inputs.mysecrets;
+  secretspath = builtins.toString inputs.nix-secrets;
 in
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
