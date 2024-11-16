@@ -22,6 +22,6 @@
   programs.bash.completion.enable = true;
 
 ## Time
-  time.timeZone = "systemSettings.timezone";
+  time.timeZone = systemSettings.timezone;
 
 }
