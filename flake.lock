@@ -340,13 +340,13 @@
         "type": "github"
       }
     },
-    "mysecrets": {
+    "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1731690889,
-        "narHash": "sha256-M25+0dLybApZ2NlttifhcQT7Ju9/HgeC463LLckppoU=",
+        "lastModified": 1731806748,
+        "narHash": "sha256-r+6WneSFlKrJkAk29OHo/UQB+LphQJOKYtdCh+kTJSA=",
         "ref": "main",
-        "rev": "d54a47c342600fa33b17f8bb7602e7dca0d3a44f",
+        "rev": "2bf26e78f8c803d12fe6666b48dd3b5c845a5e21",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git"
@@ -566,7 +566,7 @@
         "home-manager-stable": "home-manager-stable",
         "home-manager-unstable": "home-manager-unstable",
         "impermanence": "impermanence",
-        "mysecrets": "mysecrets",
+        "nix-secrets": "nix-secrets",
         "nixos-cli": "nixos-cli",
         "nixos-cosmic": "nixos-cosmic",
         "nixpkgs-stable": "nixpkgs-stable_2",

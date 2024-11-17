@@ -5,7 +5,7 @@
 
   imports =
    [  ./hardware-configuration.nix
-      ../../variables.nix
+      ../../vars
       ../common/core
       ../common/optional/nvidia.nix
       ../common/optional/localbackup.nix

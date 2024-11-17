@@ -13,7 +13,7 @@
   programs.home-manager.enable = true;
 
   imports = [
-    ../../variables.nix
+    ../../vars
 
     ./common/core
 
