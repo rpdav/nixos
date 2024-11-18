@@ -44,11 +44,12 @@
 
       # Gnome
 #      ".config/dconf"
-#      ".config/evolution"
+#      ".config/evolution" #mail/calendar client?
 #      ".config/gtk-2.0"
 #      ".config/gtk-3.0"
 #      ".config/gtk-4.0"
 #      ".config/nemo"
+      ".config/gnome-initial-setup-done" #welcome pop-up
 
       # KDE
       ".config/kdedefaults"
