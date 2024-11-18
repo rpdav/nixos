@@ -49,7 +49,6 @@
 #      ".config/gtk-3.0"
 #      ".config/gtk-4.0"
 #      ".config/nemo"
-      ".config/gnome-initial-setup-done" #welcome pop-up
 
       # KDE
       ".config/kdedefaults"
@@ -69,6 +68,7 @@
       ".config/ghostwriterrc"
 
       # Gnome
+      ".config/gnome-initial-setup-done" #welcome pop-up
 
       # KDE
 #      ".config/gwenviewrc"
