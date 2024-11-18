@@ -71,12 +71,12 @@
       # Gnome
 
       # KDE
-      ".config/gwenviewrc"
-      ".config/kactivitymanagerd-statsrc"
-      ".config/konsolerc"
-      ".config/konsolesshconfig"
-      ".config/krdpserverrc"
-      ".config/kwriterc"
+#      ".config/gwenviewrc"
+#      ".config/kactivitymanagerd-statsrc"
+#      ".config/konsolerc"
+#      ".config/konsolesshconfig"
+#      ".config/krdpserverrc"
+#      ".config/kwriterc"
 
       # System
       ".Xauthority"
