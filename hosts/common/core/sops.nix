@@ -1,6 +1,6 @@
 { inputs, config, ... }:
 
-# This config uses sshd keys - sshd must be enabled for system-level sops to work
+# This module uses sshd keys to generate host age keys - sshd must be enabled for system-level sops to work
 
 let 
   secretspath = builtins.toString inputs.nix-secrets;
