@@ -1,4 +1,8 @@
 {config, lib, inputs, secrets, pkgs-stable, ...}:
+let
+  # Generates a list of the keys in ./keys
+  pubKeys = lib.filesystem.listFilesRecursive ./keys;
+in
 {
 ## This file contains all NixOS config for user ryan
 
@@ -16,6 +20,9 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     home = "/home/ryan"; # Setting this to point local backup to persisted home directory. Not sure this will actually work
   };
+
+  # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
+  openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
 
 ## home-manager config
   home-manager = {
