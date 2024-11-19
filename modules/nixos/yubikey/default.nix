@@ -1,3 +1,5 @@
+# Got this from EmergentMind - see https://unmovedcentre.com/posts/improving-qol-on-nixos-with-yubikey/ for full guide to set up
+
 {
   config,
   pkgs,
