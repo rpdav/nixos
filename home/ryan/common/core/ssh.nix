@@ -21,6 +21,7 @@ in
     sops.secrets = {
       "${userSettings.username}/sshKeys/id_ed25519".path = "/home/${userSettings.username}/.ssh/id_ed25519";
       "${userSettings.username}/sshKeys/id_yubi5c".path = "/home/${userSettings.username}/.ssh/id_yubi5c";
+      "${userSettings.username}/sshKeys/id_yubi5pink".path = "/home/${userSettings.username}/.ssh/id_yubi5pink";
     };
 
     # General ssh config
