@@ -50,11 +50,30 @@ in
         Host borg
           Hostname 10.10.1.16
           User borg
+
         # req'd for enabling yubikey-agent
         AddKeysToAgent yes
       '';
-    };
 
+      matchBlocks = {
+        "git" = {
+          host = "gitea.dfrp.xyz github.com";
+          user = "git";
+          identityFile = [
+            "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
+           "~/.ssh/id_ed25519" # fallback if yubis aren't present
+          ];
+       };
+        "servers" = {
+          host = "nas pi vps pve borg";
+          user = "root";
+          identityFile = [
+            "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
+           "~/.ssh/id_ed25519" # fallback if yubis aren't present
+          ];
+        };
+      };
+    };
     # symlink public keys
     home.file = {
     ".ssh/sockets/.keep".text = "# Managed by Home Manager";
