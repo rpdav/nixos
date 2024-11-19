@@ -1,8 +1,8 @@
-{config, pkgs, userSettings, ... }:
+{config, pkgs, lib, userSettings, ... }:
 
 let
   # Path to public keys stored in config
-  pathtokeys  = "../../../../hosts/common/users/${userSettings.username}/keys";
+  pathtokeys  = ../../../../hosts/common/users/${userSettings.username}/keys;
   # List of public keys in path
   yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))
@@ -20,7 +20,6 @@ in
     # Pull private keys from sops
     sops.secrets = {
       "${userSettings.username}/sshKeys/id_ed25519".path = "/home/${userSettings.username}/.ssh/id_ed25519";
-    };
       "${userSettings.username}/sshKeys/id_yubi5c".path = "/home/${userSettings.username}/.ssh/id_yubi5c";
     };
 
@@ -51,14 +50,11 @@ in
         Host borg
           Hostname 10.10.1.16
           User borg
+        # req'd for enabling yubikey-agent
+        AddKeysToAgent yes
       '';
     };
 
-    # req'd for enabling yubikey-agent
-    extraConfig = ''
-      AddKeysToAgent yes
-    '';
-    
     # symlink public keys
     home.file = {
     ".ssh/sockets/.keep".text = "# Managed by Home Manager";

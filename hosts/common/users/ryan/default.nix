@@ -19,10 +19,11 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     home = "/home/ryan"; # Setting this to point local backup to persisted home directory. Not sure this will actually work
+
+    # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
+    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
   };
 
-  # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
-  openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
 
 ## home-manager config
   home-manager = {
