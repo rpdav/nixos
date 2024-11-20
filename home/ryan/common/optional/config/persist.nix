@@ -32,7 +32,6 @@
       ".config/BraveSoftware"
       ".config/chromium"
       ".config/GIMP"
-      ".config/git"
       ".config/'Moonlight Game Streaming Project'"
       ".config/Nextcloud"
       ".config/onlyoffice"
