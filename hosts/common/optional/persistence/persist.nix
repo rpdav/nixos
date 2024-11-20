@@ -25,12 +25,6 @@
       "/etc/NIXOS"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
-
-    users.${userSettings.username} = {
-      directories = [
-       ".config/systemd" # ~/.config/systemd must be persisted using the NixOS module. Remaining user persistence is in home-manager config.
-      ];
-    };
   };
 
   security.sudo.extraConfig = ''
