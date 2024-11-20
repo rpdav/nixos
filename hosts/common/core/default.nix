@@ -10,18 +10,18 @@
     ./sshd.nix #needed for sops keys
   ];
 
-## Enable flakes
+  # Enable flakes
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
 
-## CLI config
+  # CLI config
   services.nixos-cli.enable = true;
   programs.bash.completion.enable = true;
 
-## Time
+  # Time
   time.timeZone = systemSettings.timezone;
 
 }

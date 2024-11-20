@@ -7,11 +7,11 @@ let
 in
 {
 
-## Variable overrides
+  # user--specific variable overrides
   userSettings.theme = lib.mkForce "snowflake-blue";
   userSettings.base16theme = lib.mkForce "3024"; 
 
-## user definition
+  # user definition
   users.mutableUsers = false;
   sops.secrets."ryan/passwordhash".neededForUsers = true;
 
@@ -25,10 +25,10 @@ in
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
   };
 
-## passwordless sudo - see ../../optional/yubikey.nix and modules/nixos/yubikey
+  # passwordless sudo - see ../../optional/yubikey.nix and modules/nixos/yubikey
   security.pam.services.login.u2fAuth = lib.mkForce false; # Enabled in yubikey module by default; I prefer password login since I leave my key in at all times
 
-## home-manager config
+  # home-manager config
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
