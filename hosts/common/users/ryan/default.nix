@@ -26,12 +26,6 @@ in
   };
 
 ## passwordless sudo - see ../../optional/yubikey.nix and modules/nixos/yubikey
-#TODO should this be made generic and put somewhere else? Maybe sops.nix?
-  sops.secrets."ryan/u2f_keys" = {
-    owner = config.users.users.ryan.name;
-    group = config.users.users.ryan.group;
-    path = "/home/ryan/.config/Yubico/u2f_keys";
-  };
   security.pam.services.login.u2fAuth = lib.mkForce false; # Enabled in yubikey module by default; I prefer password login since I leave my key in at all times
 
 ## home-manager config
