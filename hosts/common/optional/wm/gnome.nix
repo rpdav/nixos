@@ -7,13 +7,6 @@
     displayManager.gdm = {
       enable = true;
       wayland = true;
-      settings = {
-        daemon = {
-          TimedLoginEnable = true;
-          TimedLogin = userSettings.username;
-          TimedLoginDelay = 2;
-        };
-      };
     };
     desktopManager.gnome.enable = true;
   };
