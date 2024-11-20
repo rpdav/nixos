@@ -19,7 +19,7 @@ in
   {
     # Pull private keys from sops
     sops.secrets = {
-      "${userSettings.username}/sshKeys/id_ed25519".path = "/home/${userSettings.username}/.ssh/id_ed25519";
+      "${userSettings.username}/sshKeys/id_manual".path = "/home/${userSettings.username}/.ssh/id_manual.key"; # Can't get passwordless sudo to use yubikey by default; renaming so this key isn't picked up unless manually specified.
       "${userSettings.username}/sshKeys/id_yubi5c".path = "/home/${userSettings.username}/.ssh/id_yubi5c";
       "${userSettings.username}/sshKeys/id_yubi5pink".path = "/home/${userSettings.username}/.ssh/id_yubi5pink";
     };
@@ -62,14 +62,14 @@ in
           user = "git";
           identityFile = [
             "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
-            "~/.ssh/id_ed25519" # fallback if yubis aren't present
+            "~/.ssh/id_manual.key" # fallback if yubis aren't present
           ];
        };
         "servers" = {
           host = "nas pi vps pve borg";
           identityFile = [
             "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
-            "~/.ssh/id_ed25519" # fallback if yubis aren't present
+            "~/.ssh/id_manual.key" # fallback if yubis aren't present
           ];
         };
       };
