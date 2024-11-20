@@ -62,14 +62,14 @@ in
           user = "git";
           identityFile = [
             "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
-           "~/.ssh/id_ed25519" # fallback if yubis aren't present
+            "~/.ssh/id_ed25519" # fallback if yubis aren't present
           ];
        };
         "servers" = {
           host = "nas pi vps pve borg";
           identityFile = [
             "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
-           "~/.ssh/id_ed25519" # fallback if yubis aren't present
+            "~/.ssh/id_ed25519" # fallback if yubis aren't present
           ];
         };
       };
