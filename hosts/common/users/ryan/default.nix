@@ -1,10 +1,11 @@
 {config, lib, inputs, secrets, pkgs-stable, ...}:
+## This file contains all NixOS config for user ryan
+
 let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in
 {
-## This file contains all NixOS config for user ryan
 
 ## Variable overrides
   userSettings.theme = lib.mkForce "snowflake-blue";
@@ -24,15 +25,23 @@ in
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
   };
 
+## passwordless sudo - see ../../optional/yubikey.nix
+#TODO should this be made generic and put somewhere else? Maybe sops.nix?
+  sops.secrets."ryan/u2f_keys" = {
+    owner = config.users.users.ryan.name;
+    group = config.users.users.ryan.group;
+    path = "/home/ryan/.config/Yubico/u2f_keys";
+  };
 
 ## home-manager config
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.ryan = import ../../../../home/ryan/${config.networking.hostName}.nix;
-    sharedModules = with inputs; [ 
-      plasma-manager.homeManagerModules.plasma-manager 
-      impermanence.nixosModules.home-manager.impermanence
+    sharedModules = [ 
+      (import ../../../../modules/home-manager)
+      inputs.plasma-manager.homeManagerModules.plasma-manager 
+      inputs.impermanence.nixosModules.home-manager.impermanence
     ];
     extraSpecialArgs = {
       inherit pkgs-stable;

@@ -69,5 +69,8 @@
     startInBackground = true;
   };
 
+  # for using yubikey for ssh and sudo auth
+  services.yubikey-touch-detector.enable = true;
+
 }
 
