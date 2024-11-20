@@ -13,7 +13,6 @@
   home.packages = with pkgs; [
     tree
     fastfetch
-    lazygit
     just
 
     # scripts

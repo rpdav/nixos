@@ -11,4 +11,10 @@
     };
   };
 
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      git.autoFetch = false; # too many "yubikey waiting for touch" prompts
+    };
+  };
 }

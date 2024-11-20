@@ -33,7 +33,6 @@
       ".config/chromium"
       ".config/GIMP"
       ".config/git"
-      ".config/lazygit"
       ".config/'Moonlight Game Streaming Project'"
       ".config/Nextcloud"
       ".config/onlyoffice"
