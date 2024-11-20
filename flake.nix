@@ -76,7 +76,7 @@
     secrets = builtins.fromJSON (builtins.readFile "${inputs.nix-secrets}/secrets.json");
   in rec 
   { 
-    # The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
+    #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
     # for some reason. Instead, I'm importing in each host's modules list.
     #nixosModules = import ./modules/nixos;
     #homeManagerModules = import ./modules/home-manager;
