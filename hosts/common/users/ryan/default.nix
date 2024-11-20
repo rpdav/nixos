@@ -21,17 +21,18 @@ in
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     home = "/home/ryan"; # Setting this to point local backup to persisted home directory. Not sure this will actually work
 
-    # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
+    # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
   };
 
-## passwordless sudo - see ../../optional/yubikey.nix
+## passwordless sudo - see ../../optional/yubikey.nix and modules/nixos/yubikey
 #TODO should this be made generic and put somewhere else? Maybe sops.nix?
   sops.secrets."ryan/u2f_keys" = {
     owner = config.users.users.ryan.name;
     group = config.users.users.ryan.group;
     path = "/home/ryan/.config/Yubico/u2f_keys";
   };
+  security.pam.services.login.u2fAuth = lib.mkForce false; # Enabled in yubikey module by default; I prefer password login since I leave my key in at all times
 
 ## home-manager config
   home-manager = {
