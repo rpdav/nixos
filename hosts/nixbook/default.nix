@@ -13,16 +13,15 @@
       ../common/optional/steam.nix
 #      ../common/optional/stylix.nix #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
       ../common/optional/wireguard.nix #TODO replace vanilla wireguard with tailscale
-      ../common/optional/yubikey.nix
       ../common/optional/wm/gnome.nix
-#      ../common/optional/wm/cosmic.nix
+      ../common/optional/yubikey.nix
 
       # users
       ../common/users/ryan
    ];
 
 ## Variable overrides
-  userSettings.username = lib.mkForce "ryan"; #primary user (not necessarily only user)
+  userSettings.username = "ryan"; #primary user (not necessarily only user)
 
 ## https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05"; 
@@ -43,7 +42,6 @@
     };
     initrd.luks.devices = {
       crypt = {
-                 
         device = "/dev/disk/by-uuid/58d1a163-40f1-4aed-8f6f-cadf1b180e57"; ## UUID of the encrypted partition 
         preLVM = true;
       };

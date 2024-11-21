@@ -23,6 +23,7 @@
     ./common/optional/app/kitty.nix
     ./common/optional/app/thunderbird.nix
     ./common/optional/config/persist.nix
+    ./common/optional/config/yubikey.nix
     ./common/optional/wm/gnome.nix
   ];
 
@@ -68,12 +69,6 @@
     enable = true;
     startInBackground = true;
   };
-
-  # for using yubikey for ssh and sudo auth
-  services.yubikey-touch-detector.enable = true;
-
-#TODO should this be made generic and put somewhere else? Maybe sops.nix?
-  sops.secrets."ryan/u2f_keys".path = "/home/ryan/.config/Yubico/u2f_keys";
 
 }
 

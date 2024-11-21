@@ -17,12 +17,14 @@ let
   );
 in
   {
-    # Pull private keys from sops
+    # Pull private key from sops
     sops.secrets = {
-      "${userSettings.username}/sshKeys/id_manual".path = "/home/${userSettings.username}/.ssh/id_manual.key"; # Can't get passwordless sudo to use yubikey by default; renaming so this key isn't picked up unless manually specified.
-      "${userSettings.username}/sshKeys/id_yubi5c".path = "/home/${userSettings.username}/.ssh/id_yubi5c";
-      "${userSettings.username}/sshKeys/id_yubi5pink".path = "/home/${userSettings.username}/.ssh/id_yubi5pink";
+      "${userSettings.username}/sshKeys/id_manual".path = "/home/${userSettings.username}/.ssh/id_manual"; 
     };
+
+    # symlink public keys
+    home.file = {
+    } // yubikeyPublicKeyEntries;
 
     # General ssh config
     programs.ssh = {
@@ -52,30 +54,8 @@ in
           Hostname 10.10.1.16
           User borg
 
-        # req'd for enabling yubikey-agent
-        AddKeysToAgent yes
+        Host gitea.dfrp.xyz github.com
+          User git
       '';
-
-      matchBlocks = {
-        "git" = {
-          host = "gitea.dfrp.xyz github.com";
-          user = "git";
-          identityFile = [
-            "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
-            "~/.ssh/id_manual.key" # fallback if yubis aren't present
-          ];
-       };
-        "servers" = {
-          host = "nas pi vps pve borg";
-          identityFile = [
-            "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
-            "~/.ssh/id_manual.key" # fallback if yubis aren't present
-          ];
-        };
-      };
     };
-    # symlink public keys
-    home.file = {
-    ".ssh/sockets/.keep".text = "# Managed by Home Manager";
-    } // yubikeyPublicKeyEntries;
   }
