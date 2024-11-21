@@ -41,7 +41,7 @@ Not everything can be fully declared in the NixOS config, so some critical files
 
 ### Methods of wiping `/`
 
-The impermanence module does not include a function to wipe the non-persistent directories. This config uses btrfs subvolumes and wipes them using a script taken from the [impermanence repo](https://github.com/nix-community/impermanence?tab=readme-ov-file#btrfs-subvolumes). This script is also in this repo under `hosts/common/optional/persistence/rollback.nix`. This has the advantage of keeping a handful of recently deleted roots as btrfs snapshots. If I forget to persist something and reboot, it can be recovered by mounting that snapshot. This method works for zfs as well but would need a different wiping script.
+The impermanence module does not include a function to wipe the non-persistent directories. This config uses btrfs subvolumes and wipes them using a script taken from the [impermanence repo](https://github.com/nix-community/impermanence?tab=readme-ov-file#btrfs-subvolumes). This has the advantage of keeping a handful of recently deleted roots as btrfs snapshots. If I forget to persist something and reboot, it can be recovered by mounting that snapshot. This method works for zfs as well but would need a different wiping script. GrahamC's blog linked above has one.
 
 The other method is to use a tmpfs for `/`. This is simpler but uses more RAM and doesn't preserve the recently deleted root volumes.
 
@@ -54,7 +54,7 @@ The other method is to use a tmpfs for `/`. This is simpler but uses more RAM an
 
 My recommendation is to begin by persisting everything and gradually fine-tune it if you want. If something breaks, those files still exist in `/persist` and can be easily restored. If you're not sure where an application is storing its config or data, I include a `fs-diff` script which recursively lists all files in a directory, ignoring bind mounts and symlinks. By storing the output of this script in a file before and after making the change you're interested in, you can run `diff` on those two files and see where that application is writing its change. I've found this especially useful for window managers.
 
-NB: If you are using the home-manager impermanence module, you must persist `~/.config/systemd` (or all of `~/.config`) through the **system** impermanence config, not home-manager. The bind mounts made by impermanence are done using systemd, which themselves live in `~/.config/systemd` for home-manager services. Home-manager will fail if you try to do this.
+NB: If you are using the home-manager impermanence module, and intend to persist `~/.config/systemd` (or all of `~/.config`) through the **system** impermanence config, not home-manager. The bind mounts made by impermanence are done using systemd, which themselves live in `~/.config/systemd` for home-manager services. Home-manager will fail if you try to do this using its impermanence module. You probably don't need to persist `~/.config/systemd` though since its contents should be in your config.
 
 ## Initial Install
 See readme files in each host's subfolder.
