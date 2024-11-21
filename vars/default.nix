@@ -44,6 +44,10 @@
         type = lib.types.str;
         default = "kitty";
       };
+      githubEmail = lib.mkOption {
+        type = lib.types.str;
+        default = "105075689+rpdav@users.noreply.github.com";
+      };
       username = lib.mkOption {
         type = lib.types.str;
         default = "ryan";
