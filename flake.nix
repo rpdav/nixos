@@ -67,13 +67,12 @@
     # Private secrets repo
     nix-secrets = {
       url = "git+ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1";
-      flake = false;
     };
   };
 
   outputs = { self, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
   let
-    secrets = builtins.fromJSON (builtins.readFile "${inputs.nix-secrets}/secrets.json");
+    secrets = import inputs.nix-secrets/secrets.nix;
   in rec 
   { 
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
