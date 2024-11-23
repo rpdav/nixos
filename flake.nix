@@ -5,7 +5,9 @@
   inputs = {
 
     ###### Official Sources ######
-
+    # default nixpkgs
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    # explicitly declared
     nixpkgs-stable.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
@@ -70,10 +72,9 @@
     };
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs-stable, nix-secrets, ... } @ inputs:
   let
-    secrets = builtins.fromJSON (builtins.readFile "${inputs.nix-secrets}/secrets.json");
-    secrets2 = import ./vars/secrets { inherit inputs; };
+    secrets = import ./vars/secrets { inherit inputs; };
   in rec 
   { 
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
@@ -91,7 +92,6 @@
             config.allowUnfree = true;
           };
           inherit secrets;
-          inherit secrets2;
           inherit inputs;
         };
         modules = [
