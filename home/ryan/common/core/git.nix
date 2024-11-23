@@ -8,6 +8,7 @@
     userEmail = userSettings.githubEmail;
     extraConfig = {
       init.defaultBranch = "main";
+      merge.ff = false;
     };
   };
 

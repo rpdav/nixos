@@ -73,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732276338,
-        "narHash": "sha256-Auztf3VzYXvzT4VJ64Z/uJyTAsiqDF6JrjyIK620ro4=",
+        "lastModified": 1732284644,
+        "narHash": "sha256-REGLarOB5McRMmFtOgNihEXXQILY6+2UBAY8lw8CJCI=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "84dd8eea9a06006d42b8af7cfd4fda4cf334db81",
+        "rev": "abc8baff333ac9dca930fc4921a26a8fc248e442",
         "type": "github"
       },
       "original": {
@@ -95,11 +95,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1732248209,
-        "narHash": "sha256-Mv8k0VuGdb6YhhKt+8SIvhMdmI4xZhw/3ycSvlAq19Q=",
+        "lastModified": 1732384332,
+        "narHash": "sha256-gXO6+BdLn0rLr7E/CTDZLoGrZ85CdVEh/fhsoI91gyM=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "4a8ba00d1be3f3745428ed56efbb32155c548192",
+        "rev": "f2b3bfe45192e09f82776de70f5c041f43bcdc56",
         "type": "gitlab"
       },
       "original": {
@@ -311,11 +311,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732025103,
-        "narHash": "sha256-qjEI64RKvDxRyEarY0jTzrZMa8ebezh2DEZmJJrpVdo=",
+        "lastModified": 1732383377,
+        "narHash": "sha256-FnTC1Eycct/oD1I0ZUuy9FmQFfBeuymbVD2ptlQWaGc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a46e702093a5c46e192243edbd977d5749e7f294",
+        "rev": "16fe78182e924c9a2b0cffa1f343efea80945ef2",
         "type": "github"
       },
       "original": {
@@ -344,17 +344,15 @@
       "locked": {
         "lastModified": 1732386157,
         "narHash": "sha256-R2S7zpZf9zkF6kFsmN5rIZ3+DKpD2HFVUJv96YUeq3A=",
-        "ref": "main",
+        "ref": "refs/heads/main",
         "rev": "938571300f7b2011e1d22e2d8642fc7d75bb8902",
-        "shallow": true,
+        "revCount": 37,
         "type": "git",
-        "url": "ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git"
+        "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1"
       },
       "original": {
-        "ref": "main",
-        "shallow": true,
         "type": "git",
-        "url": "ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git"
+        "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1"
       }
     },
     "nixos-cli": {
@@ -388,11 +386,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1732239366,
-        "narHash": "sha256-dY2Umwn/UzKT8K56zrAqb0JC9uCKxnDJxnf+5NwcqDQ=",
+        "lastModified": 1732325795,
+        "narHash": "sha256-6eq96vy8ZD+suPLESVe4UMBZu7cJl4U0UJWpODWkQfM=",
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
-        "rev": "7201d315fc068bed90f78e8e4493d30162711458",
+        "rev": "bc4a00d212cf3ddf81bceb2dff0c365338fda9c8",
         "type": "github"
       },
       "original": {
@@ -583,11 +581,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732156292,
-        "narHash": "sha256-XuTCME5ZausokOJ28AsIoayBVD1soscdoiKweT4VY50=",
+        "lastModified": 1732242723,
+        "narHash": "sha256-NWI8csIK0ujFlFuEXKnoc+7hWoCiEtINK9r48LUUMeU=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "2d484c7a0db32f2700e253160bcd2aaa6cdca3ba",
+        "rev": "a229311fcb45b88a95fdfa5cecd8349c809a272a",
         "type": "github"
       },
       "original": {

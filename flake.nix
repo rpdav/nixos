@@ -69,6 +69,7 @@
     # Private secrets repo
     nix-secrets = {
       url = "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1";
+      type = "git";
     };
   };
 
