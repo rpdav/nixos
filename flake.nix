@@ -68,7 +68,7 @@
 
     # Private secrets repo
     nix-secrets = {
-      url = "git+ssh://git@gitea.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1";
+      url = "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1";
     };
   };
 
