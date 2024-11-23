@@ -1,4 +1,4 @@
-{ config, secrets, secrets2, ... }:
+{ config, secrets, ... }:
 {
   sops.secrets = {
     "${config.networking.hostName}/home/wgPrivateKey" = { };
@@ -15,7 +15,7 @@
         { #router 
           publicKey = "gy5zJPgMgC5ZBLScN7Wqiu0KXNL+rYGAnYs7c7wS72g=";
           allowedIPs = [ "10.10.10.0/32" "10.10.1.0/24" "10.10.30.0/24" ];
-          endpoint = "${secrets2.wireguard.home.endpoint}:51820";
+          endpoint = "${secrets.wireguard.home.endpoint}:51820";
         }
       ];
     };
