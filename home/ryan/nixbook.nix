@@ -1,4 +1,4 @@
-{ lib, config, pkgs, pkgs-stable, systemSettings, userSettings, ... }:
+{ lib, config, pkgs, pkgs-stable, systemSettings, userSettings, configLib, ... }:
 
 {
 ## This file contains all home-manager config unique to user ryan on host nixbook
@@ -13,10 +13,11 @@
   programs.home-manager.enable = true;
 
   imports = [
-    ../../vars
-
+    # core config
+    (configLib.relativeToRoot "vars")
     ./common/core
 
+    # optional config
     ./common/optional/app/browser
     ./common/optional/app/defaultapps.nix
     ./common/optional/app/games
