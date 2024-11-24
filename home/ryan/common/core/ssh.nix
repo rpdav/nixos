@@ -1,8 +1,8 @@
-{config, pkgs, lib, userSettings, ... }:
+{config, pkgs, lib, userSettings, configLib, ... }:
 
 let
   # Path to public keys stored in config
-  pathtokeys  = ../../../../hosts/common/users/${userSettings.username}/keys;
+  pathtokeys  = configLib.relativeToRoot "hosts/common/users/${userSettings.username}/keys";
   # List of public keys in path
   yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))

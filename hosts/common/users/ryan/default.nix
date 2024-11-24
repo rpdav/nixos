@@ -29,9 +29,9 @@ in
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.ryan = import ../../../../home/ryan/${config.networking.hostName}.nix;
+    users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
     sharedModules = [ 
-      (import ../../../../modules/home-manager)
+      (import (configLib.relativeToRoot "modules/home-manager"))
       inputs.plasma-manager.homeManagerModules.plasma-manager 
       inputs.impermanence.nixosModules.home-manager.impermanence
     ];
