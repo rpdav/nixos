@@ -5,9 +5,6 @@
   inputs = {
 
     ###### Official Sources ######
-    # default nixpkgs
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    # explicitly declared
     nixpkgs-stable.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
