@@ -1,11 +1,11 @@
-{ config, lib, pkgs, pkgs-stable, inputs, systemSettings, userSettings, secrets, ... }:
+{ config, lib, pkgs, pkgs-stable, inputs, systemSettings, userSettings, secrets, configLib, ... }:
 
 {
 ## This file contains host-specific NixOS configuration
 
   imports =
    [  ./hardware-configuration.nix
-      ../../vars
+      (configLib.relativeToRoot "vars")
       ../common/core
       ../common/optional/nvidia.nix
       ../common/optional/localbackup.nix

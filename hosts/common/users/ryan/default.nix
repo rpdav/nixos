@@ -1,4 +1,4 @@
-{config, lib, inputs, secrets, pkgs-stable, ...}:
+{config, lib, inputs, secrets, pkgs-stable, configLib, ...}:
 ## This file contains all NixOS config for user ryan
 
 let
@@ -39,6 +39,7 @@ in
       inherit pkgs-stable;
       inherit secrets;
       inherit inputs;
+      inherit configLib;
     };
   };
 }

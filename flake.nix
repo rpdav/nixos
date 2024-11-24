@@ -73,6 +73,8 @@
   outputs = { self, nixpkgs-unstable, nixpkgs-stable, nix-secrets, ... } @ inputs:
   let
     secrets = import ./vars/secrets { inherit inputs; };
+    inherit (nixpkgs-unstable) lib;
+    configLib = import ./lib { inherit lib; };
   in rec 
   { 
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
@@ -91,6 +93,7 @@
           };
           inherit secrets;
           inherit inputs;
+          inherit configLib;
         };
         modules = [
           # See notes at top of outputs
