@@ -1,24 +1,23 @@
 # Got this from EmergentMind - see https://unmovedcentre.com/posts/improving-qol-on-nixos-with-yubikey/ for full guide to set up
-
 {
   config,
   pkgs,
   lib,
   userSettings,
   ...
-}:
-let
+}: let
   homeDirectory =
-    if pkgs.stdenv.isLinux then "/home/${userSettings.username}" else "/Users/${userSettings.username}";
-  yubikey-up =
-    let
-      yubikeyIds = lib.concatStringsSep " " (
-        lib.mapAttrsToList (name: id: "[${name}]=\"${builtins.toString id}\"") config.yubikey.identifiers
-      );
-    in
+    if pkgs.stdenv.isLinux
+    then "/home/${userSettings.username}"
+    else "/Users/${userSettings.username}";
+  yubikey-up = let
+    yubikeyIds = lib.concatStringsSep " " (
+      lib.mapAttrsToList (name: id: "[${name}]=\"${builtins.toString id}\"") config.yubikey.identifiers
+    );
+  in
     pkgs.writeShellApplication {
       name = "yubikey-up";
-      runtimeInputs = builtins.attrValues { inherit (pkgs) gawk yubikey-manager; };
+      runtimeInputs = builtins.attrValues {inherit (pkgs) gawk yubikey-manager;};
       text = ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -58,13 +57,12 @@ let
       rm ${homeDirectory}/.ssh/id_yubikey.pub
     '';
   };
-in
-{
+in {
   options = {
     yubikey = {
       enable = lib.mkEnableOption "Enable yubikey support";
       identifiers = lib.mkOption {
-        default = { };
+        default = {};
         type = lib.types.attrsOf lib.types.int;
         description = "Attrset of Yubikey serial numbers";
         example = lib.literalExample ''
@@ -79,12 +77,13 @@ in
   config = lib.mkIf config.yubikey.enable {
     environment.systemPackages = lib.flatten [
       (builtins.attrValues {
-      inherit (pkgs)
-      yubioath-flutter # gui-based authenticator tool. yubioath-desktop on older nixpkg channels
-      yubikey-manager # cli-based authenticator tool. accessed via `ykman`
+        inherit
+          (pkgs)
+          yubioath-flutter # gui-based authenticator tool. yubioath-desktop on older nixpkg channels
+          yubikey-manager # cli-based authenticator tool. accessed via `ykman`
 
-      pam_u2f # for yubikey with sudo
-      ;
+          pam_u2f # for yubikey with sudo
+          ;
       })
       yubikey-up
       yubikey-down
@@ -139,7 +138,7 @@ in
     # Yubikey required services and config. See Dr. Duh NixOS config for
     # reference
     services.pcscd.enable = true; # smartcard service
-    services.udev.packages = [ pkgs.yubikey-personalization ];
+    services.udev.packages = [pkgs.yubikey-personalization];
 
     services.yubikey-agent.enable = true;
 
@@ -163,5 +162,3 @@ in
     };
   };
 }
-
-

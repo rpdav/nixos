@@ -1,7 +1,8 @@
-{config, lib, ... }:
-
 {
-
+  config,
+  lib,
+  ...
+}: {
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
     mount /dev/lvm/root /btrfs_tmp
@@ -26,5 +27,4 @@
     btrfs subvolume create /btrfs_tmp/root
     umount /btrfs_tmp
   '';
-
 }

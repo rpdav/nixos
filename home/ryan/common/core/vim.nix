@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   home.sessionVariables = {
     EDITOR = "vim";
   };
@@ -14,12 +15,10 @@
       relativenumber = true;
       tabstop = 2;
     };
-    plugins = [ pkgs.vimPlugins.vim-nix pkgs.vimPlugins.vim-just  ];
-    extraConfig =
-    ''
+    plugins = [pkgs.vimPlugins.vim-nix pkgs.vimPlugins.vim-just];
+    extraConfig = ''
       set autoindent
       set smartindent
     '';
   };
-
 }

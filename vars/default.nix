@@ -1,6 +1,8 @@
-{ config, lib, ... }:
 {
-
+  config,
+  lib,
+  ...
+}: {
   options = {
     # ---- SYSTEM SETTINGS ---- #
     systemSettings = {
@@ -60,7 +62,7 @@
         type = lib.types.str;
         default = "mountain";
       };
-     base16theme = lib.mkOption {
+      base16theme = lib.mkOption {
         type = lib.types.str;
         default = "3024"; #run nix build nixpkgs#base16-schemes and browse result/share/themes
       };
@@ -73,5 +75,4 @@
       userSettings = config.userSettings;
     };
   };
-
 }

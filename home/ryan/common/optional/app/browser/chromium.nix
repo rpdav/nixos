@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     chromium
   ];
@@ -9,9 +10,8 @@
   programs.chromium = {
     enable = true;
     extensions = [
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } #ublock origin
-      { id = "nngceckbapebfimnlniiiahkandclblb"; } #bitwarden
+      {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} #ublock origin
+      {id = "nngceckbapebfimnlniiiahkandclblb";} #bitwarden
     ];
   };
-
 }

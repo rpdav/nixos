@@ -1,15 +1,20 @@
-{config, lib, inputs, secrets, pkgs-stable, configLib, ...}:
+{
+  config,
+  lib,
+  inputs,
+  secrets,
+  pkgs-stable,
+  configLib,
+  ...
+}:
 ## This file contains all NixOS config for user ryan
-
 let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
-in
-{
-
+in {
   # user--specific variable overrides
   userSettings.theme = lib.mkForce "snowflake-blue";
-  userSettings.base16theme = lib.mkForce "3024"; 
+  userSettings.base16theme = lib.mkForce "3024";
 
   # user definition
   users.mutableUsers = false;
@@ -18,7 +23,7 @@ in
   users.users.ryan = {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     home = "/home/ryan"; # Setting this to point local backup to persisted home directory. Not sure this will actually work
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
@@ -30,9 +35,9 @@ in
     useGlobalPkgs = true;
     useUserPackages = true;
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
-    sharedModules = [ 
+    sharedModules = [
       (import (configLib.relativeToRoot "modules/home-manager"))
-      inputs.plasma-manager.homeManagerModules.plasma-manager 
+      inputs.plasma-manager.homeManagerModules.plasma-manager
       inputs.impermanence.nixosModules.home-manager.impermanence
     ];
     extraSpecialArgs = {

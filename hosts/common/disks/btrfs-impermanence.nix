@@ -1,6 +1,4 @@
-{ systemSettings, ... }:
-
-{
+{systemSettings, ...}: {
   disko.devices = {
     disk.disk1 = {
       device = "/dev/${systemSettings.diskDevice}";
@@ -41,18 +39,19 @@
             size = "100%FREE";
             content = {
               type = "btrfs";
-              extraArgs = [ "-f" ];
+              extraArgs = ["-f"];
               subvolumes = {
-                "root" = { #rollback script assumes root subvol is "root"
+                "root" = {
+                  #rollback script assumes root subvol is "root"
                   mountpoint = "/";
                 };
                 "/nix" = {
                   mountpoint = "/nix";
-                  mountOptions = [ "compress=zstd" "noatime" ];
+                  mountOptions = ["compress=zstd" "noatime"];
                 };
                 "/persist" = {
                   mountpoint = "/persist";
-                  mountOptions = [ "compress=zstd" "noatime" ];
+                  mountOptions = ["compress=zstd" "noatime"];
                 };
                 "/swap" = {
                   mountpoint = "/.swap";

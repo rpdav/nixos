@@ -1,7 +1,14 @@
-{ lib, config, pkgs, pkgs-stable, systemSettings, userSettings, configLib, ... }:
-
 {
 ## This file contains all home-manager config unique to user ryan on host nixbook
+  lib,
+  config,
+  pkgs,
+  pkgs-stable,
+  systemSettings,
+  userSettings,
+  configLib,
+  ...
+}: {
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
@@ -27,48 +34,43 @@
     ./common/optional/wm/gnome.nix
   ];
 
-  home.packages = 
+  home.packages =
     (with pkgs; [
-    #protonmail-bridge-gui
-    thunderbird
-    librewolf
-    brave
-    tor-browser
-    remmina
-    onlyoffice-bin
-    ghostwriter
-    bibletime
-    xiphos
-    audacity
-    gimp
+      #protonmail-bridge-gui
+      thunderbird
+      librewolf
+      brave
+      tor-browser
+      remmina
+      onlyoffice-bin
+      ghostwriter
+      bibletime
+      xiphos
+      audacity
+      gimp
 
-    # terminals
-    kitty
-    alacritty
-    yakuake
+      # terminals
+      kitty
+      alacritty
+      yakuake
 
-    # games
-    knights
-    killbots
-    kdePackages.kgoldrunner
-    kmines
-    kdePackages.kpat
+      # games
+      knights
+      killbots
+      kdePackages.kgoldrunner
+      kmines
+      kdePackages.kpat
 
-    # scripts
-    (import ./common/optional/scripts/wgdown.nix { inherit pkgs; })
-    (import ./common/optional/scripts/wgup.nix { inherit pkgs; })
-  ])
-
-  ++
-
-  (with pkgs-stable; [
-    protonmail-bridge-gui #bridge is throwing QML component error
-  ]);
+      # scripts
+      (import ./common/optional/scripts/wgdown.nix {inherit pkgs;})
+      (import ./common/optional/scripts/wgup.nix {inherit pkgs;})
+    ])
+    ++ (with pkgs-stable; [
+      protonmail-bridge-gui #bridge is throwing QML component error
+    ]);
 
   services.nextcloud-client = {
     enable = true;
     startInBackground = true;
   };
-
 }
-

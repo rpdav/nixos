@@ -1,20 +1,19 @@
 {
-#some more changes
+  #some more changes
   description = "Ryan's Nixos configs";
 
   inputs = {
-
     ###### Official Sources ######
     nixpkgs-stable.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-stable";    
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";    
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     ###### Utilities ######
@@ -33,7 +32,7 @@
     # Secrets
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";    
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Impermanence
@@ -75,13 +74,18 @@
     };
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-stable, nix-secrets, ... } @ inputs:
-  let
-    secrets = import ./vars/secrets { inherit inputs; };
+  outputs = {
+    self,
+    nixpkgs-unstable,
+    nixpkgs-stable,
+    nix-secrets,
+    ...
+  } @ inputs: let
+    secrets = import ./vars/secrets {inherit inputs;};
     inherit (nixpkgs-unstable) lib;
-    configLib = import ./lib { inherit lib; };
-  in rec 
-  { 
+    configLib = import ./lib {inherit lib;};
+  in rec
+  {
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
     # for some reason. Instead, I'm importing in each host's modules list.
     #nixosModules = import ./modules/nixos;
@@ -121,7 +125,7 @@
       # 2020 Asus Zenbook
       nixbook = nixpkgs-unstable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = { 
+        specialArgs = {
           pkgs-stable = import nixpkgs-stable {
             inherit system;
             config.allowUnfree = true;
@@ -138,8 +142,8 @@
           inputs.home-manager-unstable.nixosModules.home-manager
           {
             nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+              substituters = ["https://cosmic.cachix.org/"];
+              trusted-public-keys = ["cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="];
             };
           }
           inputs.nixos-cosmic.nixosModules.default
@@ -150,7 +154,7 @@
       # Testing VM
       nixos-vm = nixpkgs-stable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = { 
+        specialArgs = {
           pkgs-unstable = import nixpkgs-unstable {
             inherit system;
             config.allowUnfree = true;
@@ -167,6 +171,4 @@
       };
     };
   };
-
-
 }
