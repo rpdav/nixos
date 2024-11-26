@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
+    # Hardware configs
+    inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     # Secrets
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -110,6 +115,7 @@
           inputs.nixos-cosmic.nixosModules.default
           inputs.nixos-cli.nixosModules.nixos-cli
           inputs.stylix.nixosModules.stylix
+          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         ];
       };
       # 2020 Asus Zenbook
