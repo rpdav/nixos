@@ -10,7 +10,7 @@
        # core config
        "vars"
        "hosts/common/core"
-       "hosts/common/disks/btrfs-impermanence.nix"
+       "hosts/common/disks/luks-lvm-imp.nix"
 
        # host-specific optional
        "hosts/common/optional/localbackup.nix"
