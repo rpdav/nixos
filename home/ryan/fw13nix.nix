@@ -1,7 +1,7 @@
 { lib, config, pkgs, pkgs-stable, systemSettings, userSettings, configLib, ... }:
 
 {
-## This file contains all home-manager config unique to user ryan on host nixbook
+## This file contains all home-manager config unique to user ryan on host fw13nix
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";

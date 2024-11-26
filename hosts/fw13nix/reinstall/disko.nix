@@ -3,7 +3,7 @@
 {
   disko.devices = {
     disk.disk1 = {
-      device = "/dev/${systemSettings.diskDevice}";
+      device = "/dev/nvme0n1";
       type = "disk";
       content = {
         type = "gpt";
@@ -56,7 +56,7 @@
                 };
                 "/swap" = {
                   mountpoint = "/.swap";
-                  swap.swapfile.size = systemSettings.swapSize;
+                  swap.swapfile.size = "16G";
                 };
               };
             };

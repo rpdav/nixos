@@ -83,6 +83,35 @@
     #homeManagerModules = import ./modules/home-manager;
 
     nixosConfigurations = {
+      # 2023 Framework 13
+      fw13nix = nixpkgs-unstable.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        specialArgs = { 
+          pkgs-stable = import nixpkgs-stable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          inherit secrets;
+          inherit inputs;
+          inherit configLib;
+        };
+        modules = [
+          # See notes at top of outputs
+          (import ./modules/nixos)
+          ./hosts/framework
+          inputs.impermanence.nixosModules.impermanence
+          inputs.home-manager-unstable.nixosModules.home-manager
+          {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
+          inputs.nixos-cosmic.nixosModules.default
+          inputs.nixos-cli.nixosModules.nixos-cli
+          inputs.stylix.nixosModules.stylix
+        ];
+      };
       # 2020 Asus Zenbook
       nixbook = nixpkgs-unstable.lib.nixosSystem rec {
         system = "x86_64-linux";
