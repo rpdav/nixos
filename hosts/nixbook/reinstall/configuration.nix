@@ -1,12 +1,15 @@
-## Enable flakes
+{ config, pkgs, ... }:
+
+{
+ # Enable flakes
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
 
-## Enable support for encrypted partition
-## Remove any other auto-generated boot.loader lines
+ # Enable support for encrypted partition
+ # Remove any other auto-generated boot.loader lines
   boot = {
     loader = {
       efi = {
@@ -21,17 +24,17 @@
     };
     initrd.luks.devices = {
       crypt = {
-                 ## UUID of the encrypted partition 
+                 # UUID of the encrypted partition 
         device = "/dev/disk/by-uuid/xxxxx";
         preLVM = true;
       };
     };
   };
 
-## Timezone
+ # Timezone
   time.timeZone = "America/Indiana/Indianapolis";
 
-## Useful packages for intial reinstall
+ # Useful packages for intial reinstall
   environment.systemPackages = with pkgs; [
     firefox
     git
@@ -42,19 +45,21 @@
     ssh-to-age
   ];
 
-## Define primary user
+ # Define primary user
   users.users.yourname = {
-    hashedPassword = "Run mkpasswd -m sha-512 to generate";
+    # the hash below is for the password `changeme` - obviously only use this for this bare-bones installl config
+    hashedPassword = "$6$7y9RbBEMGo1Fx.Pr$rM1PReeNvbKM1QCQvrNJ5BAYY3SlYDr49MTT0j6wv7cz5p0ezPz8ddihkyutowzEie1.NGFxzSpfawY0s9L2q1";
     isNormalUser = true; 
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
 
-## Enable gnome on xserver
+ # Enable gnome on xserver
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
 
-## This should not be changed unless doing a fresh install
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Change this to the version of your installer
+
+}
