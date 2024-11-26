@@ -1,3 +1,8 @@
+{ config, lib, ... }:
+{
+
+  imports = [ ./disko.nix ];
+
 ## Enable flakes
   nix = {
     extraOptions = ''
@@ -59,3 +64,4 @@
 
 ## This should not be changed unless doing a fresh install
   system.stateVersion = "24.05"; # Did you read the comment?
+}
