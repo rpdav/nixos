@@ -1,6 +1,13 @@
-{ config, pkgs, pkgs-stable, impermanence, secrets, systemSettings, userSettings, ... }:
-
 {
+  config,
+  pkgs,
+  pkgs-stable,
+  impermanence,
+  secrets,
+  systemSettings,
+  userSettings,
+  ...
+}: {
   imports = [
     ../../variables.nix
   ];
@@ -44,8 +51,4 @@
 
   home.packages = with pkgs; [
   ];
-
 }
-
-
-

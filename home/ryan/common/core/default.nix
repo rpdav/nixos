@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./bash.nix
     ./git.nix
@@ -16,7 +17,6 @@
     just
 
     # scripts
-    (import ../optional/scripts/fs-diff.nix { inherit pkgs; })
+    (import ../optional/scripts/fs-diff.nix {inherit pkgs;})
   ];
-
 }

@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   programs.bash.historyFile = "/persist/home/ryan/.bash_history";
 
   programs.bash = {
@@ -23,11 +24,10 @@
 
   programs.autojump.enable = true;
 
-#  programs.starship = {
-#    enable = true;
-#    settings = {
-#      settings = pkgs.lib.importTOML ./starship.toml;
-#    };
-#  };
-
+  #  programs.starship = {
+  #    enable = true;
+  #    settings = {
+  #      settings = pkgs.lib.importTOML ./starship.toml;
+  #    };
+  #  };
 }

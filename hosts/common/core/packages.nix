@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
@@ -8,6 +11,7 @@
     htop
     git
     git-crypt
+    alejandra
     rclone
     sops
     killall

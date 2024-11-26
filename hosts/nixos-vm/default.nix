@@ -1,7 +1,15 @@
-{ lib, modulesPath, config, pkgs, pkgs-unstable, inputs, systemSettings, userSettings, secrets, ... }:
-
 {
-  
+  lib,
+  modulesPath,
+  config,
+  pkgs,
+  pkgs-unstable,
+  inputs,
+  systemSettings,
+  userSettings,
+  secrets,
+  ...
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -12,7 +20,7 @@
 
   system.stateVersion = "24.05";
 
-## Enable flakes
+  ## Enable flakes
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -20,7 +28,7 @@
     '';
   };
 
-## System-specific disk config
+  ## System-specific disk config
   systemSettings.swapSize = lib.mkForce "4G";
   systemSettings.diskDevice = lib.mkForce "/dev/vda";
 
@@ -29,34 +37,34 @@
     efiInstallAsRemovable = true;
   };
 
-## SSH
+  ## SSH
   services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSJJDvRzZbvzKyA6JiI0vYfQcMaNgu699BNGJ6CE7D/ ryan@nixbook"
   ];
 
-## Networking
+  ## Networking
   networking.hostName = "nixos-vm";
 
-## Time
+  ## Time
   time.timeZone = "systemSettings.timezone";
 
-## User definition
+  ## User definition
   users.users.${userSettings.username} = {
     hashedPassword = "${secrets.${userSettings.username}.passwordhash}";
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSJJDvRzZbvzKyA6JiI0vYfQcMaNgu699BNGJ6CE7D/ ryan@nixbook"
     ];
   };
 
-## Home Manager
+  ## Home Manager
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.ryan = import ./home.nix;
-    sharedModules = with inputs; [ 
+    sharedModules = with inputs; [
       impermanence.nixosModules.home-manager.impermanence
     ];
     extraSpecialArgs = {
@@ -66,7 +74,7 @@
     };
   };
 
-## Packages
+  ## Packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     curl
@@ -80,5 +88,4 @@
     rclone
     qdirstat
   ];
-  
 }

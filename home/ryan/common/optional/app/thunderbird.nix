@@ -1,7 +1,9 @@
-{ config, pkgs, secrets, ... }:
-
 {
-
+  config,
+  pkgs,
+  secrets,
+  ...
+}: {
   programs.thunderbird = {
     enable = true;
     settings = {
@@ -32,7 +34,7 @@
       };
       thunderbird = {
         enable = true;
-        profiles = [ "ryan" ];
+        profiles = ["ryan"];
       };
     };
     admin = {
@@ -51,7 +53,7 @@
       };
       thunderbird = {
         enable = true;
-        profiles = [ "ryan" ];
+        profiles = ["ryan"];
       };
     };
   };

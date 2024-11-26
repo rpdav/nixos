@@ -1,7 +1,4 @@
-{ userSettings, ... }:
-
-{
-
+{userSettings, ...}: {
   programs.git = {
     enable = true;
     userName = userSettings.username;
