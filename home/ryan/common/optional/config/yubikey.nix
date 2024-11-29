@@ -9,6 +9,7 @@
     "${userSettings.username}/sshKeys/id_manual".path = lib.mkForce "/home/${userSettings.username}/.ssh/id_manual.key";
     "${userSettings.username}/sshKeys/id_yubi5c".path = "/home/${userSettings.username}/.ssh/id_yubi5c";
     "${userSettings.username}/sshKeys/id_yubi5pink".path = "/home/${userSettings.username}/.ssh/id_yubi5pink";
+    "${userSettings.username}/sshKeys/id_yubinano".path = "/home/${userSettings.username}/.ssh/id_yubinano";
   };
 
   # modify ssh config for yubikeys
