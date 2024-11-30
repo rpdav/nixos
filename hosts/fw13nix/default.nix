@@ -41,22 +41,8 @@
   #TODO try replacing this with systemdboot
   boot = {
     loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/efi";
-      };
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-      };
-      timeout = 2;
-    };
-    initrd.luks.devices = {
-      crypt = {
-        device = "/dev/disk/by-uuid/58d1a163-40f1-4aed-8f6f-cadf1b180e57"; ## UUID of the encrypted partition 
-        preLVM = true;
-      };
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
   };
 

@@ -25,8 +25,6 @@
     };
 
     # Hardware configs
-    inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # Secrets
@@ -107,7 +105,8 @@
         modules = [
           # See notes at top of outputs
           (import ./modules/nixos)
-          ./hosts/framework
+          ./hosts/fw13nix
+          inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-unstable.nixosModules.home-manager
           {
