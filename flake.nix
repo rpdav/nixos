@@ -106,6 +106,7 @@
           # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13nix
+          inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-unstable.nixosModules.home-manager
           {
