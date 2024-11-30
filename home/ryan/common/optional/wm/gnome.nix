@@ -12,7 +12,6 @@
     arc-menu
     dash-to-panel #kde or windows-like bottom panel. replaces top panel
     dash-to-dock #mac-like app dock
-    sound-output-device-chooser
     space-bar
     appindicator #sys tray icons
     auto-move-windows #auto launch windows on certain workspaces
@@ -38,18 +37,14 @@
       disable-user-extensions = false;
       # must be installed in home.packages above, and then enabled here
       enabled-extensions = [
-        "arcmenu@arcmenu.com"
         "dash-to-panel@jderose9.github.com"
-        "quick-settings-tweaks@qwreey"
         "trayIconsReloaded@selfmade.pl"
-        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
-        "window-list@gnome-shell-extensions.gcampax.github.com"
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
-        "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
+        "arcmenu@arcmenu.com"
         "places-menu@gnome-shell-extensions.gcampax.github.com"
-        "Vitals@CoreCoding.com"
-        "dash-to-panel@jderose9.github.com"
-        "apps-menu@gnome-shell-extensions.gcampax.github.com"
+        "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
+        "status-icons@gnome-shell-extensions.gcampax.github.com"
+        "window-list@gnome-shell-extensions.gcampax.github.com"
+        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
       ];
     };
 
