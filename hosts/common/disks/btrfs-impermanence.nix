@@ -1,7 +1,8 @@
 {systemSettings, ...}: {
+  # Disko config using lvm, swap, and btrfs subvolumes for use in the impermanence module
   disko.devices = {
     disk.disk1 = {
-      device = systemSettings.diskDevice;
+      device = "/dev/${systemSettings.diskDevice}";
       type = "disk";
       content = {
         type = "gpt";

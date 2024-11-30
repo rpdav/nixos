@@ -1,4 +1,5 @@
 {
+## This file contains all home-manager config unique to user ryan on host nixbook
   lib,
   config,
   pkgs,
@@ -8,8 +9,6 @@
   configLib,
   ...
 }: {
-  ## This file contains all home-manager config unique to user ryan on host nixbook
-  #TODO move common config (for ryan on other hosts) to common/{core,optional}
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";

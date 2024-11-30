@@ -342,11 +342,11 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1732910104,
-        "narHash": "sha256-UwxGOZ9NTayXOJYWw4HJ6HucxoAZHXSGk5JXVpsMiCY=",
+        "lastModified": 1732941001,
+        "narHash": "sha256-aoyjDeuDbYkR9eiFuJuE5gezAD5lddVh8frokIBk0mY=",
         "ref": "refs/heads/main",
-        "rev": "077e89c2261ab3ebd249e9a10dad801e50834c03",
-        "revCount": 40,
+        "rev": "536a053505786a7123739cdd25bd4822e91f60a1",
+        "revCount": 42,
         "type": "git",
         "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1"
       },
@@ -396,6 +396,22 @@
       "original": {
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1732483221,
+        "narHash": "sha256-kF6rDeCshoCgmQz+7uiuPdREVFuzhIorGOoPXMalL2U=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "45348ad6fb8ac0e8415f6e5e96efe47dd7f39405",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
         "type": "github"
       }
     },
@@ -550,6 +566,7 @@
         "nix-secrets": "nix-secrets",
         "nixos-cli": "nixos-cli",
         "nixos-cosmic": "nixos-cosmic",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "plasma-manager": "plasma-manager",
