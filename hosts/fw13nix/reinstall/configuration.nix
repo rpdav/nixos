@@ -54,7 +54,7 @@
   ];
 
   # Define primary user
-  users.users.yourname = {
+  users.users.ryan = {
     # the hash below is for the password `changeme` - obviously only use this for this bare-bones installl config
     hashedPassword = "$6$7y9RbBEMGo1Fx.Pr$rM1PReeNvbKM1QCQvrNJ5BAYY3SlYDr49MTT0j6wv7cz5p0ezPz8ddihkyutowzEie1.NGFxzSpfawY0s9L2q1";
     isNormalUser = true; 
