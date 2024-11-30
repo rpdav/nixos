@@ -1,7 +1,11 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 {
 
-  imports = [ ./disko.nix ];
+  imports = [ 
+    ./disko.nix 
+    ./hardware-configuration.nix
+    "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
+  ];
 
   # Enable flakes
   nix = {
@@ -15,21 +19,8 @@
   #TODO: replace this with systemdboot
   boot = {
     loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/efi";
-      };
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-      };
-    };
-    initrd.luks.devices = {
-      crypt = {
-        device = "/dev/disk/by-uuid/xxxxx"; # UUID of the encrypted partition 
-        preLVM = true;
-      };
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
   };
 
