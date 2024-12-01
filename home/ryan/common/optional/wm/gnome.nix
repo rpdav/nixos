@@ -37,14 +37,13 @@
       disable-user-extensions = false;
       # must be installed in home.packages above, and then enabled here
       enabled-extensions = [
-        "dash-to-panel@jderose9.github.com"
-        "trayIconsReloaded@selfmade.pl"
-        "arcmenu@arcmenu.com"
-        "places-menu@gnome-shell-extensions.gcampax.github.com"
-        "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
-        "status-icons@gnome-shell-extensions.gcampax.github.com"
-        "window-list@gnome-shell-extensions.gcampax.github.com"
-        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+        "apps-menu@gnome-shell-extensions.gcampax.github.com"
+        "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
+        "caffeine@patapon.info"
+        "clipboard-indicator@tudmotu.com"
+        "dash-to-dock@micxgx.gmail.com"
+        "openweather-extension@penguin-teal.github.io"
+        "space-bar@luchrioh"
       ];
     };
 
