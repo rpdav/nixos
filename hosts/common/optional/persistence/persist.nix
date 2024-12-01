@@ -12,6 +12,7 @@
       "/etc/nixos"
       "/etc/ssh"
       "/root/.ssh"
+      "/var/lib/fprint"
       "/var/lib/tailscale"
       "/var/log"
       "/var/lib/bluetooth"
