@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 {
 
+## This is a bare-bones config used only for provisioning a new host. See hosts/fw13/default.nix for the main config.
+
   imports = [ 
     ./disko.nix 
     ./hardware-configuration.nix

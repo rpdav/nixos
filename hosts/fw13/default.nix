@@ -47,7 +47,7 @@
   };
 
   # Networking
-  networking.hostName = "fw13nix";
+  networking.hostName = "fw13";
   networking.networkmanager.enable = true;
   services.resolved.enable = true; # needed for wireguard on kde
 

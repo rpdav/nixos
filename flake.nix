@@ -91,7 +91,7 @@
 
     nixosConfigurations = {
       # 2023 Framework 13
-      fw13nix = nixpkgs-unstable.lib.nixosSystem rec {
+      fw13 = nixpkgs-unstable.lib.nixosSystem rec {
         system = "x86_64-linux";
         specialArgs = { 
           pkgs-stable = import nixpkgs-stable {
@@ -105,7 +105,7 @@
         modules = [
           # See notes at top of outputs
           (import ./modules/nixos)
-          ./hosts/fw13nix
+          ./hosts/fw13
           inputs.disko.nixosModules.disko
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-unstable.nixosModules.home-manager
