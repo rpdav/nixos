@@ -85,6 +85,11 @@
       name = "processes";
     };
 
+    # Disable auto brightness adjustment
+    "org/gnome/settings-daemon/plugins/power" = {
+      ambient-enabled = false;
+    };
+
   };
 
 }
