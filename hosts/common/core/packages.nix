@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   nixpkgs.config.allowUnfree = true;
@@ -17,5 +18,10 @@
     killall
     pciutils
     usbutils
+    neovim
+    nixd
   ];
+
+  # for neovim lsp support
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" ];
 }
