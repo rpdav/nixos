@@ -1,11 +1,17 @@
 {
   pkgs,
+  userSettings,
   ...
-}: {
+}: 
+
+let
+  flake = "(builtins.getFlake \"/home/${userSettings.username})\"";
+in
+{
+  imports = [ ./cmp.nix ];
   home.sessionVariables = {
     EDITOR = "neovim";
   };
-
   programs.vim = {
     enable = true;
     settings = {
@@ -16,28 +22,32 @@
     };
     plugins = [pkgs.vimPlugins.vim-nix pkgs.vimPlugins.vim-just];
     extraConfig = ''
-      set autoindent
       set smartindent
     '';
   };
-
-#  programs.neovim = {
-#    enable = true;
-#  };
-#  home.file.init = {
-#    source = ./nvim;
-#    target = ".config/nvim";
-#  };
 
   programs.nixvim = {
     enable = true;
     vimAlias = true;
     colorschemes.catppuccin.enable = true;
+    globals.mapleader = " ";
     plugins = {
       lualine.enable = true;
       lsp.enable = true;
       lsp.servers = {
-	      nixd.enable = true;
+	nixd = {
+	  enable = true;
+	  settings = {
+	    formatting.command = [ "alejandra" ];
+	    nixpkgs.expr = "import ${flake}.inputs.nixpkgs { }";
+	    options =
+	      {
+	        # Completitions for nixos options
+		#TODO make this host-generic
+	        nixos.expr = "${flake}.nixosConfigurations.fw13.options.programs.nixvim.type.getSubOptions []";
+	      };
+	  };
+	};
         lua-ls.enable = true;
       };
     };
