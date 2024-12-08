@@ -29,6 +29,7 @@ in
   programs.nixvim = {
     enable = true;
     vimAlias = true;
+    #TODO make colorscheme use stylix themes
     colorschemes.catppuccin.enable = true;
     globals.mapleader = " ";
     plugins = {
@@ -40,12 +41,13 @@ in
 	  settings = {
 	    formatting.command = [ "alejandra" ];
 	    nixpkgs.expr = "import ${flake}.inputs.nixpkgs { }";
-	    options =
-	      {
-	        # Completitions for nixos options
-		#TODO make this host-generic
-	        nixos.expr = "${flake}.nixosConfigurations.fw13.options.programs.nixvim.type.getSubOptions []";
-	      };
+	    # was not able to get completions from my own flake to work.
+	    # See https://github.com/vimjoyer/nix-editor-setup-video/issues/5#issuecomment-2468418719
+#	    options =
+#	      {
+#	        # Completitions for nixos options
+#	        nixos.expr = "${flake}.nixosConfigurations.fw13.options.programs.nixvim.type.getSubOptions []";
+#	      };
 	  };
 	};
         lua-ls.enable = true;
@@ -57,7 +59,6 @@ in
       relativenumber = true;
 #      softtabstop = 2;
       shiftwidth = 2;
-      ai = true;
       si = true;
     };
   };

@@ -21,6 +21,4 @@
     nixd
   ];
 
-  # for neovim lsp support
-  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" ];
 }
