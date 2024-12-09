@@ -1,6 +1,6 @@
 {
-  config,
   pkgs,
+  inputs,
   ...
 }: {
   nixpkgs.config.allowUnfree = true;
@@ -17,5 +17,8 @@
     killall
     pciutils
     usbutils
+    neovim
+    nixd
   ];
+
 }

@@ -39,6 +39,7 @@ in {
       (import (configLib.relativeToRoot "modules/home-manager"))
       inputs.plasma-manager.homeManagerModules.plasma-manager
       inputs.impermanence.nixosModules.home-manager.impermanence
+      inputs.nixvim.homeManagerModules.nixvim
     ];
     extraSpecialArgs = {
       inherit pkgs-stable;

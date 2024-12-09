@@ -8,7 +8,7 @@
     ./git.nix
     ./sops.nix
     ./ssh.nix
-    ./vim.nix
+    ./vim
   ];
 
   home.packages = with pkgs; [
