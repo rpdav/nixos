@@ -4,6 +4,11 @@
 
   inputs = {
     ###### Official Sources ######
+    
+    # Default nixpkgs
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+
+    # Explicitly-defined stable and unstable as alternates
     nixpkgs-stable.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
@@ -42,6 +47,12 @@
     # Theming
     stylix.url = "github:danth/stylix";
 
+    # Nix-friendly editor
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     ###### GUI stuff ######
 
     # Declarative plasma config
@@ -57,7 +68,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Declare firefox extensions
+    # Firefox extensions
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -107,8 +118,12 @@
           (import ./modules/nixos)
           ./hosts/fw13
           inputs.disko.nixosModules.disko
+          inputs.nixvim.nixosModules.nixvim
           inputs.impermanence.nixosModules.impermanence
           inputs.home-manager-unstable.nixosModules.home-manager
+          inputs.nixos-cli.nixosModules.nixos-cli
+          inputs.stylix.nixosModules.stylix
+          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
           {
             nix.settings = {
               substituters = [ "https://cosmic.cachix.org/" ];
@@ -116,9 +131,6 @@
             };
           }
           inputs.nixos-cosmic.nixosModules.default
-          inputs.nixos-cli.nixosModules.nixos-cli
-          inputs.stylix.nixosModules.stylix
-          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         ];
       };
       # 2020 Asus Zenbook
