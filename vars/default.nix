@@ -36,7 +36,7 @@
     userSettings = {
       editor = lib.mkOption {
         type = lib.types.str;
-        default = "vim";
+        default = "nvim";
       };
       name = lib.mkOption {
         type = lib.types.str;

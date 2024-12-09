@@ -1,6 +1,6 @@
 {
-  config,
   pkgs,
+  userSettings,
   ...
 }: {
   imports = [
@@ -19,4 +19,8 @@
     # scripts
     (import ../optional/scripts/fs-diff.nix {inherit pkgs;})
   ];
+
+  home.sessionVariables = {
+    EDITOR = userSettings.editor;
+  };
 }

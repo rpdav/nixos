@@ -6,9 +6,6 @@
   flake = "(builtins.getFlake \"/home/${userSettings.username})\"";
 in {
   imports = [./cmp.nix];
-  home.sessionVariables = {
-    EDITOR = "neovim";
-  };
   programs.vim = {
     enable = true;
     settings = {
