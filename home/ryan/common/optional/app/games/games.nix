@@ -1,16 +1,13 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
-  home.packages = with pkgs; [
-    moonlight-qt
-    (retroarch.override {
-      cores = with libretro; [
-        snes9x
-        vba-m
-        melonds
-      ];
-    })
+{pkgs, ...}: let
+  retroarchWithCores = pkgs.retroarch.withCores (cores:
+    with cores; [
+      snes9x
+      vba-m
+      melonds
+    ]);
+in {
+  home.packages = [
+    retroarchWithCores
+    pkgs.moonlight-qt
   ];
 }
