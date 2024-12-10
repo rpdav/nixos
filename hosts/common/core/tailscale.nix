@@ -13,8 +13,12 @@
     enable = true;
     extraUpFlags = [
       "--accept-dns=false" #tailscale dns messes with resolution of selfhosted services
+      "--accept-routes"
     ];
   };
+
+  # Use opnsense router for dns
+  networking.nameservers = ["10.10.1.1"];
 
   # Auto-connect service
   systemd.services.tailscale-autoconnect = {
