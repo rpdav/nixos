@@ -1,10 +1,5 @@
 {
-  lib,
-  config,
   pkgs,
-  pkgs-stable,
-  systemSettings,
-  userSettings,
   configLib,
   ...
 }: {
@@ -24,6 +19,7 @@
     ./common/core
 
     # optional config
+    ./common/optional/app/accounts.nix
     ./common/optional/app/browser
     ./common/optional/app/defaultapps.nix
     ./common/optional/app/games

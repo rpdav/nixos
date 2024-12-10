@@ -1,9 +1,4 @@
-{
-  config,
-  userSettings,
-  impermanence,
-  ...
-}: {
+{userSettings, ...}: {
   home.persistence."/persist/home/${userSettings.username}" = {
     directories = [
       # Personal folders
@@ -41,16 +36,17 @@
       ".config/unity3d" #game data
 
       # Gnome
-      #      ".config/dconf"
-      #      ".config/evolution" #mail/calendar client?
-      #      ".config/gtk-2.0"
-      #      ".config/gtk-3.0"
-      #      ".config/gtk-4.0"
-      #      ".config/nemo"
+      ".cache/evolution" #calendar data
+      ".config/evolution" #calendar config
+      ".config/goa-1.0" #dav accounts
+      #".config/gtk-2.0"
+      #".config/gtk-3.0"
+      #".config/gtk-4.0"
+      #".config/nemo"
 
       # KDE
-      ".config/kdedefaults"
-      ".config/kde.org"
+      #".config/kdedefaults"
+      #".config/kde.org"
 
       # System
       ".config/autostart"
@@ -58,7 +54,7 @@
       ".config/pulse"
       ".config/rclone" #TODO maybe this can be added to config? It's just a couple key/value pairs.
       ".config/sops"
-      #      ".config/systemd" #this folder must be persisted through the system config
+      #".config/systemd" #this folder must be persisted through the system config
     ];
     files = [
       # Apps
@@ -68,12 +64,12 @@
       ".config/gnome-initial-setup-done" #welcome pop-up
 
       # KDE
-      #      ".config/gwenviewrc"
-      #      ".config/kactivitymanagerd-statsrc"
-      #      ".config/konsolerc"
-      #      ".config/konsolesshconfig"
-      #      ".config/krdpserverrc"
-      #      ".config/kwriterc"
+      #".config/gwenviewrc"
+      #".config/kactivitymanagerd-statsrc"
+      #".config/konsolerc"
+      #".config/konsolesshconfig"
+      #".config/krdpserverrc"
+      #".config/kwriterc"
 
       # System
       ".Xauthority"
