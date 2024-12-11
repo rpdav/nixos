@@ -1,12 +1,7 @@
 {
-  config,
   lib,
   pkgs,
-  pkgs-stable,
-  inputs,
   systemSettings,
-  userSettings,
-  secrets,
   configLib,
   ...
 }:

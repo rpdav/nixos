@@ -1,6 +1,4 @@
 {
-  config,
-  userSettings,
   systemSettings,
   ...
 }: {
@@ -17,8 +15,17 @@
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
     '';
   };
+
+  # Automate garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = systemSettings.gcInterval;
+    options = "--delete-older-than ${systemSettings.gcRetention}";
+    };
 
   # CLI config
   services.nixos-cli.enable = true;

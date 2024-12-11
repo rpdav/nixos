@@ -30,6 +30,14 @@
         type = lib.types.str;
         default = "x86_64-linux";
       };
+      gcInterval = lib.mkOption {
+        type = lib.types.str;
+        default = "weekly";
+      };
+      gcRetention = lib.mkOption {
+        type = lib.types.str;
+        default = "30d";
+      };
     };
 
     # ---- USER SETTINGS ---- #
