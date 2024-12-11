@@ -21,12 +21,12 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 
 ## Features
 * Flakes: better control of depencies and reproducibility
-* Impermanence: keep that "new computer smell"
+* Impermanence: auto-delete cruft to keep that "new computer smell"
 * Home-manager: manage user applications and configuration across multiple systems
 * Multi-host friendly: config structure is designed that it's easy to add new users/hosts and share common modules
 * Sops-nix: for secrets management
+* Disko: declarative disk partitioning
 * Stylix: system-wide theming (WIP)
-* Disko: declarative disk partitioning (WIP)
 
 ## Secrets
 See readme in nix-secrets directory.
