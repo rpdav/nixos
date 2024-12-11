@@ -28,14 +28,15 @@
       type = "Application";
     };
 
-    silverbulllet = {
+    silverbullet = {
       name = "SilverBullet";
       comment = "Markdown notes app";
       settings.StartupWMClass = "chrome-notes.dfrp.xyz__-Default";
+      settings.Keywords = "notes";
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://notes.dfrp.xyz\" %U";
       icon = "/home/${userSettings.username}/.local/share/icons/silverbullet.png";
       terminal = false;
-      categories = ["Application"];
+      categories = ["Application"]; 
       type = "Application";
     };
 
@@ -44,7 +45,7 @@
       comment = "Smart home automation";
       settings.StartupWMClass = "chrome-home.dfrp.xyz__-Default";
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://home.dfrp.xyz\" %U";
-      icon = "/home/${userSettings.username}/.local/share/icons/home-assistant.svg";
+      icon = "/home/${userSettings.username}/.local/share/icons/home-assistant.png";
       terminal = false;
       categories = ["Application"];
       type = "Application";
@@ -67,8 +68,8 @@
     target = ".local/share/icons/silverbullet.png";
   };
 
-  home.file."home-assistant.svg" = {
-    source = ./icons/home-assistant.svg;
-    target = ".local/share/icons/home-assistant.svg";
+  home.file."home-assistant.png" = {
+    source = ./icons/home-assistant.png;
+    target = ".local/share/icons/home-assistant.png";
   };
 }

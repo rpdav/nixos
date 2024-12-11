@@ -1,10 +1,12 @@
-{ lib, pkgs, ... }:
-
+{
+  pkgs,
+  ...
+}:
 #with lib.hm.gvariant;
 {
-## gtk themes to go here?
+  ## gtk themes to go here?
 
-# Gnome extensions
+  # Gnome extensions
   home.packages = with pkgs.gnomeExtensions; [
     # Extensions - must be enabled in dconf too
     tray-icons-reloaded #sys tray icons - only works in X/xwayland
@@ -22,17 +24,17 @@
     quick-settings-tweaker
   ];
 
-#dconf settings
+  #dconf settings
   dconf.settings = {
-
     "org/gnome/shell" = {
       favorite-apps = [
-        "firefox.desktop" 
-        "thunderbird.desktop" 
-        "org.gnome.Nautilus.desktop" 
-        "kitty.desktop" 
-        "org.gnome.Calendar.desktop" 
-        "org.gnome.Settings.desktop" 
+        "firefox.desktop"
+        "thunderbird.desktop"
+        "org.gnome.Nautilus.desktop"
+        "kitty.desktop"
+        "org.gnome.Calendar.desktop"
+        "actual.desktop"
+        "silverbullet.desktop"
       ];
       disable-user-extensions = false;
       # must be installed in home.packages above, and then enabled here
@@ -48,7 +50,7 @@
     };
 
     "org/gnome/desktop/wm/preferences" = {
-      workspace-names = [ 
+      workspace-names = [
         "Main"
         "Dev"
         "Media"
@@ -64,13 +66,13 @@
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [];
       switch-applications-backward = [];
-      switch-windows = [ "<Alt>Tab" ];
-      switch-windows-backward = [ "<Shift><Alt>Tab" ];
+      switch-windows = ["<Alt>Tab"];
+      switch-windows-backward = ["<Shift><Alt>Tab"];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" ];
-      home = [ "<Super>e" ];
+      custom-keybindings = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"];
+      home = ["<Super>e"];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -89,7 +91,5 @@
     "org/gnome/settings-daemon/plugins/power" = {
       ambient-enabled = false;
     };
-
   };
-
 }
