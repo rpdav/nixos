@@ -25,6 +25,7 @@
     ./common/optional/app/games
     ./common/optional/app/kitty.nix
     ./common/optional/app/thunderbird.nix
+    ./common/optional/app/web-apps
     ./common/optional/config/persist.nix
     ./common/optional/config/yubikey.nix
     ./common/optional/wm/gnome.nix
