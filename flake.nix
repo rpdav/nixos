@@ -23,6 +23,12 @@
 
     ###### Utilities ######
 
+    # Secure Boot
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Disk partitioning
     disko = {
       url = "github:nix-community/disko";
@@ -93,7 +99,7 @@
     secrets = import ./vars/secrets {inherit inputs;};
     inherit (nixpkgs-unstable) lib;
     configLib = import ./lib {inherit lib;};
-  in rec
+  in
   {
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
     # for some reason. Instead, I'm importing in each host's modules list.
@@ -117,6 +123,7 @@
           # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13
+	  inputs.lanzaboote.nixosModules.lanzaboote
           inputs.disko.nixosModules.disko
           inputs.nixvim.nixosModules.nixvim
           inputs.impermanence.nixosModules.impermanence

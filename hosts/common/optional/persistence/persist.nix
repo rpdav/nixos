@@ -1,15 +1,11 @@
-{
-  config,
-  lib,
-  userSettings,
-  ...
-}: {
+{...}: {
   programs.fuse.userAllowOther = true;
 
   environment.persistence."/persist" = {
     hideMounts = true;
     directories = [
       "/etc/nixos"
+      "/etc/secureboot"
       "/etc/ssh"
       "/root/.ssh"
       "/var/lib/fprint"

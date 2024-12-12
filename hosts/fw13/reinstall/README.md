@@ -1,5 +1,6 @@
 ## Partition and Install
 
+1. If secure boot is enabled, disable it in BIOS until the final rebuild is complete.
 1. Boot into installer, clone this repo, and cd into the reinstall folder
 1. Review `disko.nix` and `configuration.nix` for any needed edits.
 1. Partition the drive by running `sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko ./disko.nix`. Enter the disk encryption password when prompted.
