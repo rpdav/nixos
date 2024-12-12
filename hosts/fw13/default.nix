@@ -44,11 +44,15 @@
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
 
-  # Boot config with dual-boot and luks
+  # Boot config with luks
   boot = {
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot.enable = false;
       efi.canTouchEfiVariables = true;
+    };
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/persist/etc/secureboot";
     };
   };
 
@@ -68,6 +72,9 @@
     borgbackup
     qdirstat
   ];
+
+  # Firmware updates
+  services.fwupd.enable = true;
 
   # Misc
   fonts.packages = with pkgs; [
