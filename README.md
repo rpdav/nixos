@@ -26,6 +26,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 * Multi-host friendly: config structure is designed that it's easy to add new users/hosts and share common modules
 * Sops-nix: for secrets management
 * Disko: declarative disk partitioning
+* Lanzaboote: secure boot
 * Stylix: system-wide theming (WIP)
 
 ## Secrets
