@@ -50,6 +50,17 @@
       categories = ["Application"];
       type = "Application";
     };
+
+    unraid = {
+      name = "Unraid";
+      comment = "";
+      settings.StartupWMClass = "chrome-10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net\" %U";
+      icon = "/home/${userSettings.username}/.local/share/icons/unraid.png";
+      terminal = false;
+      categories = ["Application"];
+      type = "Application";
+    };
   };
 
   # Icons
@@ -71,5 +82,9 @@
   home.file."home-assistant.png" = {
     source = ./icons/home-assistant.png;
     target = ".local/share/icons/home-assistant.png";
+  };
+  home.file."unraid.png" = {
+    source = ./icons/unraid.png;
+    target = ".local/share/icons/unraid.png";
   };
 }
