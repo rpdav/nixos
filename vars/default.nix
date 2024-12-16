@@ -66,13 +66,13 @@
         type = lib.types.str;
         default = "kde";
       };
-      theme = lib.mkOption {
-        type = lib.types.str;
-        default = "mountain";
-      };
-      base16theme = lib.mkOption {
+      base16scheme = lib.mkOption {
         type = lib.types.str;
         default = "3024"; #run nix build nixpkgs#base16-schemes and browse result/share/themes
+      };
+      wallpaper = lib.mkOption {
+        type = lib.types.str;
+        default = "squares"; 
       };
     };
   };

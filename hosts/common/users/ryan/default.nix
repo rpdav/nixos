@@ -13,8 +13,8 @@ let
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
   # user--specific variable overrides
-  userSettings.theme = lib.mkForce "snowflake-blue";
-  userSettings.base16theme = lib.mkForce "3024";
+  userSettings.wallpaper = lib.mkForce "moon";
+  userSettings.base16scheme = lib.mkForce "tokyo-night-terminal-dark";
 
   # user definition
   users.mutableUsers = false;

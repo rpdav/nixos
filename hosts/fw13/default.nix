@@ -2,6 +2,7 @@
   lib,
   pkgs,
   systemSettings,
+  userSettings,
   configLib,
   ...
 }:
@@ -23,7 +24,7 @@
         "hosts/common/optional/localbackup.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
-        #"hosts/common/optional/stylix.nix" #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
+        "hosts/common/optional/stylix.nix" #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
         "hosts/common/optional/wireguard.nix" #TODO replace vanilla wireguard with tailscale
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"

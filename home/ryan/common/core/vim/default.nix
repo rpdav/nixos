@@ -23,8 +23,6 @@ in {
   programs.nixvim = {
     enable = true;
     vimAlias = true;
-    #TODO make colorscheme use stylix themes
-    colorschemes.catppuccin.enable = true;
     plugins = {
       lualine.enable = true;
       lsp = {

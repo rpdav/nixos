@@ -1,12 +1,32 @@
 {
   pkgs,
   userSettings,
+  configLib,
   ...
 }: {
-  stylix.enable = true;
-  stylix.targets.grub.enable = false;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.base16theme}.yaml"; #comment out this line to base scheme on wallpaper below
-  stylix.image = ../../themes/${userSettings.theme}/wallpaper.png;
+  stylix = {
+    enable = true;
+    targets.grub.enable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.base16scheme}.yaml";
+    image = configLib.relativeToRoot "themes/${userSettings.wallpaper}/${userSettings.wallpaper}.jpg";
+    imageScalingMode = "center";
+#    polarity = "light";
+  };
+
+  # Shortlist of themes:
+  # catppuccin-mocha
+  # gruvbox-material-dark-hard
+  # atelier-dune
+  # 3024
+  # colors
+  # isotope
+  # tokyo-night-terminal-dark
+
+  #shortlist of wallpapers
+  # ascii-cat
+  # pages
+  # squares
+  # triangles
 
   stylix.fonts.sizes = {
     applications = 10;
