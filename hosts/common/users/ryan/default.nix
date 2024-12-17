@@ -14,7 +14,7 @@ let
 in {
   # user--specific variable overrides
   userSettings.wallpaper = lib.mkForce "moon";
-  userSettings.base16scheme = lib.mkForce "tokyo-night-terminal-dark";
+  userSettings.base16scheme = lib.mkForce "gruvbox-material-dark-hard";
 
   # user definition
   users.mutableUsers = false;
@@ -52,6 +52,5 @@ in {
   # minimal root user config
   users.users.root = {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
-    };
-
+  };
 }

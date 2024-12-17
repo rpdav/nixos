@@ -14,7 +14,7 @@
   # Enable flakes
   nix = {
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes pipe-operators
       keep-outputs = true
       keep-derivations = true
       warn-dirty = false
