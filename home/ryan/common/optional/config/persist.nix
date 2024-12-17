@@ -61,7 +61,6 @@
       ".config/ghostwriterrc"
 
       # Gnome
-      ".config/gnome-initial-setup-done" #welcome pop-up
 
       # KDE
       #".config/gwenviewrc"
