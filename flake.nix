@@ -32,7 +32,7 @@
     # Disk partitioning
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Hardware configs
@@ -147,7 +147,7 @@
         system = "x86_64-linux";
         modules = [
           inputs.disko.nixosModules.disko
-          ./hosts/testbox
+          ./hosts/testbox/configuration.nix
           ./hosts/testbox/hardware-configuration.nix
         ];
       };
