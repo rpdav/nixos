@@ -1,8 +1,6 @@
 {
   lib,
   pkgs,
-  systemSettings,
-  userSettings,
   configLib,
   ...
 }:
@@ -76,11 +74,6 @@
 
   # Firmware updates
   services.fwupd.enable = true;
-
-  # Misc
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-  ];
 
   # pmail bridge must be configured imperatively using the cli tool.
   # State in ~/.config is persisted. Runs as a user service even though

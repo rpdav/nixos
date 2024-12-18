@@ -7,7 +7,7 @@
 }: let
   themePath = configLib.relativeToRoot "themes/${userSettings.wallpaper}";
 
-  image = 
+  image =
     if builtins.pathExists "${themePath}/wallpaper.jpg"
     then "${themePath}/wallpaper.jpg"
     else "${themePath}/wallpaper.png";
@@ -29,7 +29,6 @@
   polarity = "${themePath}/polarity.txt"
     |> builtins.readFile
     |> lib.removeSuffix "\n";
-
 in {
   stylix = {
     enable = true;
@@ -39,7 +38,9 @@ in {
     imageScalingMode = "center";
   };
 
-  # Shortlist of good schemes:
+  #TODO add extra gtk theming?
+
+  # Favorite schemes:
   # catppuccin-mocha
   # gruvbox-material-dark-hard
   # atelier-dune
@@ -62,23 +63,30 @@ in {
     popups = 1.0;
   };
 
-#TODO set up fonts
-#  stylix.fonts = {
-#    monospace = {
-#      name = userSettings.font;
-#      package = userSettings.fontPkg;
-#    };
-#    serif = {
-#      name = userSettings.font;
-#      package = userSettings.fontPkg;
-#    };
-#    sansSerif = {
-#      name = userSettings.font;
-#      package = userSettings.fontPkg;
-#    };
+  stylix.cursor = {
+    package = pkgs.${userSettings.cursorPkg};
+    name = userSettings.cursor;
+    size = 24;
+  };
+
+  #TODO should this go in userSettings? 6 vars seems a bit excessive.
+  # would be nice if a single package covered multiple fonts.
+  stylix.fonts = {
+    monospace = {
+      name = "Intel One Mono";
+      package = pkgs.intel-one-mono;
+    };
+    serif = {
+      name = "Ubuntu";
+      package = pkgs.nerd-fonts.ubuntu;
+    };
+    sansSerif = {
+      name = "Ubuntu Sans";
+      package = pkgs.nerd-fonts.ubuntu-sans;
+    };
 #    emoji = {
 #      name = "Noto Color Emoji";
 #      package = pkgs.noto-fonts-emoji-blob-bin;
 #    };
-#  };
+  };
 }

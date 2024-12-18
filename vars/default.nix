@@ -62,10 +62,6 @@
         type = lib.types.str;
         default = "ryan";
       };
-      wm = lib.mkOption {
-        type = lib.types.str;
-        default = "kde";
-      };
       base16scheme = lib.mkOption {
         type = lib.types.str;
         default = "3024"; #run nix build nixpkgs#base16-schemes and browse result/share/themes
@@ -73,6 +69,22 @@
       wallpaper = lib.mkOption {
         type = lib.types.str;
         default = "squares"; 
+      };
+      cursor = lib.mkOption {
+	type = lib.types.str;
+	default = "Vanilla-DMZ";
+      };
+      cursorPkg = lib.mkOption {
+	type = lib.types.str;
+	default = "vanilla-dmz";
+      };
+      font = lib.mkOption {
+	type = lib.types.str;
+	default = "";
+      };
+      fontPkg = lib.mkOption {
+	type = lib.types.str;
+	default = "nerd-fonts.fira-code";
       };
     };
   };
