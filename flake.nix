@@ -143,13 +143,12 @@
         ];
       };
       # Testing box (HP x86 thin client)
-      # nixos-anywhere --flake .#testbox --generate-hardware-config nixos-generate-config ./hardware-configuration.nix --copy-host-keys testbox
+      # nix run github:nix-community/nixos-anywhere -- --flake .#testbox --copy-host-keys --target-host root@testbox
       testbox = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           inputs.disko.nixosModules.disko
-          ./hosts/testbox/configuration.nix
-          ./hosts/testbox/hardware-configuration.nix
+          ./hosts/testbox
         ];
       };
     };

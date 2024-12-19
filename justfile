@@ -46,14 +46,17 @@ backup:
 #
 ############################################################################
 
-nixos-vm: 
-  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch 
+testbox: 
+  sudo nixos-rebuild --flake .#testbox --target-host root@testbox switch 
 
-nixos-vm-dry: 
-  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm dry-build
+testbox-dry: 
+  sudo nixos-rebuild --flake .#testbox --target-host root@testbox dry-build
 
-nixos-vm-debug: 
-  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch --show-trace -v
+testbox-boot:
+  sudo nixos-rebuild --flake .#testbox --target-host root@testbox boot
+
+testbox-debug: 
+  sudo nixos-rebuild --flake .#testbox --target-host root@testbox switch --show-trace -v
 
 pi: 
   sudo nixos-rebuild --flake .#pi --target-host root@pi switch 
@@ -65,19 +68,19 @@ pi-debug:
   sudo nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
 
 vps: 
-  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch 
+  sudo nixos-rebuild --flake .#vps --target-host root@testbox switch 
 
 vps-dry: 
-  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm dry-build
+  sudo nixos-rebuild --flake .#vps --target-host root@testbox dry-build
 
 vps-debug: 
-  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch --show-trace -v
+  sudo nixos-rebuild --flake .#vps --target-host root@testbox switch --show-trace -v
 
-machines: nixos-vm 
+machines: testbox 
 
-machines-debug: nixos-vm-debug
+machines-debug: testbox-debug
 
-machines-dry: nixos-vm-dry
+machines-dry: testbox-dry
 
 
 ############################################################################
@@ -87,10 +90,10 @@ machines-dry: nixos-vm-dry
 ############################################################################
 
 anywhere-test:
-  nix run github:nix-community/nixos-anywhere -- --flake .#nixos-vm --vm-test
+  nix run github:nix-community/nixos-anywhere -- --flake .#testbox --vm-test
 
 anywhere-deploy:
-  nix run github:nix-community/nixos-anywhere -- --flake .#nixos-vm root@ubuntu
+  nix run github:nix-community/nixos-anywhere -- --flake .#testbox root@ubuntu
 
 ############################################################################
 #

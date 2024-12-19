@@ -9,6 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
+    ./hardware-configuration.nix
   ];
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -22,6 +23,13 @@
     pkgs.curl
     pkgs.gitMinimal
   ];
+
+  users.users.ryan = {
+    # password below is "changeme" for testing
+    hashedPassword = "$6$ZKA9wKFWI9uZDKeq$VVH8V1ppkzx9awRcAPJYamkg4YBxgVNIzNFEc8taEq0koSEoFFAoMFFVBks6hH5FnQ5fbNo0..hpDrhlr3b9M.";
+    isNormalUser = true;
+    extraGroups = ["wheel"];
+  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     # change this to your ssh key
