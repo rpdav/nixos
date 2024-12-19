@@ -94,6 +94,7 @@
     nixpkgs,
     nixpkgs-unstable,
     nixpkgs-stable,
+    disko,
     ...
   } @ inputs: let
     secrets = import ./vars/secrets {inherit inputs;};
@@ -143,7 +144,7 @@
       };
       # Testing box (HP x86 thin client)
       # nixos-anywhere --flake .#testbox --generate-hardware-config nixos-generate-config ./hardware-configuration.nix --copy-host-keys testbox
-      nixosConfigurations.testbox = nixpkgs.lib.nixosSystem {
+      testbox = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           inputs.disko.nixosModules.disko
