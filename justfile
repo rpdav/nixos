@@ -47,16 +47,16 @@ backup:
 ############################################################################
 
 testbox: 
-  sudo nixos-rebuild --flake .#testbox --target-host root@testbox switch 
+  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 switch 
 
 testbox-dry: 
-  sudo nixos-rebuild --flake .#testbox --target-host root@testbox dry-build
+  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 dry-build
 
 testbox-boot:
-  sudo nixos-rebuild --flake .#testbox --target-host root@testbox boot
+  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 boot
 
 testbox-debug: 
-  sudo nixos-rebuild --flake .#testbox --target-host root@testbox switch --show-trace -v
+  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.18 switch --show-trace -v
 
 pi: 
   sudo nixos-rebuild --flake .#pi --target-host root@pi switch 
@@ -93,7 +93,7 @@ anywhere-test:
   nix run github:nix-community/nixos-anywhere -- --flake .#testbox --vm-test
 
 anywhere-deploy:
-  nix run github:nix-community/nixos-anywhere -- --flake .#testbox root@ubuntu
+  nix run github:nix-community/nixos-anywhere -- --flake .#testbox --copy-host-keys --generate-hardware-config nixos-generate-config ./hosts/testbox/hardware-configuration.nix root@10.10.1.18
 
 ############################################################################
 #

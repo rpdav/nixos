@@ -14,6 +14,10 @@
         type = lib.types.str;
         default = "en_US.UTF-8";
       };
+      swapEnable = lib.mkOption {
+        type = lib.types.bool;
+        default = "true";
+      };
       swapSize = lib.mkOption {
         type = lib.types.str;
         default = "8G";

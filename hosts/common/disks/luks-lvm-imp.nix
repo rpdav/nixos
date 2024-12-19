@@ -25,8 +25,7 @@
                 name = "crypt";
                 extraOpenArgs = [ ];
                 settings = {
-                  # if you want to use the key for interactive login be sure there is no trailing newline
-                  # for example use `echo -n "password" > /tmp/secret.key`
+		  # uses interactive passphrase during install
                   allowDiscards = true;
                 };
                 content = {

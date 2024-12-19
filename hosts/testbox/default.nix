@@ -2,15 +2,26 @@
   modulesPath,
   lib,
   pkgs,
+  configLib,
   ...
-}:
-{
-  imports = [
+}: {
+  imports = 
+    lib.flatten
+    [
+      (map configLib.relativeToRoot [
+	# core config
+	"vars"
+	"hosts/common/disks/btrfs-imp.nix"
+      ])
     (modulesPath + "/installer/scan/not-detected.nix")
-    (modulesPath + "/profiles/qemu-guest.nix")
-    ./disk-config.nix
     ./hardware-configuration.nix
   ];
+  
+  # Variable overrides
+  systemSettings.swapEnable = false;
+  # this changes from one reboot to next - check before deploying!
+  systemSettings.diskDevice = "sdb";
+
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
     # devices = [ ];

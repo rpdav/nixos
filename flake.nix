@@ -143,9 +143,15 @@
         ];
       };
       # Testing box (HP x86 thin client)
-      # nix run github:nix-community/nixos-anywhere -- --flake .#testbox --copy-host-keys --target-host root@testbox
-      testbox = nixpkgs.lib.nixosSystem {
+      testbox = nixpkgs-stable.lib.nixosSystem rec {
         system = "x86_64-linux";
+	specialArgs = {
+	  pkgs-unstable = import nixpkgs-unstable {
+	    inherit system;
+	    config.allowUnfree = true;
+	  }; 
+	  inherit configLib;
+	};
         modules = [
           inputs.disko.nixosModules.disko
           ./hosts/testbox

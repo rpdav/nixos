@@ -1,7 +1,11 @@
-{systemSettings, ...}: {
-  # Disko config using lvm, swap, and btrfs subvolumes for use in the impermanence module
+{
+  systemSettings,
+  lib,
+  ...
+}: {
+  # Disko config using lvm, optional swap, and btrfs subvolumes for use in the impermanence module
   disko.devices = {
-    disk.disk1 = {
+    disk.main = {
       device = "/dev/${systemSettings.diskDevice}";
       type = "disk";
       content = {
@@ -14,7 +18,7 @@
           };
           ESP = {
             name = "ESP";
-            size = "1G";
+            size = "500M";
             type = "EF00";
             content = {
               type = "filesystem";
@@ -45,16 +49,17 @@
                 "root" = {
                   #rollback script assumes root subvol is "root"
                   mountpoint = "/";
+                  mountOptions = ["compress=zstd" "noatime"];
                 };
-                "/nix" = {
+                "nix" = {
                   mountpoint = "/nix";
                   mountOptions = ["compress=zstd" "noatime"];
                 };
-                "/persist" = {
+                "persist" = {
                   mountpoint = "/persist";
                   mountOptions = ["compress=zstd" "noatime"];
                 };
-                "/swap" = {
+                "swap" = lib.mkIf systemSettings.swapEnable {
                   mountpoint = "/.swap";
                   swap.swapfile.size = systemSettings.swapSize;
                 };
