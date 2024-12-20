@@ -3,6 +3,7 @@
   userSettings,
   lib,
   configLib,
+  inputs,
   ...
 }: let
   themePath = configLib.relativeToRoot "themes/${userSettings.wallpaper}";
@@ -30,6 +31,8 @@
     |> builtins.readFile
     |> lib.removeSuffix "\n";
 in {
+  imports = [inputs.stylix.nixosModules.stylix];
+
   stylix = {
     enable = true;
     inherit base16Scheme;
@@ -84,9 +87,9 @@ in {
       name = "Ubuntu Sans";
       package = pkgs.nerd-fonts.ubuntu-sans;
     };
-#    emoji = {
-#      name = "Noto Color Emoji";
-#      package = pkgs.noto-fonts-emoji-blob-bin;
-#    };
+    #    emoji = {
+    #      name = "Noto Color Emoji";
+    #      package = pkgs.noto-fonts-emoji-blob-bin;
+    #    };
   };
 }

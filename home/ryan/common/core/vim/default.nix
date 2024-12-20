@@ -1,11 +1,16 @@
 {
   pkgs,
   userSettings,
+  inputs,
   ...
 }: let
   flake = "(builtins.getFlake \"/home/${userSettings.username})\"";
 in {
-  imports = [./cmp.nix];
+  imports = [
+    ./cmp.nix
+    inputs.nixvim.homeManagerModules.nixvim
+  ];
+
   programs.vim = {
     enable = true;
     settings = {

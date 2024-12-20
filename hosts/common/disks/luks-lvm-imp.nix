@@ -1,5 +1,10 @@
-{systemSettings, ...}: {
+{
+  systemSettings,
+  inputs,
+  ...
+}: {
   # Disko config using luks, lvm, swap, and btrfs subvolumes for use with impermanence module
+  imports = [inputs.disko.nixosModules.disko];
   disko.devices = {
     disk = {
       main = {
@@ -15,7 +20,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                mountOptions = ["umask=0077"];
               };
             };
             luks = {
@@ -23,9 +28,9 @@
               content = {
                 type = "luks";
                 name = "crypt";
-                extraOpenArgs = [ ];
+                extraOpenArgs = [];
                 settings = {
-		  # uses interactive passphrase during install
+                  # uses interactive passphrase during install
                   allowDiscards = true;
                 };
                 content = {

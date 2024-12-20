@@ -1,4 +1,10 @@
-{userSettings, ...}: {
+{
+  userSettings,
+  inputs,
+  ...
+}: {
+  imports = [inputs.impermanence.nixosModules.home-manager.impermanence];
+
   home.persistence."/persist/home/${userSettings.username}" = {
     directories = [
       # Personal folders
@@ -54,7 +60,7 @@
       ".config/pulse"
       ".config/rclone" #TODO maybe this can be added to config? It's just a couple key/value pairs.
       ".config/sops"
-      #".config/systemd" #this folder must be persisted through the system config
+      #".config/systemd" #persisting this will break HM - must be rebuilt each time. See readme.
     ];
     files = [
       # Apps

@@ -2,6 +2,7 @@
   lib,
   pkgs,
   configLib,
+  inputs,
   ...
 }:
 #TODO add system stats here
@@ -33,6 +34,8 @@
 
       # host-specific
       ./hardware-configuration.nix
+      inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+      inputs.lanzaboote.nixosModules.lanzaboote
     ];
 
   # Variable overrides

@@ -1,9 +1,12 @@
 {
   systemSettings,
   lib,
+  inputs,
   ...
 }: {
   # Disko config using lvm, optional swap, and btrfs subvolumes for use in the impermanence module
+  imports = [inputs.disko.nixosModules.disko];
+
   disko.devices = {
     disk.main = {
       device = "/dev/${systemSettings.diskDevice}";

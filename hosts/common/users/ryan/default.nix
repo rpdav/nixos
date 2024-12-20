@@ -12,6 +12,12 @@ let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
+  imports = [
+    # This uses unstable HM for all systems (including stable ones).
+    # The stable ones are all headless so not a lot of risk in things breaking.
+    inputs.home-manager-unstable.nixosModules.home-manager
+  ];
+
   # user--specific variable overrides
   userSettings.wallpaper = "moon";
   userSettings.base16scheme = "catppuccin-mocha";
@@ -39,9 +45,6 @@ in {
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
     sharedModules = [
       (import (configLib.relativeToRoot "modules/home-manager"))
-      inputs.plasma-manager.homeManagerModules.plasma-manager
-      inputs.impermanence.nixosModules.home-manager.impermanence
-      inputs.nixvim.homeManagerModules.nixvim
     ];
     extraSpecialArgs = {
       inherit pkgs-stable;

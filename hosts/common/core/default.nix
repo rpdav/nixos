@@ -1,5 +1,6 @@
 {
   systemSettings,
+  inputs,
   ...
 }: {
   ## This file contains NixOS configuration common to all hosts
@@ -9,6 +10,8 @@
     ./packages.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys
+
+    inputs.nixos-cli.nixosModules.nixos-cli
   ];
 
   # Enable flakes
@@ -26,7 +29,7 @@
     automatic = true;
     dates = systemSettings.gcInterval;
     options = "--delete-older-than ${systemSettings.gcRetention}";
-    };
+  };
 
   # CLI config
   services.nixos-cli.enable = true;
