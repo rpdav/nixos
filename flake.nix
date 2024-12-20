@@ -134,6 +134,7 @@
 	    config.allowUnfree = true;
 	  }; 
 	  inherit configLib;
+	  inherit inputs;
 	};
         modules = [
           ./hosts/testbox
