@@ -14,6 +14,10 @@
         type = lib.types.str;
         default = "en_US.UTF-8";
       };
+      impermanent= lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
       swapEnable = lib.mkOption {
         type = lib.types.bool;
         default = "true";

@@ -42,6 +42,7 @@
   userSettings.username = "ryan"; #primary user (not necessarily only user)
   systemSettings.diskDevice = "nvme0n1";
   systemSettings.swapSize = "16G";
+  systemSettings.impermanent = true;
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
