@@ -5,20 +5,21 @@
   configLib,
   ...
 }: {
-  imports = 
+  imports =
     lib.flatten
     [
       (map configLib.relativeToRoot [
-	# core config
-	"vars"
-	"hosts/common/disks/btrfs-imp.nix"
+        # core config
+        "vars"
+        "hosts/common/disks/btrfs-imp.nix"
       ])
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ./hardware-configuration.nix
-  ];
-  
+      (modulesPath + "/installer/scan/not-detected.nix")
+      ./hardware-configuration.nix
+    ];
+
   # Variable overrides
-  systemSettings.swapEnable = false;
+  systemSettings.swapEnable = true;
+  systemSettings.swapSize = "4G";
   # this changes from one reboot to next - check before deploying!
   systemSettings.diskDevice = "sdb";
 
@@ -30,9 +31,12 @@
   };
   services.openssh.enable = true;
 
+  networking.hostName = "testbox";
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
+    pkgs.vim
   ];
 
   users.users.ryan = {
