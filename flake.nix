@@ -123,21 +123,6 @@
           # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13
-	  inputs.lanzaboote.nixosModules.lanzaboote
-          inputs.disko.nixosModules.disko
-          inputs.nixvim.nixosModules.nixvim
-          inputs.impermanence.nixosModules.impermanence
-          inputs.home-manager-unstable.nixosModules.home-manager
-          inputs.nixos-cli.nixosModules.nixos-cli
-          inputs.stylix.nixosModules.stylix
-          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-          {
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-          }
-          inputs.nixos-cosmic.nixosModules.default
         ];
       };
       # 2020 Asus Zenbook
