@@ -9,11 +9,9 @@
     git-crypt
     alejandra
     rclone
-    sops
     killall
     pciutils
     usbutils
-    neovim
     nixd
   ];
 }

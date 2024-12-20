@@ -1,16 +1,22 @@
-{inputs, systemSettings, ...}:
+{
+  inputs,
+  systemSettings,
+  pkgs,
+  ...
+}:
 # This module uses sshd keys to generate host age keys - sshd must be enabled for system-level sops to work
 let
   secretspath = builtins.toString inputs.nix-secrets;
-  
+
   # Define appropriate key path depending on whether system is impermanent
-  sshKeyPaths = 
+  sshKeyPaths =
     if systemSettings.impermanent
     then ["/persist/etc/ssh/ssh_host_ed25519_key"]
     else ["/etc/ssh/ssh_host_ed25519_key"];
-
 in {
   imports = [inputs.sops-nix.nixosModules.sops];
+
+  environment.systemPackages = [pkgs.sops];
 
   sops = {
     defaultSopsFile = "${secretspath}/secrets.yaml";
