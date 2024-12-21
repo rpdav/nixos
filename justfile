@@ -47,34 +47,34 @@ backup:
 ############################################################################
 
 testbox: 
-  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 switch 
+  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 switch 
 
 testbox-dry: 
-  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 dry-build
+  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 dry-build
 
 testbox-boot:
-  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 boot
+  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 boot
 
 testbox-debug: 
-  sudo nixos-rebuild --flake .#testbox --target-host root@10.10.18 switch --show-trace -v
+  nixos-rebuild --flake .#testbox --target-host root@10.10.18 switch --show-trace -v
 
 pi: 
-  sudo nixos-rebuild --flake .#pi --target-host root@pi switch 
+  nixos-rebuild --flake .#pi --target-host root@pi switch 
 
 pi-dry: 
-  sudo nixos-rebuild --flake .#pi --target-host root@pi dry-build
+  nixos-rebuild --flake .#pi --target-host root@pi dry-build
 
 pi-debug: 
-  sudo nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
+  nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
 
 vps: 
-  sudo nixos-rebuild --flake .#vps --target-host root@testbox switch 
+  nixos-rebuild --flake .#vps --target-host root@testbox switch 
 
 vps-dry: 
-  sudo nixos-rebuild --flake .#vps --target-host root@testbox dry-build
+  nixos-rebuild --flake .#vps --target-host root@testbox dry-build
 
 vps-debug: 
-  sudo nixos-rebuild --flake .#vps --target-host root@testbox switch --show-trace -v
+  nixos-rebuild --flake .#vps --target-host root@testbox switch --show-trace -v
 
 machines: testbox 
 
