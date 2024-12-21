@@ -18,6 +18,7 @@
 
     # scripts
     (import ../optional/scripts/fs-diff.nix {inherit pkgs;})
+    (import ../optional/scripts/clear-testbox.nix {inherit pkgs;})
   ];
 
   home.sessionVariables = {
