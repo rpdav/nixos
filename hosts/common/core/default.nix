@@ -6,7 +6,8 @@
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
-    ./tailscale.nix
+    #TODO change this back once done with testbox
+    #./tailscale.nix
     ./packages.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys

@@ -17,6 +17,8 @@
         # core config
         "vars"
         "hosts/common/core"
+	#TODO move tailscale back into core once done with testbox
+	"hosts/common/core/tailscale.nix"
         "hosts/common/disks/luks-lvm-imp.nix"
 
         # host-specific optional

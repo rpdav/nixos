@@ -13,8 +13,8 @@
         # core config
         "vars"
         "hosts/common/disks/btrfs-imp.nix"
-        "hosts/common/core/packages.nix"
-        "hosts/common/core/sops.nix"
+        "hosts/common/core"
+	"hosts/common/optional/persistence"
       ])
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware-configuration.nix
@@ -35,23 +35,16 @@
 
   networking.hostName = "testbox";
 
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = true;
-  };
-
   users.mutableUsers = false;
 
   sops.secrets."ryan/passwordhash".neededForUsers = true;
 
   users.users.root = {
-    # password below is "changeme" for testing
-    # hashedPassword = "$6$ZKA9wKFWI9uZDKeq$VVH8V1ppkzx9awRcAPJYamkg4YBxgVNIzNFEc8taEq0koSEoFFAoMFFVBks6hH5FnQ5fbNo0..hpDrhlr3b9M.";
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     openssh.authorizedKeys.keys = [
       # yubikey
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILygGVzteEOsvhdTTP+guA4Fq0TeJM/R2tDYXXbHvhLFAAAABHNzaDo= ryan@yubinano"
-      # root's key
+      # root's key - may not be needed if sudo isn't used for nixos-rebuild
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINUY7K0mg1nTRf1gUloXdkX9QdMqXjzvszFDKYpFtekl root@borg"
     ];
   };
