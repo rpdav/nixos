@@ -8,9 +8,9 @@
   imports = [
     #TODO change this back once done with testbox
     #./tailscale.nix
-    ./packages.nix
-    ./sops.nix
-    ./sshd.nix #needed for sops keys
+    #./packages.nix
+    #./sops.nix
+    #./sshd.nix #needed for sops keys
 
     inputs.nixos-cli.nixosModules.nixos-cli
   ];
