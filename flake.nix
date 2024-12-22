@@ -140,6 +140,21 @@
           ./hosts/testbox
         ];
       };
+      # Testing box (HP x86 thin client)
+      testvm = nixpkgs-stable.lib.nixosSystem rec {
+        system = "x86_64-linux";
+	specialArgs = {
+	  pkgs-unstable = import nixpkgs-unstable {
+	    inherit system;
+	    config.allowUnfree = true;
+	  }; 
+	  inherit configLib;
+	  inherit inputs;
+	};
+        modules = [
+          ./hosts/testvm
+        ];
+      };
     };
   };
 }
