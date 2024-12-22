@@ -48,7 +48,7 @@
   users.users.root = {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     # password below is changeme for testing
-    hashedPassword = "$6$Mz17vB64XrO4mfoR$tUW5V43Q4l9CL2EeAEy5qf9BhZv0aWojXufoCI2yaZ./3jTRKtHvgvJqWgC9g6Rl45iTtNn/9osJ.Mmgso2wa0";
+    #hashedPassword = "$6$Mz17vB64XrO4mfoR$tUW5V43Q4l9CL2EeAEy5qf9BhZv0aWojXufoCI2yaZ./3jTRKtHvgvJqWgC9g6Rl45iTtNn/9osJ.Mmgso2wa0";
     openssh.authorizedKeys.keys = [
       # yubikey
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILygGVzteEOsvhdTTP+guA4Fq0TeJM/R2tDYXXbHvhLFAAAABHNzaDo= ryan@yubinano"

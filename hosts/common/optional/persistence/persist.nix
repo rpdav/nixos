@@ -6,7 +6,6 @@
     directories = [
       "/etc/nixos"
       "/etc/secureboot"
-      "/etc/ssh"
       "/root/.ssh"
       "/var/lib/fprint"
       "/var/lib/tailscale"
@@ -26,7 +25,8 @@
     files = [
       "/etc/adjtime"
       "/etc/machine-id"
-      "/etc/NIXOS"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
       {
         file = "/var/keys/secret_file";
         parentDirectory = {mode = "u=rwx,g=,o=";};

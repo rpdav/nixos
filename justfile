@@ -59,13 +59,13 @@ testbox-debug:
   nixos-rebuild --flake .#testbox --target-host root@10.10.18 switch --show-trace -v
 
 testvm: 
-  nixos-rebuild --flake .#testvm --target-host root@10.10.1.18 switch 
+  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 switch 
 
 testvm-dry: 
-  nixos-rebuild --flake .#testvm --target-host root@10.10.1.18 dry-build
+  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 dry-build
 
 testvm-boot:
-  nixos-rebuild --flake .#testvm --target-host root@10.10.1.18 boot
+  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 boot
 
 testvm-debug: 
   nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 switch --show-trace -v
@@ -105,7 +105,7 @@ anywhere-test:
   nix run github:nix-community/nixos-anywhere -- --flake .#testvm --vm-test
 
 anywhere-deploy:
-  nix run github:nix-community/nixos-anywhere -- --flake .#testvm --copy-host-keys --generate-hardware-config nixos-generate-config ./hosts/testvm/hardware-configuration.nix root@10.10.1.19
+  nix run github:nix-community/nixos-anywhere -- --flake .#testvm --generate-hardware-config nixos-generate-config ./hosts/testvm/hardware-configuration.nix root@10.10.1.19
 
 ############################################################################
 #
