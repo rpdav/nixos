@@ -4,7 +4,7 @@
 
   inputs = {
     ###### Official Sources ######
-    
+
     # Default nixpkgs
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
@@ -12,13 +12,13 @@
     nixpkgs-stable.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
-    home-manager-stable = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
     home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     ###### Utilities ######
@@ -98,9 +98,20 @@
   } @ inputs: let
     secrets = import ./vars/secrets {inherit inputs;};
     inherit (nixpkgs-unstable) lib;
+
     configLib = import ./lib {inherit lib;};
-  in
-  {
+    system = "x86_64-linux";
+
+    pkgs-unstable = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+
+    pkgs-stable = import nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+  in {
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
     # for some reason. Instead, I'm importing in each host's modules list.
     #nixosModules = import ./modules/nixos;
@@ -108,13 +119,10 @@
 
     nixosConfigurations = {
       # 2023 Framework 13
-      fw13 = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        specialArgs = { 
-          pkgs-stable = import nixpkgs-stable {
-            inherit system;
-            config.allowUnfree = true;
-          };
+      fw13 = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit pkgs-stable;
+          inherit pkgs-unstable;
           inherit secrets;
           inherit inputs;
           inherit configLib;
@@ -123,36 +131,34 @@
           # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13
+	  inputs.home-manager-unstable.nixosModules.home-manager
         ];
       };
       # Testing box (HP x86 thin client)
-      testbox = nixpkgs-stable.lib.nixosSystem rec {
+      testbox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
-	specialArgs = {
-	  pkgs-unstable = import nixpkgs-unstable {
-	    inherit system;
-	    config.allowUnfree = true;
-	  }; 
-	  inherit configLib;
-	  inherit inputs;
-	};
+        specialArgs = {
+          inherit pkgs-stable;
+          inherit pkgs-unstable;
+          inherit configLib;
+          inherit inputs;
+        };
         modules = [
           ./hosts/testbox
         ];
       };
       # Testing box (HP x86 thin client)
-      testvm = nixpkgs-stable.lib.nixosSystem rec {
+      testvm = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
-	specialArgs = {
-	  pkgs-unstable = import nixpkgs-unstable {
-	    inherit system;
-	    config.allowUnfree = true;
-	  }; 
-	  inherit configLib;
-	  inherit inputs;
-	};
+        specialArgs = {
+          inherit pkgs-stable;
+          inherit pkgs-unstable;
+          inherit configLib;
+          inherit inputs;
+        };
         modules = [
           ./hosts/testvm
+	  inputs.home-manager-stable.nixosModules.home-manager
         ];
       };
     };

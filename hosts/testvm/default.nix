@@ -12,7 +12,6 @@
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "hosts/common/disks/btrfs-imp.nix"
         "hosts/common/core"
 	#TODO move this back into core when done testing
 	"hosts/common/core/packages.nix"
@@ -20,11 +19,20 @@
 	"hosts/common/core/sops.nix"
 	"hosts/common/core/tailscale.nix"
 
+        "hosts/common/disks/btrfs-imp.nix"
+	
+
 	"hosts/common/optional/persistence"
-	"hosts/common/optional/stylix.nix"
+	# enable this once user config is more built out
+	#"hosts/common/optional/yubikey"
+
+        # users
+        "hosts/common/users/ryan"
       ])
-      (modulesPath + "/installer/scan/not-detected.nix")
+
+      # host-specific
       ./hardware-configuration.nix
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   # Variable overrides
@@ -34,9 +42,7 @@
   systemSettings.impermanent = true;
   systemSettings.gui = false;
 
-#TODO move this to user definitions once set up
-  userSettings.wallpaper = "none";
-
+  #todo change to systemd?
   boot.loader.grub = {
     efiSupport = true;
     efiInstallAsRemovable = true;
@@ -44,12 +50,10 @@
 
   networking.hostName = "testvm";
 
-  users.mutableUsers = false;
-
-  sops.secrets."ryan/passwordhash".neededForUsers = true;
-
+  # allow root ssh login for this host only
+  #TODO this key is just hard-coded - any way to dynamically add keys like in
+  #hosts/common/users?
   users.users.root = {
-    hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     openssh.authorizedKeys.keys = [
       # yubikey
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILygGVzteEOsvhdTTP+guA4Fq0TeJM/R2tDYXXbHvhLFAAAABHNzaDo= ryan@yubinano"

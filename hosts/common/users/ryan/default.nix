@@ -4,6 +4,7 @@
   inputs,
   secrets,
   pkgs-stable,
+  pkgs-unstable,
   configLib,
   ...
 }:
@@ -12,12 +13,6 @@ let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
-  imports = [
-    # This uses unstable HM for all systems (including stable ones).
-    # The stable ones are all headless so not a lot of risk in things breaking.
-    inputs.home-manager-unstable.nixosModules.home-manager
-  ];
-
   # user--specific variable overrides
   userSettings.wallpaper = "moon";
   userSettings.base16scheme = "catppuccin-mocha";
@@ -32,7 +27,7 @@ in {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    home = "/home/ryan"; # Setting this to point local backup to persisted home directory. Not sure this will actually work
+    home = "/home/ryan"; 
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
@@ -48,6 +43,7 @@ in {
     ];
     extraSpecialArgs = {
       inherit pkgs-stable;
+      inherit pkgs-unstable;
       inherit secrets;
       inherit inputs;
       inherit configLib;
