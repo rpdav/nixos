@@ -28,6 +28,7 @@ in {
   programs.nixvim = {
     enable = true;
     vimAlias = true;
+    clipboard.providers.wl-copy.enable = true;
     plugins = {
       lualine.enable = true;
       lsp = {
