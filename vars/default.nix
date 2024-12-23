@@ -18,6 +18,10 @@
         type = lib.types.bool;
         default = true;
       };
+      gui= lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
       swapEnable = lib.mkOption {
         type = lib.types.bool;
         default = "true";
