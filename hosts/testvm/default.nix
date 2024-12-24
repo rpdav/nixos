@@ -21,10 +21,8 @@
 
         "hosts/common/disks/btrfs-imp.nix"
 	
-
 	"hosts/common/optional/persistence"
-	# enable this once user config is more built out
-	#"hosts/common/optional/yubikey"
+	"hosts/common/optional/yubikey.nix"
 
         # users
         "hosts/common/users/ryan"
@@ -36,6 +34,7 @@
     ];
 
   # Variable overrides
+  userSettings.username = "ryan"; #primary user (not necessarily only user)
   systemSettings.swapEnable = false;
   systemSettings.diskDevice = "vda";
   systemSettings.gcRetention = "7d";

@@ -51,14 +51,17 @@ in {
       	User root
       	Port 44422
 
-      Host pve
-      	Hostname 10.10.1.18
-      	User root
-      	Port 22
-
       Host borg
         Hostname 10.10.1.16
         User borg
+
+      Host testbox
+	Hostname 10.10.1.18
+	User ryan
+
+      Host testvm
+	Hostname 10.10.1.19
+	User ryan
 
       Host gitea.dfrp.xyz github.com
         User git

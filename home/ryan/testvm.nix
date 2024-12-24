@@ -16,19 +16,11 @@
   imports = [
     # core config
     (configLib.relativeToRoot "vars")
-    #./common/core
+    ./common/core
 
     # optional config
-    #./common/optional/app/accounts.nix
-    #./common/optional/app/browser
-    #./common/optional/app/defaultapps.nix
-    #./common/optional/app/games
-    #./common/optional/app/kitty.nix
-    #./common/optional/app/thunderbird.nix
-    #./common/optional/app/web-apps
-    #./common/optional/config/persist.nix
-    #./common/optional/config/yubikey.nix
-    #./common/optional/wm/gnome.nix
+    ./common/optional/config/persist.nix
+    ./common/optional/config/yubikey.nix
   ];
 
   home.packages = with pkgs; [

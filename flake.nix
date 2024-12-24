@@ -142,6 +142,7 @@
           inherit pkgs-unstable;
           inherit configLib;
           inherit inputs;
+	  inherit secrets;
         };
         modules = [
           ./hosts/testbox
@@ -155,8 +156,10 @@
           inherit pkgs-unstable;
           inherit configLib;
           inherit inputs;
+	  inherit secrets;
         };
         modules = [
+          (import ./modules/nixos)
           ./hosts/testvm
 	  inputs.home-manager-stable.nixosModules.home-manager
         ];

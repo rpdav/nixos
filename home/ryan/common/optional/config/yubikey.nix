@@ -1,6 +1,7 @@
 {
   lib,
   userSettings,
+  systemSettings,
   ...
 }: {
   # Pull private keys from sops
@@ -8,7 +9,6 @@
     # override default manual key path if yubikey is enabled. If normal key is present in .ssh, sudo will use it over the yubikey.
     "${userSettings.username}/sshKeys/id_manual".path = lib.mkForce "/home/${userSettings.username}/.ssh/id_manual.key";
     "${userSettings.username}/sshKeys/id_yubi5c".path = "/home/${userSettings.username}/.ssh/id_yubi5c";
-    "${userSettings.username}/sshKeys/id_yubi5pink".path = "/home/${userSettings.username}/.ssh/id_yubi5pink";
     "${userSettings.username}/sshKeys/id_yubinano".path = "/home/${userSettings.username}/.ssh/id_yubinano";
   };
 
@@ -27,7 +27,7 @@
   };
 
   # visual notification for yubikey touch
-  services.yubikey-touch-detector.enable = true;
+  services.yubikey-touch-detector.enable = lib.mkIf systemSettings.gui true;
 
   # passwordless sudo
   sops.secrets."${userSettings.username}/u2f_keys".path = "/home/${userSettings.username}/.config/Yubico/u2f_keys";
