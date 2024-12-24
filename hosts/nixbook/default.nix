@@ -4,8 +4,8 @@
   pkgs,
   pkgs-stable,
   inputs,
-  systemSettings,
-  userSettings,
+  systemOpts,
+  userOpts,
   secrets,
   configLib,
   ...
@@ -40,7 +40,7 @@
     ];
 
   # Variable overrides
-  userSettings.username = "ryan"; #primary user (not necessarily only user)
+  userOpts.username = "ryan"; #primary user (not necessarily only user)
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

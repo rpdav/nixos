@@ -1,5 +1,5 @@
 {
-  systemSettings,
+  systemOpts,
   inputs,
   ...
 }: {
@@ -9,7 +9,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/${systemSettings.diskDevice}";
+        device = "/dev/${systemOpts.diskDevice}";
         content = {
           type = "gpt";
           partitions = {
@@ -68,7 +68,7 @@
                 };
                 "swap" = {
                   mountpoint = "/.swap";
-                  swap.swapfile.size = systemSettings.swapSize;
+                  swap.swapfile.size = systemOpts.swapSize;
                 };
               };
             };

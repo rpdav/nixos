@@ -26,12 +26,12 @@
     ];
 
   # Variable overrides
-  systemSettings.swapEnable = true;
-  systemSettings.swapSize = "4G";
+  systemOpts.swapEnable = true;
+  systemOpts.swapSize = "4G";
   # this changes from one reboot to next - check before deploying!
-  systemSettings.diskDevice = "sdb";
-  systemSettings.gcRetention = "7d";
-  systemSettings.impermanent = true;
+  systemOpts.diskDevice = "sdb";
+  systemOpts.gcRetention = "7d";
+  systemOpts.impermanent = true;
 
   boot.loader.grub = {
     efiSupport = true;

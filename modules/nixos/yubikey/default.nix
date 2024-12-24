@@ -3,13 +3,13 @@
   config,
   pkgs,
   lib,
-  userSettings,
+  userOpts,
   ...
 }: let
   homeDirectory =
     if pkgs.stdenv.isLinux
-    then "/home/${userSettings.username}"
-    else "/Users/${userSettings.username}";
+    then "/home/${userOpts.username}"
+    else "/Users/${userOpts.username}";
   yubikey-up = let
     yubikeyIds = lib.concatStringsSep " " (
       lib.mapAttrsToList (name: id: "[${name}]=\"${builtins.toString id}\"") config.yubikey.identifiers

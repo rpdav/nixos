@@ -1,13 +1,13 @@
 {
   lib,
-  userSettings,
-  systemSettings,
+  userOpts,
+  systemOpts,
   inputs,
   ...
 }: {
   imports = [inputs.impermanence.nixosModules.home-manager.impermanence];
   #TODO break this into gui and non-gui lists
-  home.persistence."/persist/home/${userSettings.username}" = {
+  home.persistence."/persist/home/${userOpts.username}" = {
     directories = (
       [
         ### home persistence for all systems ###
@@ -28,7 +28,7 @@
         ".config/sops"
         #".config/systemd" #persisting this will break HM - must be rebuilt each time. See readme.
       ]
-      ++ lib.lists.optional systemSettings.gui [
+      ++ lib.lists.optional systemOpts.gui [
         ### additional home persistence for gui systems ###
         # Data folders
         "Desktop"

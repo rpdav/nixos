@@ -1,10 +1,10 @@
 {
   pkgs,
-  userSettings,
+  userOpts,
   inputs,
   ...
 }: let
-  flake = "(builtins.getFlake \"/home/${userSettings.username})\"";
+  flake = "(builtins.getFlake \"/home/${userOpts.username})\"";
 in {
   imports = [
     ./cmp.nix

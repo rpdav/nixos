@@ -34,12 +34,12 @@
     ];
 
   # Variable overrides
-  userSettings.username = "ryan"; #primary user (not necessarily only user)
-  systemSettings.swapEnable = false;
-  systemSettings.diskDevice = "vda";
-  systemSettings.gcRetention = "7d";
-  systemSettings.impermanent = true;
-  systemSettings.gui = false;
+  userOpts.username = "ryan"; #primary user (not necessarily only user)
+  systemOpts.swapEnable = false;
+  systemOpts.diskDevice = "vda";
+  systemOpts.gcRetention = "7d";
+  systemOpts.impermanent = true;
+  systemOpts.gui = false;
 
   #todo change to systemd?
   boot.loader.grub = {

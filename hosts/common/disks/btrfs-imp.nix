@@ -1,5 +1,5 @@
 {
-  systemSettings,
+  systemOpts,
   lib,
   inputs,
   ...
@@ -9,7 +9,7 @@
 
   disko.devices = {
     disk.main = {
-      device = "/dev/${systemSettings.diskDevice}";
+      device = "/dev/${systemOpts.diskDevice}";
       type = "disk";
       content = {
         type = "gpt";
@@ -62,9 +62,9 @@
                   mountpoint = "/persist";
                   mountOptions = ["compress=zstd" "noatime"];
                 };
-                "swap" = lib.mkIf systemSettings.swapEnable {
+                "swap" = lib.mkIf systemOpts.swapEnable {
                   mountpoint = "/.swap";
-                  swap.swapfile.size = systemSettings.swapSize;
+                  swap.swapfile.size = systemOpts.swapSize;
                 };
               };
             };

@@ -1,6 +1,6 @@
 {
   inputs,
-  systemSettings,
+  systemOpts,
   pkgs,
   ...
 }:
@@ -10,7 +10,7 @@ let
 
   # Define appropriate key path depending on whether system is impermanent
   sshKeyPaths =
-    if systemSettings.impermanent
+    if systemOpts.impermanent
     then ["/persist/etc/ssh/ssh_host_ed25519_key"]
     else ["/etc/ssh/ssh_host_ed25519_key"];
 in {

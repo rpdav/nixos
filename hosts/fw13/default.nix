@@ -44,11 +44,11 @@
     ];
 
   # Variable overrides
-  userSettings.username = "ryan"; #primary user (not necessarily only user)
-  systemSettings.diskDevice = "nvme0n1";
-  systemSettings.swapSize = "16G";
-  systemSettings.impermanent = true;
-  systemSettings.gui = true;
+  userOpts.username = "ryan"; #primary user (not necessarily only user)
+  systemOpts.diskDevice = "nvme0n1";
+  systemOpts.swapSize = "16G";
+  systemOpts.impermanent = true;
+  systemOpts.gui = true;
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

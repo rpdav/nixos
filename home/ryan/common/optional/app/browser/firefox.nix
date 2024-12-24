@@ -2,7 +2,7 @@
   config,
   pkgs,
   inputs,
-  systemSettings,
+  systemOpts,
   secrets,
   ...
 }: {
@@ -26,7 +26,7 @@
       };
 
       # Extensions
-      extensions = with inputs.firefox-addons.packages."${systemSettings.arch}"; [
+      extensions = with inputs.firefox-addons.packages."${systemOpts.arch}"; [
         bitwarden
         ublock-origin
         metamask

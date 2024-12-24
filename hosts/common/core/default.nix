@@ -1,5 +1,5 @@
 {
-  systemSettings,
+  systemOpts,
   inputs,
   ...
 }: {
@@ -28,8 +28,8 @@
   # Automate garbage collection
   nix.gc = {
     automatic = true;
-    dates = systemSettings.gcInterval;
-    options = "--delete-older-than ${systemSettings.gcRetention}";
+    dates = systemOpts.gcInterval;
+    options = "--delete-older-than ${systemOpts.gcRetention}";
   };
 
   # CLI config
@@ -37,5 +37,5 @@
   programs.bash.completion.enable = true;
 
   # Time
-  time.timeZone = systemSettings.timezone;
+  time.timeZone = systemOpts.timezone;
 }

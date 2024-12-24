@@ -5,7 +5,6 @@
 }: {
   options = {
     # ---- SYSTEM SETTINGS ---- #
-    systemSettings = {
       timezone = lib.mkOption {
         type = lib.types.str;
         default = "America/Indiana/Indianapolis";
@@ -53,7 +52,6 @@
     };
 
     # ---- USER SETTINGS ---- #
-    userSettings = {
       editor = lib.mkOption {
         type = lib.types.str;
         default = "nvim";

@@ -1,6 +1,6 @@
 {
   pkgs,
-  userSettings,
+  userOpts,
   ...
 }: {
   imports = [
@@ -23,6 +23,6 @@
   ];
 
   home.sessionVariables = {
-    EDITOR = userSettings.editor;
+    EDITOR = userOpts.editor;
   };
 }

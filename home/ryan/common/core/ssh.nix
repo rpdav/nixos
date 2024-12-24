@@ -2,12 +2,12 @@
   config,
   pkgs,
   lib,
-  userSettings,
+  userOpts,
   configLib,
   ...
 }: let
   # Path to public keys stored in config
-  pathtokeys = configLib.relativeToRoot "hosts/common/users/${userSettings.username}/keys";
+  pathtokeys = configLib.relativeToRoot "hosts/common/users/${userOpts.username}/keys";
   # List of public keys in path
   yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))
@@ -23,7 +23,7 @@
 in {
   # Pull private key from sops
   sops.secrets = {
-    "${userSettings.username}/sshKeys/id_manual".path = "/home/${userSettings.username}/.ssh/id_manual";
+    "${userOpts.username}/sshKeys/id_manual".path = "/home/${userOpts.username}/.ssh/id_manual";
   };
 
   # symlink public keys
