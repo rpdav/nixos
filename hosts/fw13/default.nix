@@ -32,6 +32,7 @@
         "hosts/common/optional/stylix.nix" 
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
+	"hosts/common/optional/wireguard.nix"
 
         # users
         "hosts/common/users/ryan"
