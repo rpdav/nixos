@@ -11,6 +11,7 @@
       "/var/lib/tailscale"
       "/var/log"
       "/var/lib/bluetooth"
+      "/var/lib/docker" #should this live here or in docker config?
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"

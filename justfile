@@ -94,6 +94,12 @@ machines-debug: testbox-debug
 
 machines-dry: testbox-dry
 
+## Docker
+
+[no-cd]
+compose project:
+  nix run github:aksiksi/compose2nix -- -write_nix_setup=false -root_path /opt/appdata/{{project}} -project={{project}}
+
 
 ############################################################################
 #

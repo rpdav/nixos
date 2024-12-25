@@ -1,9 +1,7 @@
 {
   modulesPath,
   lib,
-  pkgs,
   configLib,
-  config,
   ...
 }: {
   imports =
@@ -23,6 +21,7 @@
 	
 	"hosts/common/optional/persistence"
 	"hosts/common/optional/yubikey.nix"
+	"hosts/common/optional/podman.nix"
 
         # users
         "hosts/common/users/ryan"
