@@ -6,6 +6,7 @@
   pkgs-stable,
   pkgs-unstable,
   configLib,
+  serviceOpts,
   ...
 }:
 ## This file contains all NixOS config for user ryan
@@ -18,6 +19,7 @@ in {
   userOpts.base16scheme = "catppuccin-mocha";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
+  serviceOpts.test = "nixosvalue";
 
   # user definition
   users.mutableUsers = false;
@@ -47,6 +49,10 @@ in {
       inherit secrets;
       inherit inputs;
       inherit configLib;
+      # Pass custom options assigned in nixos module to HM
+      systemOpts = config.systemOpts;
+      userOpts = config.userOpts;
+      serviceOpts = config.serviceOpts;
     };
   };
 

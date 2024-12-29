@@ -6,7 +6,8 @@
   ...
 }: {
   imports = [inputs.impermanence.nixosModules.home-manager.impermanence];
-  #TODO break this into gui and non-gui lists
+  
+  #TODO consider splitting this out into separate modules (e.g. ssh, borg, gnome, etc) and leave only base config here
   home.persistence."/persist/home/${userOpts.username}" = {
     directories = (
       [
@@ -20,7 +21,7 @@
         ".ssh"
         ".local"
         ".config/borg"
-	".terminfo" # kitty config for remote hosts
+        ".terminfo" # kitty config for remote hosts
 
         # System
         ".config/autostart"
@@ -28,7 +29,7 @@
         ".config/sops"
         #".config/systemd" #persisting this will break HM - must be rebuilt each time. See readme.
       ]
-      ++ lib.lists.optional systemOpts.gui [
+      ++ lib.lists.optionals systemOpts.gui [
         ### additional home persistence for gui systems ###
         # Data folders
         "Desktop"
