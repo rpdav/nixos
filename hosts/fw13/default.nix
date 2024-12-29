@@ -17,22 +17,22 @@
         # core config
         "vars"
         "hosts/common/core"
-	#TODO move these back into core once done with testbox
-	"hosts/common/core/tailscale.nix"
-	"hosts/common/core/packages.nix"
-	"hosts/common/core/sops.nix"
-	"hosts/common/core/sshd.nix"
-	
+        #TODO move these back into core once done with testbox
+        "hosts/common/core/tailscale.nix"
+        "hosts/common/core/packages.nix"
+        "hosts/common/core/sops.nix"
+        "hosts/common/core/sshd.nix"
+
         "hosts/common/disks/luks-lvm-imp.nix"
 
         # host-specific optional
         "hosts/common/optional/localbackup.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
-        "hosts/common/optional/stylix.nix" 
+        "hosts/common/optional/stylix.nix"
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
-	"hosts/common/optional/wireguard.nix"
+        "hosts/common/optional/wireguard.nix"
 
         # users
         "hosts/common/users/ryan"
