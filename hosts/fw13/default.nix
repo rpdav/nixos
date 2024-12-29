@@ -57,7 +57,12 @@
   # Boot config with luks
   boot = {
     loader = {
-      systemd-boot.enable = false;
+      systemd-boot = {
+	enable = false;
+	# more readable boot menu on hidpi display
+	consoleMode = "5";
+	configurationLimit = 30;
+      };
       efi.canTouchEfiVariables = true;
     };
     lanzaboote = {
