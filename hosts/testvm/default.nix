@@ -23,6 +23,9 @@
 	"hosts/common/optional/yubikey.nix"
 	"hosts/common/optional/podman.nix"
 
+	# services
+	"services/testvm/swag"
+
         # users
         "hosts/common/users/ryan"
       ])

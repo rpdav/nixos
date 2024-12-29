@@ -8,4 +8,5 @@
       dns_enabled = true;
     };
   };
+  networking.firewall.allowedUDPPorts = [53];
 }
