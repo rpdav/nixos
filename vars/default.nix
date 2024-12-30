@@ -109,7 +109,7 @@
 	description = "User under which to run docker services";
       };
       dockerDir = lib.mkOption {
-	type = lib.types.string;
+	type = lib.types.str;
 	default = "/opt/docker";
 	description = "Where to store docker appdata";
       };

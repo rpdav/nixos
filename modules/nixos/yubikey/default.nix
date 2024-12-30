@@ -65,7 +65,7 @@ in {
         default = {};
         type = lib.types.attrsOf lib.types.int;
         description = "Attrset of Yubikey serial numbers";
-        example = lib.literalExample ''
+        example = lib.literalExpression ''
           {
             foo = 12345678;
             bar = 87654321;
