@@ -6,7 +6,6 @@
   pkgs-stable,
   pkgs-unstable,
   configLib,
-  serviceOpts,
   ...
 }:
 ## This file contains all NixOS config for user ryan
@@ -19,7 +18,6 @@ in {
   userOpts.base16scheme = "catppuccin-mocha";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
-  serviceOpts.test = "nixosvalue";
 
   # user definition
   users.mutableUsers = false;
@@ -29,7 +27,7 @@ in {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    home = "/home/ryan"; 
+    home = "/home/ryan";
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);

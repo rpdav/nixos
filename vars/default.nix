@@ -103,10 +103,6 @@
 
     # ---- SERVICES SETTINGS ---- #
     serviceOpts = {
-      test = lib.mkOption {
-	type = lib.types.string;
-	default = "defaultvalue";
-      };
       dockerUser = lib.mkOption {
 	type = lib.types.str;
 	default = userOpts.username;
