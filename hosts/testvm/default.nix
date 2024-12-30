@@ -25,6 +25,7 @@
 
 	# services
 	"services/testvm/swag"
+	"services/testvm/kuma"
 
         # users
         "hosts/common/users/ryan"

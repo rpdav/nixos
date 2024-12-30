@@ -5,8 +5,12 @@
 }: {
   imports = [./docker-compose.nix];
 
-  sops.secrets."selfhosting/testvm/cloudflareToken" = {
-    path = "${serviceOpts.dockerDir}/swag/secrets/cloudflareToken";
-    owner = config.users.users.${serviceOpts.dockerUser}.name;
-  };
+  # Secrets
+  sops.secrets."selfhosting/testvm/cloudflareToken".owner = config.users.users.${serviceOpts.dockerUser}.name;
+
+  # Create directories to mount
+  systemd.tmpfiles.rules = [
+    "d ${serviceOpts.dockerDir}/swag/config 0700 ${serviceOpts.dockerUser} users"
+    "d ${serviceOpts.dockerDir}/swag/proxy-confs 0700 ${serviceOpts.dockerUser} users"
+  ];
 }

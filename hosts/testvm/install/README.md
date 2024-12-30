@@ -44,4 +44,5 @@ For each service, create default.nix to import the auto-generated compose.nix fi
 ## Docker secrets
 Sops usually places a symlink at a desired directory to /run/secrets, but that will become a dangling secret within the container. Instead, mount /run/secrets/foo/bar directly in the compose file. 
 
-
+## Directories for volume mounts
+Docker/podman require directories for volume mounts to be in place - it won't create them. So they're created using systemd tmpfiles. Even if tmpfiles is told to create a directory owned by a user, it will create parent directories owned by root. In the case of `/opt/docker/swag/config`, if `docker` is owned by a user and `swag/config` is created by tmpfiles, it will cause an unsafe transition error in the transition from `docker` (owned by user) and `swag` (owned by root). The solution here is keep everything aside from the final directory owned by root (but readable by all) if possible.

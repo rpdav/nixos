@@ -1,0 +1,16 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - ./config:/app/data
+    ports:
+      - 3001:3001
+    networks:
+      - swag_default
+    restart: unless-stopped
+    user: ryan
+
+networks:
+  swag_default:
+    external: true
