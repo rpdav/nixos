@@ -19,7 +19,6 @@
     log-driver = "journald";
     extraOptions = [
       "--network-alias=uptime-kuma"
-      #"dns=10.10.1.1"
       "--network=swag_default"
     ];
   };

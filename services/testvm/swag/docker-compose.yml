@@ -20,9 +20,8 @@ services:
       - DOCKER_MODS=linuxserver/mods:swag-auto-reload
     volumes:
       - ./config:/config
+      - ./proxy-confs:/config/nginx/proxy-confs
     ports:
       - 443:443
     restart: unless-stopped
-    dns:
-      - 10.10.1.1
     user: ryan

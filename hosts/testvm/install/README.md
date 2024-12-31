@@ -37,7 +37,7 @@ Use compose2nix just recipe to create oci containers and systemd services from d
     * Cons: need to have the know-how to edit docker-compose.nix directly, harder to incorporate upstream updates to docker-compose.yml
 1. Keep docker-compose.yml around and use it for repeated rebuilds with compose2nix.
     * Pros: I know docker-compose.yml better, easier to bring in upstream updates
-    * Cons: have to repeat those edits for secrets, etc. Git may be enough to preserve secrets while updating the file. If not, maybe a script to find/replace them?
+    * Cons: have to repeat those edits for secrets, volumes, etc. Git may be enough to preserve secrets while updating the file. If not, maybe a script to find/replace them?
 
 For each service, create default.nix to import the auto-generated compose.nix file. Default will include (or import) reverse proxy subdomain conf and any other supporting files if needed. Swag's default will also include file for cloudflare token
 
@@ -45,4 +45,7 @@ For each service, create default.nix to import the auto-generated compose.nix fi
 Sops usually places a symlink at a desired directory to /run/secrets, but that will become a dangling secret within the container. Instead, mount /run/secrets/foo/bar directly in the compose file. 
 
 ## Directories for volume mounts
-Docker/podman require directories for volume mounts to be in place - it won't create them. So they're created using systemd tmpfiles. Even if tmpfiles is told to create a directory owned by a user, it will create parent directories owned by root. In the case of `/opt/docker/swag/config`, if `docker` is owned by a user and `swag/config` is created by tmpfiles, it will cause an unsafe transition error in the transition from `docker` (owned by user) and `swag` (owned by root). The solution here is keep everything aside from the final directory owned by root (but readable by all) if possible.
+Docker/podman require directories for volume mounts to be in place - it won't create them. So they're created using systemd tmpfiles. Even if tmpfiles is told to create a directory owned by a user, it will create any needed parent directories owned by root. In the case of `/opt/docker/swag/config`, if `docker` is owned by a user and `swag/config` is created by tmpfiles, it will cause an unsafe transition error between `docker` (owned by user) and `swag` (owned by root). The solution here is keep everything aside from the final directory owned by root (but readable by all) if possible.
+
+## Proxy configs
+Each service's default.nix will contain a multiline string let binding with the nginx proxy config. This is converted to a single-line string and added as a tmpfile rule.

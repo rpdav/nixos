@@ -27,6 +27,7 @@
     };
     volumes = [
       "${serviceOpts.dockerDir}/swag/config:/config"
+      "${serviceOpts.dockerDir}/swag/proxy-confs:/config/nginx/proxy-confs"
       "/run/secrets/selfhosting/testvm/cloudflareToken:/config/dns-conf/cloudflare.ini"
     ];
     ports = [
@@ -37,7 +38,6 @@
     extraOptions = [
       "--cap-add=NET_ADMIN"
       "--network-alias=swag"
-      "--dns=10.10.1.1"
       "--network=swag_default"
     ];
   };
