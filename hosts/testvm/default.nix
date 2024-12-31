@@ -21,7 +21,7 @@
 	
 	"hosts/common/optional/persistence"
 	"hosts/common/optional/yubikey.nix"
-	"hosts/common/optional/podman.nix"
+	"hosts/common/optional/docker.nix"
 
 	# services
 	"services/testvm/swag"

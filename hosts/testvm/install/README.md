@@ -49,3 +49,8 @@ Docker/podman require directories for volume mounts to be in place - it won't cr
 
 ## Proxy configs
 Each service's default.nix will contain a multiline string let binding with the nginx proxy config. This is converted to a single-line string and added as a tmpfile rule.
+
+## Rootless
+By default, podman can't be run rootless on Nixos. This may get fixed in [this pr])https://github.com/NixOS/nixpkgs/pull/368565). I tried enabling it with some extraInit [here](https://carlosvaz.com/posts/rootless-podman-and-docker-compose-on-nixos/) but didn't work. [Other solutions](https://discourse.nixos.org/t/podman-rootless-with-systemd/23536) seem pretty involved, especially [one for home-manager](https://discourse.nixos.org/t/rootless-podman-setup-with-home-manager/57905).
+
+For now, I'm going to stick with Docker. Without rootless, podman offers no advantage over docker and requires all container admin to be done with sudo (as opposed to docker user group for ps and logs), so aliases don't work and vim doesn't look right. If I end up having to do a lot of sudo with docker (due to systemctl services), I may switch back to podman to ease the eventual switch to rootless.

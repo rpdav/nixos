@@ -3,13 +3,13 @@ services:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
     volumes:
-      - ./config:/app/data
+      - ./serviceOpts.dockerDir/uptime-kuma/config:/app/data
     ports:
       - 3001:3001
     networks:
       - swag_default
     restart: unless-stopped
-    user: ryan
+    user: config.users.users.serviceOpts.dockerUser.uid
 
 networks:
   swag_default:
