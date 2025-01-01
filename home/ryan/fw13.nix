@@ -36,7 +36,6 @@
     onlyoffice-bin
     ghostwriter
     bibletime
-    xiphos
     audacity
     gimp
 
