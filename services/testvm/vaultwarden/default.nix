@@ -3,15 +3,15 @@
     server {
         listen 443 ssl;
         listen [::]:443 ssl;
-        server_name uptime.*;
+        server_name vaultwarden.*;
         include /config/nginx/ssl.conf;
-        client_max_body_size 0;
+        client_max_body_size 128M;
         location / {
             include /config/nginx/proxy.conf;
             include /config/nginx/resolver.conf;
-            set $upstream_app uptime-kuma;
-            set $upstream_port 3001;
-            set $upstream_proto http;
+            set $upstream_app vaultwarden;
+            set $upstream_port 80;
+            set $upstream_proto http; #change to https if app requires
             proxy_pass $upstream_proto://$upstream_app:$upstream_port;
         }
     }
@@ -21,13 +21,13 @@ in {
 
   # Create directories to mount
   systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/uptime-kuma/config 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/uptime-kuma/config - ${serviceOpts.dockerUser} users"
+    "d ${serviceOpts.dockerDir}/vaultwarden/config 0700 ${serviceOpts.dockerUser} users"
+    "Z ${serviceOpts.dockerDir}/vaultwarden/config - ${serviceOpts.dockerUser} users"
   ];
 
   # Swag reverse proxy config
   systemd.tmpfiles.settings."01-proxy-confs" = {
-    "${serviceOpts.dockerDir}/swag/proxy-confs/uptime-kuma.subdomain.conf" = {
+    "${serviceOpts.dockerDir}/swag/proxy-confs/vaultwarden.subdomain.conf" = {
       "f+" = {
         group = "users";
         user = "${serviceOpts.dockerUser}";

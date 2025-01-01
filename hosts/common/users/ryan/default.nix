@@ -54,6 +54,10 @@ in {
     };
   };
 
+  # Fix file permissions after backup restore
+  systemd.tmpfiles.rules = [
+    "Z /home/ryan - ryan users"
+  ];
   # minimal root user config
   users.users.root = {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
