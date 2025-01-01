@@ -17,15 +17,11 @@
         # core config
         "vars"
         "hosts/common/core"
-        #TODO move these back into core once done with testbox
-        "hosts/common/core/tailscale.nix"
-        "hosts/common/core/packages.nix"
-        "hosts/common/core/sops.nix"
-        "hosts/common/core/sshd.nix"
 
+	# disk config
         "hosts/common/disks/luks-lvm-imp.nix"
 
-        # host-specific optional
+        # optional config
         "hosts/common/optional/localbackup.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
@@ -42,6 +38,7 @@
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
@@ -90,6 +87,9 @@
 
   # Firmware updates
   services.fwupd.enable = true;
+
+  # Misc
+  services.nixos-cli.enable = true;
 
   # pmail bridge must be configured imperatively using the cli tool.
   # State in ~/.config is persisted. Runs as a user service even though

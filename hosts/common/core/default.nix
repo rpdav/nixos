@@ -6,13 +6,10 @@
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
-    #TODO change this back once done with testbox
-    #./tailscale.nix
-    #./packages.nix
-    #./sops.nix
-    #./sshd.nix #needed for sops keys
-
-    inputs.nixos-cli.nixosModules.nixos-cli
+    ./tailscale.nix
+    ./packages.nix
+    ./sops.nix
+    ./sshd.nix #needed for sops keys
   ];
 
   # Enable flakes
@@ -33,7 +30,6 @@
   };
 
   # CLI config
-  services.nixos-cli.enable = true;
   programs.bash.completion.enable = true;
 
   # Time

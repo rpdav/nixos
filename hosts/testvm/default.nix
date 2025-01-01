@@ -11,14 +11,11 @@
         # core config
         "vars"
         "hosts/common/core"
-	#TODO move this back into core when done testing
-	"hosts/common/core/packages.nix"
-	"hosts/common/core/sshd.nix"
-	"hosts/common/core/sops.nix"
-	"hosts/common/core/tailscale.nix"
 
+	# disk config
         "hosts/common/disks/btrfs-imp.nix"
 	
+	# optional config
 	"hosts/common/optional/persistence"
 	"hosts/common/optional/yubikey.nix"
 	"hosts/common/optional/docker.nix"
@@ -26,6 +23,7 @@
 	# services
 	"services/testvm/swag"
 	"services/testvm/kuma"
+	"services/testvm/vaultwarden"
 
         # users
         "hosts/common/users/ryan"
