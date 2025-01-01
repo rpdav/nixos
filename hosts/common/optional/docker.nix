@@ -28,8 +28,8 @@
   environment.systemPackages = with pkgs; [
     oxker
     jq
-    (writeShellScriptBin "dup" "sudo systemctl restart docker-$1-.service")
-    (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1-.service")
+    (writeShellScriptBin "dup" "sudo systemctl restart docker-$1.service")
+    (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1.service")
     (writeShellScriptBin "dcup" "sudo systemctl restart docker-compose-$1-root.target")
     (writeShellScriptBin "dcdown" "sudo systemctl stop docker-compose-$1-root.target")
     (writeShellScriptBin "dcpull" "docker pull $(sudo docker inspect $1 | jq -r .[0].ImageName)")
