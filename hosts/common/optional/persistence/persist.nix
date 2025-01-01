@@ -12,13 +12,7 @@
       "/var/log"
       "/var/lib/bluetooth"
       "${serviceOpts.dockerDir}"
-#      {
-#        directory = "${serviceOpts.dockerDir}";
-#        user = "${serviceOpts.dockerUser}";
-#	group = "users";
-#	mode = "0700";
-#      }
-      "/var/lib/docker" #should this live here or in docker config?
+      "/var/lib/docker" 
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
