@@ -38,7 +38,7 @@ in {
     inherit base16Scheme;
     inherit image;
     inherit polarity;
-    imageScalingMode = "center";
+    imageScalingMode = "fill";
   };
 
   #TODO add extra gtk theming?
