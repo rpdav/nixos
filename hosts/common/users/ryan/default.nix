@@ -55,8 +55,9 @@ in {
   };
 
   # Fix file permissions after backup restore
+  #TODO make this work for non-persist systems too
   systemd.tmpfiles.rules = [
-    "Z /home/ryan - ryan users"
+    "Z /persist/home/ryan - ryan users"
   ];
   # minimal root user config
   users.users.root = {

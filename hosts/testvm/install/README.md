@@ -6,6 +6,7 @@ lsblk to determine disk
 install without keys: nix run github:nix-community/nixos-anywhere -- --flake .#testvm --generate-hardware-config nixos-generate-config ./hosts/testvm/hardware-configuration.nix root@10.10.1.19
 install and restore files: nix run github:nix-community/nixos-anywhere -- --flake .#testvm --extra-files /path/to/files --generate-hardware-config nixos-generate-config ./hosts/testvm/hardware-configuration.nix root@10.10.1.19
 where /path/to/files has a structure that mirrors what will be on the host (e.g. /path/to/files/persist/foo/bar).
+Unlike rebuilding, anywhere must be run from within the same directory as your flake.
 
 # Remote rebuilding
 Rebuild command: just testbox
