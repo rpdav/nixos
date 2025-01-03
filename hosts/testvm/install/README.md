@@ -9,7 +9,9 @@ where /path/to/files has a structure that mirrors what will be on the host (e.g.
 Unlike rebuilding, anywhere must be run from within the same directory as your flake.
 
 # Install into another distro
-Ubuntu by default does not set a root password and doesn't allow root ssh login with password. Maybe a security concern for vps connection? If it can go over tailscale, maybe that's fine though.
+Had trouble when using kexec with only 1 GB RAM. May need to up the VPS to 2 GB and bring it back down
+
+nixos-anywhere lets you ssh with password or keys. But it will ask to verify key passphrase/touch yubikey several times and will abort if you miss one. Better to test with passwords.
 
 # Remote rebuilding
 Rebuild command: just testbox

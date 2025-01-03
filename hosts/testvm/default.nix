@@ -25,9 +25,7 @@ in {
         "hosts/common/optional/docker.nix"
 
         # services
-        "services/testvm/swag"
-        "services/testvm/kuma"
-        "services/testvm/vaultwarden"
+        "services/testvm"
 
         # users
         "hosts/common/users/ryan"
