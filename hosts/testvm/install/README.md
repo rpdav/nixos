@@ -8,6 +8,9 @@ install and restore files: nix run github:nix-community/nixos-anywhere -- --flak
 where /path/to/files has a structure that mirrors what will be on the host (e.g. /path/to/files/persist/foo/bar).
 Unlike rebuilding, anywhere must be run from within the same directory as your flake.
 
+# Install into another distro
+Ubuntu by default does not set a root password and doesn't allow root ssh login with password. Maybe a security concern for vps connection? If it can go over tailscale, maybe that's fine though.
+
 # Remote rebuilding
 Rebuild command: just testbox
 make sure you're not using sudo for nixos-rebuild, otherwise it'll try to use root's ssh keys. no need for sudo as long as you ssh in as root
@@ -58,3 +61,6 @@ For now, I'm going to stick with Docker. Without rootless, podman offers no adva
 
 ## Docker vs podman differences
 There are some differences that may cause trouble if I ever switch back to podman. For instance, the default dns resolver in podman was the network's gateway - 10.89.0.1. But for docker it's 127.0.0.11. I had to manually edit (or delete) /config/nginx/resolver.conf when I switched. May want to consider rebuilding appdata folders if I switch again in order to resolve this. Who knows what other differences are in there.
+
+## Updating docker
+Using uptix to do version pinning of containers. Running the uptix binary creates a lock file in the current directory - be sure to run it in root dir.

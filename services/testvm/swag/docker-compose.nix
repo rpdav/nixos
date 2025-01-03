@@ -6,11 +6,12 @@
   secrets,
   systemOpts,
   serviceOpts,
+  uptix,
   ...
 }: {
   # Containers
   virtualisation.oci-containers.containers."swag" = {
-    image = "lscr.io/linuxserver/swag:latest";
+    image = uptix.dockerImage "lscr.io/linuxserver/swag:latest";
     environment = {
       "DNSPLUGIN" = "cloudflare";
       "DOCKER_MODS" = "linuxserver/mods:swag-auto-reload";

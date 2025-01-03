@@ -1,11 +1,11 @@
 # Auto-generated using compose2nix v0.3.2-pre.
-{ pkgs, lib, serviceOpts, secrets, ... }:
+{ pkgs, lib, serviceOpts, secrets, uptix, ... }:
 
 {
 
   # Containers
   virtualisation.oci-containers.containers."vaultwarden" = {
-    image = "vaultwarden/server";
+    image = uptix.dockerImage "vaultwarden/server";
     environment = {
       "HOST_CONTAINERNAME" = "vaultwarden";
       "HOST_HOSTNAME" = "testvm";

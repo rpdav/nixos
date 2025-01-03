@@ -1,6 +1,6 @@
 services:
   vaultwarden:
-    image: vaultwarden/server
+    image: uptix.dockerImage vaultwarden/server
     container_name: vaultwarden
     environment:
         - TZ=America/New_York

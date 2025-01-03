@@ -47,7 +47,17 @@
     # Impermanence
     impermanence.url = "github:nix-community/impermanence";
 
-    # Useful option search and CLI tools
+    # Docker utilities
+    uptix = {
+      url = "github:luizribeiro/uptix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    compose2nix = {
+      url = "github:aksiksi/compose2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Useful option search
     nixos-cli.url = "github:water-sucks/nixos";
 
     # Theming

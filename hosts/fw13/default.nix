@@ -29,6 +29,7 @@
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/wireguard.nix"
+        "hosts/common/optional/docker.nix" #container admin tools, not just for running containers
 
         # users
         "hosts/common/users/ryan"

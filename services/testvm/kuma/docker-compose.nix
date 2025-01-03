@@ -4,11 +4,12 @@
   lib,
   serviceOpts,
   config,
+  uptix,
   ...
 }: {
   # Containers
   virtualisation.oci-containers.containers."uptime-kuma" = {
-    image = "louislam/uptime-kuma:1";
+    image = uptix.dockerImage "louislam/uptime-kuma:1";
     volumes = [
       "${serviceOpts.dockerDir}/uptime-kuma/config:/app/data:rw"
     ];

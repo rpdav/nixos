@@ -98,7 +98,7 @@ machines-dry: testbox-dry
 
 [no-cd]
 compose project output='docker-compose.nix':
-  nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
+  compose2nix -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
 
 
 ############################################################################
