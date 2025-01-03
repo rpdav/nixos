@@ -2,8 +2,12 @@
   modulesPath,
   lib,
   configLib,
+  userOpts,
   ...
-}: {
+}: let
+  # Generates a list of the keys in ./keys
+  pubKeys = lib.filesystem.listFilesRecursive ../common/users/${userOpts.username}/keys;
+in {
   imports =
     lib.flatten
     [
@@ -12,18 +16,18 @@
         "vars"
         "hosts/common/core"
 
-	# disk config
+        # disk config
         "hosts/common/disks/btrfs-imp.nix"
-	
-	# optional config
-	"hosts/common/optional/persistence"
-	"hosts/common/optional/yubikey.nix"
-	"hosts/common/optional/docker.nix"
 
-	# services
-	"services/testvm/swag"
-	"services/testvm/kuma"
-	"services/testvm/vaultwarden"
+        # optional config
+        "hosts/common/optional/persistence"
+        "hosts/common/optional/yubikey.nix"
+        "hosts/common/optional/docker.nix"
+
+        # services
+        "services/testvm/swag"
+        "services/testvm/kuma"
+        "services/testvm/vaultwarden"
 
         # users
         "hosts/common/users/ryan"
@@ -50,14 +54,9 @@
 
   networking.hostName = "testvm";
 
-  # allow root ssh login for this host only
-  #TODO this key is just hard-coded - any way to dynamically add keys like in
-  #hosts/common/users?
+  # allow root ssh login for rebuilds
   users.users.root = {
-    openssh.authorizedKeys.keys = [
-      # yubikey
-      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILygGVzteEOsvhdTTP+guA4Fq0TeJM/R2tDYXXbHvhLFAAAABHNzaDo= ryan@yubinano"
-    ];
+    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
   };
 
   system.stateVersion = "25.05";
