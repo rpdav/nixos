@@ -100,6 +100,9 @@ machines-dry: testbox-dry
 compose project output='docker-compose.nix':
   compose2nix -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
 
+uptix:
+  uptix
+
 
 ############################################################################
 #
