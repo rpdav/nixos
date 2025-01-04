@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  userSettings,
+  userOpts,
   ...
 }: 
 #let
@@ -60,7 +60,7 @@
   ## Local backup definition
   sops.secrets = {
     "borg/passphrase" = {};
-    "${userSettings.username}/sshKeys/id_borg".path = "/root/.ssh/id_ed25519";
+    "${userOpts.username}/sshKeys/id_borg".path = "/root/.ssh/id_ed25519";
   };
 
   services.borgbackup.jobs."local" = {

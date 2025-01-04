@@ -1,6 +1,4 @@
-{
-  ...
-}: {
+{...}: {
   programs.bash.historyFile = "/persist/home/ryan/.bash_history";
 
   programs.bash = {
@@ -9,6 +7,7 @@
     shellAliases = {
       ".." = "cd ..";
       ll = "ls -la";
+      sudo = "sudo "; #allows aliases with sudo
       ## git
       gs = "git status";
       gc = "git commit -am";

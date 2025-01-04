@@ -1,8 +1,4 @@
-{
-  pkgs,
-  configLib,
-  ...
-}: {
+{pkgs, configLib, ...}: {
   ## This file contains all home-manager config unique to user ryan on host fw13nix
 
   home.username = "ryan";
@@ -32,7 +28,6 @@
   ];
 
   home.packages = with pkgs; [
-    #protonmail-bridge-gui
     thunderbird
     librewolf
     brave

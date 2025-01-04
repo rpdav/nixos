@@ -2,7 +2,7 @@
   config,
   pkgs,
   inputs,
-  systemSettings,
+  systemOpts,
   secrets,
   ...
 }: {
@@ -12,7 +12,7 @@
       id = 0;
       name = "ryan default";
       settings = {
-        "browser.startup.homepage" = "${secrets.selfhosting.startpage}";
+        "browser.startup.homepage" = "https://start.${secrets.selfhosting.domain}";
         "browser.search.region" = "US";
         "browser.search.isUS" = true;
         "extensions.autoDisableScopes" = 0; #automatically enable added extensions
@@ -26,7 +26,7 @@
       };
 
       # Extensions
-      extensions = with inputs.firefox-addons.packages."${systemSettings.arch}"; [
+      extensions = with inputs.firefox-addons.packages."${systemOpts.arch}"; [
         bitwarden
         ublock-origin
         metamask

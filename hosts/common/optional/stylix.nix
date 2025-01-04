@@ -1,12 +1,12 @@
 {
   pkgs,
-  userSettings,
+  userOpts,
   lib,
   configLib,
   inputs,
   ...
 }: let
-  themePath = configLib.relativeToRoot "themes/${userSettings.wallpaper}";
+  themePath = configLib.relativeToRoot "themes/${userOpts.wallpaper}";
 
   image =
     if builtins.pathExists "${themePath}/wallpaper.jpg"
@@ -21,10 +21,10 @@
       |> lib.removeSuffix "\n"
     else "";
 
-  # If scheme.txt exists in wallpaper directory, use that; otherwise use userSettings.base16scheme
+  # If scheme.txt exists in wallpaper directory, use that; otherwise use userOpts.base16scheme
   base16Scheme =
     if customTheme == ""
-    then "${pkgs.base16-schemes}/share/themes/${userSettings.base16scheme}.yaml"
+    then "${pkgs.base16-schemes}/share/themes/${userOpts.base16scheme}.yaml"
     else "${pkgs.base16-schemes}/share/themes/${customTheme}.yaml";
 
   polarity = "${themePath}/polarity.txt"
@@ -38,7 +38,7 @@ in {
     inherit base16Scheme;
     inherit image;
     inherit polarity;
-    imageScalingMode = "center";
+    imageScalingMode = "fill";
   };
 
   #TODO add extra gtk theming?
@@ -67,12 +67,12 @@ in {
   };
 
   stylix.cursor = {
-    package = pkgs.${userSettings.cursorPkg};
-    name = userSettings.cursor;
+    package = pkgs.${userOpts.cursorPkg};
+    name = userOpts.cursor;
     size = 24;
   };
 
-  #TODO should this go in userSettings? 6 vars seems a bit excessive.
+  #TODO should this go in userOpts? 6 vars seems a bit excessive.
   # would be nice if a single package covered multiple fonts.
   stylix.fonts = {
     monospace = {

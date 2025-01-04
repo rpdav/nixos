@@ -1,8 +1,8 @@
-{userSettings, ...}: {
+{userOpts, ...}: {
   programs.git = {
     enable = true;
-    userName = userSettings.username;
-    userEmail = userSettings.githubEmail;
+    userName = userOpts.username;
+    userEmail = userOpts.githubEmail;
     extraConfig = {
       init.defaultBranch = "main";
       merge.ff = false;

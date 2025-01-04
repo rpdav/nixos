@@ -1,0 +1,6 @@
+{
+  "ghcr.io/docker-mailserver/docker-mailserver:latest": "sha256:01b82c6c1c64d5b73ba161c0107e5d7d038ebdce85eb9ed084f043e9c2a7943b",
+  "louislam/uptime-kuma:1": "sha256:431fee3be822b04861cf0e35daf4beef6b7cb37391c5f26c3ad6e12ce280fe18",
+  "lscr.io/linuxserver/swag:latest": "sha256:a0567586434edcc63c2121661cb8f25f6ab44a8cecb4b2526d973ef6aaa1d26a",
+  "vaultwarden/server": "sha256:7a0aa23c0947be3582898deb5170ea4359493ed9a76af2badf60a7eb45ac36af"
+}

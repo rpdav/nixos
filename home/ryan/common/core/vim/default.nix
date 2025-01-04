@@ -1,10 +1,10 @@
 {
   pkgs,
-  userSettings,
+  userOpts,
   inputs,
   ...
 }: let
-  flake = "(builtins.getFlake \"/home/${userSettings.username})\"";
+  flake = "(builtins.getFlake \"/home/${userOpts.username})\"";
 in {
   imports = [
     ./cmp.nix
@@ -28,6 +28,7 @@ in {
   programs.nixvim = {
     enable = true;
     vimAlias = true;
+    clipboard.providers.wl-copy.enable = true;
     plugins = {
       lualine.enable = true;
       lsp = {

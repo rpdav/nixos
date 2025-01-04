@@ -46,38 +46,62 @@ backup:
 #
 ############################################################################
 
-nixos-vm: 
-  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch 
+testbox: 
+  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 switch 
 
-nixos-vm-dry: 
-  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm dry-build
+testbox-dry: 
+  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 dry-build
 
-nixos-vm-debug: 
-  sudo nixos-rebuild --flake .#nixos-vm --target-host root@nixos-vm switch --show-trace -v
+testbox-boot:
+  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 boot
+
+testbox-debug: 
+  nixos-rebuild --flake .#testbox --target-host root@10.10.18 switch --show-trace -v
+
+testvm: 
+  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 switch 
+
+testvm-dry: 
+  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 dry-build
+
+testvm-boot:
+  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 boot
+
+testvm-debug: 
+  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 switch --show-trace -v
 
 pi: 
-  sudo nixos-rebuild --flake .#pi --target-host root@pi switch 
+  nixos-rebuild --flake .#pi --target-host root@pi switch 
 
 pi-dry: 
-  sudo nixos-rebuild --flake .#pi --target-host root@pi dry-build
+  nixos-rebuild --flake .#pi --target-host root@pi dry-build
 
 pi-debug: 
-  sudo nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
+  nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
 
 vps: 
-  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch 
+  nixos-rebuild --flake .#vps --target-host root@testbox switch 
 
 vps-dry: 
-  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm dry-build
+  nixos-rebuild --flake .#vps --target-host root@testbox dry-build
 
 vps-debug: 
-  sudo nixos-rebuild --flake .#vps --target-host root@nixos-vm switch --show-trace -v
+  nixos-rebuild --flake .#vps --target-host root@testbox switch --show-trace -v
 
-machines: nixos-vm 
+machines: testbox 
 
-machines-debug: nixos-vm-debug
+machines-debug: testbox-debug
 
-machines-dry: nixos-vm-dry
+machines-dry: testbox-dry
+
+## Docker
+
+[no-cd]
+compose project output='docker-compose.nix':
+  compose2nix -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
+
+uptix:
+  uptix
 
 
 ############################################################################
@@ -87,10 +111,10 @@ machines-dry: nixos-vm-dry
 ############################################################################
 
 anywhere-test:
-  nix run github:nix-community/nixos-anywhere -- --flake .#nixos-vm --vm-test
+  nix run github:nix-community/nixos-anywhere -- --flake .#testvm --vm-test
 
 anywhere-deploy:
-  nix run github:nix-community/nixos-anywhere -- --flake .#nixos-vm root@ubuntu
+  nix run github:nix-community/nixos-anywhere -- --flake .#testvm --generate-hardware-config nixos-generate-config ./hosts/testvm/hardware-configuration.nix root@10.10.1.19
 
 ############################################################################
 #

@@ -4,8 +4,8 @@
   config,
   pkgs,
   pkgs-stable,
-  systemSettings,
-  userSettings,
+  systemOpts,
+  userOpts,
   configLib,
   ...
 }: {

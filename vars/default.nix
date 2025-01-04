@@ -1,11 +1,12 @@
 {
   config,
   lib,
+  userOpts,
   ...
 }: {
   options = {
     # ---- SYSTEM SETTINGS ---- #
-    systemSettings = {
+    systemOpts = {
       timezone = lib.mkOption {
         type = lib.types.str;
         default = "America/Indiana/Indianapolis";
@@ -13,6 +14,18 @@
       locale = lib.mkOption {
         type = lib.types.str;
         default = "en_US.UTF-8";
+      };
+      impermanent= lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
+      gui= lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+      };
+      swapEnable = lib.mkOption {
+        type = lib.types.bool;
+        default = "true";
       };
       swapSize = lib.mkOption {
         type = lib.types.str;
@@ -41,7 +54,7 @@
     };
 
     # ---- USER SETTINGS ---- #
-    userSettings = {
+    userOpts = {
       editor = lib.mkOption {
         type = lib.types.str;
         default = "nvim";
@@ -87,12 +100,27 @@
 	default = "nerd-fonts.fira-code";
       };
     };
+
+    # ---- SERVICES SETTINGS ---- #
+    serviceOpts = {
+      dockerUser = lib.mkOption {
+	type = lib.types.str;
+	default = userOpts.username;
+	description = "User under which to run docker services";
+      };
+      dockerDir = lib.mkOption {
+	type = lib.types.str;
+	default = "/opt/docker";
+	description = "Where to store docker appdata";
+      };
+    };
   };
 
   config = {
     _module.args = {
-      systemSettings = config.systemSettings;
-      userSettings = config.userSettings;
+      systemOpts = config.systemOpts;
+      userOpts = config.userOpts;
+      serviceOpts = config.serviceOpts;
     };
   };
 }
