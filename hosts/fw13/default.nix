@@ -28,7 +28,6 @@
         "hosts/common/optional/stylix.nix"
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
-        "hosts/common/optional/wireguard.nix"
         "hosts/common/optional/docker.nix" #container admin tools, not just for running containers
 
         # users
@@ -72,7 +71,6 @@
   # Networking
   networking.hostName = "fw13";
   networking.networkmanager.enable = true;
-  services.resolved.enable = true; # needed for wireguard on kde
 
   # Host-specific hardware config
   services.pipewire.audio.enable = true;

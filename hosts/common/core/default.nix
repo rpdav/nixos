@@ -12,7 +12,6 @@
     ./sshd.nix #needed for sops keys
 
     inputs.disko.nixosModules.disko
-    inputs.nixos-cli.nixosModules.nixos-cli
   ];
 
   # Enable flakes

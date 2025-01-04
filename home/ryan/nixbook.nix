@@ -62,8 +62,6 @@
       kdePackages.kpat
 
       # scripts
-      (import ./common/optional/scripts/wgdown.nix {inherit pkgs;})
-      (import ./common/optional/scripts/wgup.nix {inherit pkgs;})
     ])
     ++ (with pkgs-stable; [
       protonmail-bridge-gui #bridge is throwing QML component error

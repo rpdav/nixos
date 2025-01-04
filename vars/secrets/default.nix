@@ -5,7 +5,6 @@
     personal-mail
     admin-mail
     calendar
-    wireguard
     selfhosting
     ;
 }

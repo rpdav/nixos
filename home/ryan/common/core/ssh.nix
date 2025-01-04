@@ -47,7 +47,7 @@ in {
       	Port 22
 
       Host vps
-      	HostName 10.100.94.1 #wireguard IP
+	Hostname 100.108.25.120 #tailscale IP
       	User root
       	Port 44422
 
@@ -65,6 +65,9 @@ in {
 
       Host gitea.dfrp.xyz github.com
         User git
+
+      Host vps
+	User root
     '';
   };
 }

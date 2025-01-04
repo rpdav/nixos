@@ -52,8 +52,6 @@
     kdePackages.kpat
 
     # scripts
-    (import ./common/optional/scripts/wgdown.nix {inherit pkgs;})
-    (import ./common/optional/scripts/wgup.nix {inherit pkgs;})
   ];
 
   services.nextcloud-client = {

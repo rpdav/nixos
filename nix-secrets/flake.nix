@@ -14,10 +14,6 @@
       user = "";
       password = "";
     };
-    wireguard = {
-      home.endpoint = "";
-      vps.endpoint = "";
-    };
     selfhosting.startpage = "";
   };
 }

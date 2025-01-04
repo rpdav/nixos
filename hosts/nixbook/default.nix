@@ -27,7 +27,6 @@
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
         #"hosts/common/optional/stylix.nix" #temporarily deactivated - throwing plasma look-and-feel errors on rebuild
-        "hosts/common/optional/wireguard.nix" #TODO replace vanilla wireguard with tailscale
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
 
@@ -70,7 +69,6 @@
   # Networking
   networking.hostName = "nixbook";
   networking.networkmanager.enable = true;
-  services.resolved.enable = true; # needed for wireguard on kde
 
   # Host-specific hardware config
   services.pipewire.audio.enable = true;
