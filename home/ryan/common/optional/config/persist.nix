@@ -12,10 +12,6 @@
     directories = (
       [
         ### home persistence for all systems ###
-        # Data folders
-        "Documents"
-        "Pictures"
-
         # Apps
         ".gnupg"
         ".ssh"
@@ -32,6 +28,8 @@
       ++ lib.lists.optionals systemOpts.gui [
         ### additional home persistence for gui systems ###
         # Data folders
+        "Documents"
+        "Pictures"
         "Desktop"
         "Games"
         "Music"

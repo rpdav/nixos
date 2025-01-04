@@ -158,7 +158,7 @@
           ./hosts/testbox
         ];
       };
-      # Testing box (HP x86 thin client)
+      # Testing VM (QEMU VM running on Unraid)
       testvm = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
