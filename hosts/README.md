@@ -1,7 +1,7 @@
 # hosts/common
 This is where all modules live that are used by multiple hosts. If any host-specific settings are needed, they can be made generic through the custom options defined in `variables.nix`. Default options are defined there but can be overridden in each host's config file.
 
-For instance, two machines with different swap sizes can use a single disk config file by setting their own `systemSettings.swapSize = lib.mkForce "16G"`.
+For instance, two machines with different swap sizes can use a single disk config file by setting their own `systemOpts.swapSize = lib.mkForce "16G"`.
 
 Similarly, they can all do backups to their own repository using the same backup config by defining the backup target as something like `ssh://borg@borg/backups/${config.networking.hostname}`.
 

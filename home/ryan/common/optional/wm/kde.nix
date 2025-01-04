@@ -17,7 +17,7 @@
 
     ## Theming is handled by stylix
     #    workspace = {
-    #      wallpaper = "/persist/home/${userSettings.username}/Documents/wallpaper.png";
+    #      wallpaper = "/persist/home/${userOpts.username}/Documents/wallpaper.png";
     #      theme = "breeze-dark";
     #      colorScheme = "BreezeDark";
     #      cursor = {

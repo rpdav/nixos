@@ -4,6 +4,7 @@
   inputs,
   secrets,
   pkgs-stable,
+  pkgs-unstable,
   configLib,
   ...
 }:
@@ -19,10 +20,10 @@ in {
   ];
 
   # user--specific variable overrides
-  userSettings.wallpaper = "moon";
-  userSettings.base16scheme = "catppuccin-mocha";
-  userSettings.cursor = "Bibata-Modern-Ice";
-  userSettings.cursorPkg = "bibata-cursors";
+  userOpts.wallpaper = "moon";
+  userOpts.base16scheme = "catppuccin-mocha";
+  userOpts.cursor = "Bibata-Modern-Ice";
+  userOpts.cursorPkg = "bibata-cursors";
 
   # user definition
   users.mutableUsers = false;
@@ -32,7 +33,7 @@ in {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    home = "/home/ryan"; # Setting this to point local backup to persisted home directory. Not sure this will actually work
+    home = "/home/ryan";
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
@@ -48,12 +49,22 @@ in {
     ];
     extraSpecialArgs = {
       inherit pkgs-stable;
+      inherit pkgs-unstable;
       inherit secrets;
       inherit inputs;
       inherit configLib;
+      # Pass custom options assigned in nixos module to HM
+      systemOpts = config.systemOpts;
+      userOpts = config.userOpts;
+      serviceOpts = config.serviceOpts;
     };
   };
 
+  # Fix file permissions after backup restore
+  #TODO make this work for non-persist systems too
+  systemd.tmpfiles.rules = [
+    "Z /persist/home/ryan - ryan users"
+  ];
   # minimal root user config
   users.users.root = {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;

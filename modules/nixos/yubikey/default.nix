@@ -3,13 +3,13 @@
   config,
   pkgs,
   lib,
-  userSettings,
+  userOpts,
   ...
 }: let
   homeDirectory =
     if pkgs.stdenv.isLinux
-    then "/home/${userSettings.username}"
-    else "/Users/${userSettings.username}";
+    then "/home/${userOpts.username}"
+    else "/Users/${userOpts.username}";
   yubikey-up = let
     yubikeyIds = lib.concatStringsSep " " (
       lib.mapAttrsToList (name: id: "[${name}]=\"${builtins.toString id}\"") config.yubikey.identifiers
@@ -65,7 +65,7 @@ in {
         default = {};
         type = lib.types.attrsOf lib.types.int;
         description = "Attrset of Yubikey serial numbers";
-        example = lib.literalExample ''
+        example = lib.literalExpression ''
           {
             foo = 12345678;
             bar = 87654321;

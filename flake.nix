@@ -4,7 +4,7 @@
 
   inputs = {
     ###### Official Sources ######
-    
+
     # Default nixpkgs
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
@@ -12,13 +12,13 @@
     nixpkgs-stable.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
-    home-manager-stable = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
     home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     ###### Utilities ######
@@ -32,7 +32,7 @@
     # Disk partitioning
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Hardware configs
@@ -47,7 +47,17 @@
     # Impermanence
     impermanence.url = "github:nix-community/impermanence";
 
-    # Useful option search and CLI tools
+    # Docker utilities
+    uptix = {
+      url = "github:luizribeiro/uptix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    compose2nix = {
+      url = "github:aksiksi/compose2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Useful option search
     nixos-cli.url = "github:water-sucks/nixos";
 
     # Theming
@@ -91,16 +101,27 @@
 
   outputs = {
     self,
+    nixpkgs,
     nixpkgs-unstable,
     nixpkgs-stable,
-    nix-secrets,
     ...
   } @ inputs: let
     secrets = import ./vars/secrets {inherit inputs;};
     inherit (nixpkgs-unstable) lib;
+
     configLib = import ./lib {inherit lib;};
-  in
-  {
+    system = "x86_64-linux";
+
+    pkgs-unstable = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+
+    pkgs-stable = import nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+  in {
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
     # for some reason. Instead, I'm importing in each host's modules list.
     #nixosModules = import ./modules/nixos;
@@ -108,13 +129,10 @@
 
     nixosConfigurations = {
       # 2023 Framework 13
-      fw13 = nixpkgs-unstable.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        specialArgs = { 
-          pkgs-stable = import nixpkgs-stable {
-            inherit system;
-            config.allowUnfree = true;
-          };
+      fw13 = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit pkgs-stable;
+          inherit pkgs-unstable;
           inherit secrets;
           inherit inputs;
           inherit configLib;
@@ -123,53 +141,37 @@
           # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13
+	  inputs.home-manager-unstable.nixosModules.home-manager
         ];
       };
-      # 2020 Asus Zenbook
-      nixbook = nixpkgs-unstable.lib.nixosSystem rec {
+      # Testing box (HP x86 thin client)
+      testbox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          pkgs-stable = import nixpkgs-stable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          inherit secrets;
-          inherit inputs;
+          inherit pkgs-stable;
+          inherit pkgs-unstable;
           inherit configLib;
+          inherit inputs;
+	  inherit secrets;
         };
         modules = [
-          # See notes at top of outputs
-          (import ./modules/nixos)
-          ./hosts/nixbook
-          inputs.impermanence.nixosModules.impermanence
-          inputs.home-manager-unstable.nixosModules.home-manager
-          {
-            nix.settings = {
-              substituters = ["https://cosmic.cachix.org/"];
-              trusted-public-keys = ["cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="];
-            };
-          }
-          inputs.nixos-cosmic.nixosModules.default
-          inputs.nixos-cli.nixosModules.nixos-cli
-          inputs.stylix.nixosModules.stylix
+          ./hosts/testbox
         ];
       };
-      # Testing VM
-      nixos-vm = nixpkgs-stable.lib.nixosSystem rec {
+      # Testing VM (QEMU VM running on Unraid)
+      testvm = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          pkgs-unstable = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          inherit secrets;
+          inherit pkgs-stable;
+          inherit pkgs-unstable;
+          inherit configLib;
           inherit inputs;
+	  inherit secrets;
         };
         modules = [
-          ./hosts/nixos-vm
-          inputs.disko.nixosModules.disko
-          inputs.impermanence.nixosModules.impermanence
-          inputs.home-manager-stable.nixosModules.home-manager
+          (import ./modules/nixos)
+          ./hosts/testvm
+	  inputs.home-manager-stable.nixosModules.home-manager
         ];
       };
     };

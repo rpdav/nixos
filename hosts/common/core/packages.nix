@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
@@ -13,12 +9,9 @@
     git-crypt
     alejandra
     rclone
-    sops
     killall
     pciutils
     usbutils
-    neovim
     nixd
   ];
-
 }

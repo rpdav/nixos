@@ -1,6 +1,6 @@
 {
   inputs,
-  userSettings,
+  userOpts,
   ...
 }: let
   secretspath = builtins.toString inputs.nix-secrets;
@@ -10,6 +10,6 @@ in {
   sops = {
     defaultSopsFile = "${secretspath}/secrets.yaml";
     defaultSopsFormat = "yaml";
-    age.keyFile = "/persist/home/${userSettings.username}/.config/sops/age/keys.txt";
+    age.keyFile = "/persist/home/${userOpts.username}/.config/sops/age/keys.txt";
   };
 }

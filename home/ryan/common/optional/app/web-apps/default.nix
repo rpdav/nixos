@@ -1,4 +1,4 @@
-{userSettings, ...}: {
+{userOpts, ...}: {
   # The StartumpWMClass must match this format in order to group windows properly. I'm not sure why this format in particular
   # Pulled from repo https://github.com/bashfulrobot/nixos/tree/65bb54076ef00f08a1289a96425d68bf5e1f4036/modules/apps/web-apps
 
@@ -11,7 +11,7 @@
       comment = "Zero-base budgeting app";
       settings.StartupWMClass = "chrome-budget.dfrp.xyz__-Default";
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://budget.dfrp.xyz\" %U";
-      icon = "/home/${userSettings.username}/.local/share/icons/actual.png";
+      icon = "/home/${userOpts.username}/.local/share/icons/actual.png";
       terminal = false;
       categories = ["Application"];
       type = "Application";
@@ -22,7 +22,7 @@
       comment = "Self-hosted cloud";
       settings.StartupWMClass = "chrome-cloud.dfrp.xyz__-Default";
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://cloud.dfrp.xyz\" %U";
-      icon = "/home/${userSettings.username}/.local/share/icons/nextcloud.png";
+      icon = "/home/${userOpts.username}/.local/share/icons/nextcloud.png";
       terminal = false;
       categories = ["Application"];
       type = "Application";
@@ -34,7 +34,7 @@
       settings.StartupWMClass = "chrome-notes.dfrp.xyz__-Default";
       settings.Keywords = "notes";
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://notes.dfrp.xyz\" %U";
-      icon = "/home/${userSettings.username}/.local/share/icons/silverbullet.png";
+      icon = "/home/${userOpts.username}/.local/share/icons/silverbullet.png";
       terminal = false;
       categories = ["Application"]; 
       type = "Application";
@@ -45,7 +45,7 @@
       comment = "Smart home automation";
       settings.StartupWMClass = "chrome-home.dfrp.xyz__-Default";
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://home.dfrp.xyz\" %U";
-      icon = "/home/${userSettings.username}/.local/share/icons/home-assistant.png";
+      icon = "/home/${userOpts.username}/.local/share/icons/home-assistant.png";
       terminal = false;
       categories = ["Application"];
       type = "Application";
@@ -56,7 +56,7 @@
       comment = "";
       settings.StartupWMClass = "chrome-10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net__-Default";
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net\" %U";
-      icon = "/home/${userSettings.username}/.local/share/icons/unraid.png";
+      icon = "/home/${userOpts.username}/.local/share/icons/unraid.png";
       terminal = false;
       categories = ["Application"];
       type = "Application";
