@@ -40,6 +40,9 @@ gc:
 backup:
   sudo systemctl restart borgbackup-job-local.service
 
+restore
+  sudo mkdir ~/borg && sudo borg mount ssh://borg@10.10.1.16/backup/fw13 ~/borg
+
 ############################################################################
 #
 #  Nix commands for remote systems
