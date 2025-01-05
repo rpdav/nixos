@@ -3,7 +3,7 @@
   configLib,
   ...
 }: {
-  ## This file contains all home-manager config unique to user ryan on host fw13nix
+  ## This file contains all home-manager config unique to user ryan on host testvm
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";

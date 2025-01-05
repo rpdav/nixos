@@ -13,12 +13,6 @@ let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
-  imports = [
-    # This uses unstable HM for all systems (including stable ones).
-    # The stable ones are all headless so not a lot of risk in things breaking.
-    inputs.home-manager-unstable.nixosModules.home-manager
-  ];
-
   # user--specific variable overrides
   userOpts.wallpaper = "moon";
   userOpts.base16scheme = "catppuccin-mocha";

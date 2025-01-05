@@ -51,46 +51,40 @@ restore:
 ############################################################################
 
 testbox: 
-  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 switch 
+  nixos-rebuild --flake .#testbox --target-host root@testbox switch 
 
 testbox-dry: 
-  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 dry-build
+  nixos-rebuild --flake .#testbox --target-host root@testbox dry-build
 
 testbox-boot:
-  nixos-rebuild --flake .#testbox --target-host root@10.10.1.18 boot
+  nixos-rebuild --flake .#testbox --target-host root@testbox boot
 
 testbox-debug: 
-  nixos-rebuild --flake .#testbox --target-host root@10.10.18 switch --show-trace -v
+  nixos-rebuild --flake .#testbox --target-host root@testbox switch --show-trace -v
 
 testvm: 
-  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 switch 
+  nixos-rebuild --flake .#testvm --target-host root@testvm switch 
 
 testvm-dry: 
-  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 dry-build
+  nixos-rebuild --flake .#testvm --target-host root@testvm dry-build
 
 testvm-boot:
-  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 boot
+  nixos-rebuild --flake .#testvm --target-host root@testvm boot
 
 testvm-debug: 
-  nixos-rebuild --flake .#testvm --target-host root@10.10.1.19 switch --show-trace -v
-
-pi: 
-  nixos-rebuild --flake .#pi --target-host root@pi switch 
-
-pi-dry: 
-  nixos-rebuild --flake .#pi --target-host root@pi dry-build
-
-pi-debug: 
-  nixos-rebuild --flake .#pi --target-host root@pi switch --show-trace -v
+  nixos-rebuild --flake .#testvm --target-host root@testvm switch --show-trace -v
 
 vps: 
-  nixos-rebuild --flake .#vps --target-host root@testbox switch 
+  nixos-rebuild --flake .#vps --target-host root@vps switch 
 
 vps-dry: 
-  nixos-rebuild --flake .#vps --target-host root@testbox dry-build
+  nixos-rebuild --flake .#vps --target-host root@vps dry-build
+
+vps-boot:
+  nixos-rebuild --flake .#vps --target-host root@vps boot
 
 vps-debug: 
-  nixos-rebuild --flake .#vps --target-host root@testbox switch --show-trace -v
+  nixos-rebuild --flake .#vps --target-host root@vps switch --show-trace -v
 
 machines: testbox 
 
@@ -107,18 +101,17 @@ compose project output='docker-compose.nix':
 uptix:
   uptix
 
-
 ############################################################################
 #
 #  Nixos-anywhere commands
 #
 ############################################################################
 
-anywhere-test:
-  nix run github:nix-community/nixos-anywhere -- --flake .#testvm --vm-test
+anywhere-test host:
+  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --vm-test
 
-anywhere-deploy:
-  nix run github:nix-community/nixos-anywhere -- --flake .#testvm --generate-hardware-config nixos-generate-config ./hosts/testvm/hardware-configuration.nix root@10.10.1.19
+anywhere-deploy host:
+  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --extra-files ~/anywhere --generate-hardware-config nixos-generate-config ./hosts/{{host}}/hardware-configuration.nix root@{{host}}
 
 ############################################################################
 #
