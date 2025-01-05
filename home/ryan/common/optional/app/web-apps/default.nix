@@ -1,4 +1,4 @@
-{userOpts, ...}: {
+{userOpts, secrets, ...}: {
   # The StartumpWMClass must match this format in order to group windows properly. I'm not sure why this format in particular
   # Pulled from repo https://github.com/bashfulrobot/nixos/tree/65bb54076ef00f08a1289a96425d68bf5e1f4036/modules/apps/web-apps
 
@@ -9,8 +9,8 @@
     actual = {
       name = "Actual Budget";
       comment = "Zero-base budgeting app";
-      settings.StartupWMClass = "chrome-budget.dfrp.xyz__-Default";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://budget.dfrp.xyz\" %U";
+      settings.StartupWMClass = "chrome-budget.${secrets.selfhosting.domain}__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://budget.${secrets.selfhosting.domain}\" %U";
       icon = "/home/${userOpts.username}/.local/share/icons/actual.png";
       terminal = false;
       categories = ["Application"];
@@ -20,8 +20,8 @@
     nextcloud = {
       name = "Nextcloud";
       comment = "Self-hosted cloud";
-      settings.StartupWMClass = "chrome-cloud.dfrp.xyz__-Default";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://cloud.dfrp.xyz\" %U";
+      settings.StartupWMClass = "chrome-cloud.${secrets.selfhosting.domain}__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://cloud.${secrets.selfhosting.domain}\" %U";
       icon = "/home/${userOpts.username}/.local/share/icons/nextcloud.png";
       terminal = false;
       categories = ["Application"];
@@ -31,9 +31,9 @@
     silverbullet = {
       name = "SilverBullet";
       comment = "Markdown notes app";
-      settings.StartupWMClass = "chrome-notes.dfrp.xyz__-Default";
+      settings.StartupWMClass = "chrome-notes.${secrets.selfhosting.domain}__-Default";
       settings.Keywords = "notes";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://notes.dfrp.xyz\" %U";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://notes.${secrets.selfhosting.domain}\" %U";
       icon = "/home/${userOpts.username}/.local/share/icons/silverbullet.png";
       terminal = false;
       categories = ["Application"]; 
@@ -43,8 +43,8 @@
     home-assistant = {
       name = "Home Assistant";
       comment = "Smart home automation";
-      settings.StartupWMClass = "chrome-home.dfrp.xyz__-Default";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://home.dfrp.xyz\" %U";
+      settings.StartupWMClass = "chrome-home.${secrets.selfhosting.domain}__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://home.${secrets.selfhosting.domain}\" %U";
       icon = "/home/${userOpts.username}/.local/share/icons/home-assistant.png";
       terminal = false;
       categories = ["Application"];
