@@ -52,7 +52,7 @@
     "org/gnome/desktop/wm/preferences" = {
       workspace-names = [
         "Main"
-        "Dev"
+        "Term"
         "Media"
         "Misc"
       ];
