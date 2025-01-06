@@ -6,5 +6,6 @@
     admin-mail
     calendar
     selfhosting
+    vps
     ;
 }
