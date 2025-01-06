@@ -49,7 +49,6 @@ in {
       Host vps
 	Hostname 170.187.148.177
       	User root
-      	Port 44422
 
       Host borg
         Hostname 10.10.1.16

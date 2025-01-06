@@ -53,9 +53,6 @@ in {
 
   networking.hostName = "vps";
 
-  # custom ssh port
-  services.openssh.ports = lib.mkForce [44422];
-
   # allow root ssh login for rebuilds
   users.users.root = {
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
