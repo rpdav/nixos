@@ -21,6 +21,7 @@
     (import ../optional/scripts/fs-diff.nix {inherit pkgs;})
     (import ../optional/scripts/clear-testbox.nix {inherit pkgs;})
     (import ../optional/scripts/clear-testvm.nix {inherit pkgs;})
+    (import ../optional/scripts/clear-vps.nix {inherit pkgs;})
   ];
 
   home.sessionVariables = {
