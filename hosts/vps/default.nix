@@ -3,6 +3,7 @@
   lib,
   configLib,
   userOpts,
+  pkgs,
   ...
 }: let
   # Generates a list of the keys in ./keys
@@ -36,6 +37,35 @@ in {
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # Enable Linode LISH console
+  boot.kernelParams = [ "console=ttyS0,19200n8" ];
+  boot.loader.grub.extraConfig = ''
+    serial --speed=19200 --unit=0 --word=8 --parity=no --stop=1;
+    terminal_input serial;
+    terminal_output serial
+  '';
+
+  boot.loader.grub.forceInstall = true;
+
+  # Allow time for LISH connection delay
+  boot.loader.grub.device = "nodev";
+  boot.loader.timeout = 10;
+
+  # Linode does not use predictable network names
+  networking.usePredictableInterfaceNames = false;
+
+
+  networking.useDHCP = false; # Disable DHCP globally as we will not need it.
+  # required for ssh?
+  networking.interfaces.eth0.useDHCP = true;
+
+  environment.systemPackages = with pkgs; [
+    # Recommended utils per Linode
+    inetutils
+    mtr
+    sysstat
+  ];
+
   # Variable overrides
   userOpts.username = "ryan"; #primary user (not necessarily only user)
   systemOpts.swapEnable = true;
@@ -46,10 +76,10 @@ in {
   systemOpts.gui = false;
 
   #todo change to systemd?
-  boot.loader.grub = {
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-  };
+ # boot.loader.grub = {
+ #   efiSupport = true;
+ #   efiInstallAsRemovable = true;
+ # };
 
   networking.hostName = "vps";
 

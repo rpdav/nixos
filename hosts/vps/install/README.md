@@ -1,6 +1,35 @@
 # Remote Nixos Install
 
-This doc is based on the one in testvm
+This requires a separate ~1 GB disk be used for the installer image. The main disk image will need to be shrunk by that amount or the vps temporarily upsized to create an extra disk. I run this VPS with only 1 GB RAM typically, so I need to upsize to 2 GB to support kexec anyway, so I just temporarily create the installer disk.
+
+Set up linode configuration per the [Linode NixOS guide](https://www.linode.com/docs/guides/install-nixos-on-linode/). Boot into installer environment and launch the glish console. Set a root password in the glish console - all else will be done from ssh
+
+If you want to install with key ssh instead of password, run these commands:
+```
+# ssh in with password and copy key
+ssh-copy-id -i .ssh/id_keyname root@vps
+ssh root@vps
+
+# convert sshd config to regular file and make it editable
+cp --remove-destination `readlink /etc/ssh/sshd_config` /etc/ssh/sshd_config
+chmod 755 /etc/ssh/sshd_config
+
+# edit sshd_config to remove password login
+sed -i '/PasswordAuthentication/d' /etc/ssh/sshd_config 
+sed -i '/PermitRootLogin/d' /etc/ssh/sshd_config 
+echo "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config
+
+# restart sshd
+systemctl restart sshd.service
+```
+
+Install with nixos-anywhere
+
+in linode console, reboot into NixOS configuration
+
+
+
+testvm doc below:
 
 ## nixos-anywhere notes:
 
