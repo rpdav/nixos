@@ -722,11 +722,11 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1736268530,
-        "narHash": "sha256-nm7I5Xo6+SOzmgU+UtSNTuYI/qO3A9uUBAwBYCBTduw=",
+        "lastModified": 1736278275,
+        "narHash": "sha256-T/Uyf81x8lwNVgCF1ltHTcpfmRzaztGCSmhfuQCuTys=",
         "ref": "refs/heads/main",
-        "rev": "7dcd3cf2f79be25fc59ac813969edd1bd0801d31",
-        "revCount": 69,
+        "rev": "d7d856bd643e3ce31cd265a51a53dcbd388148ab",
+        "revCount": 70,
         "type": "git",
         "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1"
       },

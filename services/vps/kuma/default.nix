@@ -3,7 +3,7 @@
     server {
         listen 443 ssl;
         listen [::]:443 ssl;
-        server_name uptime.*;
+        server_name up.*;
         include /config/nginx/ssl.conf;
         client_max_body_size 0;
         location / {

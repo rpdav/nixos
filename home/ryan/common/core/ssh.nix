@@ -48,7 +48,7 @@ in {
 
       Host vps
 	Hostname 170.187.148.177
-      	User root
+      	User ryan
 
       Host borg
         Hostname 10.10.1.16
