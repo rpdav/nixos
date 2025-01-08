@@ -51,6 +51,10 @@
         type = lib.types.str;
         default = "30d";
       };
+      persistVol = lib.mkOption {
+        type = lib.types.str;
+        default = "/persist";
+      };
     };
 
     # ---- USER SETTINGS ---- #

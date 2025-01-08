@@ -1,9 +1,29 @@
 {
   pkgs,
   inputs,
+  systemOpts,
+  userOpts,
+  lib,
   ...
 }: {
   imports = [inputs.plasma-manager.homeManagerModules.plasma-manager];
+
+  # Create persistent directories
+  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+    directories = [
+      ".config/kdedefaults"
+      ".config/kde.org"
+    ];
+    files = [
+      ".config/gwenviewrc"
+      ".config/kactivitymanagerd-statsrc"
+      ".config/konsolerc"
+      ".config/konsolesshconfig"
+      ".config/krdpserverrc"
+      ".config/kwriterc"
+    ];
+  };
+
   home.packages = with pkgs; [
     aha
     clinfo

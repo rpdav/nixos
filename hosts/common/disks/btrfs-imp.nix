@@ -59,7 +59,7 @@
                   mountOptions = ["compress=zstd" "noatime"];
                 };
                 "persist" = {
-                  mountpoint = "/persist";
+                  mountpoint = "${systemOpts.persistVol}";
                   mountOptions = ["compress=zstd" "noatime"];
                 };
                 "swap" = lib.mkIf systemOpts.swapEnable {
@@ -73,5 +73,5 @@
       };
     };
   };
-  fileSystems."/persist".neededForBoot = true;
+  fileSystems.${systemOpts.persistVol}.neededForBoot = true;
 }

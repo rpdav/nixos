@@ -1,18 +1,13 @@
-{serviceOpts, ...}: {
+{
+  systemOpts,
+  ...
+}: {
   programs.fuse.userAllowOther = true;
 
-  environment.persistence."/persist" = {
+  environment.persistence.${systemOpts.persistVol} = {
     hideMounts = true;
     directories = [
-      "/etc/nixos"
-      "/etc/secureboot"
-      "/root/.ssh"
-      "/var/lib/fprint"
-      "/var/lib/tailscale"
       "/var/log"
-      "/var/lib/bluetooth"
-      "${serviceOpts.dockerDir}"
-      "/var/lib/docker" 
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
@@ -27,12 +22,6 @@
     files = [
       "/etc/adjtime"
       "/etc/machine-id"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-      {
-        file = "/var/keys/secret_file";
-        parentDirectory = {mode = "u=rwx,g=,o=";};
-      }
     ];
   };
 

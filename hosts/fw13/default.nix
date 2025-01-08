@@ -3,6 +3,8 @@
   pkgs,
   configLib,
   inputs,
+  systemOpts,
+  config,
   ...
 }:
 #TODO add system stats here
@@ -18,7 +20,7 @@
         "vars"
         "hosts/common/core"
 
-	# disk config
+        # disk config
         "hosts/common/disks/luks-lvm-imp.nix"
 
         # optional config
@@ -55,16 +57,16 @@
   boot = {
     loader = {
       systemd-boot = {
-	enable = false;
-	# more readable boot menu on hidpi display
-	consoleMode = "5";
-	configurationLimit = 30;
+        enable = false;
+        # more readable boot menu on hidpi display
+        consoleMode = "5";
+        configurationLimit = 30;
       };
       efi.canTouchEfiVariables = true;
     };
     lanzaboote = {
       enable = true;
-      pkiBundle = "/persist/etc/secureboot";
+      pkiBundle = "${systemOpts.persistVol}/etc/secureboot";
     };
   };
 
@@ -84,6 +86,18 @@
     qdirstat
   ];
 
+  # Create impermanent directories
+  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+    directories = [
+      "/etc/secureboot"
+      "/var/lib/fprint" # fingerprint reader
+      "/var/lib/bluetooth"
+    ];
+    files = [
+    "/root/.ssh/known_hosts"
+    ];
+  };
+
   # Firmware updates
   services.fwupd.enable = true;
 
@@ -98,4 +112,10 @@
     # make gnome keyring available to bridge in case I'm running KDE
     path = with pkgs; [pass gnome-keyring];
   };
+
+  # minimal root user config
+  users.users.root = {
+    hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
+  };
+  
 }
