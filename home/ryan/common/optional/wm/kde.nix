@@ -113,7 +113,6 @@
     };
 
     configFile = {
-      "kcminputrc"."Libinput/1267/12529/ELAN1206:00 04F3:30F1 Touchpad"."NaturalScroll" = true; #nixbook-specific
       kwinrc.Desktops = {
         Name_1.value = "browse";
         Name_2.value = "dev";
