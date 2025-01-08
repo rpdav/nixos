@@ -47,9 +47,8 @@ in {
       	Port 22
 
       Host vps
-	Hostname 100.108.25.120 #tailscale IP
-      	User root
-      	Port 44422
+	Hostname 170.187.148.177
+      	User ryan
 
       Host borg
         Hostname 10.10.1.16
@@ -65,9 +64,6 @@ in {
 
       Host gitea.dfrp.xyz github.com
         User git
-
-      Host vps
-	User root
     '';
   };
 }

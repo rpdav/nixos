@@ -116,10 +116,16 @@
       inherit system;
       config.allowUnfree = true;
     };
-
     pkgs-stable = import nixpkgs-stable {
       inherit system;
       config.allowUnfree = true;
+    };
+    specialArgs = {
+      inherit pkgs-stable;
+      inherit pkgs-unstable;
+      inherit secrets;
+      inherit inputs;
+      inherit configLib;
     };
   in {
     #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
@@ -130,30 +136,28 @@
     nixosConfigurations = {
       # 2023 Framework 13
       fw13 = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit pkgs-stable;
-          inherit pkgs-unstable;
-          inherit secrets;
-          inherit inputs;
-          inherit configLib;
-        };
+        inherit specialArgs;
         modules = [
           # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13
-	  inputs.home-manager-unstable.nixosModules.home-manager
+          inputs.home-manager-unstable.nixosModules.home-manager
+        ];
+      };
+      # Linode VPS
+      vps = nixpkgs-stable.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          (import ./modules/nixos)
+          ./hosts/vps
+          inputs.home-manager-stable.nixosModules.home-manager
         ];
       };
       # Testing box (HP x86 thin client)
       testbox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit pkgs-stable;
-          inherit pkgs-unstable;
-          inherit configLib;
-          inherit inputs;
-	  inherit secrets;
-        };
+        inherit specialArgs;
         modules = [
           ./hosts/testbox
         ];
@@ -161,17 +165,11 @@
       # Testing VM (QEMU VM running on Unraid)
       testvm = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit pkgs-stable;
-          inherit pkgs-unstable;
-          inherit configLib;
-          inherit inputs;
-	  inherit secrets;
-        };
+        inherit specialArgs;
         modules = [
           (import ./modules/nixos)
           ./hosts/testvm
-	  inputs.home-manager-stable.nixosModules.home-manager
+          inputs.home-manager-stable.nixosModules.home-manager
         ];
       };
     };
