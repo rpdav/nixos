@@ -3,7 +3,7 @@
   configLib,
   ...
 }: {
-  ## This file contains all home-manager config unique to user ryan on host testvm
+  ## This file contains all home-manager config unique to user ryan on host vps
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";

@@ -12,7 +12,6 @@
   services.tailscale = {
     enable = true;
     extraUpFlags = [
-      "--accept-dns=false" #tailscale dns messes with resolution of selfhosted services
       "--accept-routes"
     ];
   };
