@@ -1,13 +1,12 @@
-{pkgs, configLib, ...}: {
+{
+  pkgs,
+  configLib,
+  systemOpts,
+  userOpts,
+  lib,
+  ...
+}: {
   ## This file contains all home-manager config unique to user ryan on host fw13nix
-
-  home.username = "ryan";
-  home.homeDirectory = "/home/ryan";
-
-  home.stateVersion = "24.05"; # Please read the comment before changing.
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 
   imports = [
     # core config
@@ -26,6 +25,30 @@
     ./common/optional/config/yubikey.nix
     ./common/optional/wm/gnome.nix
   ];
+
+  # Create persistent directories
+  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+    directories = [
+      ".sword"
+      ".config/BraveSoftware"
+      ".config/GIMP"
+      ".config/Nextcloud"
+      ".config/onlyoffice"
+      ".config/remmina"
+    ];
+    files = [
+      ".config/ghostwriterrc"
+      ".config/bluedevelglobalrc" # bluetooth
+    ];
+  };
+
+  home.username = "ryan";
+  home.homeDirectory = "/home/ryan";
+
+  home.stateVersion = "24.05"; # Please read the comment before changing.
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
     thunderbird

@@ -1,12 +1,22 @@
 {
   config,
   secrets,
+  systemOpts,
+  userOpts,
+  lib,
   ...
 }: {
   sops.secrets = {
     "admin-mail/password" = {};
     "personal-mail/password" = {};
     "dav/ryan/password" = {};
+  };
+
+  # Create persistent directories
+  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+    directories = [
+      ".config/protonmail"
+    ];
   };
 
   # Email

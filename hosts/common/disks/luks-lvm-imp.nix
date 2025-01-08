@@ -63,7 +63,7 @@
                   mountOptions = ["compress=zstd" "noatime"];
                 };
                 "persist" = {
-                  mountpoint = "/persist";
+                  mountpoint = "${systemOpts.persistVol}";
                   mountOptions = ["compress=zstd" "noatime"];
                 };
                 "swap" = {
@@ -77,5 +77,5 @@
       };
     };
   };
-  fileSystems."/persist".neededForBoot = true;
+  fileSystems.${systemOpts.persistVol}.neededForBoot = true;
 }

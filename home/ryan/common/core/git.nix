@@ -5,7 +5,7 @@
     userEmail = userOpts.githubEmail;
     extraConfig = {
       init.defaultBranch = "main";
-      merge.ff = false;
+      merge.ff = false; # I prefer to see explicit merges
     };
   };
 

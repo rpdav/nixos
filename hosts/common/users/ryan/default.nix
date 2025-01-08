@@ -3,6 +3,7 @@
   lib,
   inputs,
   secrets,
+  systemOpts,
   pkgs-stable,
   pkgs-unstable,
   configLib,
@@ -57,10 +58,6 @@ in {
   # Fix file permissions after backup restore
   #TODO make this work for non-persist systems too
   systemd.tmpfiles.rules = [
-    "Z /persist/home/ryan - ryan users"
+    "Z ${systemOpts.persistVol}/home/ryan - ryan users"
   ];
-  # minimal root user config
-  users.users.root = {
-    hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
-  };
 }

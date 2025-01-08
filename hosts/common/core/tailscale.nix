@@ -1,8 +1,16 @@
 {
   config,
   pkgs,
+  systemOpts,
+  lib,
   ...
 }: {
+  # Create impermanent directory
+  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+    directories = [
+      "/var/lib/tailscale"
+    ];
+  };
   sops.secrets."tailscale/authkey" = {};
 
   # Install tailscale package

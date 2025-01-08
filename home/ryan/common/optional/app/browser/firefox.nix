@@ -1,11 +1,18 @@
 {
-  config,
   pkgs,
   inputs,
   systemOpts,
+  userOpts,
+  lib,
   secrets,
   ...
 }: {
+  # Create persistent directories
+  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+    directories = [
+      ".mozilla"
+    ];
+  };
   programs.firefox = {
     enable = true;
     profiles.ryan = {
