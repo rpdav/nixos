@@ -1,7 +1,18 @@
-{...}: {
-  programs.bash.historyFile = "/persist/home/ryan/.bash_history";
+{
+  systemOpts,
+  userOpts,
+  ...
+}: let
+  # Define appropriate key path depending on whether system is impermanent
+  defaultLocation = "/home/${userOpts.username}/.bash_history";
+  historyFile =
+    if systemOpts.impermanent
+    then "${systemOpts.persistVol}/${defaultLocation}"
+    else "${defaultLocation}";
+in {
 
   programs.bash = {
+    inherit historyFile;
     enable = true;
     enableCompletion = true;
     shellAliases = {
