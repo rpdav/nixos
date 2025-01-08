@@ -1,6 +1,7 @@
 {
   systemOpts,
   inputs,
+  config,
   ...
 }: {
   ## This file contains NixOS configuration common to all hosts
@@ -35,5 +36,5 @@
   programs.bash.completion.enable = true;
 
   # Time
-  time.timeZone = systemOpts.timezone;
+  time.timeZone = config.systemOpts.timezone;
 }

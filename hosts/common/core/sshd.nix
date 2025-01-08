@@ -1,7 +1,18 @@
 {
   pkgs,
+  systemOpts,
+  lib,
   ...
 }: {
+  # Create impermanent directory
+  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+    files = [
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+    ];
+  };
+
+  # Enable SSH
   services.openssh = {
     enable = true;
     ports = [22];
