@@ -2,10 +2,10 @@ keys:
   - &users: 
     - &ryan #standalone age pubkey goes here; used for home-manager secrets
   - &hosts:
-    - &nixbook #pubkey derived from host ssh key goes here; used for system secrets
+    - &laptop #pubkey derived from host ssh key goes here; used for system secrets
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
       - age:
         - *ryan
-        - *nixbook
+        - *laptop
