@@ -15,11 +15,10 @@ dry:
 debug:
   sudo nixos-rebuild switch --flake . --show-trace --verbose
 
-up:
+up {{input}}:
   nix flake update
 
 # Update specific input
-# usage: make upp i=home-manager
 upp input:
   nix flake update {{input}}
 
@@ -37,18 +36,18 @@ gc:
   # garbage collect all unused nix store entries
   sudo nix-collect-garbage --delete-older-than 14d
 
-backup:
-  sudo systemctl restart borgbackup-job-local.service
-
-restore:
-  -sudo mkdir /tmp/borg 
-  sudo borg mount ssh://borg@10.10.1.16/backup/fw13 /tmp/borg
-
 ############################################################################
 #
 #  Nix commands for remote systems
 #
 ############################################################################
+
+deploy host:
+  nixos-rebuild --flake .#{{host}} --target-host root@{host}} switch
+
+deploy-test:
+  just deploy vps
+  just deploy testvm
 
 testbox: 
   nixos-rebuild --flake .#testbox --target-host root@testbox switch 
@@ -86,13 +85,31 @@ vps-boot:
 vps-debug: 
   nixos-rebuild --flake .#vps --target-host root@vps switch --show-trace -v
 
-machines: testbox 
+machines: testvm vps
 
-machines-debug: testbox-debug
+machines-boot: testvm-boot vps-boot
 
-machines-dry: testbox-dry
+machines-debug: testvm-debug vps-debug
 
-## Docker
+############################################################################
+#
+#  ixos-anywhere commands
+#
+############################################################################
+
+[no-cd]
+anywhere-test host:
+  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --vm-test
+
+[no-cd]
+anywhere host:
+  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --extra-files ~/anywhere --generate-hardware-config nixos-generate-config ./hosts/{{host}}/hardware-configuration.nix root@{{host}}
+
+############################################################################
+#
+#  Docker
+#
+############################################################################
 
 [no-cd]
 compose project output='docker-compose.nix':
@@ -103,15 +120,16 @@ uptix:
 
 ############################################################################
 #
-#  Nixos-anywhere commands
+#  Backup
 #
 ############################################################################
 
-anywhere-test host:
-  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --vm-test
+backup:
+  sudo systemctl restart borgbackup-job-local.service
 
-anywhere-deploy host:
-  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --extra-files ~/anywhere --generate-hardware-config nixos-generate-config ./hosts/{{host}}/hardware-configuration.nix root@{{host}}
+restore:
+  -sudo mkdir /tmp/borg 
+  sudo borg mount ssh://borg@10.10.1.16/backup/fw13 /tmp/borg
 
 ############################################################################
 #
@@ -122,5 +140,3 @@ anywhere-deploy host:
 nsearch:
   nix run github:niksingh710/nsearch
 
-search expression:
-  grep -Rnw . -e {{expression}}
