@@ -15,7 +15,7 @@ dry:
 debug:
   sudo nixos-rebuild switch --flake . --show-trace --verbose
 
-up {{input}}:
+up:
   nix flake update
 
 # Update specific input

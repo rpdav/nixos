@@ -5,8 +5,9 @@
   userOpts,
   ...
 }: let
-  # Generates a list of the keys in ./keys
+  # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/${userOpts.username}/keys;
+
 in {
   imports =
     lib.flatten
@@ -43,6 +44,19 @@ in {
   systemOpts.gcRetention = "7d";
   systemOpts.impermanent = true;
   systemOpts.gui = false;
+
+#  boot.zfs.extraPools = [ "tank" ];
+
+#  systemd.enableEmergencyMode = false;
+
+  networking.hostId = "1d5aec24";
+
+  systemd.services.zfs-mount.enable = false;
+
+  fileSystems."/mnt/tank" = {
+    device = "tank";
+    fsType = "zfs";
+  };
 
   #todo change to systemd?
   boot.loader.grub = {
