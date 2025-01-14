@@ -34,6 +34,7 @@ in {
 
       # host-specific
       ./hardware-configuration.nix
+      ./zfs.nix
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
@@ -45,18 +46,18 @@ in {
   systemOpts.impermanent = true;
   systemOpts.gui = false;
 
-#  boot.zfs.extraPools = [ "tank" ];
+#  boot.zfs.extraPools = [ "tank" ]; # not needed if using filesystems block below
 
-#  systemd.enableEmergencyMode = false;
+  # disable emergency mode from preventing system boot if there are mounting issues
+  systemd.enableEmergencyMode = false;
 
+  # Needed for zfs
   networking.hostId = "1d5aec24";
 
-  systemd.services.zfs-mount.enable = false;
-
-  fileSystems."/mnt/tank" = {
-    device = "tank";
-    fsType = "zfs";
-  };
+#  fileSystems."/mnt/tank" = {
+#    device = "tank";
+#    fsType = "zfs";
+#  };
 
   #todo change to systemd?
   boot.loader.grub = {
