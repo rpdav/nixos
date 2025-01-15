@@ -15,7 +15,7 @@ dry:
 debug:
   sudo nixos-rebuild switch --flake . --show-trace --verbose
 
-up {{input}}:
+up: 
   nix flake update
 
 # Update specific input
@@ -129,7 +129,7 @@ backup:
 
 restore:
   -sudo mkdir /tmp/borg 
-  sudo borg mount ssh://borg@10.10.1.16/backup/fw13 /tmp/borg
+  sudo borg mount ssh://borg@10.10.1.17:2222/backup/fw13 /tmp/borg
 
 ############################################################################
 #

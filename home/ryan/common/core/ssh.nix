@@ -57,7 +57,8 @@ in {
         User ryan
 
       Host borg
-        Hostname 10.10.1.16
+        Hostname 10.10.1.17
+	Port 2222
         User borg
 
       Host testbox
@@ -68,8 +69,12 @@ in {
 	Hostname 10.10.1.19
 	User ryan
 
-      Host gitea.dfrp.xyz github.com
+      Host gitea.dfrp.xyz
         User git
+	Port 2223
+
+      Host github.com
+	User git
     '';
   };
 }

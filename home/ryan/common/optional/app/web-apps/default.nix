@@ -55,7 +55,7 @@
       name = "Unraid";
       comment = "";
       settings.StartupWMClass = "chrome-10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net__-Default";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net\" %U";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net:444\" %U";
       icon = "/home/${userOpts.username}/.local/share/icons/unraid.png";
       terminal = false;
       categories = ["Application"];
