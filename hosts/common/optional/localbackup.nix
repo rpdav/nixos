@@ -76,7 +76,7 @@
       "*/home/*/Downloads" #usually has some big temporary files that don't need backed up
     ];
     user = "root";
-    repo = "ssh://borg@10.10.1.16/backup" + ("/" + config.networking.hostName);
+    repo = "ssh://borg@10.10.1.17:2222/backup" + ("/" + config.networking.hostName);
     doInit = true;
     startAt = ["daily"];
     #    preHook = placeholder for snapshotting/mounting command

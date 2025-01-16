@@ -18,6 +18,7 @@
     ./common/optional/app/browser
     ./common/optional/app/defaultapps.nix
     ./common/optional/app/games
+    ./common/optional/app/alacritty.nix
     ./common/optional/app/kitty.nix
     ./common/optional/app/thunderbird.nix
     ./common/optional/app/web-apps
