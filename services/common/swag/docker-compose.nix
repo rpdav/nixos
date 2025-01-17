@@ -39,7 +39,7 @@
     extraOptions = [
       "--cap-add=NET_ADMIN"
       "--network-alias=swag"
-      "--network=swag_default"
+      "--network=proxynet"
     ];
   };
   systemd.services."docker-swag" = {
@@ -49,33 +49,12 @@
       RestartSec = lib.mkOverride 90 "100ms";
       RestartSteps = lib.mkOverride 90 9;
     };
-    after = [
-      "docker-network-swag_default.service"
-    ];
-    requires = [
-      "docker-network-swag_default.service"
-    ];
     partOf = [
       "docker-compose-swag-root.target"
     ];
     wantedBy = [
       "docker-compose-swag-root.target"
     ];
-  };
-
-  # Networks
-  systemd.services."docker-network-swag_default" = {
-    path = [ pkgs.docker ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStop = "docker network rm -f swag_default";
-    };
-    script = ''
-      docker network inspect swag_default || docker network create swag_default
-    '';
-    partOf = [ "docker-compose-swag-root.target" ];
-    wantedBy = [ "docker-compose-swag-root.target" ];
   };
 
   # Root service

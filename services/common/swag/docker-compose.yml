@@ -3,6 +3,8 @@ services:
   swag:
     image: lscr.io/linuxserver/swag:latest
     container_name: swag
+    networks:
+      - proxynet
     cap_add:
       - NET_ADMIN
     environment:
@@ -25,3 +27,7 @@ services:
       - 443:443
     restart: unless-stopped
     user: ryan
+
+networks:
+  proxynet:
+    external: true

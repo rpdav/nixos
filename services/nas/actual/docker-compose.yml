@@ -1,0 +1,12 @@
+services:
+    actual-server:
+        container_name: ActualServer
+        image: 'actualbudget/actual-server:latest'
+        volumes:
+            - '/mnt/docker/appdata/actualserver/config:/data:rw'
+        networks:
+          - proxynet
+
+networks:
+  proxynet:
+    external: true
