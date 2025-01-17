@@ -18,7 +18,7 @@ in {
         "hosts/common/core"
 
         # disk config
-        "hosts/common/disks/btrfs-imp.nix"
+        "hosts/common/disks/luks-lvm-imp.nix"
 
         # optional config
         "hosts/common/optional/persistence"
@@ -26,7 +26,7 @@ in {
         "hosts/common/optional/docker.nix"
 
         # services
-	"services/common/swag"
+	"services/common"
         "services/testvm"
 
         # users
@@ -35,7 +35,7 @@ in {
 
       # host-specific
       ./hardware-configuration.nix
-      ./zfs.nix
+      #./zfs.nix
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
@@ -62,10 +62,24 @@ in {
 
   #todo change to systemd?
   boot.loader.grub = {
+    device = "nodev";
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
 
+  # Boot config with luks
+#  boot = {
+#    loader = {
+#      grub.device = "nodev";
+#      systemd-boot = {
+#        enable = false;
+#        # more readable boot menu on hidpi display
+#        consoleMode = "5";
+#        configurationLimit = 30;
+#      };
+#      efi.canTouchEfiVariables = true;
+#    };
+#  };
   networking.hostName = "testvm";
 
   # allow root ssh login for rebuilds
