@@ -789,15 +789,17 @@
       "locked": {
         "lastModified": 1737119166,
         "narHash": "sha256-icTRpVvvSYCymN69s9Oe/V+wmqOMzJkXFFvoBlefFAo=",
-        "ref": "refs/heads/main",
+        "ref": "main",
         "rev": "07260d19e95343a4bb21a4d2932a34733903f00d",
-        "revCount": 71,
+        "shallow": true,
         "type": "git",
-        "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1"
+        "url": "ssh://git@github.com/rpdav/nix-secrets.git"
       },
       "original": {
+        "ref": "main",
+        "shallow": true,
         "type": "git",
-        "url": "https://git.dfrp.xyz/ryan/nix-secrets.git?ref=main&shallow=1"
+        "url": "ssh://git@github.com/rpdav/nix-secrets.git"
       }
     },
     "nixos-cli": {
