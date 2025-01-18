@@ -55,10 +55,6 @@ in {
   # Needed for zfs
   networking.hostId = "1d5aec24";
 
-#  fileSystems."/mnt/tank" = {
-#    device = "tank";
-#    fsType = "zfs";
-#  };
 
   #todo change to systemd?
   boot.loader.grub = {
@@ -69,23 +65,23 @@ in {
 
   # Unlock secondary drives
   boot.initrd.luks.devices = {
-#    zfs1.device = "/dev/disk/by-uuid/f90feb66-b8e9-4331-8d80-ebe0b56f6a52";
-#    zfs2.device = "/dev/disk/by-uuid/2f82d38e-a1e9-43bd-a9a2-c4b4c7fc23cc";
-    storage1.device = "/dev/disk/by-uuid/d364a03e-44cc-4b76-b088-a1ac234672f2"; # nas sdd 4TB drive
-    storage2.device = "/dev/disk/by-uuid/766a4cfb-0d4a-4a1e-8e26-e6e35adf5d51"; # nas sde 4%B drive
+    zfs1.device = "/dev/disk/by-uuid/f90feb66-b8e9-4331-8d80-ebe0b56f6a52";
+    zfs2.device = "/dev/disk/by-uuid/2f82d38e-a1e9-43bd-a9a2-c4b4c7fc23cc";
+#    storage1.device = "/dev/disk/by-uuid/d364a03e-44cc-4b76-b088-a1ac234672f2"; # nas sdd 4TB drive
+#    storage2.device = "/dev/disk/by-uuid/766a4cfb-0d4a-4a1e-8e26-e6e35adf5d51"; # nas sde 4%B drive
   };
 
   # import test zpool
-#  fileSystems."/mnt/tank" = {
-#    device = "tank";
-#    fsType = "zfs";
-#  };
-
-  # import storage zpool
-  fileSystems."/mnt/storage" = {
-    device = "storage";
+  fileSystems."/mnt/tank" = {
+    device = "tank";
     fsType = "zfs";
   };
+
+  # import storage zpool
+#  fileSystems."/mnt/storage" = {
+#    device = "storage";
+#    fsType = "zfs";
+#  };
 
   # Boot config with luks
 #  boot = {
