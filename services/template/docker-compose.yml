@@ -3,13 +3,17 @@ services:
     image: [IMAGE-URL]:latest
     container_name: [CONTAINER]
     volumes:
-      - ./serviceOpts.dockerDir/[CONTAINER]/config:/container/path
+      - /serviceOpts.dockerDir/[CONTAINER]/config:/container/path
     ports:
       - [HOST-PORT]:[CONTAINER-PORT]
     networks:
-      - swag_default #if proxied
+      - proxynet #if proxied
+      - dbnet #if a database
+      - default #default must be declared for multi-container compose and external networks
     restart: unless-stopped
 
 networks:
-  swag_default:
+  proxynet:
+    external: true
+  dbnet:
     external: true

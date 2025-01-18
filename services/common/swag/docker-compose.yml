@@ -26,7 +26,6 @@ services:
     ports:
       - 443:443
     restart: unless-stopped
-    user: ryan
 
 networks:
   proxynet:

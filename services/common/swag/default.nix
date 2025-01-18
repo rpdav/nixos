@@ -6,7 +6,9 @@
   imports = [./docker-compose.nix];
 
   # Secrets
-  sops.secrets."selfhosting/testvm/cloudflareToken".owner = config.users.users.${serviceOpts.dockerUser}.name;
+  sops.secrets = {
+    "selfhosting/swag/cloudflareToken".owner = config.users.users.${serviceOpts.dockerUser}.name;
+  };
 
   # Create directories to mount
   systemd.tmpfiles.rules = [
