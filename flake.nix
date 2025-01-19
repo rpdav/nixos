@@ -153,6 +153,16 @@
           inputs.home-manager-stable.nixosModules.home-manager
         ];
       };
+      # Ryzen 5 3600 NAS and virtualization host
+      nas = nixpkgs-stable.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          (import ./modules/nixos)
+          ./hosts/nas
+          inputs.home-manager-stable.nixosModules.home-manager
+        ];
+      };
       # Testing box (HP x86 thin client)
       testbox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
