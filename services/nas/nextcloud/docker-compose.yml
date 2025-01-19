@@ -1,0 +1,38 @@
+services:
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud
+    container_name: nextcloud
+    networks:
+      - proxynet
+      - default
+    environment:
+      PUID: 99
+      PGID: 100
+    volumes:
+      - '/mnt/docker/nextcloud/:/data:rw' # data storage
+      - '/serviceOpts.dockerDir/nextcloud/config:/config:rw' # app config
+    depends_on:
+      db:
+        restart: true
+        condition: service_started
+    restart: unless-stopped
+  db:
+    image: lscr.io/linuxserver/mariadb
+    container_name: nextcloud-db
+    networks:
+      - dbnet
+      - default
+    environment:
+      # MYSQL_ROOT_PASSWORD: changme # see secret env file
+      PUID: 99
+      PGID: 100
+      UMASK: 022
+    volumes:
+      - '/serviceOpts.dockerDir/nextcloud/db:/config:rw'
+    restart: unless-stopped
+        
+networks:
+  proxynet:
+    external: true
+  dbnet:
+    external: true

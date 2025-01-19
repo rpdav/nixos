@@ -3,7 +3,8 @@
   "homeassistant/home-assistant": "sha256:871f84a00db8d05856a70ee3761b138a8e91eb108d61f2fa176e7eeadb5eda03",
   "louislam/uptime-kuma:1": "sha256:431fee3be822b04861cf0e35daf4beef6b7cb37391c5f26c3ad6e12ce280fe18",
   "lscr.io/linuxserver/mariadb": "sha256:9f2bcd8d9106c48e13fd2b81c580c0426bf8e94eb309460b759ef5aa5d5a8c1a",
-  "lscr.io/linuxserver/swag:latest": "sha256:332e0327f8cbc3e20ad6b263f6e463c20232d013cd93a2c63f096c675d77205c",
+  "lscr.io/linuxserver/nextcloud": "sha256:c9040ac1c640996cc84044d78c166d97daa3a3570aa1a1c936bbb14714058e8d",
+  "lscr.io/linuxserver/swag:latest": "sha256:dec358f39b429e18456951cc74adc2c37e5d9e1a7b555f2734c51bff41d7b21d",
   "vaultwarden/server": "sha256:7a0aa23c0947be3582898deb5170ea4359493ed9a76af2badf60a7eb45ac36af",
   "zwavejs/zwavejs2mqtt": "sha256:6db019573dec6287535d9bac450e14d7ca0f150a511b6755d37da54280ef292d"
 }
