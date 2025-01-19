@@ -11,6 +11,12 @@ Use these templates to bring a proxied, selfhosted service online using systemd 
 1. Update default.nix with container, subdomain, and port information.
 1. Update opnSense host overrides with new subdomain
 
+## Command cheat sheet
+```code
+:%s-/serviceOpts.dockerDir-${serviceOpts.dockerDir}-g
+:%s-image = -image = uptix.dockerImage -g
+:%s-systemOpts.timezone-${systemOpts.timezone}-g
+```
 
 ## Secret environment variables
 1. Put the contents of the secrets env file into sops; push and pull down the secrets repo

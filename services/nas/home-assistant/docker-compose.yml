@@ -1,0 +1,51 @@
+services:
+  home-assistant:
+    image: homeassistant/home-assistant
+    container_name: home-assistant
+    networks:
+      - proxynet
+      - default
+    ports:
+      - 8123:8123 #webui
+    volumes:
+      - '/serviceOpts.dockerDir/Home-Assistant-Core/config:/config:rw'
+    depends_on:
+      db:
+        condition: service_started
+        restart: true
+    restart: unless-stopped
+  db:
+    image: lscr.io/linuxserver/mariadb
+    container_name: home-assistant-db
+    networks:
+      - dbnet
+      - default
+    environment:
+      TZ: $$systemOpts.timezone
+      # MYSQL_ROOT_PASSWORD: changeme # pulled from secret env file
+      PUID: 99
+      PGID: 100
+      UMASK: 022
+    volumes:
+      - '/serviceOpts.dockerDir/Home-Assistant-Core/db:/config:rw'
+    restart: unless-stopped
+  zwave:
+    image: zwavejs/zwavejs2mqtt
+    container_name: zwavejs2mqtt
+    environment:
+      ZWAVEJS_EXTERNAL_CONFIG: /usr/src/app/store/.config-db
+    networks:
+      - default
+      - proxynet
+    volumes:
+      - '/serviceOpts.dockerDir/Home-Assistant-Core/zwave/data:/usr/src/app/store:rw'
+      - '/serviceOpts.dockerDir/Home-Assistant-Core/zwave/log:/usr/src/app/bin:rw'
+    devices:
+      - '/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave'
+    restart: unless-stopped
+    
+networks:
+  proxynet:
+    external: true
+  dbnet:
+    external: true

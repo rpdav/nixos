@@ -1,6 +1,9 @@
 {
   "ghcr.io/docker-mailserver/docker-mailserver:latest": "sha256:01b82c6c1c64d5b73ba161c0107e5d7d038ebdce85eb9ed084f043e9c2a7943b",
+  "homeassistant/home-assistant": "sha256:871f84a00db8d05856a70ee3761b138a8e91eb108d61f2fa176e7eeadb5eda03",
   "louislam/uptime-kuma:1": "sha256:431fee3be822b04861cf0e35daf4beef6b7cb37391c5f26c3ad6e12ce280fe18",
-  "lscr.io/linuxserver/swag:latest": "sha256:115a5d7cf3e1a1a05eb074f200a2e33fc352c7c44e114a0b8685400acada347f",
-  "vaultwarden/server": "sha256:7a0aa23c0947be3582898deb5170ea4359493ed9a76af2badf60a7eb45ac36af"
+  "lscr.io/linuxserver/mariadb": "sha256:9f2bcd8d9106c48e13fd2b81c580c0426bf8e94eb309460b759ef5aa5d5a8c1a",
+  "lscr.io/linuxserver/swag:latest": "sha256:332e0327f8cbc3e20ad6b263f6e463c20232d013cd93a2c63f096c675d77205c",
+  "vaultwarden/server": "sha256:7a0aa23c0947be3582898deb5170ea4359493ed9a76af2badf60a7eb45ac36af",
+  "zwavejs/zwavejs2mqtt": "sha256:6db019573dec6287535d9bac450e14d7ca0f150a511b6755d37da54280ef292d"
 }
