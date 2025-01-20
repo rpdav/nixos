@@ -85,6 +85,18 @@ vps-boot:
 vps-debug: 
   nixos-rebuild --flake .#vps --target-host root@vps switch --show-trace -v
 
+nas: 
+  nixos-rebuild --flake .#nas --target-host root@nas switch 
+
+nas-dry: 
+  nixos-rebuild --flake .#nas --target-host root@nas dry-build
+
+nas-boot:
+  nixos-rebuild --flake .#nas --target-host root@nas boot
+
+nas-debug: 
+  nixos-rebuild --flake .#nas --target-host root@nas switch --show-trace -v
+
 machines: testvm vps
 
 machines-boot: testvm-boot vps-boot

@@ -787,10 +787,10 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1737242336,
-        "narHash": "sha256-udUWvt3AgHmMBdxfAXPmrRdwJyt0qgC4WvrZ2fVvLFU=",
+        "lastModified": 1737382684,
+        "narHash": "sha256-3taDT3CY4hUUNJGE2Ejf3Ncz1iT+YApqCVqbzQhYR24=",
         "ref": "main",
-        "rev": "04a528764f36abb2eb017a4cdc67639a94f06335",
+        "rev": "3228da0e285876f20d5abd40d3dd55ad6191a394",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/rpdav/nix-secrets.git"

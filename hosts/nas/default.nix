@@ -45,6 +45,7 @@ in {
   systemOpts.gcRetention = "30d";
   systemOpts.impermanent = true;
   systemOpts.gui = false;
+  serviceOpts.dockerDir = "/mnt/docker/appdata";
 
   # disable emergency mode from preventing system boot if there are mounting issues
   systemd.enableEmergencyMode = false;

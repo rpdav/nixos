@@ -44,7 +44,7 @@ in {
     extraConfig = ''
       Host nas
         HostName 10.10.1.17
-       	User root
+       	User ryan
        	Port 22
 
       Host pi
