@@ -1,0 +1,12 @@
+services:
+    borgserver:
+        image: 'nold360/borgserver:latest'
+        container_name: borgserver
+        environment:
+            - PUID=1000
+            - PGID=100
+        ports:
+          - 2222:22 #ssh
+        volumes:
+            - '/serviceOpts/dockerDir/borg/sshkeys/:/sshkeys:rw'
+            - '/mnt/storage/backups/borg:/backup:rw'

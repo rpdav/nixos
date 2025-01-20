@@ -1,0 +1,18 @@
+services:
+    gitea:
+        image: gitea/gitea
+        container_name: gitea
+        environment:
+          - USER_UID=1000
+          - USER_GID=1000
+        networks:
+          - proxynet
+        ports:
+          - 2223:22 #ssh
+        volumes:
+            - '/serviceOpts.dockerDir/gitea/config:/data:rw'
+            - /etc/localtime:/etc/localtime:ro
+
+networks:
+  proxynet:
+    external: true

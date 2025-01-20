@@ -1,0 +1,15 @@
+services:
+    albyhub:
+        container_name: albyhub
+        environment:
+          - WORK_DIR=/data/albyhub
+          - LOG_EVENTS=true
+        networks:
+          - proxynet
+        volumes:
+            - '/serviceOpts.dockerDir/albyhub/config:/data/albyhub:rw'
+        image: 'ghcr.io/getalby/hub:latest'
+        
+networks:
+  proxynet:
+    external: true
