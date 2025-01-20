@@ -4,14 +4,14 @@
     server {
         listen 443 ssl;
         listen [::]:443 ssl;
-        server_name [SUBDOMAIN].*;
+        server_name _SUBDOMAIN_.*;
         include /config/nginx/ssl.conf;
         client_max_body_size 0;
         location / {
             include /config/nginx/proxy.conf;
             include /config/nginx/resolver.conf;
-            set $upstream_app [CONTAINER];
-            set $upstream_port [PORT];
+            set $upstream_app _CONTAINER_;
+            set $upstream_port _PORT_;
             set $upstream_proto http; #change to https if app requires
             proxy_pass $upstream_proto://$upstream_app:$upstream_port;
         }
@@ -23,13 +23,13 @@ in {
   # Create directories for appdata
   # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
   systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/[CONTAINER]/config 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/[CONTAINER]/config - ${serviceOpts.dockerUser} users"
+    "d ${serviceOpts.dockerDir}/_CONTAINER_/config 0700 ${serviceOpts.dockerUser} users"
+    "Z ${serviceOpts.dockerDir}/_CONTAINER_/config - ${serviceOpts.dockerUser} users"
   ];
 
   # Swag reverse proxy config
   systemd.tmpfiles.settings."01-proxy-confs" = {
-    "${serviceOpts.dockerDir}/swag/proxy-confs/[CONTAINER].subdomain.conf" = {
+    "${serviceOpts.dockerDir}/swag/proxy-confs/_CONTAINER_.subdomain.conf" = {
       "f+" = {
         group = "users";
         user = "${serviceOpts.dockerUser}";

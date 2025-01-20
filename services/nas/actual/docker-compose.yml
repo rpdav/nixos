@@ -1,9 +1,9 @@
 services:
-    actual-server:
-        container_name: ActualServer
+    actualserver:
+        container_name: actualserver
         image: 'actualbudget/actual-server:latest'
         volumes:
-            - '/mnt/docker/appdata/actualserver/config:/data:rw'
+            - '/serviceOpts.dockerDir/actualserver/config:/data:rw'
         networks:
           - proxynet
 
