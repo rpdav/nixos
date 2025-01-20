@@ -2,6 +2,6 @@
   imports = [
     #./actual
     #./home-assistant
-    #./nextcloud
+    ./nextcloud
   ];
 }

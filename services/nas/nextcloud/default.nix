@@ -45,7 +45,7 @@ in {
   ];
 
   # Secret env file
-  sops.secrets."selfhosting.nextcloud.env" = {};
+  sops.secrets."selfhosting/nextcloud/env" = {};
 
   # Swag reverse proxy config
   systemd.tmpfiles.settings."01-proxy-confs" = {

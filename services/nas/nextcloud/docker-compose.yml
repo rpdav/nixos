@@ -6,8 +6,8 @@ services:
       - proxynet
       - default
     environment:
-      PUID: 99
-      PGID: 100
+      PUID: 1000
+      PGID: 1000
     volumes:
       - '/mnt/docker/nextcloud/:/data:rw' # data storage
       - '/serviceOpts.dockerDir/nextcloud/config:/config:rw' # app config
@@ -24,9 +24,8 @@ services:
       - default
     environment:
       # MYSQL_ROOT_PASSWORD: changme # see secret env file
-      PUID: 99
-      PGID: 100
-      UMASK: 022
+      PUID: 1000
+      PGID: 1000
     volumes:
       - '/serviceOpts.dockerDir/nextcloud/db:/config:rw'
     restart: unless-stopped

@@ -10,8 +10,8 @@
   virtualisation.oci-containers.containers."nextcloud" = {
     image = uptix.dockerImage "lscr.io/linuxserver/nextcloud";
     environment = {
-      "PGID" = "100";
-      "PUID" = "99";
+      "PGID" = "1000";
+      "PUID" = "1000";
     };
     volumes = [
       "/mnt/docker/nextcloud/:/data:rw"
@@ -50,9 +50,8 @@
   virtualisation.oci-containers.containers."nextcloud-db" = {
     image = uptix.dockerImage "lscr.io/linuxserver/mariadb";
     environment = {
-      "PGID" = "100";
-      "PUID" = "99";
-      "UMASK" = "18";
+      "PGID" = "1000";
+      "PUID" = "1000";
     };
     volumes = [
       "${serviceOpts.dockerDir}/nextcloud/db:/config:rw"
