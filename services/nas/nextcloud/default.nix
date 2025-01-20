@@ -1,4 +1,8 @@
-{serviceOpts, ...}: let
+{
+  serviceOpts,
+  config,
+  ...
+}: let
   proxy-conf = ''
     server {
         listen 443 ssl;
@@ -45,7 +49,7 @@ in {
   ];
 
   # Secret env file
-  sops.secrets."selfhosting/nextcloud/env" = {};
+  sops.secrets."selfhosting/nextcloud/env".owner = config.users.users.${serviceOpts.dockerUser}.name;
 
   # Swag reverse proxy config
   systemd.tmpfiles.settings."01-proxy-confs" = {

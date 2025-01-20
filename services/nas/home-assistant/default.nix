@@ -1,4 +1,8 @@
-{serviceOpts, ...}: let
+{
+  serviceOpts,
+  config,
+  ...
+}: let
   proxy-conf = ''
     # home-assistant
     server {
@@ -48,7 +52,7 @@ in {
   ];
 
   # Secret env file
-  sops.secrets."selfhosting/home-assistant/env" = {};
+  sops.secrets."selfhosting/home-assistant/env".owner = config.users.users.${serviceOpts.dockerUser}.name;
 
   # Swag reverse proxy config
   systemd.tmpfiles.settings."01-proxy-confs" = {
@@ -57,7 +61,7 @@ in {
         group = "users";
         user = "${serviceOpts.dockerUser}";
         mode = "0700";
-	# Convert multiline string to single for tmpfiles
+        # Convert multiline string to single for tmpfiles
         argument = builtins.replaceStrings ["\n"] ["\\n"] proxy-conf;
       };
     };

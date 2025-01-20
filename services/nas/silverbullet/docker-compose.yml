@@ -1,0 +1,15 @@
+services:
+  silverbullet:
+    container_name: silverbullet
+    image: zefhemel/silverbullet
+    #environment:
+    #  - SB_USER # see secret env file
+    volumes:
+      - /serviceOpts.dockerDir/silverbullet/data:/space:rw
+    networks:
+      - proxynet
+    restart: unless-stopped
+        
+networks:
+  proxynet:
+    external: true

@@ -6,5 +6,8 @@
     ./gitea
     ./albyhub
     ./borg
+    ./heimdall
+    ./silverbullet
+    ./speedtest
   ];
 }

@@ -1,0 +1,15 @@
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall
+    container_name: heimdall
+    networks:
+      - proxynet
+    environment:
+      - PUID=1000
+      - PGID=100
+    volumes:
+      - '/serviceOpts.dockerDir/heimdall/config:/config:rw'
+
+networks:
+  proxynet:
+    external: true
