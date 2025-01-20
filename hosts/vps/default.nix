@@ -5,6 +5,8 @@
   userOpts,
   pkgs,
   config,
+  systemOpts,
+  serviceOpts,
   ...
 }: let
   # Generates a list of the keys in ./keys
@@ -78,6 +80,13 @@ in {
     mtr
     sysstat
   ];
+
+  # VPS docker directory lives in persistent volume
+  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+    directories = [
+      "${serviceOpts.dockerDir}"
+    ];
+  };
 
   # VPS monitoring
   sops.secrets."linode/longviewAPIKey" = {};

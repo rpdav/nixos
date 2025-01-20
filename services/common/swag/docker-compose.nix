@@ -14,8 +14,8 @@
     image = uptix.dockerImage "lscr.io/linuxserver/swag:latest";
     environment = {
       "DNSPLUGIN" = "cloudflare";
-      "DOCKER_MODS" = "linuxserver/mods:swag-auto-reload";
       "EMAIL" = "${secrets.admin-mail.address}";
+      "DOCKER_MODS" = "linuxserver/mods:swag-auto-reload|linuxserver/mods:swag-dashboard";
       "ONLY_SUBDOMAINS" = "true";
       "PGID" = "1000";
       "PROPAGATION" = "";
@@ -34,7 +34,6 @@
     ports = [
       "443:443/tcp"
     ];
-    user = config.users.users.${serviceOpts.dockerUser}.uid;
     log-driver = "journald";
     extraOptions = [
       "--cap-add=NET_ADMIN"

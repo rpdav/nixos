@@ -10,7 +10,6 @@
   # Create impermanent directory
   environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
     directories = [
-      "${serviceOpts.dockerDir}"
       "/var/lib/docker"
     ];
   };
