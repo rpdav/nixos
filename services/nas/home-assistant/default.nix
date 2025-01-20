@@ -1,6 +1,6 @@
 {serviceOpts, ...}: let
   proxy-conf = ''
-    # This is just a template based on common settings. If there's a template from swag available, replace this text with that.
+    # home-assistant
     server {
         listen 443 ssl;
         listen [::]:443 ssl;
@@ -12,6 +12,22 @@
             include /config/nginx/resolver.conf;
             set $upstream_app home-assistant;
             set $upstream_port 8123;
+            set $upstream_proto http; #change to https if app requires
+            proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+        }
+    }
+    # zwave
+    server {
+        listen 443 ssl;
+        listen [::]:443 ssl;
+        server_name zwave.*;
+        include /config/nginx/ssl.conf;
+        client_max_body_size 0;
+        location / {
+            include /config/nginx/proxy.conf;
+            include /config/nginx/resolver.conf;
+            set $upstream_app zwavejs2mqtt;
+            set $upstream_port 8091;
             set $upstream_proto http; #change to https if app requires
             proxy_pass $upstream_proto://$upstream_app:$upstream_port;
         }

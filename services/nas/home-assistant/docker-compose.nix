@@ -49,10 +49,9 @@
   virtualisation.oci-containers.containers."home-assistant-db" = {
     image = uptix.dockerImage "lscr.io/linuxserver/mariadb";
     environment = {
-      "PGID" = "100";
-      "PUID" = "99";
+      "PGID" = "1000";
+      "PUID" = "1000";
       "TZ" = "${systemOpts.timezone}";
-      "UMASK" = "18";
     };
     volumes = [
       "${serviceOpts.dockerDir}/Home-Assistant-Core/db:/config:rw"
@@ -95,6 +94,9 @@
     volumes = [
       "${serviceOpts.dockerDir}/Home-Assistant-Core/zwave/data:/usr/src/app/store:rw"
       "${serviceOpts.dockerDir}/Home-Assistant-Core/zwave/log:/usr/src/app/bin:rw"
+    ];
+    ports = [
+      "3000:3000/tcp"
     ];
     log-driver = "journald";
     extraOptions = [

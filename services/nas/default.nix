@@ -1,7 +1,7 @@
 {...}: {
   imports = [
     #./actual
-    #./home-assistant
+    ./home-assistant
     ./nextcloud
   ];
 }
