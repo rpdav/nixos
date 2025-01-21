@@ -10,5 +10,6 @@
     ./silverbullet
     ./speedtest
     #./immich
+    ./unifi
   ];
 }
