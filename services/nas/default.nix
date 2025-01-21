@@ -9,5 +9,6 @@
     ./heimdall
     ./silverbullet
     ./speedtest
+    #./immich
   ];
 }
