@@ -35,7 +35,7 @@ services:
             condition: service_started
     db:
         container_name: unifi-db
-        image: mongo
+        image: mongo:5.3
         networks:
           - dbnet
           - default

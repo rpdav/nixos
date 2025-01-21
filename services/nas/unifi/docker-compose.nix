@@ -8,7 +8,7 @@
 }: {
   # Containers
   virtualisation.oci-containers.containers."unifi-db" = {
-    image = uptix.dockerImage "hub.docker.com/mongo";
+    image = "mongo:7.0";
     volumes = [
       "${serviceOpts.dockerDir}/unifi-network-application/db:/data/db:rw"
     ];

@@ -25,7 +25,7 @@ in {
   systemd.tmpfiles.rules = [
     "d ${serviceOpts.dockerDir}/unifi-network-application/config 0700 ${serviceOpts.dockerUser} users"
     "Z ${serviceOpts.dockerDir}/unifi-network-application/config - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/unifi-network-application/db 0700 ${serviceOpts.dockerUser} users"
+    "d ${serviceOpts.dockerDir}/unifi-network-application/db 0755 ${serviceOpts.dockerUser} users"
     "Z ${serviceOpts.dockerDir}/unifi-network-application/db - ${serviceOpts.dockerUser} users"
   ];
 
