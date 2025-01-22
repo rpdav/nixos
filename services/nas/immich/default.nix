@@ -20,15 +20,15 @@
 in {
   imports = [./docker-compose.nix];
 
-  # Create directories for appdata
+  # Create directories for appdata and photos
   # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
   systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/immich_server/config 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/immich_server/config - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/immich_server/db 0766 999 users"
-    "Z ${serviceOpts.dockerDir}/immich_server/db - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/immich_server/ml 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/immich_server/ml - ${serviceOpts.dockerUser} users"
+    "d ${serviceOpts.dockerDir}/immich/db 0700 999 users"
+    "Z ${serviceOpts.dockerDir}/immich/db - 999 users"
+    "d ${serviceOpts.dockerDir}/immich/model-cache 0755 ${serviceOpts.dockerUser} users"
+    "Z ${serviceOpts.dockerDir}/immich/model-cache - ${serviceOpts.dockerUser} users"
+    "d /mnt/docker/photos/immich 0755 ${serviceOpts.dockerUser} users"
+    "Z /mnt/docker/photos/immich - ${serviceOpts.dockerUser} users"
   ];
 
   # pull secret env file
