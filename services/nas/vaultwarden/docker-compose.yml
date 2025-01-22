@@ -1,0 +1,18 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server
+    container_name: vaultwarden
+    networks:
+      - proxynet
+    environment:
+      - SERVER_ADMIN_EMAIL=secrets.personal-mail.address
+      - SIGNUPS_ALLOWED=false
+      - INVITATIONS_ALLOWED=true
+      - WEBSOCKET_ENABLED=true
+      - LOG_FILE=/data/vaultwarden.log
+    volumes:
+      - '/serviceOpts.dockerDir/vaultwarden/config:/data:rw'
+      
+networks:
+  proxynet:
+    external: true
