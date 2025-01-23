@@ -18,7 +18,6 @@ services:
     image: lscr.io/linuxserver/mariadb
     container_name: home-assistant-db
     networks:
-      - dbnet
       - default
     environment:
       TZ: $$systemOpts.timezone
@@ -47,6 +46,4 @@ services:
     
 networks:
   proxynet:
-    external: true
-  dbnet:
     external: true

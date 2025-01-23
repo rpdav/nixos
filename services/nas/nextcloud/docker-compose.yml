@@ -20,7 +20,6 @@ services:
     image: lscr.io/linuxserver/mariadb
     container_name: nextcloud-db
     networks:
-      - dbnet
       - default
     environment:
       # MYSQL_ROOT_PASSWORD: changme # see secret env file
@@ -32,6 +31,4 @@ services:
         
 networks:
   proxynet:
-    external: true
-  dbnet:
     external: true

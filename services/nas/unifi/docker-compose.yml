@@ -37,7 +37,6 @@ services:
         container_name: unifi-db
         image: mongo:5.3
         networks:
-          - dbnet
           - default
         volumes:
             - /serviceOpts.dockerDir/unifi-network-application/db:/data/db:rw
@@ -45,6 +44,4 @@ services:
         
 networks:
   proxynet:
-    external: true
-  dbnet:
     external: true

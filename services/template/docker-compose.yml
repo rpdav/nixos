@@ -8,12 +8,9 @@ services:
       - [HOST-PORT]:[CONTAINER-PORT]
     networks:
       - proxynet #if proxied
-      - dbnet #if a database
       - default #default must be declared for multi-container compose and external networks
     restart: unless-stopped
 
 networks:
   proxynet:
-    external: true
-  dbnet:
     external: true

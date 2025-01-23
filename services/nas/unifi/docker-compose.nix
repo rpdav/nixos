@@ -15,7 +15,6 @@
     log-driver = "journald";
     extraOptions = [
       "--network-alias=db"
-      "--network=dbnet"
       "--network=unifi_default"
     ];
   };
