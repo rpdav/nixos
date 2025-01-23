@@ -9,7 +9,7 @@
     ./heimdall
     ./silverbullet
     ./speedtest
-    #./immich
+    ./immich
     ./unifi
     ./vaultwarden
   ];

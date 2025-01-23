@@ -69,7 +69,6 @@
       "--health-start-interval=30s"
       "--health-start-period=5m0s"
       "--network-alias=database"
-      "--network=dbnet"
       "--network=immich_default"
     ];
   };
@@ -99,7 +98,6 @@
     extraOptions = [
       "--health-cmd=redis-cli ping || exit 1"
       "--network-alias=redis"
-      "--network=dbnet"
       "--network=immich_default"
     ];
   };
