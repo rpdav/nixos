@@ -20,6 +20,7 @@ in {
       ll = "ls -la";
       sudo = "sudo "; #allows aliases with sudo
       jctl = "journalctl -xeu";
+      nas-boot = "ssh root@nas -p 2220 cryptsetup-askpass";
       ## git
       gs = "git status";
       gc = "git commit -am";
