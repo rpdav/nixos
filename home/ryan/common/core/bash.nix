@@ -19,6 +19,7 @@ in {
       ".." = "cd ..";
       ll = "ls -la";
       sudo = "sudo "; #allows aliases with sudo
+      jctl = "journalctl -xeu";
       ## git
       gs = "git status";
       gc = "git commit -am";
