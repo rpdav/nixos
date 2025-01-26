@@ -1,6 +1,7 @@
 {
   modulesPath,
   lib,
+  pkgs,
   configLib,
   userOpts,
   ...
@@ -23,7 +24,7 @@ in {
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
-	"hosts/common/optional/ssh-unlock.nix"
+        "hosts/common/optional/ssh-unlock.nix"
 
         # services
         "services/common"
@@ -70,19 +71,18 @@ in {
   };
 
   # import zpools
+  # at least one fileSystems parameter must be set, otherwise, boot.zfs.extraPools will not be imported
   fileSystems = {
-    "/mnt/storage" = {
-      device = "storage";
-      fsType = "zfs";
-    };
-    "/mnt/docker" = {
-      device = "docker";
-      fsType = "zfs";
-    };
     "/mnt/vms" = {
       device = "vms";
       fsType = "zfs";
     };
+  };
+  boot.zfs = {
+    extraPools = [
+      "storage"
+      "docker"
+    ];
   };
 
   networking.hostName = "nas";
