@@ -45,7 +45,7 @@
 
   # Variable overrides
   userOpts.username = "ryan"; #primary user (not necessarily only user)
-  userOpts.term = "alacritty";
+  userOpts.term = "kitty";
   systemOpts.diskDevice = "nvme0n1";
   systemOpts.swapSize = "16G";
   systemOpts.impermanent = true;
