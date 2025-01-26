@@ -31,7 +31,9 @@
   virtualisation.oci-containers.backend = "docker";
 
   # Open firewall port for dns resolution
-  networking.firewall.allowedUDPPorts = [53];
+  networking.firewall = {
+    allowedUDPPorts = [53];
+  };
 
   # Add user to docker group
   users.users.${serviceOpts.dockerUser} = {
@@ -41,6 +43,8 @@
   environment.systemPackages =
     (with pkgs; [
       oxker
+      lazydocker
+      beszel
       jq
       (writeShellScriptBin "dup" "sudo systemctl restart docker-$1.service")
       (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1.service")
