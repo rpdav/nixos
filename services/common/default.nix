@@ -2,6 +2,7 @@
 
   imports = [
     ./swag
+    ./beszel-agent
   ];
   # create proxynet network
   systemd.services."docker-network-proxynet" = {

@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./actual
+    ./beszel-hub
     ./home-assistant
     ./nextcloud
     ./gitea
