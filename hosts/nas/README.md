@@ -22,3 +22,36 @@ I could also move the docker directory over to /persist and not do any symlinkin
 
 ## Docker
 Home assistant and nextcloud have reverse proxy settings that may need tweaked on migration.
+
+## Backup
+
+### Contents
+
+* NAS
+	- persist
+		+ etc/ssh
+		+ home/{username}
+	- /mnt/storage/media
+	- /mnt/docker
+		+ photos
+		+ nextcloud
+		+ appdata
+	- /mnt/vms
+* VPS
+* FW13
+
+### Roadmap
+
+- [ ] Delete old snapshots
+- [ ] Set up sanoid
+- [ ] Set up local zfs send/receive backup
+- [ ] Set up non-zfs service
+	- [ ] rclone mount
+	- [ ] run borg
+	- [ ] rclone unmount
+- [ ] Set up zfs service
+	- [ ] (recursively) snapshot filesystems
+	- [ ] rclone mount
+	- [ ] run borg
+	- [ ] rclone unmount
+	- [ ] delete snapshots

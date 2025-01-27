@@ -3,6 +3,7 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    borgbackup
     wget
     htop
     git

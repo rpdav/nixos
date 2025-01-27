@@ -83,7 +83,6 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
-    borgbackup
     qdirstat
   ];
 
