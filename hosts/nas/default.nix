@@ -1,7 +1,7 @@
 {
   modulesPath,
   lib,
-  pkgs,
+  config,
   configLib,
   userOpts,
   ...
@@ -21,6 +21,7 @@ in {
         "hosts/common/disks/luks-lvm-imp.nix"
 
         # optional config
+	"hosts/common/optional/backup"
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
@@ -42,14 +43,26 @@ in {
 
   # Variable overrides
   userOpts.username = "ryan"; #primary user (not necessarily only user)
-  systemOpts.swapEnable = true;
-  systemOpts.diskDevice = "nvme1n1";
-  systemOpts.swapSize = "16G";
-  systemOpts.gcRetention = "30d";
-  systemOpts.impermanent = true;
-  systemOpts.gui = false;
+  systemOpts = {
+    swapEnable = true;
+    diskDevice = "nvme1n1";
+    swapSize = "16G";
+    gcRetention = "30d";
+    impermanent = true;
+    gui = false;
+  };
   serviceOpts.dockerDir = "/mnt/docker/appdata";
-
+  backupOpts = {
+    localRepo = "/mnt/storage/backups/borg";
+    remoteRepo = "";
+    sourcePaths = [config.systemOpts.persistVol];
+    excludeList = [
+      # Run `borg help patterns` for guidance on exclusion patterns
+      "*/home/*/.git/**" #can be restored from repo
+      "**/.local/share/libvirt" #root and user vm images
+      "var/**"
+    ];
+  };
   # disable emergency mode from preventing system boot if there are mounting issues
   systemd.enableEmergencyMode = false;
 
