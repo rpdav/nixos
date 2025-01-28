@@ -42,9 +42,9 @@ Home assistant and nextcloud have reverse proxy settings that may need tweaked o
 
 ### Roadmap
 
-- [ ] Delete old snapshots
-- [ ] Set up sanoid
-- [ ] Set up local zfs send/receive backup
+- [x] Delete old snapshots
+- [x] Set up sanoid
+- [x] Set up local zfs send/receive backup
 - [ ] Set up non-zfs service
 	- [ ] rclone mount
 	- [ ] run borg
