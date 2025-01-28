@@ -24,13 +24,13 @@
         "hosts/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "hosts/common/optional/localbackup.nix"
+        "hosts/common/optional/backup"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/stylix.nix"
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
-        "hosts/common/optional/docker.nix" #container admin tools, not just for running containers
+        "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
 
         # users
         "hosts/common/users/ryan"
@@ -44,12 +44,32 @@
     ];
 
   # Variable overrides
-  userOpts.username = "ryan"; #primary user (not necessarily only user)
-  userOpts.term = "kitty";
-  systemOpts.diskDevice = "nvme0n1";
-  systemOpts.swapSize = "16G";
-  systemOpts.impermanent = true;
-  systemOpts.gui = true;
+  userOpts = {
+    username = "ryan"; #primary user (not necessarily only user)
+    term = "kitty";
+  };
+  systemOpts = {
+    diskDevice = "nvme0n1";
+    swapSize = "16G";
+    impermanent = true;
+    gui = true;
+  };
+  backupOpts = {
+    localRepo = "ssh://borg@10.10.1.17:2222/backup";
+    remoteRepo = "";
+    sourcePaths = [config.systemOpts.persistVol];
+    excludeList = [
+      # Run `borg help patterns` for guidance on exclusion patterns
+      "*/home/*/.git/**" #can be restored from repo
+      "*/*/.thunderbird/*/ImapMail" #email doesn't need backup
+      "*/home/*/Nextcloud" #already on server
+      "**/.local/share/libvirt" #root and user vm images
+      "*/home/*/.local/share/Steam" #lots of small files and big games
+      "*/home/*/.local/share/lutris"
+      "*/home/*/.local/share/protonmail" #email
+      "*/home/*/Downloads" #usually has some big temporary files that don't need backed up
+    ];
+  };
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
@@ -94,7 +114,7 @@
       "/var/lib/bluetooth"
     ];
     files = [
-    "/root/.ssh/known_hosts"
+      "/root/.ssh/known_hosts"
     ];
   };
 
@@ -117,5 +137,4 @@
   users.users.root = {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
   };
-  
 }

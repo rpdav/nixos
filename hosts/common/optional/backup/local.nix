@@ -3,8 +3,11 @@
   pkgs,
   lib,
   userOpts,
+  backupOpts,
   ...
 }:
+
+#TODO: get backup monitor working again
 #let
 #  ## Set up notifications in case of failure
 #  borgbackupMonitor = {
@@ -58,25 +61,18 @@
   # This config assumes this machine's root user public key is copied to the borg server as /sshkeys/clients/$hostname. The server will create a backup directory under /backup/$hostname
 
   ## Local backup definition
+
+  # Pull passphrase and key for ssh access (not needed for NAS)
   sops.secrets = {
     "borg/passphrase" = {};
     "${userOpts.username}/sshKeys/id_borg".path = "/root/.ssh/id_ed25519";
   };
 
   services.borgbackup.jobs."local" = {
-    paths = [config.systemOpts.persistVol];
-    exclude = [
-      # Run `borg help patterns` for guidance on exclusion patterns
-      "*/home/*/.git/**" #can be restored from repo
-      "*/*/.thunderbird/*/ImapMail" #email doesn't need backup
-      "*/home/*/Nextcloud" #already on server
-      "*/home/*/.local/share/Steam" #lots of small files and big games
-      "*/home/*/.local/share/lutris"
-      "*/home/*/.local/share/protonmail" #email
-      "*/home/*/Downloads" #usually has some big temporary files that don't need backed up
-    ];
+    paths = config.backupOpts.sourcePaths;
+    exclude = config.backupOpts.excludeList;
     user = "root";
-    repo = "ssh://borg@10.10.1.17:2222/backup" + ("/" + config.networking.hostName);
+    repo = config.backupOpts.localRepo + ("/" + config.networking.hostName);
     doInit = true;
     startAt = ["daily"];
     #    preHook = placeholder for snapshotting/mounting command
