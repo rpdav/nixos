@@ -20,13 +20,6 @@
     yubikeys
   );
 in { 
-  # Create impermanent mounts
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    files = [
-    ".ssh/known_hosts"
-    ];
-  };
-
   # Pull private key from sops
   sops.secrets = {
     "${userOpts.username}/sshKeys/id_manual".path = "/home/${userOpts.username}/.ssh/id_manual";
@@ -41,6 +34,7 @@ in {
   # General ssh config
   programs.ssh = {
     enable = true;
+    userKnownHostsFile = lib.mkIf systemOpts.impermanent "${systemOpts.persistVol}/home/${userOpts.username}/.ssh/known_hosts";
     extraConfig = ''
       Host nas
         HostName 10.10.1.17
