@@ -2,6 +2,7 @@
   lib,
   userOpts,
   systemOpts,
+  config,
   configLib,
   ...
 }: let
@@ -35,40 +36,5 @@ in {
   programs.ssh = {
     enable = true;
     userKnownHostsFile = lib.mkIf systemOpts.impermanent "${systemOpts.persistVol}/home/${userOpts.username}/.ssh/known_hosts";
-    extraConfig = ''
-      Host nas
-        HostName 10.10.1.17
-       	User ryan
-       	Port 22
-
-      Host pi
-       	HostName 10.10.1.10
-       	User pi
-       	Port 22
-
-      Host vps
-	Hostname 170.187.148.177
-        User ryan
-
-      Host borg
-        Hostname 10.10.1.17
-	Port 2222
-        User borg
-
-      Host testbox
-	Hostname 10.10.1.18
-	User ryan
-
-      Host testvm
-	Hostname 10.10.1.19
-	User ryan
-
-      Host gitea.dfrp.xyz
-        User git
-	Port 2223
-
-      Host github.com
-	User git
-    '';
   };
 }

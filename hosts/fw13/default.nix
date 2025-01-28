@@ -55,7 +55,7 @@
     gui = true;
   };
   backupOpts = {
-    localRepo = "ssh://borg@10.10.1.17:2222/backup";
+    localRepo = "ssh://borg@borg:/backup";
     remoteRepo = "";
     sourcePaths = [config.systemOpts.persistVol];
     excludeList = [

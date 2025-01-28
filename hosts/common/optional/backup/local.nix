@@ -1,9 +1,6 @@
 {
   config,
-  pkgs,
-  lib,
   userOpts,
-  backupOpts,
   ...
 }:
 
