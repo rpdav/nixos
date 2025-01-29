@@ -55,19 +55,21 @@
     gui = true;
   };
   backupOpts = {
-    localRepo = "ssh://borg@borg:/backup";
+    localRepo = "ssh://borg@borg:2222/backup";
     remoteRepo = "";
     sourcePaths = [config.systemOpts.persistVol];
     excludeList = [
       # Run `borg help patterns` for guidance on exclusion patterns
-      "*/home/*/.git/**" #can be restored from repo
-      "*/*/.thunderbird/*/ImapMail" #email doesn't need backup
-      "*/home/*/Nextcloud" #already on server
-      "**/.local/share/libvirt" #root and user vm images
+      "*/var/**" #not needed for restore
+      "**/.git" #can be restored from repos
+      "**/.Trash*" #automatically made by gui deletions
+      "**/.local/share/libvirt" #vdisks made mostly for testing
+      "*/home/*/Downloads/" #big files
+      "*/home/ryan/Nextcloud" #already on server
+      "*/home/*/.thunderbird/*/ImapMail" #email
       "*/home/*/.local/share/Steam" #lots of small files and big games
-      "*/home/*/.local/share/lutris"
+      "*/home/*/.local/share/lutris" #lots of small files and big games
       "*/home/*/.local/share/protonmail" #email
-      "*/home/*/Downloads" #usually has some big temporary files that don't need backed up
     ];
   };
 

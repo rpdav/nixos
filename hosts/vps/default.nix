@@ -24,6 +24,7 @@ in {
         "hosts/common/disks/btrfs-imp.nix"
 
         # optional config
+	"hosts/common/optional/backup/remote.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
@@ -43,12 +44,24 @@ in {
 
   # Variable overrides
   userOpts.username = "ryan"; #primary user (not necessarily only user)
-  systemOpts.swapEnable = true;
-  systemOpts.swapSize= "2G";
-  systemOpts.diskDevice = "sda";
-  systemOpts.gcRetention = "7d";
-  systemOpts.impermanent = true;
-  systemOpts.gui = false;
+  systemOpts = {
+    swapEnable = true;
+    swapSize= "2G";
+    diskDevice = "sda";
+    gcRetention = "7d";
+    impermanent = true;
+    gui = false;
+  };
+  serviceOpts.dockerDir = "/opt/docker";
+  backupOpts = {
+    remoteRepo = "";
+    sourcePaths = [config.systemOpts.persistVol];
+    excludeList = [
+      # Run `borg help patterns` for guidance on exclusion patterns
+      "*/home/*/.git/**" #can be restored from repo
+      "*/var/**"
+    ];
+  };
 
   # Enable LISH console
   boot.kernelParams = [ "console=ttyS0,19200n8" ];
