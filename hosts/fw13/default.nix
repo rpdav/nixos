@@ -56,7 +56,7 @@
   };
   backupOpts = {
     localRepo = "ssh://borg@borg:2222/backup";
-    remoteRepo = "";
+    remoteRepo = "/mnt/B2/borg";
     sourcePaths = [config.systemOpts.persistVol];
     excludeList = [
       # Run `borg help patterns` for guidance on exclusion patterns

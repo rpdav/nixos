@@ -54,7 +54,7 @@ in {
   };
   serviceOpts.dockerDir = "/opt/docker";
   backupOpts = {
-    remoteRepo = "";
+    remoteRepo = "/mnt/B2/borg";
     sourcePaths = [config.systemOpts.persistVol];
     excludeList = [
       # Run `borg help patterns` for guidance on exclusion patterns
