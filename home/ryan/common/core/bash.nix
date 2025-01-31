@@ -25,6 +25,8 @@ in {
       gs = "git status";
       gc = "git commit -am";
       gp = "git push";
+      ## docker
+      compose2nix = "nix run github:aksiksi/compose2nix --";
     };
     bashrcExtra = ''
       # this is overridden if stylix is used

@@ -52,16 +52,13 @@
       url = "github:luizribeiro/uptix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    compose2nix = {
-      url = "github:aksiksi/compose2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Useful option search
-    nixos-cli.url = "github:water-sucks/nixos";
 
     # Theming
-    stylix.url = "github:danth/stylix";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager-unstable";
+    };
 
     # Nix-friendly editor
     nixvim = {
@@ -71,18 +68,18 @@
 
     ###### GUI stuff ######
 
-    # Declarative plasma config
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.home-manager.follows = "home-manager-unstable";
-    };
+   # # Declarative plasma config
+   # plasma-manager = {
+   #   url = "github:nix-community/plasma-manager";
+   #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+   #   inputs.home-manager.follows = "home-manager-unstable";
+   # };
 
-    # Cosmic alpha
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+   # # Cosmic alpha
+   # nixos-cosmic = {
+   #   url = "github:lilyinstarlight/nixos-cosmic";
+   #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+   # };
 
     # Firefox extensions
     firefox-addons = {

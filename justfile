@@ -1,5 +1,7 @@
 # just is a command runner, Justfile is very similar to Makefile, but simpler.
 
+set positional-arguments
+
 ############################################################################
 #
 #  Nix commands related to the local machine
@@ -105,7 +107,7 @@ machines-debug: testvm-debug vps-debug
 
 ############################################################################
 #
-#  ixos-anywhere commands
+#  nixos-anywhere commands
 #
 ############################################################################
 
@@ -125,10 +127,10 @@ anywhere host:
 
 [no-cd]
 compose project output='docker-compose.nix':
-  compose2nix -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
+  nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
 
 uptix:
-  uptix
+  nix run github:luizribeiro/uptix
 
 ############################################################################
 #
@@ -151,4 +153,7 @@ restore:
 
 nsearch:
   nix run github:niksingh710/nsearch
+
+option:
+  nix run github:water-sucks/nixos -- option -i
 

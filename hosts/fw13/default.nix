@@ -40,7 +40,6 @@
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
@@ -122,9 +121,6 @@
 
   # Firmware updates
   services.fwupd.enable = true;
-
-  # Misc
-  services.nixos-cli.enable = true;
 
   # pmail bridge must be configured imperatively using the cli tool.
   # State in ~/.config is persisted. Runs as a user service even though
