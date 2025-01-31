@@ -1,6 +1,6 @@
 {...}: {
   imports = [
     ./local.nix
-    ./remote.nix
+    #./remote.nix
   ];
 }
