@@ -1,57 +1,72 @@
-# NAS install notes
+# NAS host notes
 
-## ZFS
-Want to check a couple approaches to managing ZFS volumes:
-1. Importing a previously imperatively-made pool. This is probably what I'll do with the current NAS drives.
-1. Declare them in disko. Need to make sure this can be done non-destructively for drives with data
+My NAS is a 6-drive Ryzen 5 3600 system. Before it was `nix`ed it ran Unraid. I primarily use it for docker services, running a Windows VM with passed through GPU for gaming (WIP on Nixos), and a few simple network shares.
 
-### Mount in default.nix
-Current disks on nas have mountpoints explicitly declared (/mnt/storage, /mnt/docker) as zfs filesystem properties. This conflicts with `fileSystems."/mnt/tank"` even if systemd.services.zfs-mount is disabled as recommended by the wiki. Will cause systemd to drop to emergency mode unless emergency mode is disabled. May need to set the mountpoint to legacy if going the non-disko route.
+## Install
 
-### Mount with disko
-Disko won't mount new disk configs on an already-installed system. But when I deleted the 2 partitions per disk (main partition plus the extra 8 MB EFI partition) and re-installed with anywhere, it mounted them and the data was even there too (although only a single partition per disk). Will retry without deleting the partitions - this may be a good way to import during install.
+Install is done remotely from another machine with Nix or Nixos installed. It requires the target host to be booted into a nixos installer, be accessible over ssh for root, and target install disk has been added to `default.nix` (i.e. `systemOpts.diskDevice = "nvme1n1";`) within this config.
 
-I created 2 pools on nas using zvols and passed them through to an installer environment. I deleted the partitions for one of the pools and its filesystems were preserved but the content wasn't. filesystems were not preserved for the one that wasn't deleted.
+### ssh key initialization
 
-### Misc notes
-I currently persist ${serviceOpts.dockerDir} in the impermanence module. This causes a config collision with the zfs mounts because zfs is trying to mount /mnt/tank to the zpool but impermanence is trying to mount it to /persist.
+1. Copy ssh keys from the existing host (or create new keys if totally fresh) to `/tmp/backup/persist/etc/ssh` or similar directory
+2. Generate an age pubkey from the host ssh pubkey: `cat /tmp/backup/persist/etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age`
+3. Add the age pubkey to `.sops.yaml` within the private `nix-secrets` repo
+4. Re-encrypt `sops.yaml` by running `sops updateKeys secrets.yaml`
+5. Commit and push the secrets to the `nix-secrets` remote
+6. Within the main repo, update the `nix-secrets` input
 
-Maybe mount it into /persist and let impermanence bind mount it over to /mnt/tank?
+### Remote install with nixos-anywhere
 
-I could also move the docker directory over to /persist and not do any symlinking into /opt or /mnt/tank.
+1. Copy backed up files to `/tmp/backup` or similar directory. This directory should mimic the root of the target host (e.g. `/tmp/backup/persist`, `/tmp/backup/etc`). At a minimum this should have the user age key in `/persist/home/user/.config/sops/keys.txt` and host ssh key in `/persist/etc/ssh`. Docker appdata should be copied as well to prevent the containers from creating boilerplate data that will have to be replaced later unless it's already on
+2. Run `nix run github:nix-community/nixos-anywhere -- --flake .#<hostname> --extra-files /tmp/backup --generate-hardware-config nixos-generate-config ./hosts/<hostname>/hardware-configuration.nix root@<ip>`
+3. After reboot, the machine should be fully restored. `nixos-anywhere` copies files from `/tmp/backup` preserving permissions but assigns ownership to root. This config includes `tmpfiles` Z rules to correct ownership in `~` and the docker service directories.
 
-## Docker
-Home assistant and nextcloud have reverse proxy settings that may need tweaked on migration.
+## ZFS drives
+
+The main config difference between NAS and my other systems is the data drives, so most of this config is in `hosts/nas/zfs` rather than common.
+
+ZFS pools were previously created in Unraid, so they are imported as filesystems in `default.nix` rather than in disko. I'd probably use disko if starting out from scratch. I did some experimenting with importing previously-created pools with disko in a test environment but sometimes got data loss, so manual it is.
+
+Below is the high level filesystem structure:
+
+```code
+.
+├── docker          Mirrored zpool using 256 GB sata SSDs
+│   ├── appdata     Contains child filesystems for each service I run. This lets them receive independent snapshots so they can be rolled back individually if needed.
+│   ├── nextcloud   Data directory for Nextcloud (config is still in appdata)
+│   └── photos      Data directory for photos. I don't have a ton so they're on ssds for performance on Immich
+├── storage         Mirrored zpool using 4 TB sata HDDs
+│   ├── backups     Target for all local backups, including FW13 host (using borg), Windows laptop (using Veeam), and some legacy data from Unraid
+│   ├── isos        For real, this is actually linux ISOs
+│   ├── media       iTunes media which is mounted into a Windows VM, as well as some backed up DVDs
+│   └── syncoid     docker and vms pools synchronize to this filesystem. I consider this the 'local backup' for that data
+└── vms             Single drive zpool using a 1 TB NVME with subvolumes for VMs
+```
+
+### Import and mounting
+There are 2 main ways to import zpools in Nixos:
+
+1. Set the zfs mountpoint property to `legacy` and mount using `fileSystems.mountpoint`. This will **not** auto-mount child filesystems.
+2. Set the zfs mountpoint property to the desired mountpoint and import using `boot.zfs.extraPools`. This **will** auto-mount child filesystems.
+
+2 is obviously preferable for pools with child filesystems, however I could not get my config to import any pools if they are all imported using `boot.zfs.extraPools`; at least one had to use method 1. So since my `vms` pool does not have any child filesystems on it, that one gets mounted with method 1, and the others with method 2.
+
+### Drive encryption
+
+ZFS drives are encrypted with luks. The easiest way I found to unlock them is to use the same passphrase as for the root drive. To enable remote unlocking, I enabled an initrd ssh server so I can enter the passphrase remotely.
+
+## Services
+
+Most of the documentation for services are in the top-level `services` folder. 
 
 ## Backup
 
-### Contents
+### Local
+My goal to was to do both a local and offsite backup for all my systems, including the vps host. Local would back up to the zfs `storage` pool using a borg container running on nas. Since everything is running on tailscale, this should work for all hosts, including vps. However, I had issues getting vps to connect using the systemd services generated by my local backup config (`hosts/common/optional/backup/local.nix`). The systemd units produced on vps and fw13 are slightly different; it may be due to running unstable on fw13 and stable on vps.
 
-* NAS
-	- persist
-		+ etc/ssh
-		+ home/{username}
-	- /mnt/storage/media
-	- /mnt/docker
-		+ photos
-		+ nextcloud
-		+ appdata
-	- /mnt/vms
-* VPS
-* FW13
+Local backup for nas goes from the btrfs root drive to the HDD `storage` pool using borg or from the other 2 data pools to `storage` using syncoid.
 
-### Roadmap
+### Remote
+Remote backup is still WIP. My goal is to use Backblaze B2 using either rclone and borg, or just a simple rclone sync, in which case I'd use an encrypted rclone mount. If neither of those work, I may resort to a duplicati container connected to B2 which is what I had running on Unraid. That's less ideal since I can't do snapshots before backup and I've had some data corruption issues with duplicati before too.
 
-- [x] Delete old snapshots
-- [x] Set up sanoid
-- [x] Set up local zfs send/receive backup
-- [ ] Set up non-zfs service
-	- [ ] rclone mount
-	- [ ] run borg
-	- [ ] rclone unmount
-- [ ] Set up zfs service
-	- [ ] (recursively) snapshot filesystems
-	- [ ] rclone mount
-	- [ ] run borg
-	- [ ] rclone unmount
-	- [ ] delete snapshots
+Another option is rclone sync to proton drive. This is still in beta in rclone, but it would give me remote access to files through the proton drive gui.

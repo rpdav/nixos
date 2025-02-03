@@ -31,4 +31,4 @@ selfhosting:
     ];
 ```
 
-This puts a redundant entry in sops but makes it easier to run compose2nix because it will complain if you assign a variable of `POSTGRES_PASSWORD=${DB_PASSWORD} due to the missing entry in the .env file.
+This puts a redundant entry in sops but makes it easier to run compose2nix because it will complain if you assign a variable of `POSTGRES_PASSWORD=${DB_PASSWORD} like the default config due to the missing entry in the .env file.
