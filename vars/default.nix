@@ -105,6 +105,30 @@
       };
     };
 
+    # ---- BACKUP SETTINGS ---- #
+    backupOpts = {
+      localRepo = lib.mkOption {
+	type = lib.types.str;
+	default = "ssh://borg@10.10.1.17:2222/backup";
+	description = "Local backup target";
+      };
+      remoteRepo = lib.mkOption {
+	type = lib.types.str;
+	default = "/mnt/B2/borg or something";
+	description = "B2 backup target after mounting";
+      };
+      sourcePaths = lib.mkOption {
+	type = lib.types.listOf lib.types.str;
+	default = [config.systemOpts.persistVol];
+	description = "Path(s) to back up";
+      };
+      excludeList = lib.mkOption {
+	type = lib.types.listOf lib.types.str;
+	default = [ ".git/**" "etcetera" ]; 
+	description = "List of paths and files to exclude";
+      };
+    };
+
     # ---- SERVICES SETTINGS ---- #
     serviceOpts = {
       dockerUser = lib.mkOption {
@@ -125,6 +149,7 @@
       systemOpts = config.systemOpts;
       userOpts = config.userOpts;
       serviceOpts = config.serviceOpts;
+      backupOpts = config.backupOpts;
     };
   };
 }

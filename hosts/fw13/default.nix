@@ -24,13 +24,13 @@
         "hosts/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "hosts/common/optional/localbackup.nix"
+        "hosts/common/optional/backup"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/stylix.nix"
         "hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
-        "hosts/common/optional/docker.nix" #container admin tools, not just for running containers
+        "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
 
         # users
         "hosts/common/users/ryan"
@@ -40,16 +40,37 @@
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
-  userOpts.username = "ryan"; #primary user (not necessarily only user)
-  userOpts.term = "alacritty";
-  systemOpts.diskDevice = "nvme0n1";
-  systemOpts.swapSize = "16G";
-  systemOpts.impermanent = true;
-  systemOpts.gui = true;
+  userOpts = {
+    username = "ryan"; #primary user (not necessarily only user)
+    term = "kitty";
+  };
+  systemOpts = {
+    diskDevice = "nvme0n1";
+    swapSize = "16G";
+    impermanent = true;
+    gui = true;
+  };
+  backupOpts = {
+    localRepo = "ssh://borg@borg:2222/backup";
+    remoteRepo = "/mnt/B2/borg";
+    sourcePaths = [config.systemOpts.persistVol];
+    excludeList = [
+      # Run `borg help patterns` for guidance on exclusion patterns
+      "*/var/**" #not needed for restore
+      "**/.git" #can be restored from repos
+      "**/.Trash*" #automatically made by gui deletions
+      "**/.local/share/libvirt" #vdisks made mostly for testing
+      "*/home/*/Downloads/" #big files
+      "*/home/ryan/Nextcloud" #already on server
+      "*/home/*/.thunderbird/*/ImapMail" #email
+      "*/home/*/.local/share/Steam" #lots of small files and big games
+      "*/home/*/.local/share/lutris" #lots of small files and big games
+      "*/home/*/.local/share/protonmail" #email
+    ];
+  };
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
@@ -83,7 +104,6 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
-    borgbackup
     qdirstat
   ];
 
@@ -95,15 +115,12 @@
       "/var/lib/bluetooth"
     ];
     files = [
-    "/root/.ssh/known_hosts"
+      "/root/.ssh/known_hosts"
     ];
   };
 
   # Firmware updates
   services.fwupd.enable = true;
-
-  # Misc
-  services.nixos-cli.enable = true;
 
   # pmail bridge must be configured imperatively using the cli tool.
   # State in ~/.config is persisted. Runs as a user service even though
@@ -118,5 +135,4 @@
   users.users.root = {
     hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
   };
-  
 }

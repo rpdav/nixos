@@ -3,9 +3,11 @@
   lib,
   configLib,
   userOpts,
+  systemOpts,
+  serviceOpts,
   ...
 }: let
-  # Generates a list of the keys in ./keys
+  # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/${userOpts.username}/keys;
 in {
   imports =
@@ -17,7 +19,7 @@ in {
         "hosts/common/core"
 
         # disk config
-        "hosts/common/disks/btrfs-imp.nix"
+        "hosts/common/disks/luks-lvm-imp.nix"
 
         # optional config
         "hosts/common/optional/persistence"
@@ -25,6 +27,7 @@ in {
         "hosts/common/optional/docker.nix"
 
         # services
+        "services/common"
         "services/testvm"
 
         # users
@@ -33,6 +36,7 @@ in {
 
       # host-specific
       ./hardware-configuration.nix
+      #./zfs.nix
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
@@ -44,13 +48,29 @@ in {
   systemOpts.impermanent = true;
   systemOpts.gui = false;
 
+  #  boot.zfs.extraPools = [ "tank" ]; # not needed if using filesystems block below
+
+  # disable emergency mode from preventing system boot if there are mounting issues
+  systemd.enableEmergencyMode = false;
+
+  # Needed for zfs
+  networking.hostId = "1d5aec24";
+
   #todo change to systemd?
   boot.loader.grub = {
+    device = "nodev";
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
 
   networking.hostName = "testvm";
+
+  # testvm docker directory lives in persistent volume
+  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+    directories = [
+      "${serviceOpts.dockerDir}"
+    ];
+  };
 
   # allow root ssh login for rebuilds
   users.users.root = {

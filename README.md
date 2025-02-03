@@ -24,7 +24,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 * Flakes: better control of depencies and reproducibility
 * Impermanence: auto-delete cruft to keep that "new computer smell"
 * Home-manager: manage user applications and configuration across multiple systems
-* Multi-host friendly: config structure is designed that it's easy to add new users/hosts and share common modules
+* Multi-host friendly: config structure is designed that it's easy to add new users/hosts and share as much common config as possible
 * Sops-nix: for secrets management
 * Disko: declarative disk partitioning
 * Lanzaboote: secure boot
@@ -34,7 +34,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 See readme in nix-secrets directory.
 
 ## Selfhosted Services
-The `services` directory contains container-based selfhosted services. This is currently only built out for my testing VM but will eventually contain configs for my Linode VPS (mainly a mail server) and NAS (currently Unraid).
+The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server.
 
 ## Impermanence
 

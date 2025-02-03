@@ -34,6 +34,7 @@
 
   # CLI config
   programs.bash.completion.enable = true;
+  environment.enableAllTerminfo = true;
 
   # Time
   time.timeZone = config.systemOpts.timezone;

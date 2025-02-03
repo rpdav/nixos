@@ -1,0 +1,47 @@
+services:
+    unifi-network-application:
+        container_name: unifi-network-application
+        image: lscr.io/linuxserver/unifi-network-application
+        networks:
+          - proxynet
+          - default
+        environment:
+            - MONGO_USER=unifi
+            - MONGO_HOST=unifi-db
+            - MONGO_PORT=27017
+            - MONGO_DBNAME=unifi
+            - MEM_LIMIT=1024
+            - MEM_STARTUP=1024
+            - MONGO_TLS=
+            - MONGO_AUTHSOURCE=
+            - PUID=1000
+            - PGID=100
+        ports:
+            - '8443:8443/tcp'
+            - '3478:3478/udp'
+            - '10001:10001/udp'
+            - '8080:8080/tcp'
+            - '1900:1900/udp'
+            - '8843:8843/tcp'
+            - '8880:8880/tcp'
+            - '6789:6789/tcp'
+            - '5514:5514/udp'
+        volumes:
+            - /serviceOpts.dockerDir/unifi-network-application/config:/config:rw
+        restart: unless-stopped
+        depends_on:
+          db:
+            restart: true
+            condition: service_started
+    db:
+        container_name: unifi-db
+        image: mongo:5.3
+        networks:
+          - default
+        volumes:
+            - /serviceOpts.dockerDir/unifi-network-application/db:/data/db:rw
+        restart: unless-stopped
+        
+networks:
+  proxynet:
+    external: true

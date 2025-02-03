@@ -1,8 +1,7 @@
 {...}: {
   imports = [
-    ./dms
-    ./kuma
-    ./swag
-    ./vaultwarden
+#    ./dms
+#    ./kuma
+#    ./vaultwarden
   ];
 }

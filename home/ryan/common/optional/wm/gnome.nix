@@ -47,7 +47,7 @@
         "firefox.desktop"
         "thunderbird.desktop"
         "org.gnome.Nautilus.desktop"
-        "Alacritty.desktop"
+        "kitty.desktop"
         "org.gnome.Calendar.desktop"
         "actual.desktop"
         "silverbullet.desktop"
@@ -92,8 +92,7 @@
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Control><Alt>t";
-      command = "alacritty
-      ";
+      command = "kitty";
       name = "terminal";
     };
 

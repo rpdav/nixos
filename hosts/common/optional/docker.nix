@@ -10,7 +10,6 @@
   # Create impermanent directory
   environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
     directories = [
-      "${serviceOpts.dockerDir}"
       "/var/lib/docker"
     ];
   };
@@ -32,28 +31,27 @@
   virtualisation.oci-containers.backend = "docker";
 
   # Open firewall port for dns resolution
-  networking.firewall.allowedUDPPorts = [53];
+  networking.firewall = {
+    allowedUDPPorts = [53];
+  };
 
   # Add user to docker group
   users.users.${serviceOpts.dockerUser} = {
     extraGroups = ["docker"];
   };
 
-  environment.systemPackages =
-    (with pkgs; [
-      oxker
-      jq
-      (writeShellScriptBin "dup" "sudo systemctl restart docker-$1.service")
-      (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1.service")
-      (writeShellScriptBin "dcup" "sudo systemctl restart docker-compose-$1-root.target")
-      (writeShellScriptBin "dcdown" "sudo systemctl stop docker-compose-$1-root.target")
-      (writeShellScriptBin "dcpull" "docker pull $(sudo docker inspect $1 | jq -r .[0].ImageName)")
-      (writeShellScriptBin "appdata" "cd ${serviceOpts.dockerDir}/$1")
-      (writeShellScriptBin "dtail" "docker logs -tf -n 50 $1")
-      (writeShellScriptBin "dexec" "docker exec -it $1 /bin/bash")
-    ])
-    ++ [
-    inputs.uptix.defaultPackage.${systemOpts.arch}
-    inputs.compose2nix.packages.${systemOpts.arch}.default
-    ];
+  environment.systemPackages = with pkgs; [
+    oxker
+    lazydocker
+    beszel
+    jq
+    (writeShellScriptBin "dup" "sudo systemctl restart docker-$1.service")
+    (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1.service")
+    (writeShellScriptBin "dcup" "sudo systemctl restart docker-compose-$1-root.target")
+    (writeShellScriptBin "dcdown" "sudo systemctl stop docker-compose-$1-root.target")
+    (writeShellScriptBin "dcpull" "docker pull $(sudo docker inspect $1 | jq -r .[0].ImageName)")
+    (writeShellScriptBin "appdata" "cd ${serviceOpts.dockerDir}/$1")
+    (writeShellScriptBin "dtail" "docker logs -tf -n 50 $1")
+    (writeShellScriptBin "dexec" "docker exec -it $1 /bin/bash")
+  ];
 }

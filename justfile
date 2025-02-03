@@ -1,5 +1,7 @@
 # just is a command runner, Justfile is very similar to Makefile, but simpler.
 
+set positional-arguments
+
 ############################################################################
 #
 #  Nix commands related to the local machine
@@ -15,7 +17,7 @@ dry:
 debug:
   sudo nixos-rebuild switch --flake . --show-trace --verbose
 
-up: 
+up:
   nix flake update
 
 # Update specific input
@@ -85,6 +87,18 @@ vps-boot:
 vps-debug: 
   nixos-rebuild --flake .#vps --target-host root@vps switch --show-trace -v
 
+nas: 
+  nixos-rebuild --flake .#nas --target-host root@nas switch 
+
+nas-dry: 
+  nixos-rebuild --flake .#nas --target-host root@nas dry-build
+
+nas-boot:
+  nixos-rebuild --flake .#nas --target-host root@nas boot
+
+nas-debug: 
+  nixos-rebuild --flake .#nas --target-host root@nas switch --show-trace -v
+
 machines: testvm vps
 
 machines-boot: testvm-boot vps-boot
@@ -93,7 +107,7 @@ machines-debug: testvm-debug vps-debug
 
 ############################################################################
 #
-#  ixos-anywhere commands
+#  nixos-anywhere commands
 #
 ############################################################################
 
@@ -113,10 +127,10 @@ anywhere host:
 
 [no-cd]
 compose project output='docker-compose.nix':
-  compose2nix -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
+  nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
 
 uptix:
-  uptix
+  nix run github:luizribeiro/uptix
 
 ############################################################################
 #
@@ -129,7 +143,7 @@ backup:
 
 restore:
   -sudo mkdir /tmp/borg 
-  sudo borg mount ssh://borg@10.10.1.17:2222/backup/fw13 /tmp/borg
+  sudo borg mount ssh://borg@borg:2222/backup/fw13 /tmp/borg
 
 ############################################################################
 #
@@ -139,4 +153,7 @@ restore:
 
 nsearch:
   nix run github:niksingh710/nsearch
+
+option:
+  nix run github:water-sucks/nixos -- option -i
 
