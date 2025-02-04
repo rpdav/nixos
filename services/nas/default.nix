@@ -13,5 +13,7 @@
     ./immich
     ./unifi
     ./vaultwarden
+    ./jellyfin
+    ./vikunja
   ];
 }

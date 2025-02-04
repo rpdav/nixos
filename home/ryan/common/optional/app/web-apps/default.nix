@@ -1,4 +1,8 @@
-{userOpts, secrets, ...}: {
+{
+  userOpts,
+  secrets,
+  ...
+}: {
   # The StartumpWMClass must match this format in order to group windows properly. I'm not sure why this format in particular
   # Pulled from repo https://github.com/bashfulrobot/nixos/tree/65bb54076ef00f08a1289a96425d68bf5e1f4036/modules/apps/web-apps
 
@@ -36,7 +40,7 @@
       exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://notes.${secrets.selfhosting.domain}\" %U";
       icon = "/home/${userOpts.username}/.local/share/icons/silverbullet.png";
       terminal = false;
-      categories = ["Application"]; 
+      categories = ["Application"];
       type = "Application";
     };
 
@@ -51,12 +55,22 @@
       type = "Application";
     };
 
-    unraid = {
-      name = "Unraid";
-      comment = "";
-      settings.StartupWMClass = "chrome-10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net__-Default";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://10-10-1-17.5d5ec17f8d70f5b25a8a8817d686fad852ed30ff.myunraid.net:444\" %U";
-      icon = "/home/${userOpts.username}/.local/share/icons/unraid.png";
+    vikunja = {
+      name = "Vikunja";
+      comment = "Task management";
+      settings.StartupWMClass = "chrome-todo.${secrets.selfhosting.domain}__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https:todo.${secrets.selfhosting.domain}\" %U";
+      icon = "/home/${userOpts.username}/.local/share/icons/vikunja.png";
+      terminal = false;
+      categories = ["Application"];
+      type = "Application";
+    };
+    jellyfin = {
+      name = "Jellyfin";
+      comment = "Media streaming";
+      settings.StartupWMClass = "chrome-movies.${secrets.selfhosting.domain}__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https:movies.${secrets.selfhosting.domain}\" %U";
+      icon = "/home/${userOpts.username}/.local/share/icons/jellyfin.png";
       terminal = false;
       categories = ["Application"];
       type = "Application";
@@ -64,6 +78,8 @@
   };
 
   # Icons
+  # check https://selfh.st/icons/
+
   home.file."actual.png" = {
     source = ./icons/actual.png;
     target = ".local/share/icons/actual.png";
@@ -83,8 +99,12 @@
     source = ./icons/home-assistant.png;
     target = ".local/share/icons/home-assistant.png";
   };
-  home.file."unraid.png" = {
-    source = ./icons/unraid.png;
-    target = ".local/share/icons/unraid.png";
+  home.file."vikunja.png" = {
+    source = ./icons/vikunja.png;
+    target = ".local/share/icons/vikunja.png";
+  };
+  home.file."jellyfin.png" = {
+    source = ./icons/jellyfin.png;
+    target = ".local/share/icons/jellyfin.png";
   };
 }

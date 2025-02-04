@@ -8,13 +8,16 @@
   "homeassistant/home-assistant": "sha256:a8aab945aec2f43eb1b1fde4d19e25ef952fab9c10f49e40d3b3ce7d24cedc19",
   "louislam/uptime-kuma:1": "sha256:431fee3be822b04861cf0e35daf4beef6b7cb37391c5f26c3ad6e12ce280fe18",
   "lscr.io/linuxserver/heimdall": "sha256:cd06a1752dcd3773560d653f02f5ca7b9d975c45cfa1c260f4f608389116267e",
+  "lscr.io/linuxserver/jellyfin:latest": "sha256:54c240ab539acaa7f183625ae464158e8ffe3255029480344882aaa4ee334669",
   "lscr.io/linuxserver/mariadb": "sha256:fdf30e6b302688c290cef10ca24b80e6e25e93955bc6b64636777f06676a6c52",
+  "lscr.io/linuxserver/mariadb:latest": "sha256:fdf30e6b302688c290cef10ca24b80e6e25e93955bc6b64636777f06676a6c52",
   "lscr.io/linuxserver/nextcloud": "sha256:b1f1c1b4522fbb94d00cb726373ddc0bcefdb3efd4670224cf0896f2af90a463",
   "lscr.io/linuxserver/speedtest-tracker": "sha256:cf311bf612935ca6b9405c09b81cc3df99b9e9ebb9ec03701b37be4a64722985",
   "lscr.io/linuxserver/swag:latest": "sha256:4f104d503dbf1fdf6c74f29d91fe81bdeb834c6d6952c7473824469e7082fe83",
   "lscr.io/linuxserver/unifi-network-application": "sha256:d819f56eb5af806d4182271d9576b6abe6d6fbb73585548cc49dbf7719287d9d",
   "nold360/borgserver:latest": "sha256:c212c795d3bb022ed4c1468addfdd09c5eb0c9d9f4917c0ab24deb9320aebb69",
   "vaultwarden/server": "sha256:24aa90c2424f2f6b10862ba84dc9141d09c1df2b7025f111c9b2bbc4c078894b",
+  "vikunja/vikunja": "sha256:ed1f3ed467fecec0b57e9de7bc6607f8bbcbb23ffced6a81f5dfefc794cdbe3b",
   "zefhemel/silverbullet": "sha256:4c1f9425c005cd7f922155c9afdab0fb6adc2fe8f7c2a64cfdb8ec92581c5db9",
   "zwavejs/zwavejs2mqtt": "sha256:e74db9cfbbff0f29893e5e329de9c88319eebc93c2ecddebcb7aa7d1b5d01973"
 }
