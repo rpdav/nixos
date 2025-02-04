@@ -1,0 +1,47 @@
+services:
+  redis:
+    image: valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    volumes:
+      - /serviceOpts.dockerDir/searxng/redis:/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+  app:
+    image: searxng/searxng:latest
+    restart: unless-stopped
+    networks:
+      - proxynet
+      - default
+#    ports:
+#      - "127.0.0.1:8080:8080"
+    volumes:
+      - /serviceOpts.dockerDir/searxng/config:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=https://search.{secrets.selfhosting.domain}
+      - UWSGI_WORKERS=2
+      - UWSGI_THREADS=2
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+networks:
+  proxynet:
+    external: true

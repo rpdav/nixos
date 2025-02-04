@@ -16,6 +16,8 @@
   "lscr.io/linuxserver/swag:latest": "sha256:4f104d503dbf1fdf6c74f29d91fe81bdeb834c6d6952c7473824469e7082fe83",
   "lscr.io/linuxserver/unifi-network-application": "sha256:d819f56eb5af806d4182271d9576b6abe6d6fbb73585548cc49dbf7719287d9d",
   "nold360/borgserver:latest": "sha256:c212c795d3bb022ed4c1468addfdd09c5eb0c9d9f4917c0ab24deb9320aebb69",
+  "searxng/searxng:latest": "sha256:cb1f826670a8dbaf58a836b1d1c73165d11346f6c31cbc016b6214fd6809c95b",
+  "valkey/valkey:8-alpine": "sha256:2b2811478015aadaa3fd09e441dcb9268bd6a06afacc358cead96c4096b38426",
   "vaultwarden/server": "sha256:24aa90c2424f2f6b10862ba84dc9141d09c1df2b7025f111c9b2bbc4c078894b",
   "vikunja/vikunja": "sha256:ed1f3ed467fecec0b57e9de7bc6607f8bbcbb23ffced6a81f5dfefc794cdbe3b",
   "zefhemel/silverbullet": "sha256:4c1f9425c005cd7f922155c9afdab0fb6adc2fe8f7c2a64cfdb8ec92581c5db9",

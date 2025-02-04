@@ -42,8 +42,23 @@
       # Search engines
       search = {
         force = true;
-        default = "DuckDuckGo";
+        default = "SearX";
         engines = {
+          "SearX" = {
+            urls = [
+              {
+                template = "https://search.${secrets.selfhosting.domain}";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            iconUpdateURL = "https://search.${secrets.selfhosting.domain}/favicon.ico";
+            definedAliases = ["@s"];
+          };
           "Nix Packages" = {
             urls = [
               {
@@ -75,7 +90,7 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://mynixos.com/favicon.png";
+            iconUpdateURL = "https://mynixos.com/favicon.ico";
             definedAliases = ["@mn"];
           };
           "Wikipedia" = {
@@ -90,11 +105,11 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://mynixos.com/favicon.png";
+            iconUpdateURL = "https://wikipedia.org/favicon.ico";
             definedAliases = ["@wik"];
           };
         };
-        order = ["DuckDuckGo" "Google" "Nix Packages" "MyNixOS" "Wikipedia"];
+        order = ["SearX" "DuckDuckGo" "Google" "Nix Packages" "MyNixOS" "Wikipedia"];
       };
     };
   };

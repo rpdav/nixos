@@ -15,5 +15,6 @@
     ./vaultwarden
     ./jellyfin
     ./vikunja
+    ./searxng
   ];
 }
