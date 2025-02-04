@@ -51,7 +51,7 @@
       fi
 
       # otherwise authenticate with tailscale server
-      ${tailscale}/bin/tailscale up --authkey $(cat ${config.sops.secrets."tailscale/authkey".path}) --accept-dns=false
+      ${tailscale}/bin/tailscale up --authkey $(cat ${config.sops.secrets."tailscale/authkey".path}) --accept-routes
     '';
   };
 }

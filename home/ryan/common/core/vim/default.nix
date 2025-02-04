@@ -36,7 +36,6 @@ in {
               #};
             };
           };
-          lua_ls.enable = true;
         };
       };
     };
