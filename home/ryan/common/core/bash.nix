@@ -10,7 +10,6 @@
     then "${systemOpts.persistVol}/${defaultLocation}"
     else "${defaultLocation}";
 in {
-
   programs.bash = {
     inherit historyFile;
     enable = true;
@@ -23,6 +22,7 @@ in {
       nas-boot = "ssh root@nas -p 2220 cryptsetup-askpass";
       ## git
       gs = "git status";
+      vim = "nvim";
       gc = "git commit -am";
       gp = "git push";
       ## docker

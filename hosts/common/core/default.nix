@@ -11,6 +11,7 @@
     ./packages.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys
+    ./vim.nix
 
     inputs.disko.nixosModules.disko
   ];
