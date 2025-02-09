@@ -12,6 +12,6 @@
     killall
     pciutils
     usbutils
-    nixd
+    vim
   ];
 }

@@ -61,25 +61,25 @@
     };
 
     # Nix-friendly editor
-    nixvim = {
-      url = "github:nix-community/nixvim";
+    nvf = {
+      url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ###### GUI stuff ######
 
-   # # Declarative plasma config
-   # plasma-manager = {
-   #   url = "github:nix-community/plasma-manager";
-   #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-   #   inputs.home-manager.follows = "home-manager-unstable";
-   # };
+    # # Declarative plasma config
+    # plasma-manager = {
+    #   url = "github:nix-community/plasma-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #   inputs.home-manager.follows = "home-manager-unstable";
+    # };
 
-   # # Cosmic alpha
-   # nixos-cosmic = {
-   #   url = "github:lilyinstarlight/nixos-cosmic";
-   #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-   # };
+    # # Cosmic alpha
+    # nixos-cosmic = {
+    #   url = "github:lilyinstarlight/nixos-cosmic";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
 
     # Firefox extensions
     firefox-addons = {
