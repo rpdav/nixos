@@ -7,7 +7,6 @@
   secrets,
   ...
 }: {
- 
   # Containers
   virtualisation.oci-containers.containers."vikunja-db" = {
     image = uptix.dockerImage "lscr.io/linuxserver/mariadb:latest";
@@ -27,9 +26,9 @@
       "--network-alias=db"
       "--network=vikunja_default"
     ];
-   environmentFiles = [
-     "/run/secrets/selfhosting/vikunja/env-db"
-   ];
+    environmentFiles = [
+      "/run/secrets/selfhosting/vikunja/env-db"
+    ];
   };
   systemd.services."docker-vikunja-db" = {
     serviceConfig = {
@@ -72,9 +71,9 @@
       "--network=proxynet"
       "--network=vikunja_default"
     ];
-   environmentFiles = [
-     "/run/secrets/selfhosting/vikunja/env-app"
-   ];
+    environmentFiles = [
+      "/run/secrets/selfhosting/vikunja/env-app"
+    ];
   };
   systemd.services."docker-vikunja-app" = {
     serviceConfig = {
