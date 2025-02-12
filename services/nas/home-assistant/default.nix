@@ -14,7 +14,7 @@
         location / {
             include /config/nginx/proxy.conf;
             include /config/nginx/resolver.conf;
-            set $upstream_app home-assistant;
+            set $upstream_app home-assistant-app;
             set $upstream_port 8123;
             set $upstream_proto http; #change to https if app requires
             proxy_pass $upstream_proto://$upstream_app:$upstream_port;
@@ -30,7 +30,7 @@
         location / {
             include /config/nginx/proxy.conf;
             include /config/nginx/resolver.conf;
-            set $upstream_app zwavejs2mqtt;
+            set $upstream_app home-assistant-zwave;
             set $upstream_port 8091;
             set $upstream_proto http; #change to https if app requires
             proxy_pass $upstream_proto://$upstream_app:$upstream_port;

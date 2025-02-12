@@ -1,7 +1,6 @@
 services:
-  home-assistant:
+  app:
     image: homeassistant/home-assistant
-    container_name: home-assistant
     networks:
       - proxynet
       - default
@@ -16,7 +15,6 @@ services:
     restart: unless-stopped
   db:
     image: lscr.io/linuxserver/mariadb
-    container_name: home-assistant-db
     networks:
       - default
     environment:
@@ -29,7 +27,6 @@ services:
     restart: unless-stopped
   zwave:
     image: zwavejs/zwavejs2mqtt
-    container_name: zwavejs2mqtt
     environment:
       ZWAVEJS_EXTERNAL_CONFIG: /usr/src/app/store/.config-db
     ports:

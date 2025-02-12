@@ -8,7 +8,7 @@
   ...
 }: {
   # Containers
-  virtualisation.oci-containers.containers."home-assistant" = {
+  virtualisation.oci-containers.containers."home-assistant-app" = {
     image = uptix.dockerImage "homeassistant/home-assistant";
     volumes = [
       "${serviceOpts.dockerDir}/Home-Assistant-Core/config:/config:rw"
@@ -26,7 +26,7 @@
       "--network=proxynet"
     ];
   };
-  systemd.services."docker-home-assistant" = {
+  systemd.services."docker-home-assistant-app" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
       RestartMaxDelaySec = lib.mkOverride 90 "1m";
@@ -85,7 +85,7 @@
       "docker-compose-home-assistant-root.target"
     ];
   };
-  virtualisation.oci-containers.containers."zwavejs2mqtt" = {
+  virtualisation.oci-containers.containers."home-assistant-zwave" = {
     image = uptix.dockerImage "zwavejs/zwavejs2mqtt";
     environment = {
       "ZWAVEJS_EXTERNAL_CONFIG" = "/usr/src/app/store/.config-db";
@@ -105,7 +105,7 @@
       "--network=proxynet"
     ];
   };
-  systemd.services."docker-zwavejs2mqtt" = {
+  systemd.services."docker-home-assistant-zwave" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
       RestartMaxDelaySec = lib.mkOverride 90 "1m";
