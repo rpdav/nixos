@@ -15,7 +15,7 @@
       "MYSQL_USER" = "vikunja";
     };
     volumes = [
-      "${config.serviceOpts.dockerDir}/vikunja/db:/var/lib/mysql:rw"
+      "${config.serviceOpts.dockerDir}/vikunja/db:/config:rw"
     ];
     #cmd = ["--character-set-server=utf8mb4" "--collation-server=utf8mb4_unicode_ci"];
     log-driver = "journald";

@@ -31,18 +31,20 @@ services:
       - default
     depends_on:
       db:
-        #condition: service_healthy
+        condition: service_healthy
     restart: unless-stopped
   db:
     image: lscr.io/linuxserver/mariadb:latest
     #    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      #MYSQL_ROOT_PASSWORD: config.sops.secrets."vikunja/rootPass"
+      PGID: 100
+      PUID: 1000
+      #MYSQL_ROOT_PASSWORD
       MYSQL_USER: vikunja
-      #MYSQL_PASSWORD: config.sops.secrets."vikunja/jwtSecret"
+      #MYSQL_PASSWORD
       MYSQL_DATABASE: vikunja
     volumes:
-      - /serviceOpts.dockerDir/vikunja/db:/var/lib/mysql
+      - /serviceOpts.dockerDir/vikunja/db:/config
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
