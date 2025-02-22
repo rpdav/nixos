@@ -34,12 +34,16 @@
 
         # users
         "hosts/common/users/ryan"
+
+        # VM config for testing
+        "VMs"
       ])
 
       # host-specific
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
@@ -130,6 +134,13 @@
     # make gnome keyring available to bridge in case I'm running KDE
     path = with pkgs; [pass gnome-keyring];
   };
+
+  # Add justfile at root
+  systemd.tmpfiles.rules = [
+    "f /justfile 0644 ${config.userOpts.username} users - import \\'/home/${config.userOpts.username}/nixos/justfile\\'"
+  ];
+  # Options search
+  services.nixos-cli.enable = true;
 
   # minimal root user config
   users.users.root = {
