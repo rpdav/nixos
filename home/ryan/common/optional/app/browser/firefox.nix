@@ -33,7 +33,7 @@
       };
 
       # Extensions
-      extensions = with inputs.firefox-addons.packages."${systemOpts.arch}"; [
+      extensions.packages = with inputs.firefox-addons.packages."${systemOpts.arch}"; [
         bitwarden
         ublock-origin
         metamask

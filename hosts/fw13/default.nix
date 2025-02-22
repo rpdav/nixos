@@ -34,9 +34,6 @@
 
         # users
         "hosts/common/users/ryan"
-
-        # VM config for testing
-        "VMs"
       ])
 
       # host-specific

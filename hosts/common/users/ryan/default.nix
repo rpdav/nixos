@@ -36,7 +36,6 @@ in {
 
   # home-manager config
   home-manager = {
-    useGlobalPkgs = true;
     useUserPackages = true;
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
     sharedModules = [

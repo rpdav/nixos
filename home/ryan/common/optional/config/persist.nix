@@ -7,7 +7,6 @@
 }: {
   imports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
-  #TODO consider splitting this out into separate modules (e.g. ssh, borg, gnome, etc) and leave only base config here
   home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = {
     directories = (
       [
