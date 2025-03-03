@@ -15,7 +15,7 @@ in {
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
     directories = [
-      ".steam"
+      #".steam" #normal persistence causes issues. this is mostly symlinks to .local/share/Steam; will try not persisting
       ".config/Moonlight Game Streaming Project"
       ".config/unity3d"
     ];
