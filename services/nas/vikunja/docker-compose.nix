@@ -58,6 +58,7 @@
       "VIKUNJA_DATABASE_TYPE" = "mysql";
       "VIKUNJA_DATABASE_USER" = "vikunja";
       "VIKUNJA_SERVICE_PUBLICURL" = "https://todo.${secrets.selfhosting.domain}";
+      "VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED" = "true";
     };
     volumes = [
       "${config.serviceOpts.dockerDir}/vikunja/config:/app/vikunja/files:rw"
