@@ -59,7 +59,7 @@
     tor-browser
     remmina
     onlyoffice-bin
-    ghostwriter
+    kdePackages.ghostwriter
     bibletime
     audacity
     gimp
@@ -69,10 +69,10 @@
     alacritty
 
     # games
-    knights
-    killbots
+    kdePackages.knights
+    kdePackages.killbots
     kdePackages.kgoldrunner
-    kmines
+    kdePackages.kmines
     kdePackages.kpat
 
     # scripts
