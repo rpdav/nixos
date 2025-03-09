@@ -15,8 +15,7 @@ let
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
   # user--specific variable overrides
-  userOpts.wallpaper = "moon";
-  userOpts.base16scheme = "catppuccin-mocha";
+  userOpts.wallpaper = "mountain";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
 
