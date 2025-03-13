@@ -11,13 +11,6 @@
     enable = true;
     settings = {
       vim = {
-        #TODO tie this into stylix somehow?
-        theme = {
-          enable = true;
-          transparent = true;
-          name = "catppuccin";
-          style = "mocha";
-        };
         vimAlias = true;
         viAlias = false;
         globals.mapleader = "\\";
