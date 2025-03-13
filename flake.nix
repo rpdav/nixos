@@ -68,7 +68,7 @@
 
     # Useful options search
     nixos-cli = {
-      url = "github:water-sucks/nixos";
+      url = "github:water-sucks/nixos/rewrite";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
