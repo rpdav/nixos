@@ -97,6 +97,12 @@
   networking.hostName = "fw13";
   networking.networkmanager.enable = true;
 
+  # Host-specific tailscale config
+  # This causes TS to use relays to connect to router and nas when on lan. This is a known issue -
+  # https://github.com/tailscale/tailscale/issues/1227. The only way around is to manually add --accept-routes
+  # when remote and --reset when on lan. Since this doesn't really cause much issue on LAN, I'm just leaving it.
+  services.tailscale.extraUpFlags = ["--accept-routes"]; #accept tailscale routes to LAN while offsite during reauth.
+
   # Host-specific hardware config
   services.pipewire.audio.enable = true;
   hardware.bluetooth.enable = true;

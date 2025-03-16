@@ -24,13 +24,13 @@ in {
         "hosts/common/disks/btrfs-imp.nix"
 
         # optional config
-	"hosts/common/optional/backup/remote.nix"
+        "hosts/common/optional/backup/remote.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
 
         # services
-	"services/common"
+        "services/common"
         "services/vps"
 
         # users
@@ -46,7 +46,7 @@ in {
   userOpts.username = "ryan"; #primary user (not necessarily only user)
   systemOpts = {
     swapEnable = true;
-    swapSize= "2G";
+    swapSize = "2G";
     diskDevice = "sda";
     gcRetention = "7d";
     impermanent = true;
@@ -64,7 +64,7 @@ in {
   };
 
   # Enable LISH console
-  boot.kernelParams = [ "console=ttyS0,19200n8" ];
+  boot.kernelParams = ["console=ttyS0,19200n8"];
   boot.loader.grub.extraConfig = ''
     serial --speed=19200 --unit=0 --word=8 --parity=no --stop=1;
     terminal_input serial;
@@ -75,12 +75,14 @@ in {
   boot.loader.grub.device = "nodev";
   boot.loader.timeout = 10;
 
+  # networking
   networking = {
     hostName = "vps";
     usePredictableInterfaceNames = false; # Linode doesn't use predictable network names
     useDHCP = false; # IP is assigned by Linode statically
     interfaces.eth0.useDHCP = true; # Required for SSH
   };
+  services.tailscale.extraUpFlags = ["--accept-routes"]; #accept tailscale routes to LAN during reauth.
 
   # allow root ssh login for rebuilds
   users.users.root = {
