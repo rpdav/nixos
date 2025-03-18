@@ -37,6 +37,10 @@
     })
   ];
 
+  programs.tmux = {
+    enable = true;
+  };
+
   home.sessionVariables = {
     EDITOR = userOpts.editor;
   };
