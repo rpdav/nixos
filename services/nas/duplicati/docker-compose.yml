@@ -1,0 +1,25 @@
+#   Add this to docker-compose.nix:
+#   environmentFiles = [
+#     ${config.sops.secrets."selfhosting/duplicati".path}
+#   ];
+
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    networks:
+      - proxynet 
+    environment:
+      - PUID=0 # Needs to run as root to access ssh keys for backup
+      - PGID=0
+      - TZ=systemOpts.timezone
+#      - SETTINGS_ENCRYPTION_KEY=config.sops.secrets."selfhosting/duplicati".path
+    volumes:
+      - /serviceOpts.dockerDir/duplicati/config:/config
+      - /mnt/storage/backups:/backups
+      - /:/source
+    restart: unless-stopped
+
+networks:
+  proxynet:
+    external: true
