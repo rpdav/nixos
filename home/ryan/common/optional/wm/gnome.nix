@@ -33,7 +33,6 @@
     auto-move-windows #auto launch windows on certain workspaces
     caffeine #toggle to disable auto-suspend
     clipboard-indicator
-    openweather-refined
     removable-drive-menu
     quick-settings-tweaker
   ];
@@ -58,7 +57,6 @@
         "caffeine@patapon.info"
         "clipboard-indicator@tudmotu.com"
         "dash-to-dock@micxgx.gmail.com"
-        "openweather-extension@penguin-teal.github.io"
         "space-bar@luchrioh"
       ];
     };
