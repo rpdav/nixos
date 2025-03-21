@@ -25,6 +25,7 @@
 
         # optional config
         "hosts/common/optional/backup"
+        "hosts/common/optional/duplicati.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/stylix.nix"

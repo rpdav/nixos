@@ -75,6 +75,17 @@
       categories = ["Application"];
       type = "Application";
     };
+    # icon isn't working for duplicati - think the WMClass is wrong
+    duplicati = {
+      name = "Duplicati";
+      comment = "Backups";
+      settings.StartupWMClass = "chrome-localhost-8200__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"http://localhost:8200\" %U";
+      icon = "/home/${userOpts.username}/.local/share/icons/duplicati.png";
+      terminal = false;
+      categories = ["Application"];
+      type = "Application";
+    };
   };
 
   # Icons
@@ -106,5 +117,9 @@
   home.file."jellyfin.png" = {
     source = ./icons/jellyfin.png;
     target = ".local/share/icons/jellyfin.png";
+  };
+  home.file."duplicati.png" = {
+    source = ./icons/duplicati.png;
+    target = ".local/share/icons/duplicati.png";
   };
 }
