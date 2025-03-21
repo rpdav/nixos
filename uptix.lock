@@ -9,6 +9,7 @@
   "louislam/uptime-kuma:1": "sha256:431fee3be822b04861cf0e35daf4beef6b7cb37391c5f26c3ad6e12ce280fe18",
   "lscr.io/linuxserver/heimdall": "sha256:b8a397409596040a46463b3ac70e0d21a2ae56a8edeb30b94dfe7cfb1db69cd1",
   "lscr.io/linuxserver/jellyfin:latest": "sha256:c7d4dec91cfd474c65d515e6ef926933b673c310c494f565c01022b16c533e31",
+  "lscr.io/linuxserver/duplicati:latest": "sha256:98783f54d8380bf44bb5df8b2dfab5987546f87c661e10335e1bb3e20ff7a4d8",
   "lscr.io/linuxserver/mariadb": "sha256:31ccc6a761a8c3555b1b1fdac6ac5f6ff544d103684713e082be51d6a190ac8c",
   "lscr.io/linuxserver/mariadb:latest": "sha256:31ccc6a761a8c3555b1b1fdac6ac5f6ff544d103684713e082be51d6a190ac8c",
   "lscr.io/linuxserver/nextcloud": "sha256:f95f2028e716b9c06e6427f758691795412b168e4560db85e412d12df1eda84c",

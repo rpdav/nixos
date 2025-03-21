@@ -16,5 +16,6 @@
     ./jellyfin
     ./vikunja
     ./searxng
+    ./duplicati
   ];
 }
