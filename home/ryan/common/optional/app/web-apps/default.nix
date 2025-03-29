@@ -65,16 +65,6 @@
       categories = ["Application"];
       type = "Application";
     };
-    jellyfin = {
-      name = "Jellyfin";
-      comment = "Media streaming";
-      settings.StartupWMClass = "chrome-movies.${secrets.selfhosting.domain}__-Default";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https:movies.${secrets.selfhosting.domain}\" %U";
-      icon = "/home/${userOpts.username}/.local/share/icons/jellyfin.png";
-      terminal = false;
-      categories = ["Application"];
-      type = "Application";
-    };
     # icon isn't working for duplicati - think the WMClass is wrong
     duplicati = {
       name = "Duplicati";
@@ -113,10 +103,6 @@
   home.file."vikunja.png" = {
     source = ./icons/vikunja.png;
     target = ".local/share/icons/vikunja.png";
-  };
-  home.file."jellyfin.png" = {
-    source = ./icons/jellyfin.png;
-    target = ".local/share/icons/jellyfin.png";
   };
   home.file."duplicati.png" = {
     source = ./icons/duplicati.png;

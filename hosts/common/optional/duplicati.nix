@@ -13,5 +13,6 @@
   services.duplicati = {
     enable = true;
     user = "root";
+    port = 80;
   };
 }

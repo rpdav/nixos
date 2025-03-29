@@ -63,6 +63,7 @@
     bibletime
     audacity
     gimp
+    jellyfin-media-player
 
     # terminals
     kitty

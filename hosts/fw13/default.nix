@@ -112,6 +112,7 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    protonvpn-gui
     qdirstat
   ];
 
