@@ -10,6 +10,7 @@
       snes9x
       vba-m
       melonds
+      dolphin
     ]);
 in {
   # Create persistent directories
@@ -18,6 +19,7 @@ in {
       #".steam" #normal persistence causes issues. this is mostly symlinks to .local/share/Steam; will try not persisting
       ".config/Moonlight Game Streaming Project"
       ".config/unity3d"
+      ".config/retroarch"
     ];
   };
   home.packages = [
