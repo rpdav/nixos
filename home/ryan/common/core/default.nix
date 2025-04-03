@@ -9,6 +9,7 @@
     ./git.nix
     ./sops.nix
     ./ssh.nix
+    ./tmux
   ];
 
   home.packages = with pkgs; [
@@ -36,10 +37,6 @@
       inherit secrets;
     })
   ];
-
-  programs.tmux = {
-    enable = true;
-  };
 
   home.sessionVariables = {
     EDITOR = userOpts.editor;
