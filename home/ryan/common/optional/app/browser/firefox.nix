@@ -56,7 +56,7 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://search.${secrets.selfhosting.domain}/favicon.ico";
+            icon = "https://search.${secrets.selfhosting.domain}/favicon.ico";
             definedAliases = ["@s"];
           };
           "Nix Packages" = {
@@ -90,7 +90,7 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://mynixos.com/favicon.ico";
+            icon = "https://mynixos.com/favicon.ico";
             definedAliases = ["@mn"];
           };
           "Wikipedia" = {
@@ -105,7 +105,7 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://wikipedia.org/favicon.ico";
+            icon = "https://wikipedia.org/favicon.ico";
             definedAliases = ["@wik"];
           };
         };
