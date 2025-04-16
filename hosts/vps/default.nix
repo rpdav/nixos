@@ -82,7 +82,7 @@ in {
     useDHCP = false; # IP is assigned by Linode statically
     interfaces.eth0.useDHCP = true; # Required for SSH
   };
-  services.tailscale.extraUpFlags = ["--accept-routes"]; #accept tailscale routes to LAN during reauth.
+  services.tailscale.extraUpFlags = ["--accept-routes" "--advertise-exit-node"]; #accept tailscale routes to LAN during reauth.
 
   # allow root ssh login for rebuilds
   users.users.root = {
