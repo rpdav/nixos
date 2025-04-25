@@ -110,9 +110,17 @@
   services.blueman.enable = true;
   services.libinput.enable = true;
 
+  # Printing
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   # System packages
   environment.systemPackages = with pkgs; [
-    protonvpn-gui
+    # protonvpn-gui # Marked as broken on 25-Apr-25
     qdirstat
   ];
 
