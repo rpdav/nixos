@@ -109,7 +109,7 @@
             definedAliases = ["@wik"];
           };
         };
-        order = ["SearX" "DuckDuckGo" "Google" "Nix Packages" "MyNixOS" "Wikipedia"];
+        order = ["SearX" "ddg" "google" "Nix Packages" "MyNixOS" "Wikipedia"];
       };
     };
   };
