@@ -1,7 +1,6 @@
 {
   serviceOpts,
   pkgs,
-  config,
   ...
 }: let
   proxy-conf = ''
@@ -56,7 +55,7 @@ in {
         user = "${serviceOpts.dockerUser}";
         mode = "0700";
         # Convert multiline string to single for tmpfiles
-        argument = builtins.replaceStrings ["\n"] ["\\n"] proxy-conf;
+        argument = proxy-conf;
       };
     };
   };

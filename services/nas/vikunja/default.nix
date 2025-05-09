@@ -1,4 +1,8 @@
-{serviceOpts, config, ...}: let
+{
+  serviceOpts,
+  config,
+  ...
+}: let
   proxy-conf = ''
     # This is just a template based on common settings. If there's a template from swag available, replace this text with that.
     server {
@@ -40,8 +44,8 @@ in {
         group = "users";
         user = "${serviceOpts.dockerUser}";
         mode = "0700";
-	# Convert multiline string to single for tmpfiles
-        argument = builtins.replaceStrings ["\n"] ["\\n"] proxy-conf;
+        # Convert multiline string to single for tmpfiles
+        argument = proxy-conf;
       };
     };
   };
