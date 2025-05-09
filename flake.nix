@@ -74,19 +74,6 @@
 
     ###### GUI stuff ######
 
-    # # Declarative plasma config
-    # plasma-manager = {
-    #   url = "github:nix-community/plasma-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    #   inputs.home-manager.follows = "home-manager-unstable";
-    # };
-
-    # # Cosmic alpha
-    # nixos-cosmic = {
-    #   url = "github:lilyinstarlight/nixos-cosmic";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
-
     # Firefox extensions
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -157,13 +144,13 @@
         ];
       };
       # Ryzen 5 3600 NAS and virtualization host
-      nas = nixpkgs-stable.lib.nixosSystem {
+      nas = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
           (import ./modules/nixos)
           ./hosts/nas
-          inputs.home-manager-stable.nixosModules.home-manager
+          inputs.home-manager-unstable.nixosModules.home-manager
         ];
       };
       # Testing box (HP x86 thin client)
