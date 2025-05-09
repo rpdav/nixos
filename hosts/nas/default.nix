@@ -21,11 +21,14 @@ in {
         "hosts/common/disks/luks-lvm-imp.nix"
 
         # optional config
-	"hosts/common/optional/backup"
+        "hosts/common/optional/backup"
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
         "hosts/common/optional/ssh-unlock.nix"
+        "hosts/common/optional/stylix.nix"
+        "hosts/common/optional/steam.nix"
+        "hosts/common/optional/wm/gnome.nix"
 
         # services
         "services/common"
@@ -36,6 +39,7 @@ in {
       ])
 
       # host-specific
+      #./nvidia.nix
       ./hardware-configuration.nix
       ./zfs
       (modulesPath + "/installer/scan/not-detected.nix")
@@ -49,7 +53,7 @@ in {
     swapSize = "16G";
     gcRetention = "30d";
     impermanent = true;
-    gui = false;
+    gui = true;
   };
   serviceOpts.dockerDir = "/mnt/docker/appdata";
   backupOpts = {
