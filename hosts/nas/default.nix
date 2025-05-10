@@ -39,7 +39,7 @@ in {
       ])
 
       # host-specific
-      #./nvidia.nix
+      ./nvidia.nix
       ./hardware-configuration.nix
       ./zfs
       (modulesPath + "/installer/scan/not-detected.nix")
