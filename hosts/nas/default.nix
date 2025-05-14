@@ -80,6 +80,7 @@ in {
   };
 
   networking.hostName = "nas";
+  networking.networkmanager.enable = true;
 
   # allow root ssh login for rebuilds
   users.users.root = {

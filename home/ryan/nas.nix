@@ -84,4 +84,12 @@
       After = pkgs.lib.mkForce "graphical-session.target";
     };
   };
+
+  # Disable sleep in gnome
+
+  dconf.settings = {
+    "org/gnome/settings-daemon/plugins/power" = {
+      sleep-inactive-ac-type = "nothing";
+    };
+  };
 }
