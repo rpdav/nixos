@@ -68,10 +68,10 @@
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 4;
       workspace-names = [
-        "Main"
+        "Work"
         "Term"
         "Media"
-        "Misc"
+        "Games"
       ];
     };
 
