@@ -25,11 +25,11 @@
           si = true;
         };
         lsp = {
+          enable = true;
           formatOnSave = true;
           mappings.format = "<leader>f";
         };
         languages = {
-          enableLSP = true;
           enableTreesitter = true;
           nix = {
             enable = true;
