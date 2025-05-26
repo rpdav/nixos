@@ -32,8 +32,8 @@ in {
         group = "users";
         user = "${serviceOpts.dockerUser}";
         mode = "0700";
-	# Convert multiline string to single for tmpfiles
-        argument = builtins.replaceStrings ["\n"] ["\\n"] proxy-conf;
+        # Convert multiline string to single for tmpfiles
+        argument = proxy-conf;
       };
     };
   };
