@@ -29,8 +29,8 @@ in {
   systemd.tmpfiles.rules = [
     "d ${serviceOpts.dockerDir}/vikunja/config 0700 ${serviceOpts.dockerUser} users"
     "Z ${serviceOpts.dockerDir}/vikunja/config - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/vikunja/db 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/vikunja/db - ${serviceOpts.dockerUser} users"
+    "d ${serviceOpts.dockerDir}/vikunja/db 0700 0911 0911"
+    "Z ${serviceOpts.dockerDir}/vikunja/db - 0911 0911"
   ];
 
   # pull secret env file
