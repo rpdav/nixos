@@ -70,17 +70,23 @@ in {
   # disable emergency mode from preventing system boot if there are mounting issues
   systemd.enableEmergencyMode = false;
 
-  # Needed for zfs
-  networking.hostId = "7e3de5fa";
+  services.xrdp = {
+    enable = true;
+    openFirewall = true;
+    sslKey = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/privkey.pem";
+    sslCert = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/cert.pem";
+  };
+
+  # Networking
+  networking.hostId = "7e3de5fa"; # needed for zfs
+  networking.hostName = "nas";
+  networking.networkmanager.enable = true;
 
   boot.loader.grub = {
     device = "nodev";
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
-
-  networking.hostName = "nas";
-  networking.networkmanager.enable = true;
 
   # allow root ssh login for rebuilds
   users.users.root = {
