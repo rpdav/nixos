@@ -120,7 +120,6 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
-    # protonvpn-gui # Marked as broken on 25-Apr-25
     qdirstat
   ];
 
@@ -145,7 +144,7 @@
   services.protonmail-bridge = {
     enable = true;
     # make gnome keyring available to bridge in case I'm running KDE
-    path = with pkgs; [pass gnome-keyring];
+    path = with pkgs; [gnome-keyring];
   };
 
   # Add justfile at root
