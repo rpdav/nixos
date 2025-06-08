@@ -17,5 +17,6 @@
     ./vikunja
     ./searxng
     ./duplicati
+    ./planka
   ];
 }

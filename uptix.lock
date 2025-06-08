@@ -4,6 +4,7 @@
   "ghcr.io/getalby/hub:latest": "sha256:49f9019bf218239c2cd57091524e130d4e74c815bd731d4e9c8b3d6deb7887c0",
   "ghcr.io/immich-app/immich-machine-learning:release": "sha256:e157e0fa0d4363b0b6bab1923adab5951bbcdb71cd9016470bc6810dae21d115",
   "ghcr.io/immich-app/immich-server:release": "sha256:073fc04c7e3d18ace466c20763809cf17aa55765ed610f12971b392a6a80b50c",
+  "ghcr.io/plankanban/planka:2.0.0-rc.3": "sha256:5a2a69ec7159a2f9c6679c31698e4b5b17ccf254d5bfc6e9be43e411b6de0c3d",
   "gitea/gitea": "sha256:8b5a98abe52dacbead16eb4179c9abb7c217d523df3a75901343906ae7853357",
   "homeassistant/home-assistant": "sha256:8a99004ff832dbd535e6ac4d141042bc31141ff6a86b4d5bb288b3680fbceac1",
   "louislam/uptime-kuma:1": "sha256:431fee3be822b04861cf0e35daf4beef6b7cb37391c5f26c3ad6e12ce280fe18",
