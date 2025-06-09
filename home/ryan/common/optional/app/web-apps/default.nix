@@ -55,16 +55,28 @@
       type = "Application";
     };
 
-    vikunja = {
-      name = "Vikunja";
-      comment = "Task management";
-      settings.StartupWMClass = "chrome-todo.${secrets.selfhosting.domain}__-Default";
-      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https:todo.${secrets.selfhosting.domain}\" %U";
-      icon = "/home/${userOpts.username}/.local/share/icons/vikunja.png";
+    planka = {
+      name = "Planka";
+      comment = "Kanban Project Management";
+      settings.StartupWMClass = "chrome-projects.${secrets.selfhosting.domain}__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https:projects.${secrets.selfhosting.domain}\" %U";
+      icon = "/home/${userOpts.username}/.local/share/icons/planka.png";
       terminal = false;
       categories = ["Application"];
       type = "Application";
     };
+
+    ticktick = {
+      name = "TickTick";
+      comment = "To-Do List";
+      settings.StartupWMClass = "chrome-ticktick.com__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https:ticktick.com\" %U";
+      icon = "/home/${userOpts.username}/.local/share/icons/ticktick.png";
+      terminal = false;
+      categories = ["Application"];
+      type = "Application";
+    };
+
     # icon isn't working for duplicati - think the WMClass is wrong
     duplicati = {
       name = "Duplicati";
@@ -100,9 +112,13 @@
     source = ./icons/home-assistant.png;
     target = ".local/share/icons/home-assistant.png";
   };
-  home.file."vikunja.png" = {
-    source = ./icons/vikunja.png;
-    target = ".local/share/icons/vikunja.png";
+  home.file."planka.png" = {
+    source = ./icons/planka.png;
+    target = ".local/share/icons/planka.png";
+  };
+  home.file."ticktick.png" = {
+    source = ./icons/ticktick.png;
+    target = ".local/share/icons/ticktick.png";
   };
   home.file."duplicati.png" = {
     source = ./icons/duplicati.png;
