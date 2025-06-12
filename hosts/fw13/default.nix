@@ -29,7 +29,8 @@
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/stylix.nix"
-        "hosts/common/optional/wm/gnome.nix"
+        #"hosts/common/optional/wm/gnome.nix"
+        "hosts/common/optional/wm/cosmic.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
 

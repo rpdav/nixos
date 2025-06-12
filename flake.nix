@@ -72,6 +72,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Cosmic Alpha
+    nixpkgs.follows = "nixos-cosmic/nixpkgs";
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+
     ###### GUI stuff ######
 
     # Firefox extensions
