@@ -11,6 +11,9 @@ set positional-arguments
 switch:
   sudo nixos-rebuild switch --flake .
 
+cosmic:
+  sudo nixos-rebuild switch --flake . --specialisation cosmic
+
 dry:
   sudo nixos-rebuild dry-build --flake . 
 
