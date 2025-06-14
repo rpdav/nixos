@@ -1,11 +1,16 @@
 {
-  inputs,
-  cosmicLib,
+  systemOpts,
+  userOpts,
+  lib,
+  pkgs,
   ...
 }: {
-  imports = [inputs.cosmic-manager.homeManagerModules.cosmic-manager];
-
-  #wayland.desktopManager.cosmic.compositor.input_touchpad.scroll_config.natural_scroll = true; # this does not work - see github issue
-
-  programs.cosmic-files.enable = false;
+  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+    directories = [
+      ".config/cosmic"
+    ];
+  };
+  home.packages = with pkgs; [
+    quick-webapps
+  ];
 }

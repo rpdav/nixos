@@ -80,14 +80,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    cosmic-manager = {
-      url = "github:HeitorAugustoLN/cosmic-manager";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager-unstable";
-      };
-    };
-
     ###### Personal repos ######
 
     # Private secrets repo
