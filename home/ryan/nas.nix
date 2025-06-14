@@ -30,7 +30,7 @@
     ./common/optional/app/kitty.nix
     ./common/optional/config/persist.nix
     ./common/optional/config/yubikey.nix
-    ./common/optional/wm/gnome.nix
+    ./common/optional/wm
   ];
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
@@ -82,14 +82,6 @@
   systemd.user.services.nextcloud-client = {
     Unit = {
       After = pkgs.lib.mkForce "graphical-session.target";
-    };
-  };
-
-  # Disable sleep in gnome
-
-  dconf.settings = {
-    "org/gnome/settings-daemon/plugins/power" = {
-      sleep-inactive-ac-type = "nothing";
     };
   };
 }

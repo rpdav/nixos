@@ -3,18 +3,17 @@
   systemOpts,
   userOpts,
   lib,
+  config,
   ...
 }: {
+  imports = [./cosmic.nix];
+
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    directories = [
+    directories = lib.mkIf (config.specialisation != {}) [
       ".cache/evolution" #calendar data
       ".config/evolution" #calendar config
       ".config/goa-1.0" #dav accounts
-      #".config/gtk-2.0"
-      #".config/gtk-3.0"
-      #".config/gtk-4.0"
-      #".config/nemo"
     ];
   };
 
@@ -37,9 +36,13 @@
     quick-settings-tweaker
   ];
 
-  #dconf settings
-  dconf.settings = {
+  # Gnome dconf settings
+  dconf.settings = lib.mkIf (config.specialisation != {}) {
+    # Disable sleep on AC
+    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
+
     "org/gnome/shell" = {
+      # Pinned apps
       favorite-apps = [
         "firefox.desktop"
         "thunderbird.desktop"
@@ -49,8 +52,10 @@
         "actual.desktop"
         "silverbullet.desktop"
       ];
-      disable-user-extensions = false;
+
+      # Extensions
       # must be installed in home.packages above, and then enabled here
+      disable-user-extensions = false;
       enabled-extensions = [
         "apps-menu@gnome-shell-extensions.gcampax.github.com"
         "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
@@ -61,10 +66,10 @@
       ];
     };
 
+    # Workspaces
     "org/gnome/mutter" = {
       dynamic-workspaces = false;
     };
-
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 4;
       workspace-names = [
@@ -75,28 +80,30 @@
       ];
     };
 
+    # Clock
     "org/gnome/desktop/interface" = {
       clock-format = "12h";
     };
 
+    # Keybinds
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [];
       switch-applications-backward = [];
       switch-windows = ["<Alt>Tab"];
       switch-windows-backward = ["<Shift><Alt>Tab"];
     };
-
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"];
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+      ];
       home = ["<Super>e"];
     };
-
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Control><Alt>t";
       command = "kitty";
       name = "terminal";
     };
-
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding = "<Shift><Control>Escape";
       command = "gnome-process-monitor";
