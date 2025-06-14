@@ -88,6 +88,17 @@
       categories = ["Application"];
       type = "Application";
     };
+
+    sketchup = {
+      name = "Sketchup";
+      comment = "Modeling";
+      settings.StartupWMClass = "chrome-app.sketchup.com__-Default";
+      exec = "chromium --ozone-platform-hint=auto --force-dark-mode --enable-features=WebUIDarkMode --app=\"https://app.sketchup.com\" %U";
+      icon = "/home/${userOpts.username}/.local/share/icons/sketchup.png";
+      terminal = false;
+      categories = ["Application"];
+      type = "Application";
+    };
   };
 
   # Icons
@@ -123,5 +134,9 @@
   home.file."duplicati.png" = {
     source = ./icons/duplicati.png;
     target = ".local/share/icons/duplicati.png";
+  };
+  home.file."sketchup.png" = {
+    source = ./icons/sketchup.png;
+    target = ".local/share/icons/sketchup.png";
   };
 }
