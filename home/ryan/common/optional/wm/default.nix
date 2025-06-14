@@ -10,7 +10,7 @@
 
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    directories = lib.mkIf (config.specialisation != {}) [
+    directories = [
       ".cache/evolution" #calendar data
       ".config/evolution" #calendar config
       ".config/goa-1.0" #dav accounts
@@ -37,7 +37,7 @@
   ];
 
   # Gnome dconf settings
-  dconf.settings = lib.mkIf (config.specialisation != {}) {
+  dconf.settings = {
     # Disable sleep on AC
     "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
 
