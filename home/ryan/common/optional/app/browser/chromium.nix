@@ -18,7 +18,7 @@
   programs.chromium = {
     enable = true;
     extensions = [
-      {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} #ublock origin
+      {id = "ddkjiahejlhfcafbddmgiahcphecmpfh";} #ublock origin lite
       {id = "nngceckbapebfimnlniiiahkandclblb";} #bitwarden
     ];
   };
