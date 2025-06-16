@@ -44,6 +44,7 @@
     config = {
       config_location = "/home/${userOpts.username}/nixos";
       apply.use_git_commit_msg = true;
+      apply.imply_impure_with_tag = true;
       apply.use_nom = true;
     };
   };
