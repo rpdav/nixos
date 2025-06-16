@@ -66,9 +66,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Useful options search
+    # Useful options search and cli tools
     nixos-cli.url = "github:nix-community/nixos-cli";
 
+    # Interactive pkgs search
+    nsearch = {
+      url = "github:niksingh710/nsearch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ###### GUI stuff ######
 
     # Firefox extensions

@@ -41,8 +41,6 @@ gc:
   # garbage collect all unused nix store entries
   sudo nix-collect-garbage --delete-older-than 14d
 
-tree:
-  nix run github:utdemir/nix-tree
 
 ############################################################################
 #
@@ -157,9 +155,11 @@ restore:
 #
 ############################################################################
 
-nsearch:
-  nix run github:niksingh710/nsearch
+shell program:
+  nix shell nixpkgs#{{program}}
 
-option:
-  nix run github:water-sucks/nixos -- option -i
+run program:
+  nix run nixpkgs#{{program}}
 
+search package:
+  nix search nixpkgs {{package}}
