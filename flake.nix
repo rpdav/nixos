@@ -67,10 +67,7 @@
     };
 
     # Useful options search
-    nixos-cli = {
-      url = "github:water-sucks/nixos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-cli.url = "github:nix-community/nixos-cli";
 
     ###### GUI stuff ######
 

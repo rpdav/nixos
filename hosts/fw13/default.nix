@@ -151,8 +151,6 @@
   systemd.tmpfiles.rules = [
     "f /justfile 0644 ${config.userOpts.username} users - import \\'/home/${config.userOpts.username}/nixos/justfile\\'"
   ];
-  # Options search
-  services.nixos-cli.enable = true;
 
   # minimal root user config
   users.users.root = {
