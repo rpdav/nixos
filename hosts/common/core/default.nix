@@ -1,5 +1,6 @@
 {
   systemOpts,
+  userOpts,
   inputs,
   config,
   ...
@@ -38,7 +39,14 @@
   environment.enableAllTerminfo = true;
 
   # Options search
-  services.nixos-cli.enable = true;
+  services.nixos-cli = {
+    enable = true;
+    config = {
+      config_location = "/home/${userOpts.username}/nixos";
+      apply.use_git_commit_msg = true;
+      apply.use_nom = true;
+    };
+  };
   nix.settings = {
     substituters = ["https://watersucks.cachix.org"];
     trusted-public-keys = [
