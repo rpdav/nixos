@@ -13,5 +13,6 @@
     pciutils
     usbutils
     vim
+    nix-output-monitor
   ];
 }
