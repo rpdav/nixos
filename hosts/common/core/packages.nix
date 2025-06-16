@@ -2,17 +2,21 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    alejandra
     borgbackup
-    wget
-    htop
+    btop
+    dust
     git
     git-crypt
-    alejandra
-    rclone
+    htop
     killall
+    nix-output-monitor
     pciutils
+    rclone
+    systemctl-tui
     usbutils
     vim
-    nix-output-monitor
+    wget
+    yazi
   ];
 }
