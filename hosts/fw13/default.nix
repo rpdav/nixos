@@ -4,6 +4,7 @@
   configLib,
   inputs,
   systemOpts,
+  userOpts,
   config,
   ...
 }:
@@ -41,6 +42,7 @@
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
@@ -144,6 +146,23 @@
     enable = true;
     # make gnome keyring available to bridge in case I'm running KDE
     path = with pkgs; [gnome-keyring];
+  };
+
+  # Options search
+  services.nixos-cli = {
+    enable = true;
+    config = {
+      config_location = "/home/${userOpts.username}/nixos";
+      apply.use_git_commit_msg = true;
+      apply.imply_impure_with_tag = true;
+      apply.use_nom = true;
+    };
+  };
+  nix.settings = {
+    substituters = ["https://watersucks.cachix.org"];
+    trusted-public-keys = [
+      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
+    ];
   };
 
   # Add justfile at root

@@ -25,8 +25,10 @@ in {
       vim = "nvim";
       gc = "git commit -am";
       gp = "git push";
+      lg = "lazygit";
       ## docker
       compose2nix = "nix run github:aksiksi/compose2nix --";
+      ld = "lazydocker";
     };
     bashrcExtra = ''
       # this is overridden if stylix is used
