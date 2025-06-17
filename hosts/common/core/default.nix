@@ -15,6 +15,7 @@
     ./vim.nix
 
     inputs.disko.nixosModules.disko
+    inputs.nixos-cli.nixosModules.nixos-cli
   ];
 
   # Enable flakes

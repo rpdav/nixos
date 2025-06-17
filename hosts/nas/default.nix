@@ -28,7 +28,7 @@ in {
         "hosts/common/optional/ssh-unlock.nix"
         "hosts/common/optional/stylix.nix"
         "hosts/common/optional/steam.nix"
-        "hosts/common/optional/wm/gnome.nix"
+        "hosts/common/optional/wm"
 
         # services
         "services/common"

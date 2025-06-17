@@ -41,7 +41,6 @@
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
