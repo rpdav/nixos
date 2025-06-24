@@ -6,7 +6,10 @@
   config,
   ...
 }: {
-  imports = [./cosmic.nix];
+  imports = [
+    #./cosmic.nix
+    ./hyprland.nix
+  ];
 
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
