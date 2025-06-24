@@ -82,6 +82,9 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Hyprland
+    hyprland.url = "github:hyprwm/Hyprland";
+
     ###### Personal repos ######
 
     # Private secrets repo
