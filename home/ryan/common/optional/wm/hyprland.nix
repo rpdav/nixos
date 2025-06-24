@@ -14,6 +14,9 @@
   };
 
   #waybar
+  programs.waybar = {
+    enable = true;
+  };
 
   #notifications
 
@@ -21,10 +24,31 @@
     enable = true;
     plugins = [];
     settings = {
+      ################
+      ### MONITORS ###
+      ################
+
+      ###################
+      ### MY PROGRAMS ###
+      ###################
+
+      "$terminal" = "${pkgs.kitty}/bin/kitty";
+      "$fileManager" = "${pkgs.kdePackages.dolphin}/bin/dolphin";
+      "$menu" = "${pkgs.rofi}/bin/rofi";
+
+      #################
+      ### AUTOSTART ###
+      #################
+
+      exec-once = [
+        "${pkgs.waybar}/bin/waybar"
+      ];
+
+      ###################
+      ### KEYBINDINGS ###
+      ###################
+
       "$mainMod" = "SUPER";
-      "$terminal" = "kitty";
-      "$fileManager" = "dolphin";
-      "$menu" = "rofi";
       bind = [
         "$mainMod, Q, exec, $terminal"
         "$mainMod, C, killactive,"
