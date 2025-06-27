@@ -5,8 +5,13 @@
   lib,
   ...
 }: {
+  imports = [
+    ./waybar.nix
+  ];
+
+  # core utilities
   home.packages = with pkgs; [
-    kdePackages.dolphin
+    nautilus
     brightnessctl
   ];
 
@@ -22,18 +27,12 @@
     };
   };
 
-  #waybar
-  programs.waybar = {
-    enable = true;
-  };
-
   #notifications
   services.dunst = {
     enable = true;
   };
 
   # Stylix overrides for hyprland
-
   stylix.opacity.terminal = lib.mkForce 1.0;
 
   # Temporary - will iterate on hyprland.conf then convert it to nix when done

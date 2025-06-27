@@ -30,7 +30,8 @@
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/stylix.nix"
-        "hosts/common/optional/wm"
+        "hosts/common/optional/wm/hyprland.nix"
+        #"hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
 
@@ -106,7 +107,10 @@
   services.tailscale.extraUpFlags = ["--accept-routes"]; #accept tailscale routes to LAN while offsite during reauth.
 
   # Host-specific hardware config
-  services.pipewire.audio.enable = true;
+  services.pipewire = {
+    audio.enable = true;
+    pulse.enable = true;
+  };
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   services.libinput.enable = true;

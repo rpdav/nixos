@@ -3,8 +3,6 @@
   pkgs,
   ...
 }: {
-  imports = [./hyprland.nix];
-
   ### Default gnome config
   services.displayManager.gdm = {
     enable = true;

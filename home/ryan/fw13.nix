@@ -23,7 +23,8 @@
     ./common/optional/app/web-apps
     ./common/optional/config/persist.nix
     ./common/optional/config/yubikey.nix
-    ./common/optional/wm
+    ./common/optional/wm/hyprland
+    #./common/optional/wm/gnome.nix
   ];
 
   # Create persistent directories
