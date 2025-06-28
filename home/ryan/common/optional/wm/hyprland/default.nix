@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   systemOpts,
   userOpts,
@@ -8,6 +9,13 @@
   imports = [
     ./waybar.nix
   ];
+
+  # Shortcut to edit hyprland config
+  programs.bash = {
+    shellAliases = {
+      hypredit = "vim ~/.config/hypr/hyprland.conf";
+    };
+  };
 
   # core utilities
   home.packages = with pkgs; [
@@ -41,6 +49,7 @@
       ".config/hypr"
     ];
   };
+  home.file.".config/hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/ryan/nixos/home/ryan/common/optional/wm/hyprland/hyprland.conf";
 
   #  wayland.windowManager.hyprland = {
   #    enable = true;
