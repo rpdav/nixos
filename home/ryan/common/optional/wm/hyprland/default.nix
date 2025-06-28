@@ -11,7 +11,7 @@
 
   # core utilities
   home.packages = with pkgs; [
-    nautilus
+    #nautilus
     brightnessctl
   ];
 
