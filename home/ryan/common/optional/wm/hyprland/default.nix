@@ -8,6 +8,7 @@
 }: {
   imports = [
     ./waybar.nix
+    ./hyprlock.nix
   ];
 
   # Shortcut to edit hyprland config
