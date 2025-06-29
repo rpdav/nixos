@@ -63,7 +63,7 @@
         };
         "clock#2" = {
           inherit timezone;
-          format = "{:%H:%M}";
+          format = "{:%I:%M %p}";
           tooltip = false;
         };
         "clock#3" = {
