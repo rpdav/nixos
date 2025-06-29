@@ -9,6 +9,7 @@
   imports = [
     ./waybar.nix
     ./hyprlock.nix
+    ./hypridle.nix
   ];
 
   # Shortcut to edit hyprland config
@@ -22,6 +23,7 @@
   home.packages = with pkgs; [
     #nautilus
     brightnessctl
+    libnotify
   ];
 
   # launcher
