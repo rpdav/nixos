@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   home.packages = with pkgs; [
     font-awesome
   ];
@@ -9,7 +13,9 @@
   programs.waybar = {
     enable = true;
     settings = {
-      topbar = {
+      topbar = let
+        timezone = config.systemOpts.timezone;
+      in {
         layer = "top";
         position = "top";
         modules-left = [
@@ -51,14 +57,17 @@
           };
         };
         "clock#1" = {
+          inherit timezone;
           format = "{:%a}";
           tooltip = false;
         };
         "clock#2" = {
+          inherit timezone;
           format = "{:%H:%M}";
           tooltip = false;
         };
         "clock#3" = {
+          inherit timezone;
           format = "{:%m-%d}";
           tooltip = false;
         };
