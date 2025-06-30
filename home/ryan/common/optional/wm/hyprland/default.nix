@@ -134,8 +134,6 @@
           "$mainMod, L, exec, $lock"
           "$mainMod, F, fullscreen"
           "$mainMod, space, exec, $menu"
-          "$mainMod, P, pseudo,"
-          "$mainMod, J, togglesplit,"
 
           # Window focus
           "$mainMod, left, movefocus, l"
@@ -145,11 +143,19 @@
           "ALT, Tab, cyclenext,"
           "ALT, Tab, bringactivetotop,"
 
+          # Window movement
+          "$mainMod SHIFT, left, swapwindow, l"
+          "$mainMod SHIFT, right, swapwindow, r"
+          "$mainMod SHIFT, up, swapwindow, u"
+          "$mainMod SHIFT, down, swapwindow, d"
+
           # Window resize
-          "$mainMod SHIFT, left, resizeactive, -10 0"
-          "$mainMod SHIFT, right, resizeactive, 10 0"
-          "$mainMod SHIFT, up, resizeactive, 0 -10"
-          "$mainMod SHIFT, down, resizeactive, 0 10"
+          "$mainMod CTRL, left, resizeactive, -10 0"
+          "$mainMod CTRL, right, resizeactive, 10 0"
+          "$mainMod CTRL, up, resizeactive, 0 -10"
+          "$mainMod CTRL, down, resizeactive, 0 10"
+
+          # Special workspaces
           "$mainMod, S, togglespecialworkspace, magic"
         ]
         ++ (
@@ -186,6 +192,13 @@
         ", XF86AudioPause, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
         ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
         ", XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
+      ];
+      binde = [
+        # Window movement
+        "$mainMod SHIFT, left, moveactive, -50 0"
+        "$mainMod SHIFT, right, moveactive, 50 0"
+        "$mainMod SHIFT, up, moveactive, 0 -50"
+        "$mainMod SHIFT, down, moveactive, 0 50"
       ];
     };
   };
