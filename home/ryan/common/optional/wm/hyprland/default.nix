@@ -15,6 +15,10 @@
   # core utilities
   home.packages = with pkgs; [
     libnotify
+
+    # Screenshot utils
+    slurp
+    grim
   ];
 
   # launcher
@@ -57,6 +61,7 @@
       "$terminal" = "${pkgs.kitty}/bin/kitty";
       "$bar" = "${pkgs.waybar}/bin/waybar";
       "$lock" = "${pkgs.hyprlock}/bin/hyprlock";
+      "$hyprshot" = "${pkgs.hyprshot}/bin/hyprshot";
 
       #################
       ### AUTOSTART ###
@@ -69,33 +74,15 @@
       #####################
 
       decoration = {
-        shadow = {
-          color = "rgba(1e1e2e99)";
-        };
         rounding = 5;
-
         active_opacity = 1.0;
         inactive_opacity = 0.9;
       };
 
       general = {
-        "col.active_border" = "rgb(89b4fa)";
-        "col.inactive_border" = "rgb(45475a)";
         gaps_in = 5;
         gaps_out = 10;
-
         border_size = 2;
-      };
-
-      group = {
-        groupbar = {
-          "col.active" = "rgb(89b4fa)";
-          "col.inactive" = "rgb(45475a)";
-          text_color = "rgb(cdd6f4)";
-        };
-        "col.border_active" = "rgb(89b4fa)";
-        "col.border_inactive" = "rgb(45475a)";
-        "col.border_locked_active" = "rgb(94e2d5)";
       };
 
       animations = {
@@ -140,6 +127,9 @@
           "$mainMod, M, exit,"
           "$mainMod, E, exec, $fileManager"
           "$mainMod, B, exec, $browser"
+          ", PRINT, exec, $hyprshot -m output -z --clipboard-only" # Screenshot monitor
+          "$mainMod, PRINT, exec, $hyprshot -m window -z --clipboard-only" # Screenshot window
+          "$mainMod SHIFT, PRINT, exec, $hyprshot -m region -z --clipboard-only" # Screenshot selection
           "$mainMod, V, togglefloating,"
           "$mainMod, L, exec, $lock"
           "$mainMod, F, fullscreen"
@@ -163,7 +153,7 @@
           "$mainMod, S, togglespecialworkspace, magic"
         ]
         ++ (
-          # workspaces
+          # Workspaces
           # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
           builtins.concatLists (builtins.genList (
               i: let
@@ -175,6 +165,7 @@
             )
             9)
         );
+
       # Move/resize windows with mouse
       bindm = [
         "$mainMod, mouse:272, movewindow"
@@ -196,11 +187,6 @@
         ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
         ", XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
       ];
-
-      ##############################
-      ### WINDOWS AND WORKSPACES ###
-      ##############################
-      # WIP
     };
   };
 }
