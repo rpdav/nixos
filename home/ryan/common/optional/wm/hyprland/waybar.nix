@@ -135,7 +135,6 @@
     style = let
       # Add default color schme (Catppuccin Mocha) if stylix is disabled.
       defaultColors = ''
-        /* asdf */
         @define-color base00 #1e1e2e; @define-color base01 #181825;
         @define-color base02 #313244; @define-color base03 #45475a;
         @define-color base04 #585b70; @define-color base05 #cdd6f4;
