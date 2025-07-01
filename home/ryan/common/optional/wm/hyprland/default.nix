@@ -144,21 +144,21 @@
 
           # Window focus
           "$mainMod, h, movefocus, l"
-          "$mainMod, right, movefocus, r"
+          "$mainMod, l, movefocus, r"
           "$mainMod, k, movefocus, u"
           "$mainMod, j, movefocus, d"
           "ALT, Tab, cyclenext,"
           "ALT, Tab, bringactivetotop,"
 
           # Window movement
-          "$mainMod SHIFT, left, swapwindow, l"
-          "$mainMod SHIFT, right, swapwindow, r"
+          "$mainMod SHIFT, h, swapwindow, l"
+          "$mainMod SHIFT, l, swapwindow, r"
           "$mainMod SHIFT, k, swapwindow, u"
           "$mainMod SHIFT, j, swapwindow, d"
 
           # Window resize
-          "$mainMod CTRL, left, resizeactive, -10 0"
-          "$mainMod CTRL, right, resizeactive, 10 0"
+          "$mainMod CTRL, h, resizeactive, -10 0"
+          "$mainMod CTRL, l, resizeactive, 10 0"
           "$mainMod CTRL, k, resizeactive, 0 -10"
           "$mainMod CTRL, j, resizeactive, 0 10"
 
