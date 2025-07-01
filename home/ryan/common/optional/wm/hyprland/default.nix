@@ -121,39 +121,46 @@
       bind =
         [
           # General
-          "$mainMod, return, exec, $terminal"
+          "$mainMod, M, exit,"
           "$mainMod, Q, killactive,"
           "$mainMod SHIFT, Q, forcekillactive,"
-          "$mainMod, M, exit,"
+          "$mainMod, V, togglefloating,"
+          "$mainMod, F, fullscreen"
+
+          # Apps
+          "$mainMod, return, exec, $terminal"
           "$mainMod, E, exec, $fileManager"
           "$mainMod, B, exec, $browser"
-          ", PRINT, exec, $hyprshot -m output -z --clipboard-only" # Screenshot monitor
-          "$mainMod, PRINT, exec, $hyprshot -m window -z --clipboard-only" # Screenshot window
-          "$mainMod SHIFT, PRINT, exec, $hyprshot -m region -z --clipboard-only" # Screenshot selection
-          "$mainMod, V, togglefloating,"
-          "$mainMod, L, exec, $lock"
-          "$mainMod, F, fullscreen"
           "$mainMod, space, exec, $menu"
 
+          # Lock and suspend
+          ", XF86AudioMedia, exec, $lock"
+          "$mainMod, XF86AudioMedia, exec, systemctl suspend"
+
+          # Screenshotting to clipboard
+          ", PRINT, exec, $hyprshot -m output -z --clipboard-only" # Monitor
+          "$mainMod, PRINT, exec, $hyprshot -m window -z --clipboard-only" # Window
+          "$mainMod SHIFT, PRINT, exec, $hyprshot -m region -z --clipboard-only" # Selection
+
           # Window focus
-          "$mainMod, left, movefocus, l"
+          "$mainMod, h, movefocus, l"
           "$mainMod, right, movefocus, r"
-          "$mainMod, up, movefocus, u"
-          "$mainMod, down, movefocus, d"
+          "$mainMod, k, movefocus, u"
+          "$mainMod, j, movefocus, d"
           "ALT, Tab, cyclenext,"
           "ALT, Tab, bringactivetotop,"
 
           # Window movement
           "$mainMod SHIFT, left, swapwindow, l"
           "$mainMod SHIFT, right, swapwindow, r"
-          "$mainMod SHIFT, up, swapwindow, u"
-          "$mainMod SHIFT, down, swapwindow, d"
+          "$mainMod SHIFT, k, swapwindow, u"
+          "$mainMod SHIFT, j, swapwindow, d"
 
           # Window resize
           "$mainMod CTRL, left, resizeactive, -10 0"
           "$mainMod CTRL, right, resizeactive, 10 0"
-          "$mainMod CTRL, up, resizeactive, 0 -10"
-          "$mainMod CTRL, down, resizeactive, 0 10"
+          "$mainMod CTRL, k, resizeactive, 0 -10"
+          "$mainMod CTRL, j, resizeactive, 0 10"
 
           # Special workspaces
           "$mainMod, S, togglespecialworkspace, magic"
@@ -172,6 +179,13 @@
             9)
         );
 
+      binde = [
+        # Window movement (pt 2)
+        "$mainMod SHIFT, h, moveactive, -50 0"
+        "$mainMod SHIFT, l, moveactive, 50 0"
+        "$mainMod SHIFT, k, moveactive, 0 -50"
+        "$mainMod SHIFT, j, moveactive, 0 50"
+      ];
       # Move/resize windows with mouse
       bindm = [
         "$mainMod, mouse:272, movewindow"
@@ -192,13 +206,6 @@
         ", XF86AudioPause, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
         ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
         ", XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
-      ];
-      binde = [
-        # Window movement
-        "$mainMod SHIFT, left, moveactive, -50 0"
-        "$mainMod SHIFT, right, moveactive, 50 0"
-        "$mainMod SHIFT, up, moveactive, 0 -50"
-        "$mainMod SHIFT, down, moveactive, 0 50"
       ];
     };
   };
