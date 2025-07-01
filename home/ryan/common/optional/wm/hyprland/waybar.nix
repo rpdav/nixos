@@ -45,16 +45,15 @@
           "tray"
         ];
         memory = {
-          format = "Mem {}%";
+          format = "  {}%";
           interval = 5;
         };
         battery = {
           format = "{icon} {capacity}%";
-          format-icons = ["  " "  " "  " "  " "  "];
+          format-icons = [" " " " " " " " " "];
           states = {
-            critical = 15;
-            good = 95;
             warning = 30;
+            critical = 15;
           };
         };
         "clock#1" = {
@@ -73,7 +72,7 @@
           tooltip = false;
         };
         cpu = {
-          format = "CPU {usage:2}%";
+          format = " {usage:2}%";
           interval = 5;
         };
         "custom/left-divider" = {
@@ -89,7 +88,7 @@
           tooltip = false;
         };
         disk = {
-          format = "Disk {percentage_used:2}%";
+          format = " {percentage_used:2}%";
           interval = 5;
           path = "/";
         };
