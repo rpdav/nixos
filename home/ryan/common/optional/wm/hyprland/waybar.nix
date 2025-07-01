@@ -20,6 +20,13 @@
         layer = "top";
         position = "top";
         modules-left = [
+          "custom/divider"
+          "disk"
+          "custom/left-divider"
+          "memory"
+          "custom/left-divider"
+          "cpu"
+          "custom/left-divider"
           "hyprland/workspaces"
         ];
         modules-center = [
@@ -34,11 +41,9 @@
         modules-right = [
           "pulseaudio"
           "custom/right-divider"
-          "memory"
+          "backlight"
           "custom/right-divider"
-          "cpu"
-          "custom/right-divider"
-          "disk"
+          "network"
           "custom/right-divider"
           "battery"
           "custom/divider"
@@ -56,6 +61,10 @@
             critical = 15;
           };
         };
+        "backlight" = {
+          "format" = "{icon}{percent}%";
+          format-icons = [" " " " " " " " " " " " " " " " " "];
+        };
         "clock#1" = {
           inherit timezone;
           format = "{:%a}";
@@ -70,6 +79,13 @@
           inherit timezone;
           format = "{:%m-%d}";
           tooltip = false;
+        };
+        network = {
+          format-wifi = " ";
+          format-ethernet = " ";
+          tooltip-format = "{ipaddr} on {essid}, {signalStrength}%";
+          format-disconnected = "󰖪 ";
+          on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
         };
         cpu = {
           format = " {usage:2}%";
@@ -100,14 +116,13 @@
         };
         pulseaudio = {
           format = "{icon} {volume:2}%";
-          format-bluetooth = "{icon}  {volume}%";
+          format-bluetooth = "{icon} {volume}% ";
           format-icons = {
             default = [" " " "];
             headphones = " ";
           };
           format-muted = "MUTE";
-          on-click = "pamixer -t";
-          on-click-right = "pavucontrol";
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
           scroll-step = 5;
         };
         tray = {icon-size = 20;};
@@ -183,6 +198,8 @@
         #clock.1,
         #clock.2,
         #clock.3,
+        #backlight,
+        #network,
         #pulseaudio,
         #memory,
         #cpu,
@@ -210,7 +227,16 @@
         	background: @base01;
         }
 
+        #network {
+        	color: @base0D;
+        }
+        #network.disconnected {
+                color: @base08;
+        }
         #pulseaudio {
+        	color: @base0B;
+        }
+        #backlight {
         	color: @base0F;
         }
         #memory {
