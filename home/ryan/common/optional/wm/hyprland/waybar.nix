@@ -45,6 +45,8 @@
           "custom/right-divider"
           "network"
           "custom/right-divider"
+          "bluetooth"
+          "custom/right-divider"
           "battery"
           "custom/divider"
           "tray"
@@ -79,6 +81,16 @@
           inherit timezone;
           format = "{:%m-%d}";
           tooltip = false;
+        };
+        bluetooth = {
+          format-on = "󰂯 ";
+          format-connected = "󰂱 ";
+          format-disabled = "󰂲 ";
+          on-click = "${pkgs.blueman}/bin/blueman-manager";
+          tooltip-format = "No devices connected";
+          tooltip-format-connected = "{device_enumerate}";
+          tooltip-format-enumerate-connected = "{device_alias}";
+          tooltip-format-enumerate-connected-battery = "{device_alias}\t 󰁹 {device_battery_percentage}%";
         };
         network = {
           format-wifi = " ";
@@ -200,6 +212,7 @@
         #clock.3,
         #backlight,
         #network,
+        #bluetooth,
         #pulseaudio,
         #memory,
         #cpu,
@@ -219,16 +232,17 @@
         	color: @base0D;
                 background: @base00;
         }
-        /*#workspaces button:hover {
-        	box-shadow: inherit;
-        	text-shadow: inherit;
-        }*/
         #workspaces button:hover {
         	background: @base01;
         }
-
-        #network {
+        #bluetooth {
         	color: @base0D;
+        }
+        #bluetooth.disabled {
+                color: @base08;
+        }
+        #network {
+        	color: @base0E;
         }
         #network.disconnected {
                 color: @base08;
