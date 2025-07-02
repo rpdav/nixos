@@ -41,6 +41,12 @@
           "custom/right-divider"
         ];
         modules-right = [
+          "power-profiles-daemon"
+          "custom/divider"
+          "custom/divider"
+          "idle_inhibitor"
+          "custom/divider"
+          "custom/divider"
           "network"
           "custom/divider"
           "custom/divider"
@@ -107,6 +113,24 @@
           tooltip-format-connected = "{device_enumerate}";
           tooltip-format-enumerate-connected = "{device_alias}";
           tooltip-format-enumerate-connected-battery = "{device_alias}\t 󰁹 {device_battery_percentage}%";
+        };
+        power-profiles-daemon = {
+          format = "{icon} ";
+          tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+          tooltip = true;
+          format-icons = {
+            default = "";
+            performance = "";
+            balanced = "";
+            power-saver = "";
+          };
+        };
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
+            activated = "󰅶 ";
+            deactivated = "󰾫 ";
+          };
         };
         network = {
           format-wifi = " ";
@@ -175,29 +199,34 @@
     # 0E color4
     # 0F color5
     style = let
-      # Add default color schme (Catppuccin Mocha) if stylix is disabled.
+      # Add default colors and font if stylix is disabled.
       defaultColors = ''
-        @define-color base00 #1e1e2e; @define-color base01 #181825;
-        @define-color base02 #313244; @define-color base03 #45475a;
-        @define-color base04 #585b70; @define-color base05 #cdd6f4;
-        @define-color base06 #f5e0dc; @define-color base07 #b4befe;
+        /* Catppuccin Mocha */
+        @define-color base00 #1e1e2e; /* base */
+        @define-color base01 #181825; /* mantle */
+        @define-color base02 #313244; /* surface0 */
+        @define-color base03 #45475a; /* surface1 */
+        @define-color base04 #585b70; /* surface2 */
+        @define-color base05 #cdd6f4; /* text */
+        @define-color base06 #f5e0dc; /* rosewater */
+        @define-color base07 #b4befe; /* lavendar */
+        @define-color base08 #f38ba8; /* red */
+        @define-color base09 #fab387; /* peach */
+        @define-color base0A #f9e2af; /* yellow */
+        @define-color base0B #a6e3a1; /* green */
+        @define-color base0C #94e2d5; /* teal */
+        @define-color base0D #89b4fa; /* blue */
+        @define-color base0E #cba6f7; /* mauve */
+        @define-color base0F #f2cdcd; /* flamingo */
 
-        @define-color base08 #f38ba8; @define-color base09 #fab387;
-        @define-color base0A #f9e2af; @define-color base0B #a6e3a1;
-        @define-color base0C #94e2d5; @define-color base0D #89b4fa;
-        @define-color base0E #cba6f7; @define-color base0F #f2cdcd;
-
+        * {
+            font-family: "monospace";
+            font-size: 10p5;
+        }
       '';
     in
       lib.optionalString (!config.stylix.targets.waybar.enable) defaultColors
       + ''
-
-        * {
-            font-family: "Intel One Mono";
-            font-size: 10pt;
-        }
-
-
         window#waybar, tooltip {
             color: @base05;
             background: alpha(@base00, 1.000000);
@@ -225,6 +254,8 @@
         #clock.2,
         #clock.3,
         #backlight,
+        #power-profiles-daemon,
+        #idle_inhibitor,
         #network,
         #bluetooth,
         #pulseaudio,
@@ -248,6 +279,24 @@
         }
         #workspaces button:hover {
         	background: @base01;
+        }
+        #idle_inhibitor {
+                color: @base04;
+        }
+        #idle_inhibitor.activated {
+                color: @base05;
+        }
+        #power-profiles-daemon {
+        	color: @base0A;
+        }
+        #power-profiles-daemon.performance {
+                color: @base0A;
+        }
+        #power-profiles-daemon.balanced {
+        	color: @base0D;
+        }
+        #power-profiles-daemon.power-saver {
+                color: @base0B;
         }
         #bluetooth {
         	color: @base0D;
