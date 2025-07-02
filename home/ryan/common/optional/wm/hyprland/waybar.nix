@@ -23,6 +23,7 @@
           "custom/divider"
           "custom/power"
           "custom/divider"
+          "custom/divider"
           "disk"
           "custom/left-divider"
           "memory"
@@ -75,6 +76,7 @@
         memory = {
           format = "  {}%";
           interval = 5;
+          on-click = "${pkgs.kitty}/bin/kitty ${pkgs.systemctl-tui}/bin/systemctl-tui";
         };
         battery = {
           format = "{icon} {capacity}%";
@@ -137,11 +139,13 @@
           format-ethernet = " ";
           tooltip-format = "{ipaddr} on {essid}, {signalStrength}%";
           format-disconnected = "󰖪 ";
-          on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+          on-click = "${pkgs.networkmanagerapplet}/bin/nm-applet";
+          on-click-right = "pkill nm-applet";
         };
         cpu = {
           format = " {usage:2}%";
           interval = 5;
+          on-click = "${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
         };
         "custom/left-divider" = {
           format = "//";
@@ -159,6 +163,7 @@
           format = " {percentage_used:2}%";
           interval = 5;
           path = "/";
+          on-click = "${pkgs.qdirstat}/bin/qdirstat";
         };
         "hyprland/workspaces" = {
           all-outputs = true;
