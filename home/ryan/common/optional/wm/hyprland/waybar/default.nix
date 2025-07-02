@@ -14,7 +14,6 @@
     enable = true;
     settings = let
       timezone = config.systemOpts.timezone;
-      powerMenu = ./power_menu.xml;
     in {
       topbar = {
         layer = "top";
@@ -42,6 +41,12 @@
           "custom/right-divider"
         ];
         modules-right = [
+          "pulseaudio"
+          "custom/right-divider"
+          "backlight"
+          "custom/right-divider"
+          "battery"
+          "custom/right-divider"
           "power-profiles-daemon"
           "custom/divider"
           "custom/divider"
@@ -52,12 +57,6 @@
           "custom/divider"
           "custom/divider"
           "bluetooth"
-          "custom/right-divider"
-          "pulseaudio"
-          "custom/right-divider"
-          "backlight"
-          "custom/right-divider"
-          "battery"
           "custom/divider"
           "tray"
         ];
@@ -65,7 +64,7 @@
           format = " ";
           tooltip = false;
           menu = "on-click";
-          menu-file = powerMenu;
+          menu-file = ./power_menu.xml;
           menu-actions = {
             shutdown = "shutdown";
             reboot = "reboot";
@@ -76,7 +75,6 @@
         memory = {
           format = "  {}%";
           interval = 5;
-          on-click = "${pkgs.kitty}/bin/kitty ${pkgs.systemctl-tui}/bin/systemctl-tui";
         };
         battery = {
           format = "{icon} {capacity}%";
@@ -145,7 +143,12 @@
         cpu = {
           format = " {usage:2}%";
           interval = 5;
-          on-click = "${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
+          menu = "on-click";
+          menu-file = ./cpu_menu.xml;
+          menu-actions = {
+            btop = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.btop}/bin/btop";
+            systemctl-tui = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.systemctl-tui}/bin/systemctl-tui";
+          };
         };
         "custom/left-divider" = {
           format = "//";
@@ -163,7 +166,13 @@
           format = " {percentage_used:2}%";
           interval = 5;
           path = "/";
-          on-click = "${pkgs.qdirstat}/bin/qdirstat";
+          menu = "on-click";
+          menu-file = ./disk_menu.xml;
+          menu-actions = {
+            root = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.dua}/bin/dua i /";
+            home = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.dua}/bin/dua i /home";
+            persist = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.dua}/bin/dua i /persist";
+          };
         };
         "hyprland/workspaces" = {
           all-outputs = true;

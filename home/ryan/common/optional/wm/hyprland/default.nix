@@ -7,7 +7,7 @@
   ...
 }: {
   imports = [
-    ./waybar.nix
+    ./waybar
     ./hyprlock.nix
     ./hypridle.nix
   ];
