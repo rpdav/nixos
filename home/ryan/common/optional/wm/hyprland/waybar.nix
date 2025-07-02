@@ -10,16 +10,18 @@
 
   stylix.targets.waybar.addCss = false;
 
-  # From cgbassi's config https://github.com/cjbassi/config/tree/master/.config/waybar
   programs.waybar = {
     enable = true;
-    settings = {
-      topbar = let
-        timezone = config.systemOpts.timezone;
-      in {
+    settings = let
+      timezone = config.systemOpts.timezone;
+      powerMenu = ./power_menu.xml;
+    in {
+      topbar = {
         layer = "top";
         position = "top";
         modules-left = [
+          "custom/divider"
+          "custom/power"
           "custom/divider"
           "disk"
           "custom/left-divider"
@@ -39,24 +41,38 @@
           "custom/right-divider"
         ];
         modules-right = [
+          "network"
+          "custom/divider"
+          "custom/divider"
+          "bluetooth"
+          "custom/right-divider"
           "pulseaudio"
           "custom/right-divider"
           "backlight"
-          "custom/right-divider"
-          "network"
-          "custom/right-divider"
-          "bluetooth"
           "custom/right-divider"
           "battery"
           "custom/divider"
           "tray"
         ];
+        "custom/power" = {
+          format = " ";
+          tooltip = false;
+          menu = "on-click";
+          menu-file = powerMenu;
+          menu-actions = {
+            shutdown = "shutdown";
+            reboot = "reboot";
+            suspend = "systemctl suspend";
+            lock = "${pkgs.hyprlock}/bin/hyprlock";
+          };
+        };
         memory = {
           format = "  {}%";
           interval = 5;
         };
         battery = {
           format = "{icon} {capacity}%";
+          format-charging = " {icon} {capacity}%";
           format-icons = [" " " " " " " " " "];
           states = {
             warning = 30;
@@ -184,14 +200,11 @@
 
         window#waybar, tooltip {
             color: @base05;
+            background: alpha(@base00, 1.000000);
         }
 
         tooltip {
             border-color: @base0D;
-        }
-
-        window#waybar, tooltip {
-            background: alpha(@base00, 1.000000);
         }
 
         window#waybar {
@@ -206,6 +219,7 @@
           padding: 0 8px;
         }
 
+        #custom-power,
         #workspaces,
         #clock.1,
         #clock.2,
