@@ -3,29 +3,27 @@
   pkgs,
   userOpts,
   ...
-}: 
- 
-{
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.hyprland}/bin/hyprctl dispatch exec ${pkgs.greetd.gtkgreet}/bin/gtkgreet -l";
-        user = "ryan";
-      };
-      bash = {
-        command = "${pkgs.bash}/bin/bash";
-      };
-      hyprland = {
-        command = "${pkgs.hyprland}/bin/Hyprland;
-      };
-    };
-  };
+}: {
+  #  services.greetd = {
+  #    enable = true;
+  #    settings = {
+  #      default_session = {
+  #        command = "${pkgs.hyprland}/bin/hyprctl dispatch exec ${pkgs.greetd.gtkgreet}/bin/gtkgreet -l";
+  #        user = "ryan";
+  #      };
+  #      bash = {
+  #        command = "${pkgs.bash}/bin/bash";
+  #      };
+  #      hyprland = {
+  #        command = "${pkgs.hyprland}/bin/Hyprland";
+  #      };
+  #    };
+  #  };
 
-  environment.etc."greetd/environments".text = ''
-    bash
-    hyprland
-  '';
+  #  environment.etc."greetd/environments".text = ''
+  #    bash
+  #    hyprland
+  #  '';
 
   # Keyring
   services.gnome.gnome-keyring.enable = true;

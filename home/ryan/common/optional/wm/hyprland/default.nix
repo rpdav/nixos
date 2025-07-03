@@ -1,8 +1,6 @@
 {
   config,
   pkgs,
-  systemOpts,
-  userOpts,
   lib,
   ...
 }: {
@@ -61,8 +59,21 @@
       ################
       ### MONITORS ###
       ################
-
-      monitor = "e-DP1,preferred,auto,2";
+      monitor =
+        map
+        (
+          m: let
+            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+            position = "${toString m.x}x${toString m.y}";
+            scaling = lib.strings.floatToString m.scaling;
+          in "${m.name},${
+            if m.enabled
+            then "${resolution}, ${position}, ${scaling}"
+            else "disable"
+          }"
+        )
+        (config.monitors);
+      #monitor = "e-DP1,preferred,auto,2";
 
       ###################
       ### MY PROGRAMS ###

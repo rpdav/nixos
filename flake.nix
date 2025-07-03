@@ -132,7 +132,6 @@
       fw13 = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         modules = [
-          # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13
           inputs.home-manager-unstable.nixosModules.home-manager
