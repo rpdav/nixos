@@ -3,15 +3,33 @@
   pkgs,
   userOpts,
   ...
-}: {
-  services.displayManager.gdm = {
+}: 
+ 
+{
+  services.greetd = {
     enable = true;
-    wayland = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.hyprland}/bin/hyprctl dispatch exec ${pkgs.greetd.gtkgreet}/bin/gtkgreet -l";
+        user = "ryan";
+      };
+      bash = {
+        command = "${pkgs.bash}/bin/bash";
+      };
+      hyprland = {
+        command = "${pkgs.hyprland}/bin/Hyprland;
+      };
+    };
   };
+
+  environment.etc."greetd/environments".text = ''
+    bash
+    hyprland
+  '';
 
   # Keyring
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.gdm.enableGnomeKeyring = true;
+  #security.pam.services.ly.enableGnomeKeyring = true;
 
   nix.settings = {
     substituters = ["https://hyprland.cachix.org"];
