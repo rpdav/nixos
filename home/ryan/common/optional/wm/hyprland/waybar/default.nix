@@ -59,6 +59,7 @@
           "bluetooth"
           "custom/divider"
           "tray"
+          "custom/divider"
         ];
         "custom/power" = {
           format = " ";
@@ -133,10 +134,11 @@
           };
         };
         network = {
-          format-wifi = " ";
+          format-wifi = "󰖩 ";
           format-ethernet = " ";
+          format-disconnected = "󱚼 ";
+          format-disabled = "󰖪 ";
           tooltip-format = "{ipaddr} on {essid}, {signalStrength}%";
-          format-disconnected = "󰖪 ";
           on-click = "${pkgs.networkmanagerapplet}/bin/nm-applet";
           on-click-right = "pkill nm-applet";
         };
@@ -191,7 +193,10 @@
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
           scroll-step = 5;
         };
-        tray = {icon-size = 20;};
+        tray = {
+          icon-size = 20;
+          spacing = 5;
+        };
       };
     };
     ### COLOR GUIDE
@@ -316,13 +321,16 @@
         	color: @base0D;
         }
         #bluetooth.disabled {
-                color: @base08;
+                color: @base04;
         }
         #network {
         	color: @base0E;
         }
         #network.disconnected {
                 color: @base08;
+        }
+        #network.disabled {
+                color: @base04;
         }
         #pulseaudio {
         	color: @base0B;

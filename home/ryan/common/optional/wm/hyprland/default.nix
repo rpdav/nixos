@@ -14,12 +14,22 @@
 
   # core utilities
   home.packages = with pkgs; [
+    # services
     libnotify
 
     # Screenshot utils
     slurp
     grim
+
+    # Misc gui apps
+    vlc
+    galculator
+    gnome-calendar
+    cheese
   ];
+
+  # clipboard history
+  services.cliphist.enable = true;
 
   # launcher
   programs.fuzzel = {
@@ -33,10 +43,13 @@
     };
   };
 
-  #notifications
+  # notifications
   services.dunst = {
     enable = true;
   };
+
+  # flash drive sys tray
+  services.udiskie.enable = true;
 
   # Stylix overrides for hyprland
   stylix.opacity.terminal = lib.mkForce 1.0;
@@ -132,6 +145,7 @@
           "$mainMod, E, exec, $fileManager"
           "$mainMod, B, exec, $browser"
           "$mainMod, space, exec, $menu"
+          "$mainMod, C, exec, ${pkgs.cliphist}/bin/cliphist list | $menu --dmenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy"
 
           # Lock and suspend
           ", XF86AudioMedia, exec, $lock"
