@@ -123,6 +123,9 @@
     openFirewall = true;
   };
 
+  # Disable fingerprint for login (causes gnome-keyring unlock to fail)
+  security.pam.services.login.fprintAuth = false;
+
   # System packages
   environment.systemPackages = with pkgs; [
     qdirstat
