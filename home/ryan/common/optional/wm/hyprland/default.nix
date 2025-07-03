@@ -59,20 +59,22 @@
       ################
       ### MONITORS ###
       ################
-      monitor =
-        map
-        (
-          m: let
-            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-            position = "${toString m.x}x${toString m.y}";
-            scaling = lib.strings.floatToString m.scaling;
-          in "${m.name},${
-            if m.enabled
-            then "${resolution}, ${position}, ${scaling}"
-            else "disable"
-          }"
-        )
-        (config.monitors);
+      monitor = lib.flatten [
+        ", preferred, auto, 1" # Default for non-defined monitors (e.g. projectors)
+        (map
+          (
+            m: let
+              resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+              position = "${toString m.x}x${toString m.y}";
+              scaling = lib.strings.floatToString m.scaling;
+            in "${m.name},${
+              if m.enabled
+              then "${resolution}, ${position}, ${scaling}"
+              else "disable"
+            }"
+          )
+          (config.monitors))
+      ];
       #monitor = "e-DP1,preferred,auto,2";
 
       ###################
