@@ -30,7 +30,7 @@
     ./common/optional/app/kitty.nix
     ./common/optional/config/persist.nix
     ./common/optional/config/yubikey.nix
-    ./common/optional/wm
+    ./common/optional/wm/gnome.nix
   ];
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
