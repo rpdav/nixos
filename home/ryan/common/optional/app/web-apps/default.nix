@@ -7,6 +7,9 @@
   programs.firefox.webapps = let
     domain = secrets.selfhosting.domain;
   in {
+    # id must be a unique integer. Note that the default firefox profile is 0, so start with 1.
+    # extensions will need to be manually enabled in about:addons. Any extensions that need auth (like password managers) will need to be individually signed on, but should stay signed in after that.
+
     actual = {
       enable = true;
       id = 1;
