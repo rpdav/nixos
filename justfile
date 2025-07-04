@@ -116,4 +116,4 @@ run program:
   nix run nixpkgs#{{program}}
 
 search package:
-  nix search nixpkgs {{package}} 2> /dev/null
+  nix search nixpkgs {{package}}

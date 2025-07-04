@@ -15,11 +15,11 @@
         type = lib.types.str;
         default = "en_US.UTF-8";
       };
-      impermanent= lib.mkOption {
+      impermanent = lib.mkOption {
         type = lib.types.bool;
         default = true;
       };
-      gui= lib.mkOption {
+      gui = lib.mkOption {
         type = lib.types.bool;
         default = false;
       };
@@ -55,6 +55,34 @@
         type = lib.types.str;
         default = "/persist";
       };
+      screenDimTimeout = lib.mkOption {
+        type = lib.types.ints.positive;
+        default = 150;
+        description = ''
+          Time in seconds until screen dims.
+        '';
+      };
+      lockTimeout = lib.mkOption {
+        type = lib.types.ints.positive;
+        default = 300;
+        description = ''
+          Time in seconds until system is locked.
+        '';
+      };
+      screenOffTimeout = lib.mkOption {
+        type = lib.types.ints.positive;
+        default = 330;
+        description = ''
+          Time in seconds until screen turns off.
+        '';
+      };
+      suspendTimeout = lib.mkOption {
+        type = lib.types.ints.positive;
+        default = 600;
+        description = ''
+          Time in seconds until system suspends.
+        '';
+      };
     };
 
     # ---- USER SETTINGS ---- #
@@ -85,61 +113,61 @@
       };
       wallpaper = lib.mkOption {
         type = lib.types.str;
-        default = "squares"; 
+        default = "squares";
       };
       cursor = lib.mkOption {
-	type = lib.types.str;
-	default = "Vanilla-DMZ";
+        type = lib.types.str;
+        default = "Vanilla-DMZ";
       };
       cursorPkg = lib.mkOption {
-	type = lib.types.str;
-	default = "vanilla-dmz";
+        type = lib.types.str;
+        default = "vanilla-dmz";
       };
       font = lib.mkOption {
-	type = lib.types.str;
-	default = "";
+        type = lib.types.str;
+        default = "";
       };
       fontPkg = lib.mkOption {
-	type = lib.types.str;
-	default = "nerd-fonts.fira-code";
+        type = lib.types.str;
+        default = "nerd-fonts.fira-code";
       };
     };
 
     # ---- BACKUP SETTINGS ---- #
     backupOpts = {
       localRepo = lib.mkOption {
-	type = lib.types.str;
-	default = "ssh://borg@10.10.1.17:2222/backup";
-	description = "Local backup target";
+        type = lib.types.str;
+        default = "ssh://borg@10.10.1.17:2222/backup";
+        description = "Local backup target";
       };
       remoteRepo = lib.mkOption {
-	type = lib.types.str;
-	default = "/mnt/B2/borg or something";
-	description = "B2 backup target after mounting";
+        type = lib.types.str;
+        default = "/mnt/B2/borg or something";
+        description = "B2 backup target after mounting";
       };
       sourcePaths = lib.mkOption {
-	type = lib.types.listOf lib.types.str;
-	default = [config.systemOpts.persistVol];
-	description = "Path(s) to back up";
+        type = lib.types.listOf lib.types.str;
+        default = [config.systemOpts.persistVol];
+        description = "Path(s) to back up";
       };
       excludeList = lib.mkOption {
-	type = lib.types.listOf lib.types.str;
-	default = [ ".git/**" "etcetera" ]; 
-	description = "List of paths and files to exclude";
+        type = lib.types.listOf lib.types.str;
+        default = [".git/**" "etcetera"];
+        description = "List of paths and files to exclude";
       };
     };
 
     # ---- SERVICES SETTINGS ---- #
     serviceOpts = {
       dockerUser = lib.mkOption {
-	type = lib.types.str;
-	default = userOpts.username;
-	description = "User under which to run docker services";
+        type = lib.types.str;
+        default = userOpts.username;
+        description = "User under which to run docker services";
       };
       dockerDir = lib.mkOption {
-	type = lib.types.str;
-	default = "/opt/docker";
-	description = "Where to store docker appdata";
+        type = lib.types.str;
+        default = "/opt/docker";
+        description = "Where to store docker appdata";
       };
     };
   };
