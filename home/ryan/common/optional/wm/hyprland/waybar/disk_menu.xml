@@ -2,6 +2,11 @@
 <interface>
   <object class="GtkMenu" id="menu">
     <child>
+		<object class="GtkMenuItem" id="btrfs">
+                  <property name="label">btrfs-assistant</property>
+        </object>
+	</child>
+    <child>
 		<object class="GtkMenuItem" id="root">
                   <property name="label">/ disk usage</property>
         </object>

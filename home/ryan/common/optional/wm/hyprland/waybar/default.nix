@@ -172,6 +172,7 @@
           menu = "on-click";
           menu-file = ./disk_menu.xml;
           menu-actions = {
+            btrfs = "${pkgs.btrfs-assistant}/bin/btrfs-assistant-launcher";
             root = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.dua}/bin/dua i /";
             home = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.dua}/bin/dua i /home";
             persist = "${pkgs.kitty}/bin/kitty -o confirm_os_window_close=0 ${pkgs.dua}/bin/dua i /persist";
