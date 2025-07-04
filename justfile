@@ -48,20 +48,11 @@ gc:
 #
 ############################################################################
 
+build host:
+  nixos apply .{{host}} --dry
+
 deploy host:
-  nixos-rebuild --flake .#{{host}} --target-host root@{host}} switch
-
-vps-build: 
-  nixos apply .#vps --dry
-
-vps-apply:
-  nixos-rebuild --flake .#vps --target-host root@nas switch
-
-nas-build: 
-  nixos apply .#nas --dry
-
-nas-apply:
-  sudo tailscale up --reset && nixos-rebuild --flake .#nas --target-host root@nas switch && sudo tailscale up --accept-routes
+  sudo tailscale up --reset && nixos-rebuild --flake .#{{host}} --target-host root@{host}} switch; sudo tailscale up --accept-routes
 
 ############################################################################
 #
