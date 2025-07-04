@@ -116,6 +116,9 @@
 
         # XDG vars
         "XDG_SESSION_DESKTOP,Hyprland"
+
+        # Miscellaneous
+        "TZ,${config.systemOpts.timezone}"
       ];
 
       #####################
