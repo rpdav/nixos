@@ -109,8 +109,13 @@
       #############################
 
       env = [
+        # QT app settings (stylix theming broken)
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
         "QT_QPA_PLATFORM,wayland;xcb"
+        "QT_QPA_PLATFORMTHEME,qtct" # Default theme for stylix
+
+        # XDG vars
+        "XDG_SESSION_DESKTOP,Hyprland"
       ];
 
       #####################
