@@ -30,6 +30,9 @@
   # clipboard history
   services.cliphist.enable = true;
 
+  # gui app privilege escallation
+  services.hyprpolkitagent.enable = true;
+
   # launcher
   programs.fuzzel = {
     enable = true;
@@ -55,7 +58,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    # plugins break often due to version mismatches even with versino pinning :(
+    # plugins break often due to version mismatches even with version pinning :(
     plugins = let
       hyprPlugins = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
     in [
@@ -100,8 +103,6 @@
       #################
       ### AUTOSTART ###
       #################
-
-      exec-once = ["$bar"];
 
       #####################
       ### LOOK AND FEEL ###
