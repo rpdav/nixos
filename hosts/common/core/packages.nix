@@ -33,6 +33,7 @@
         ++ lib.lists.optionals config.systemOpts.gui [
           # Core packages for gui systems
           btrfs-assistant
+          bitwarden-desktop
         ]
     )
     ++ [
