@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -54,13 +55,21 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [];
+    # plugins break often due to version mismatches even with versino pinning :(
+    plugins = let
+      hyprPlugins = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
+    in [
+      hyprPlugins.hyprexpo
+      hyprPlugins.hyprfocus
+    ];
     settings = {
       ################
       ### MONITORS ###
       ################
       monitor = lib.flatten [
         ", preferred, auto, 1" # Default for non-defined monitors (e.g. projectors)
+
+        # Dynamic monitor config from monitors.nix module
         (map
           (
             m: let
@@ -75,7 +84,6 @@
           )
           (config.monitors))
       ];
-      #monitor = "e-DP1,preferred,auto,2";
 
       ###################
       ### MY PROGRAMS ###
@@ -152,6 +160,7 @@
           "$mainMod SHIFT, Q, forcekillactive,"
           "$mainMod, V, togglefloating,"
           "$mainMod, F, fullscreen"
+          #", SUPER, hyprexpo:expo, toggle"
 
           # Apps
           "$mainMod, return, exec, $terminal"
@@ -234,6 +243,10 @@
         ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
         ", XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
       ];
+
+      ###############
+      ### PLUGINS ###
+      ###############
     };
   };
 }
