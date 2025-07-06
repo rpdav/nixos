@@ -143,116 +143,115 @@ in {
     default = {};
 
     type = with lib.types;
-      attrsOf (submodule {
-        options = {
-          enable = mkEnableOption "webapp";
+      attrsOf (
+        submodule {
+          options = {
+            enable = mkEnableOption "webapp";
 
-          ####################
-          # Firefox settings #
-          ####################
-          url = mkOption {
-            type = str;
-            description = "The URL of the webapp to launch.";
+            ####################
+            # Firefox settings #
+            ####################
+            url = mkOption {
+              type = str;
+              description = "The URL of the webapp to launch.";
+            };
+
+            id = mkOption {
+              type = int;
+              description = "The Firefox profile ID to set.";
+            };
+
+            extraArgs = mkOption {
+              type = listOf str;
+              default = [];
+              description = "Extra args to launch Firefox with.";
+            };
+
+            extraSettings = mkOption {
+              type = attrsOf (either bool (either int str));
+              default = {};
+              description = "Additional Firefox profile settings.";
+            };
+
+            extensions.packages = mkOption {
+              type = listOf package;
+              default = [];
+              description = "Additional Firefox profile extensions.";
+            };
+
+            backgroundColor = mkOption {
+              type = str;
+              default = "rgba(0, 0, 0, 0)";
+              description = "The background color to use for loading pages.";
+            };
+
+            theme = mkOption {
+              type = enum [
+                "dark"
+                "light"
+                "system"
+              ];
+              default = "system";
+              description = "The application CSS theme to use, if supported.";
+            };
+
+            #########################
+            # Desktop file settings #
+            #########################
+
+            # Copied from xdg.desktopEntries, with slight modification for default settings
+            name = mkOption {
+              type = nullOr str;
+              default = null;
+              description = "Specific name of the application. Defaults to the capitalized attribute name.";
+            };
+
+            mimeType = mkOption {
+              description = "The MIME type(s) supported by this application.";
+              type = nullOr (listOf str);
+              default = [
+                "text/html"
+                "text/xml"
+                "application/xhtml_xml"
+              ];
+            };
+
+            # Copied verbatim from xdg.desktopEntries.
+            genericName = mkOption {
+              type = nullOr str;
+              default = null;
+              description = "Generic name of the application.";
+            };
+
+            comment = mkOption {
+              type = nullOr str;
+              default = null;
+              description = "Tooltip for the entry.";
+            };
+
+            categories = mkOption {
+              type = nullOr (listOf str);
+              default = null;
+              description = "Categories in which the entry should be shown in a menu.";
+            };
+
+            icon = mkOption {
+              type = nullOr (either path str);
+              default = "./icon.png";
+              description = "Icon to display in file manager, menus, etc.";
+            };
+
+            prefersNonDefaultGPU = mkOption {
+              type = nullOr bool;
+              default = null;
+              description = ''
+                If true, the application prefers to be run on a more
+                powerful discrete GPU if available.
+              '';
+            };
           };
-
-          id = mkOption {
-            type = int;
-            description = "The Firefox profile ID to set.";
-          };
-
-          extraArgs = mkOption {
-            type = listOf str;
-            default = [];
-            description = "Extra args to launch Firefox with.";
-          };
-
-          extraSettings = mkOption {
-            type = attrsOf (either bool (either int str));
-            default = {};
-            description = "Additional Firefox profile settings.";
-          };
-
-          extensions.packages = mkOption {
-            type = listOf package;
-            default = with inputs.firefox-addons.packages."${config.systemOpts.arch}"; [
-              bitwarden
-              ublock-origin
-            ];
-            description = "Additional Firefox profile extensions.";
-          };
-
-          backgroundColor = mkOption {
-            type = str;
-            default = "rgba(0, 0, 0, 0)";
-            description = "The background color to use for loading pages.";
-          };
-
-          theme = mkOption {
-            type = enum [
-              "dark"
-              "light"
-              "system"
-            ];
-            default = "system";
-            description = "The application CSS theme to use, if supported.";
-          };
-
-          #########################
-          # Desktop file settings #
-          #########################
-
-          # Copied from xdg.desktopEntries, with slight modification for default settings
-          name = mkOption {
-            type = nullOr str;
-            default = null;
-            description = "Specific name of the application. Defaults to the capitalized attribute name.";
-          };
-
-          mimeType = mkOption {
-            description = "The MIME type(s) supported by this application.";
-            type = nullOr (listOf str);
-            default = [
-              "text/html"
-              "text/xml"
-              "application/xhtml_xml"
-            ];
-          };
-
-          # Copied verbatim from xdg.desktopEntries.
-          genericName = mkOption {
-            type = nullOr str;
-            default = null;
-            description = "Generic name of the application.";
-          };
-
-          comment = mkOption {
-            type = nullOr str;
-            default = null;
-            description = "Tooltip for the entry.";
-          };
-
-          categories = mkOption {
-            type = nullOr (listOf str);
-            default = null;
-            description = "Categories in which the entry should be shown in a menu.";
-          };
-
-          icon = mkOption {
-            type = nullOr (either str path);
-            default = null;
-            description = "Icon to display in file manager, menus, etc.";
-          };
-
-          prefersNonDefaultGPU = mkOption {
-            type = nullOr bool;
-            default = null;
-            description = ''
-              If true, the application prefers to be run on a more
-              powerful discrete GPU if available.
-            '';
-          };
-        };
-      });
+        }
+      );
 
     description = "Websites to create special site-specific Firefox instances for.";
   };
