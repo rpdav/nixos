@@ -55,7 +55,7 @@
 
     # Theming
     stylix = {
-      url = "github:danth/stylix";
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager-unstable";
     };
@@ -80,6 +80,13 @@
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Hyprland
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
     };
 
     ###### Personal repos ######
@@ -129,7 +136,6 @@
       fw13 = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         modules = [
-          # See notes at top of outputs
           (import ./modules/nixos)
           ./hosts/fw13
           inputs.home-manager-unstable.nixosModules.home-manager

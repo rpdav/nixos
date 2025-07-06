@@ -29,6 +29,8 @@ in {
       ## docker
       compose2nix = "nix run github:aksiksi/compose2nix --";
       ld = "lazydocker";
+      ## system admin
+      sctl = "systemctl-tui";
     };
     bashrcExtra = ''
       # this is overridden if stylix is used

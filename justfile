@@ -48,66 +48,11 @@ gc:
 #
 ############################################################################
 
+build host:
+  nixos apply .{{host}} --dry
+
 deploy host:
-  nixos-rebuild --flake .#{{host}} --target-host root@{host}} switch
-
-deploy-test:
-  just deploy vps
-  just deploy testvm
-
-testbox: 
-  nixos-rebuild --flake .#testbox --target-host root@testbox switch 
-
-testbox-dry: 
-  nixos-rebuild --flake .#testbox --target-host root@testbox dry-build
-
-testbox-boot:
-  nixos-rebuild --flake .#testbox --target-host root@testbox boot
-
-testbox-debug: 
-  nixos-rebuild --flake .#testbox --target-host root@testbox switch --show-trace -v
-
-testvm: 
-  nixos-rebuild --flake .#testvm --target-host root@testvm switch 
-
-testvm-dry: 
-  nixos-rebuild --flake .#testvm --target-host root@testvm dry-build
-
-testvm-boot:
-  nixos-rebuild --flake .#testvm --target-host root@testvm boot
-
-testvm-debug: 
-  nixos-rebuild --flake .#testvm --target-host root@testvm switch --show-trace -v
-
-vps: 
-  nixos-rebuild --flake .#vps --target-host root@vps switch 
-
-vps-dry: 
-  nixos-rebuild --flake .#vps --target-host root@vps dry-build
-
-vps-boot:
-  nixos-rebuild --flake .#vps --target-host root@vps boot
-
-vps-debug: 
-  nixos-rebuild --flake .#vps --target-host root@vps switch --show-trace -v
-
-nas: 
-  nixos-rebuild --flake .#nas --target-host root@nas switch 
-
-nas-dry: 
-  nixos-rebuild --flake .#nas --target-host root@nas dry-build
-
-nas-boot:
-  nixos-rebuild --flake .#nas --target-host root@nas boot
-
-nas-debug: 
-  nixos-rebuild --flake .#nas --target-host root@nas switch --show-trace -v
-
-machines: testvm vps
-
-machines-boot: testvm-boot vps-boot
-
-machines-debug: testvm-debug vps-debug
+  sudo tailscale up --reset && nixos-rebuild --flake .#{{host}} --target-host root@{host}} switch; sudo tailscale up --accept-routes
 
 ############################################################################
 #
@@ -162,4 +107,4 @@ run program:
   nix run nixpkgs#{{program}}
 
 search package:
-  nix search nixpkgs {{package}} 2> /dev/null
+  nix search nixpkgs {{package}}
