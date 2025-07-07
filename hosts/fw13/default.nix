@@ -46,8 +46,13 @@
       inputs.nixos-cli.nixosModules.nixos-cli
 
       # testing
-      ./service.nix
+      ./function-gpt.nix
     ];
+
+  my.textFiles = {
+    hello.text = "Hello world!";
+    config.text = "some config content";
+  };
 
   # Variable overrides
   userOpts = {
