@@ -44,6 +44,9 @@
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.nixos-cli.nixosModules.nixos-cli
+
+      # testing
+      ./service.nix
     ];
 
   # Variable overrides
