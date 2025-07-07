@@ -37,6 +37,9 @@
 
         # users
         "hosts/common/users/ryan"
+
+        # testing
+        "modules/nixos/proxy-conf"
       ])
 
       # host-specific
@@ -46,12 +49,17 @@
       inputs.nixos-cli.nixosModules.nixos-cli
 
       # testing
-      ./function-gpt.nix
+      #./function.nix
     ];
 
-  my.textFiles = {
-    hello.text = "Hello world!";
-    config.text = "some config content";
+  virtualisation.oci-containers.proxy-conf = {
+    "defaultService" = {};
+    "configuredService" = {
+      container = "nextcloud";
+      subdomain = "cloud";
+      port = "8082";
+      protocol = "https";
+    };
   };
 
   # Variable overrides
