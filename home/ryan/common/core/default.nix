@@ -38,6 +38,8 @@
     })
   ];
 
+  programs.btop.enable = true;
+
   home.sessionVariables = {
     EDITOR = userOpts.editor;
   };

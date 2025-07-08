@@ -14,7 +14,6 @@
           # Core packages for all systems
           alejandra
           borgbackup
-          btop
           dust
           git
           git-crypt
