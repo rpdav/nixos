@@ -1,30 +1,31 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
   inherit (lib) mkMerge mkOption types mapAttrs';
   proxyConf = services:
     mapAttrs' (name: cfg: {
-      name = "proxied-files/${name}.subdomain.conf";
-      value.source = pkgs.writeText "myfile-${name}" ''
-        server {
-            listen 443 ssl;
-            listen [::]:443 ssl;
-            server_name ${cfg.subdomain}.*;
-            include /config/nginx/ssl.conf;
-            client_max_body_size 0;
-            location / {
-                include /config/nginx/proxy.conf;
-                include /config/nginx/resolver.conf;
-                set $upstream_app ${cfg.container};
-                set $upstream_port ${cfg.port};
-                set $upstream_proto ${cfg.protocol};
-                proxy_pass $upstream_proto://$upstream_app:$upstream_port;
-            }
-        }
-      '';
+      name = "${name}.subdomain.conf";
+      value = let
+        proxyArg = ''
+          server {
+              listen 443 ssl;
+              listen [::]:443 ssl;
+              server_name ${cfg.subdomain}.*;
+              include /config/nginx/ssl.conf;
+              client_max_body_size 0;
+              location / {
+                  include /config/nginx/proxy.conf;
+                  include /config/nginx/resolver.conf;
+                  set $upstream_app ${cfg.container};
+                  set $upstream_port ${cfg.port};
+                  set $upstream_proto ${cfg.protocol};
+                  proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+              }
+          }
+        '';
+      in "f+ /run/selfhosting/${name} 0700 ryan users - ${proxyArg}";
     })
     services;
 in {
@@ -61,7 +62,7 @@ in {
     );
   };
   config = {
-    environment.etc = mkMerge [
+    systemd.tmpfiles.rules = mkMerge [
       (proxyConf config.virtualisation.oci-containers.proxy-conf)
     ];
   };
