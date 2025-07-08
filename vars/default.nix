@@ -169,6 +169,11 @@
         default = "/opt/docker";
         description = "Where to store docker appdata";
       };
+      proxyDir = lib.mkOption {
+        type = lib.types.str;
+        default = config.serviceOpts.dockerDir;
+        description = "Where to store swag proxy configs";
+      };
     };
   };
 
