@@ -3,36 +3,17 @@
   config,
   ...
 }: let
-  inherit (lib) mkMerge mkOption types mapAttrs';
-  proxyConf = services:
-    mapAttrs' (name: cfg: {
-      name = "${name}.subdomain.conf";
-      value = let
-        proxyArg = ''
-          server {
-              listen 443 ssl;
-              listen [::]:443 ssl;
-              server_name ${cfg.subdomain}.*;
-              include /config/nginx/ssl.conf;
-              client_max_body_size 0;
-              location / {
-                  include /config/nginx/proxy.conf;
-                  include /config/nginx/resolver.conf;
-                  set $upstream_app ${cfg.container};
-                  set $upstream_port ${cfg.port};
-                  set $upstream_proto ${cfg.protocol};
-                  proxy_pass $upstream_proto://$upstream_app:$upstream_port;
-              }
-          }
-        '';
-      in "f+ /run/selfhosting/${name} 0700 ryan users - ${proxyArg}";
-    })
-    services;
+  inherit (lib) mkOption types flatten mapAttrsToList;
+  cfg = config.virtualisation.oci-containers.proxy-conf;
 in {
   options.virtualisation.oci-containers.proxy-conf = mkOption {
     type = types.attrsOf (
       types.submodule ({name, ...}: {
         options = {
+          name = mkOption {
+            type = types.str;
+            default = name;
+          };
           container = mkOption {
             type = types.str;
             description = "Name of the container hostname or IP. Must be reachable by swag";
@@ -62,9 +43,13 @@ in {
     );
   };
   config = {
-    systemd.tmpfiles.rules = mkMerge [
-      (proxyConf config.virtualisation.oci-containers.proxy-conf)
-    ];
+    systemd.tmpfiles.rules = flatten (mapAttrsToList (
+        key: val: let
+          # For example: create a directory with the given name and mode
+          rule = "f+ /run/selfhosting/${val.name}.subdomain.conf 0700 ryan users - set $upstream_app ${val.container}";
+        in [rule]
+      )
+      cfg);
   };
   #    systemd.tmpfiles.settings."01-proxy-confs" = {
   #      "/run/selfhosting/proxy-confs/test.subdomain.conf" = {
@@ -76,4 +61,21 @@ in {
   #      };
   #    };
   # };
+  #        proxyArg = ''
+  #          server {
+  #              listen 443 ssl;
+  #              listen [::]:443 ssl;
+  #              server_name ${cfg.subdomain}.*;
+  #              include /config/nginx/ssl.conf;
+  #              client_max_body_size 0;
+  #              location / {
+  #                  include /config/nginx/proxy.conf;
+  #                  include /config/nginx/resolver.conf;
+  #                  set $upstream_app ${cfg.container};
+  #                  set $upstream_port ${cfg.port};
+  #                  set $upstream_proto ${cfg.protocol};
+  #                  proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+  #              }
+  #          }
+  #        '';
 }
