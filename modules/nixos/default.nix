@@ -8,5 +8,6 @@
   imports = [
     ./yubikey
     ./proxy-conf
+    ./container-mount
   ];
 }
