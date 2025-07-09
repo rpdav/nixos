@@ -1,9 +1,20 @@
-{
-  serviceOpts,
-  config,
-  ...
-}: {
+{config, ...}: let
+  inherit (config.serviceOpts) dockerDir;
+in {
   imports = [./docker-compose.nix];
+
+  # Create/chmod appdata directories to mount
+  virtualisation.oci-containers.mounts = {
+    "searxng-config" = {
+      target = "${dockerDir}/searxng/config";
+      mode = "0755";
+    };
+    "searxng-redis" = {
+      target = "${dockerDir}/searxng/redis";
+      user = "999";
+      mode = "0755";
+    };
+  };
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."searxng" = {
@@ -12,12 +23,4 @@
     port = 8080;
     protocol = "http";
   };
-  # Create directories for appdata
-  # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
-  systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/searxng/config 0755 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/searxng/config - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/searxng/redis 0755 999 users"
-    "Z ${serviceOpts.dockerDir}/searxng/redis - 999 users"
-  ];
 }

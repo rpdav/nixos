@@ -1,5 +1,20 @@
-{serviceOpts, ...}: {
+{config, ...}: {
   imports = [./docker-compose.nix];
+
+  # Create/chmod appdata directories to mount
+  virtualisation.oci-containers.mounts = {
+    "jellyfin-library" = {
+      target = "${config.serviceOpts.dockerDir}/jellyfin/config";
+    };
+    "jellyfin-movies" = {
+      target = "/mnt/storage/media/movies";
+      mode = "0755";
+    };
+    "jellyfin-tvshows" = {
+      target = "/mnt/storage/media/tvshows";
+      mode = "0755";
+    };
+  };
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."jellyfin" = {
@@ -7,14 +22,4 @@
     port = 8096;
     protocol = "http";
   };
-  # Create directories for appdata
-  # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
-  systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/jellyfin/library 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/jellyfin/library - ${serviceOpts.dockerUser} users"
-    "d /mnt/storage/media/movies 0755 ${serviceOpts.dockerUser} users"
-    "Z /mnt/storage/media/movies - ${serviceOpts.dockerUser} users"
-    "d /mnt/storage/media/tvshows 0755 ${serviceOpts.dockerUser} users"
-    "Z /mnt/storage/media/tvshows - ${serviceOpts.dockerUser} users"
-  ];
 }
