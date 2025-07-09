@@ -1,22 +1,22 @@
 {...}: {
   imports = [
     ./actual
-    ./beszel-hub
-    ./home-assistant
-    ./nextcloud
-    ./gitea
     ./albyhub
+    ./beszel-hub
     ./borg
+    ./duplicati
+    ./gitea
     ./heimdall
+    ./home-assistant
+    ./immich
+    ./jellyfin
+    ./nextcloud
+    ./planka
+    ./searxng
     ./silverbullet
     ./speedtest
-    ./immich
     ./unifi
     ./vaultwarden
-    ./jellyfin
     ./vikunja
-    ./searxng
-    ./duplicati
-    ./planka
   ];
 }

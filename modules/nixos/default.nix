@@ -5,5 +5,8 @@
 #  yubikey = import ./yubikey;
 #}
 {
-  imports = [./yubikey];
+  imports = [
+    ./yubikey
+    ./proxy-conf
+  ];
 }

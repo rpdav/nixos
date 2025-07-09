@@ -3,81 +3,83 @@
   lib,
   userOpts,
   ...
-}: {
+}: let
+  inherit (lib) mkOption types;
+in {
   options = {
     # ---- SYSTEM SETTINGS ---- #
     systemOpts = {
-      timezone = lib.mkOption {
-        type = lib.types.str;
+      timezone = mkOption {
+        type = types.str;
         default = "America/Indiana/Indianapolis";
       };
-      locale = lib.mkOption {
-        type = lib.types.str;
+      locale = mkOption {
+        type = types.str;
         default = "en_US.UTF-8";
       };
-      impermanent = lib.mkOption {
-        type = lib.types.bool;
+      impermanent = mkOption {
+        type = types.bool;
         default = true;
       };
-      gui = lib.mkOption {
-        type = lib.types.bool;
+      gui = mkOption {
+        type = types.bool;
         default = false;
       };
-      swapEnable = lib.mkOption {
-        type = lib.types.bool;
+      swapEnable = mkOption {
+        type = types.bool;
         default = "true";
       };
-      swapSize = lib.mkOption {
-        type = lib.types.str;
+      swapSize = mkOption {
+        type = types.str;
         default = "8G";
       };
-      diskDevice = lib.mkOption {
-        type = lib.types.str;
+      diskDevice = mkOption {
+        type = types.str;
         default = "/dev/nvme01n1";
       };
-      hibernate = lib.mkOption {
-        type = lib.types.bool;
+      hibernate = mkOption {
+        type = types.bool;
         default = false;
       };
-      arch = lib.mkOption {
-        type = lib.types.str;
+      arch = mkOption {
+        type = types.str;
         default = "x86_64-linux";
       };
-      gcInterval = lib.mkOption {
-        type = lib.types.str;
+      gcInterval = mkOption {
+        type = types.str;
         default = "weekly";
       };
-      gcRetention = lib.mkOption {
-        type = lib.types.str;
+      gcRetention = mkOption {
+        type = types.str;
         default = "30d";
       };
-      persistVol = lib.mkOption {
-        type = lib.types.str;
+      persistVol = mkOption {
+        type = types.str;
         default = "/persist";
       };
-      screenDimTimeout = lib.mkOption {
-        type = lib.types.ints.positive;
+      screenDimTimeout = mkOption {
+        type = types.ints.positive;
         default = 150;
         description = ''
           Time in seconds until screen dims.
         '';
       };
-      lockTimeout = lib.mkOption {
-        type = lib.types.ints.positive;
+      lockTimeout = mkOption {
+        type = types.ints.positive;
         default = 300;
         description = ''
           Time in seconds until system is locked.
         '';
       };
-      screenOffTimeout = lib.mkOption {
-        type = lib.types.ints.positive;
+      screenOffTimeout = mkOption {
+        type = types.ints.positive;
         default = 330;
         description = ''
           Time in seconds until screen turns off.
         '';
       };
-      suspendTimeout = lib.mkOption {
-        type = lib.types.ints.positive;
+      suspendTimeout = mkOption {
+        type = types.ints.positive;
         default = 600;
         description = ''
           Time in seconds until system suspends.
@@ -87,71 +89,71 @@
 
     # ---- USER SETTINGS ---- #
     userOpts = {
-      editor = lib.mkOption {
-        type = lib.types.str;
+      editor = mkOption {
+        type = types.str;
         default = "nvim";
       };
-      name = lib.mkOption {
-        type = lib.types.str;
+      name = mkOption {
+        type = types.str;
         default = "Ryan";
       };
-      term = lib.mkOption {
-        type = lib.types.str;
+      term = mkOption {
+        type = types.str;
         default = "kitty";
       };
-      githubEmail = lib.mkOption {
-        type = lib.types.str;
+      githubEmail = mkOption {
+        type = types.str;
         default = "105075689+rpdav@users.noreply.github.com";
       };
-      username = lib.mkOption {
-        type = lib.types.str;
+      username = mkOption {
+        type = types.str;
         default = "ryan";
       };
-      base16scheme = lib.mkOption {
-        type = lib.types.str;
+      base16scheme = mkOption {
+        type = types.str;
         default = "3024"; #run nix build nixpkgs#base16-schemes and browse result/share/themes
       };
-      wallpaper = lib.mkOption {
-        type = lib.types.str;
+      wallpaper = mkOption {
+        type = types.str;
         default = "squares";
       };
-      cursor = lib.mkOption {
-        type = lib.types.str;
+      cursor = mkOption {
+        type = types.str;
         default = "Vanilla-DMZ";
       };
-      cursorPkg = lib.mkOption {
-        type = lib.types.str;
+      cursorPkg = mkOption {
+        type = types.str;
         default = "vanilla-dmz";
       };
-      font = lib.mkOption {
-        type = lib.types.str;
+      font = mkOption {
+        type = types.str;
         default = "";
       };
-      fontPkg = lib.mkOption {
-        type = lib.types.str;
+      fontPkg = mkOption {
+        type = types.str;
         default = "nerd-fonts.fira-code";
       };
     };
 
     # ---- BACKUP SETTINGS ---- #
     backupOpts = {
-      localRepo = lib.mkOption {
-        type = lib.types.str;
+      localRepo = mkOption {
+        type = types.str;
         default = "ssh://borg@10.10.1.17:2222/backup";
         description = "Local backup target";
       };
-      remoteRepo = lib.mkOption {
-        type = lib.types.str;
+      remoteRepo = mkOption {
+        type = types.str;
         default = "/mnt/B2/borg or something";
         description = "B2 backup target after mounting";
       };
-      sourcePaths = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
+      sourcePaths = mkOption {
+        type = types.listOf types.str;
         default = [config.systemOpts.persistVol];
         description = "Path(s) to back up";
       };
-      excludeList = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
+      excludeList = mkOption {
+        type = types.listOf types.str;
         default = [".git/**" "etcetera"];
         description = "List of paths and files to exclude";
       };
@@ -159,15 +161,20 @@
 
     # ---- SERVICES SETTINGS ---- #
     serviceOpts = {
-      dockerUser = lib.mkOption {
-        type = lib.types.str;
+      dockerUser = mkOption {
+        type = types.str;
         default = userOpts.username;
         description = "User under which to run docker services";
       };
-      dockerDir = lib.mkOption {
-        type = lib.types.str;
+      dockerDir = mkOption {
+        type = types.str;
         default = "/opt/docker";
         description = "Where to store docker appdata";
+      };
+      proxyDir = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Where to store swag proxy configs";
       };
     };
   };

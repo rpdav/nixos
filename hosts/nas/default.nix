@@ -55,7 +55,10 @@ in {
     impermanent = true;
     gui = true;
   };
-  serviceOpts.dockerDir = "/mnt/docker/appdata";
+  serviceOpts = {
+    dockerDir = "/mnt/docker/appdata";
+    proxyDir = "/run/selfhosting/proxy-confs";
+  };
   backupOpts = {
     localRepo = "/mnt/storage/backups/borg";
     remoteRepo = "/mnt/B2/borg";
