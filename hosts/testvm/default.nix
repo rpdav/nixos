@@ -28,7 +28,6 @@ in {
 
         # services
         "services/common"
-        "services/testvm"
 
         # users
         "hosts/common/users/ryan"

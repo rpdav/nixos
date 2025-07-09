@@ -49,10 +49,10 @@ gc:
 ############################################################################
 
 build host:
-  nixos apply .{{host}} --dry
+  nixos apply /home/ryan/nixos/.#{{host}} --dry
 
 deploy host:
-  sudo tailscale up --reset && nixos-rebuild --flake .#{{host}} --target-host root@{host}} switch; sudo tailscale up --accept-routes
+  sudo tailscale up --reset && nixos-rebuild --flake /home/ryan/nixos/.#{{host}} --target-host root@{{host}} switch; sudo tailscale up --accept-routes
 
 ############################################################################
 #
