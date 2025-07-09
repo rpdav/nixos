@@ -5,5 +5,7 @@
 #  yubikey = import ./yubikey;
 #}
 {
-  imports = [./yubikey];
+  imports = [
+    ./yubikey
+  ];
 }

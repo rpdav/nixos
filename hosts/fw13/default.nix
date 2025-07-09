@@ -31,15 +31,11 @@
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/stylix.nix"
         "hosts/common/optional/wm/hyprland.nix"
-        #"hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
 
         # users
         "hosts/common/users/ryan"
-
-        # testing
-        "modules/nixos/proxy-conf"
       ])
 
       # host-specific
@@ -47,20 +43,7 @@
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.nixos-cli.nixosModules.nixos-cli
-
-      # testing
-      #./function.nix
     ];
-
-  virtualisation.oci-containers.proxy-conf = {
-    "defaultService" = {};
-    "configuredService" = {
-      container = "nextcloud";
-      subdomain = "cloud";
-      port = "8082";
-      protocol = "https";
-    };
-  };
 
   # Variable overrides
   userOpts = {
