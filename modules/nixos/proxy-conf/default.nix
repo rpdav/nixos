@@ -11,6 +11,7 @@ in {
     type = types.attrsOf (
       types.submodule ({name, ...}: {
         options = {
+          enable = lib.mkEnableOption "Enable proxy config module";
           name = mkOption {
             type = types.str;
             default = name;
@@ -43,11 +44,14 @@ in {
       })
     );
   };
-  config = {
+
+  # Disable module if config.systemOpts.proxyDir is not set. Prevents errors when the submodule is imported but no options defined.
+  # Would be cleaner to have an enable option but I'm not sure how to do that for types.attrsOf (types.submodule)
+  config = lib.mkIf (!(isNull config.serviceOpts.proxyDir)) {
     systemd.tmpfiles.rules = lib.flatten (lib.mapAttrsToList (
         key: val: let
-          # Define the proxy config as a multi-line string and convert to single-line with newlines
           textPort = toString val.port;
+          # Define the proxy config as a multi-line string and convert to single-line with newlines
           proxyArg = builtins.replaceStrings ["\n"] ["\\n"] ''
             server {
                 listen 443 ssl;
