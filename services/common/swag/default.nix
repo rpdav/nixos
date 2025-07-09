@@ -1,18 +1,11 @@
-{
-  config,
-  serviceOpts,
-  ...
-}: {
+{config, ...}: {
   imports = [./docker-compose.nix];
+
+  # Create/chmod appdata directories to mount
+  virtualisation.oci-containers.mounts."swag" = {};
 
   # Secrets
   sops.secrets = {
-    "selfhosting/swag/cloudflareToken".owner = config.users.users.${serviceOpts.dockerUser}.name;
+    "selfhosting/swag/cloudflareToken".owner = config.users.users.${config.serviceOpts.dockerUser}.name;
   };
-
-  # Create directories to mount
-  systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/swag/config 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/swag/config - ${serviceOpts.dockerUser} users"
-  ];
 }

@@ -1,9 +1,28 @@
-{
-  serviceOpts,
-  config,
-  ...
-}: {
+{config, ...}: let
+  inherit (config.serviceOpts) dockerDir dockerUser;
+  plankaDir = "${dockerDir}/planka";
+in {
   imports = [./docker-compose.nix];
+
+  # Create/chmod appdata directories to mount
+  virtualisation.oci-containers.mounts = {
+    "planka-favicons" = {
+      target = "${plankaDir}/favicons";
+    };
+    "planka-user-avatars" = {
+      target = "${plankaDir}/user-avatars";
+    };
+    "planka-background-images" = {
+      target = "${plankaDir}/background-images";
+    };
+    "planka-attachments" = {
+      target = "${plankaDir}/attachments";
+    };
+    "planka-db-data" = {
+      target = "${plankaDir}/db-data";
+      user = "70";
+    };
+  };
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."planka" = {
@@ -12,21 +31,6 @@
     port = 1337;
     protocol = "http";
   };
-  # Create directories for appdata
-  # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
-  systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/planka/favicons 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/planka/favicons - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/planka/user-avatars 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/planka/user-avatars - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/planka/background-images 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/planka/background-images - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/planka/attachments 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/planka/attachments - ${serviceOpts.dockerUser} users"
-    "d ${serviceOpts.dockerDir}/planka/db-data 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/planka/db-data - 70 users"
-  ];
-
   # pull secret env file
-  sops.secrets."selfhosting/planka/env".owner = config.users.users.${serviceOpts.dockerUser}.name;
+  sops.secrets."selfhosting/planka/env".owner = config.users.users.${dockerUser}.name;
 }

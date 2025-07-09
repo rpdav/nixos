@@ -3,7 +3,7 @@ services:
     image: [IMAGE-URL]:latest
     container_name: [CONTAINER]
     volumes:
-      - /serviceOpts.dockerDir/[CONTAINER]/config:/container/path
+      - /config.serviceOpts.dockerDir/[CONTAINER]/config:/container/path
     ports:
       - [HOST-PORT]:[CONTAINER-PORT]
     networks:

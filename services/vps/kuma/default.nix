@@ -1,5 +1,8 @@
-{serviceOpts, ...}: {
+{...}: {
   imports = [./docker-compose.nix];
+
+  # Create/chmod appdata directories to mount
+  virtualisation.oci-containers.mounts."uptime-kuma" = {};
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."kuma" = {
@@ -8,10 +11,4 @@
     port = 3001;
     protocol = "http";
   };
-
-  # Create directories to mount
-  systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/uptime-kuma/config 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/uptime-kuma/config - ${serviceOpts.dockerUser} users"
-  ];
 }

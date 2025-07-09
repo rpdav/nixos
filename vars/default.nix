@@ -172,8 +172,8 @@ in {
         description = "Where to store docker appdata";
       };
       proxyDir = mkOption {
-        type = types.nullOr types.str;
-        default = null;
+        type = types.str;
+        default = "${config.serviceOpts.dockerDir}/swag/proxy-confs";
         description = "Where to store swag proxy configs";
       };
     };

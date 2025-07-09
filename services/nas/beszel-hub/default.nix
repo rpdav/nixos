@@ -1,8 +1,10 @@
 {
-  serviceOpts,
+  config,
   pkgs,
   ...
-}: {
+}: let
+  inherit (config.serviceOpts) dockerUser dockerDir;
+in {
   networking.firewall = {
     allowedTCPPorts = [8090];
   };
@@ -15,8 +17,8 @@
       Type = "simple";
       Restart = "always";
       RestartSec = 3;
-      User = "${serviceOpts.dockerUser}";
-      WorkingDirectory = "${serviceOpts.dockerDir}/beszel-hub";
+      User = "${dockerUser}";
+      WorkingDirectory = "${dockerDir}/beszel-hub";
       ExecStart = "${pkgs.beszel}/bin/beszel-hub serve --http \"0.0.0.0:8090\"";
     };
   };
@@ -28,11 +30,4 @@
     port = 8090;
     protocol = "http";
   };
-
-  # Create directories for appdata
-  # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
-  systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/beszel-hub 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/beszel-hub - ${serviceOpts.dockerUser} users"
-  ];
 }

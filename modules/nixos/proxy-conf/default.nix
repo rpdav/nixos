@@ -8,6 +8,7 @@
 in {
   # Define submodule options
   options.virtualisation.oci-containers.proxy-conf = mkOption {
+    default = {};
     type = types.attrsOf (
       types.submodule ({name, ...}: {
         options = {
@@ -45,9 +46,7 @@ in {
     );
   };
 
-  # Disable module if config.systemOpts.proxyDir is not set. Prevents errors when the submodule is imported but no options defined.
-  # Would be cleaner to have an enable option but I'm not sure how to do that for types.attrsOf (types.submodule)
-  config = lib.mkIf (!(isNull config.serviceOpts.proxyDir)) {
+  config = {
     systemd.tmpfiles.rules = lib.flatten (lib.mapAttrsToList (
         key: val: let
           textPort = toString val.port;
