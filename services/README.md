@@ -31,7 +31,7 @@ When `tmpfiles` creates a directory owned by a user, if parent directories also 
 
 ### Proxy configuration
 
-Many of the webapps that I run are accessed through my reverse proxy (`swag`), which uses nginx. Services are configured through individual nginx configuration files. I defined a custom module `virtualisation.oci-containers.proxy-conf` where the relevant options for each service can be defined (container name, port, and protocol, as well as the subdomain nginx should listen for). The module then builds a config file using `systemd.tmpfiles.rules` and places it at location defined in `config.serviceOpts.proxyDir`. By default this value is `null`, which disables the `proxy-conf` module. Otherwise rebuilding fails due to no options being set.
+Many of the webapps that I run are accessed through my reverse proxy (`swag`), which uses nginx. Services are configured through individual nginx configuration files. I defined a custom module `virtualisation.oci-containers.proxy-conf` where the relevant options for each service can be defined (container name, port, and protocol, as well as the subdomain nginx should listen for). The module then builds a config file using `systemd.tmpfiles.rules` and places it at location defined in `config.serviceOpts.proxyDir`. 
 
 I set my `proxyDir` to be in `/run` so that it gets cleared on reboot and rebuilt during boot. This keeps old configs from unused services from staying around indefinitely.
 
