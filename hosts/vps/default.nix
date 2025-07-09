@@ -52,7 +52,10 @@ in {
     impermanent = true;
     gui = false;
   };
-  serviceOpts.dockerDir = "/opt/docker";
+  serviceOpts = {
+    dockerDir = "/opt/docker";
+    proxyDir = "/run/selfhosting/proxy-confs";
+  };
   backupOpts = {
     remoteRepo = "/mnt/B2/borg";
     sourcePaths = [config.systemOpts.persistVol];
