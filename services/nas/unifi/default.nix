@@ -8,7 +8,6 @@
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."unifi" = {
     container = "unifi-network-application";
-    subdomain = "unifi";
     port = 8443;
     protocol = "https";
   };

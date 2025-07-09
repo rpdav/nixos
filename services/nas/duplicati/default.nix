@@ -7,7 +7,6 @@
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."duplicati" = {
-    container = "duplicati";
     subdomain = "backups";
     port = 8200;
     protocol = "http";

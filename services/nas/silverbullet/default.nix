@@ -7,7 +7,6 @@
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."silverbullet" = {
-    container = "silverbullet";
     subdomain = "notes";
     port = 3000;
     protocol = "http";

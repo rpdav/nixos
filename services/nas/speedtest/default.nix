@@ -8,7 +8,6 @@
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."speedtest" = {
     container = "speedtest-tracker";
-    subdomain = "speedtest";
     port = 80;
     protocol = "http";
   };

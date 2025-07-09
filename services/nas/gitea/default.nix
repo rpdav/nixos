@@ -3,7 +3,6 @@
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."gitea" = {
-    container = "gitea";
     subdomain = "git";
     port = 3000;
     protocol = "http";

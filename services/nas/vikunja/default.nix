@@ -7,7 +7,6 @@
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."vikunja" = {
-    container = "vikunja";
     subdomain = "todo";
     port = 3456;
     protocol = "http";

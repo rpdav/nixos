@@ -3,7 +3,6 @@
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."vaultwarden" = {
-    container = "vaultwarden";
     subdomain = "vault";
     port = 80;
     protocol = "http";
