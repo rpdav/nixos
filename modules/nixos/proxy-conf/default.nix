@@ -28,10 +28,10 @@ in {
             example = "cloud";
           };
           port = mkOption {
-            type = types.str;
-            example = "8080";
+            type = types.port;
+            example = 8080;
             description = "Container port (not host-mapped port)";
-            default = "80";
+            default = 80;
           };
           protocol = mkOption {
             type = types.enum ["http" "https"];
@@ -47,6 +47,7 @@ in {
     systemd.tmpfiles.rules = lib.flatten (lib.mapAttrsToList (
         key: val: let
           # Define the proxy config as a multi-line string and convert to single-line with newlines
+          textPort = toString val.port;
           proxyArg = builtins.replaceStrings ["\n"] ["\\n"] ''
             server {
                 listen 443 ssl;
@@ -58,7 +59,7 @@ in {
                     include /config/nginx/proxy.conf;
                     include /config/nginx/resolver.conf;
                     set $upstream_app ${val.container};
-                    set $upstream_port ${val.port};
+                    set $upstream_port ${textPort};
                     set $upstream_proto ${val.protocol};
                     proxy_pass $upstream_proto://$upstream_app:$upstream_port;
                 }

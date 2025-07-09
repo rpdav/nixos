@@ -7,5 +7,6 @@
 {
   imports = [
     ./yubikey
+    ./proxy-conf
   ];
 }
