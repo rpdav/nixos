@@ -29,18 +29,19 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 * Disko: declarative disk partitioning
 * Lanzaboote: secure boot
 * Stylix: system-wide theming
+* Hyprland: like building a desktop environment with legos
 
 ## Secrets
 See readme in nix-secrets directory.
 
 ## Selfhosted Services
-The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server.
+The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server. Bootstrapping a container-based service takes a bit more work to bootstrap. I've found a few tools (and wrote a couple simple modules) that help speed that process up. More details in the `services` directory.
 
 ## Impermanence
 
 [Impermanence](https://github.com/nix-community/impermanence) is a community module that is designed with the intention of deleting all of `/` during boot with the exception of `/boot`, `/nix`, and `/persist` (and optionally `/home`).  [GrahamC's blog](https://grahamc.com/blog/erase-your-darlings/) goes into detail about why you would want to do this.
 
-Not everything can be fully declared in the NixOS config, so some critical files in `/etc` and `/var` are symlinked to files in `/persist` using the impermanence module. There is both a NixOS module and a home-manager module for dotfiles in `/home`.
+Not everything can be fully declared in the NixOS config, so some critical files in `/etc` and `/var` are symlinked or bind-mounted to files in `/persist` using the impermanence module. There is both a NixOS module and a home-manager module for dotfiles in `/home`.
 
 ### Methods of wiping `/`
 
@@ -51,13 +52,17 @@ The other method is to use a tmpfs for `/`. This is simpler but uses more RAM an
 ### How to persist `/home`
 
  You have to decide how granular you want to be in persisting `/home`:
-* You could persist all of `/home`. Cruft will accumulate in `~` and `.config` but you may be OK with that. This can be done by persisting home in the NixOS impermanence module or by having a separate subvolume for `/home` if using the btrfs/zfs method.
+* You could persist all of `/home`. Cruft will accumulate in `~` and `.config` but you may be OK with that. This can be done by persisting home in the NixOS impermanence module or by having a separate subvolume for `/home` that doesn't get wiped at all.
 * You could persist the main folders, like data folders, `.config`, `.local`, and `.ssh`. This is a good middle ground.
-* You could persist individual folders within `.config` and `.local`. You will have to comb through these folders and determine what you want to keep and throw away. Anything managed by home-manager should be symlinked to `/nix/store` and does not need to be persisted. Some applications spew a lot of loose files and folders in `.config` (looking at you, KDE), so this can be a bit fussy. If you have a lot application churn, you'll have to tweak this frequently.
+* You could persist individual folders within `.config` and `.local`. You will have to comb through these folders and determine what you want to keep and throw away. Anything managed by home-manager should be symlinked to `/nix/store` and does not need to be persisted. Some applications spew a lot of loose files and folders in `.config` (looking at you, KDE), so this can be a bit fussy. If you have a lot application churn, you'll have to tweak this frequently. But the more you configure your system with home-manager, the less you will need to persist within `.config`.
 
-My recommendation is to begin by persisting everything and gradually fine-tune it if you want. If something breaks, those files still exist in `/persist` and can be easily restored. If you're not sure where an application is storing its config or data, I include a `fs-diff` script which recursively lists all files in a directory, ignoring bind mounts and symlinks. By storing the output of this script in a file before and after making the change you're interested in, you can run `diff` on those two files and see where that application is writing its change. I've found this especially useful for window managers.
+My recommendation is to begin by persisting everything and gradually fine-tune it if you want. If something breaks, those files still exist in `/persist` and can be easily restored. If you're not sure where an application is storing its config or data, I include a `fs-diff` script which recursively lists all files in a directory, ignoring bind mounts and symlinks. By storing the output of this script in a file before and after making the change you're interested in, you can run a `diff` on those two files and see where that application is writing its change. I've found this especially useful for window manager files.
 
-NB: If you are using the home-manager impermanence module, and intend to persist `~/.config/systemd` (or all of `~/.config`) through the **system** impermanence config, not home-manager. The bind mounts made by impermanence are done using systemd, which themselves live in `~/.config/systemd` for home-manager services. Home-manager will fail if you try to do this using its impermanence module. You probably don't need to persist `~/.config/systemd` though since its contents should be in your config.
+NB: If you are using the home-manager impermanence module, and intend to persist `~/.config/systemd` (or all of `~/.config`), do it through the **system** impermanence config, not home-manager. The bind mounts made by impermanence are done using systemd, which themselves live in `~/.config/systemd` for home-manager services. Home-manager will fail if you try to do this using its impermanence module. You probably don't need to persist `~/.config/systemd` itself though since its contents should be in your config.
+
+## Hyprland
+
+My hyprland config is pretty simple but I'm happy with how it so far. Nix and the hypr ecosystem complement each other very well. It works great with stylix too.
 
 ## Initial Install
 See readme files in each host's subfolder.
@@ -65,7 +70,7 @@ See readme files in each host's subfolder.
 ## Acknowledgements
 * [LibrePhoenix](https://github.com/librephoenix/nixos-config) - Phoenix's videos were a big help in setting up my initial system.
 * [Ryan Lin's NixOS and Flakes book](https://nixos-and-flakes.thiscute.world/) - This was probably the single most helpful resource for me in understanding flakes.
-* [Emergent Mind](https://github.com/EmergentMind/nix-config) - Helpful videos on SOPS and nixos-anywhere. I modeled the structure of my config after his and have borrowed several of his modules.
+* [Emergent Mind](https://github.com/EmergentMind/nix-config) - Helpful videos on SOPS, nixos-anywhere, and yubikey configs. I modeled the structure of my config after his and have borrowed several of his modules.
 * [Vim Joyer](https://github.com/vimjoyer/) - Tons of videos on setting up a NixOS system, like impermanence, secrets, stylix, gaming...the list goes on!
-* [TheMaxMur's config](https://github.com/TheMaxMur/NixOS-Configuration) - Great documentation and contains a lot of features I'd like to implement like disko and eventually lanzaboot.
+* [TheMaxMur's config](https://github.com/TheMaxMur/NixOS-Configuration) - Great documentation and contains a lot of features I borrowed from, like disko and lanzaboote.
 * [NixOS: Everything Everywhere All At Once](https://www.youtube.com/watch?v=CwfKlX3rA6E) - This convinced me to jump down the NixOS rabbit hole.
