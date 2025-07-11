@@ -170,13 +170,13 @@
         ];
       };
       # Testing VM (QEMU VM running on Unraid)
-      testvm = nixpkgs-stable.lib.nixosSystem {
+      testvm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
           (import ./modules/nixos)
           ./hosts/testvm
-          inputs.home-manager-stable.nixosModules.home-manager
+          inputs.home-manager-unstable.nixosModules.home-manager
         ];
       };
     };

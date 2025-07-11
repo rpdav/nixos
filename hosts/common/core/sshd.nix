@@ -52,7 +52,7 @@
       User ryan
 
     Host testvm
-      Hostname 192.168.122.223
+      Hostname 192.168.122.224
       User root
 
     Host gitea.dfrp.xyz
