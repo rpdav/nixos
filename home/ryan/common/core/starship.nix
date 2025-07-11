@@ -1,14 +1,34 @@
-{...}: {
+{
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkIf;
+  stylixDisable = !config.stylix.targets.starship.enable;
+in {
   programs.starship = {
     enable = true;
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
+      # Only enable palette settings if stylix is disabled.
+      # Defaults below are catppuccin mocha.
+      palette = mkIf stylixDisable "base16_mocha";
+      palettes.base16_mocha = mkIf stylixDisable {
+        black = "#1e1e2e";
+        white = "#cdd64f";
+        red = "#f38ba8";
+        orange = "#fab387";
+        yellow = "#f9e2af";
+        green = "#a6e3a1";
+        blue = "#89b4fa";
+        purple = "#cba6f7";
+      };
       character = {
         disabled = false;
         error_symbol = "[✗](bold fg:red)";
         success_symbol = "[➜](bold fg:green)";
-        vimcmd_replace_one_symbol = "[❮](bold fg:base07)";
-        vimcmd_replace_symbol = "[❮](bold fg:base07)";
+        vimcmd_replace_one_symbol = "[❮](bold fg:white)";
+        vimcmd_replace_symbol = "[❮](bold fg:white)";
         vimcmd_symbol = "[❮](bold fg:green)";
         vimcmd_visual_symbol = "[❮](bold fg:yellow)";
       };
@@ -18,7 +38,7 @@
         min_time_to_notify = 45000;
         show_milliseconds = true;
         show_notifications = true;
-        style = "bg:base07";
+        style = "bg:white";
       };
       directory = {
         format = "[ $path ]($style)";
@@ -53,9 +73,9 @@
         "$python"
         "[](fg:green bg:blue)"
         "$conda"
-        "[](fg:blue bg:base07)"
+        "[](fg:blue bg:purple)"
         "$time"
-        "[ ](fg:base07)"
+        "[ ](fg:purple)"
         "$cmd_duration"
         "$line_break"
         "$character"
@@ -97,7 +117,6 @@
           Windows = "";
         };
       };
-      palette = "base16";
       python = {
         format = "[[ $symbol( $version)(\\(#$virtualenv\\)) ](fg:black bg:green)]($style)";
         style = "bg:green";
@@ -105,8 +124,8 @@
       };
       time = {
         disabled = false;
-        format = "[[ 󱑍 $time ](fg:black bg:base07)]($style)";
-        style = "bg:base07";
+        format = "[[ 󱑍 $time ](fg:black bg:purple)]($style)";
+        style = "bg:purple";
         time_format = "%R";
       };
       username = {
