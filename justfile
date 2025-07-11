@@ -66,7 +66,7 @@ anywhere-test host:
 
 [no-cd]
 anywhere host:
-  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --extra-files ~/anywhere --generate-hardware-config nixos-generate-config ./hosts/{{host}}/hardware-configuration.nix root@{{host}}
+  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --extra-files ~/Documents/anywhere/{{host}} --generate-hardware-config nixos-generate-config ./hosts/{{host}}/hardware-configuration.nix root@{{host}}
 
 ############################################################################
 #

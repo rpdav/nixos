@@ -52,8 +52,8 @@
       User ryan
 
     Host testvm
-      Hostname 10.10.1.19
-      User ryan
+      Hostname 192.168.122.223
+      User root
 
     Host gitea.dfrp.xyz
       User git
