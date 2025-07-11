@@ -33,6 +33,7 @@
         "hosts/common/optional/wm/hyprland.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
+        "hosts/common/optional/virtualization"
 
         # users
         "hosts/common/users/ryan"
