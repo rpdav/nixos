@@ -10,7 +10,6 @@
     ./sops.nix
     ./ssh.nix
     ./starship.nix
-    ./tmux
   ];
 
   home.packages = with pkgs; [
