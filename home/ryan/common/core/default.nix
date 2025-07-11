@@ -9,6 +9,7 @@
     ./git.nix
     ./sops.nix
     ./ssh.nix
+    ./starship.nix
     ./tmux
   ];
 
@@ -37,8 +38,13 @@
       inherit secrets;
     })
   ];
+  programs.bat.enable = true;
+
+  programs.autojump.enable = true;
 
   programs.btop.enable = true;
+
+  programs.ripgrep.enable = true;
 
   home.sessionVariables = {
     EDITOR = userOpts.editor;

@@ -13,6 +13,7 @@
         [
           # Core packages for all systems
           alejandra
+          bat
           borgbackup
           dust
           git

@@ -48,10 +48,10 @@
           "custom/right-divider"
           "battery"
           "custom/right-divider"
-          "power-profiles-daemon"
-          "custom/divider"
-          "custom/divider"
           "idle_inhibitor"
+          "custom/divider"
+          "custom/divider"
+          "power-profiles-daemon"
           "custom/divider"
           "custom/divider"
           "network"
@@ -99,6 +99,7 @@
         "clock#2" = {
           inherit timezone;
           format = "{:%I:%M %p}";
+          on-click = "${pkgs.gnome-calendar}/bin/gnome-calendar";
           tooltip = false;
         };
         "clock#3" = {
