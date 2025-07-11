@@ -15,18 +15,15 @@
 
     # optional config
     #./common/optional/app/accounts.nix
-    #./common/optional/app/browser
-    #./common/optional/app/defaultapps.nix
+    ./common/optional/app/browser
+    ./common/optional/app/defaultapps.nix
     #./common/optional/app/games
-    #./common/optional/app/kitty.nix
+    ./common/optional/app/kitty.nix
     #./common/optional/app/thunderbird.nix
     #./common/optional/app/web-apps
     ./common/optional/config/persist.nix
     ./common/optional/config/yubikey.nix
     ./common/optional/wm/cinnamon.nix
-
-    # monitor module
-    (configLib.relativeToRoot "modules/hyprland/monitors.nix")
   ];
 
   # Create persistent directories
@@ -69,7 +66,7 @@
   # client starts to early and fails; this delays it a bit
   systemd.user.services.nextcloud-client = {
     Unit = {
-      After = pkgs.lib.mkForce "graphical-session.target";
+      After = lib.mkForce "graphical-session.target";
     };
   };
 }

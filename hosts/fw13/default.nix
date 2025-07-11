@@ -155,23 +155,6 @@
     path = with pkgs; [gnome-keyring];
   };
 
-  # Options search
-  services.nixos-cli = {
-    enable = true;
-    config = {
-      config_location = "/home/${userOpts.username}/nixos";
-      apply.use_git_commit_msg = true;
-      apply.imply_impure_with_tag = true;
-      apply.use_nom = true;
-    };
-  };
-  nix.settings = {
-    substituters = ["https://watersucks.cachix.org"];
-    trusted-public-keys = [
-      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
-    ];
-  };
-
   # Add justfile at root
   systemd.tmpfiles.rules = [
     "f /justfile 0644 ${config.userOpts.username} users - import \\'/home/${config.userOpts.username}/nixos/justfile\\'"

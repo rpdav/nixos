@@ -24,7 +24,6 @@
     ./common/optional/config/persist.nix
     ./common/optional/config/yubikey.nix
     ./common/optional/wm/hyprland
-    #./common/optional/wm/gnome.nix
 
     # monitor module
     (configLib.relativeToRoot "modules/hyprland/monitors.nix")
