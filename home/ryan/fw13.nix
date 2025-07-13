@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   configLib,
   systemOpts,
@@ -90,17 +91,19 @@
   ];
 
   home.packages = with pkgs; [
-    thunderbird
-    librewolf
-    brave
-    tor-browser
-    remmina
-    onlyoffice-bin
-    kdePackages.ghostwriter
-    bibletime
     audacity
+    bibletime
+    brave
     gimp
     jellyfin-media-player
+    kdePackages.ghostwriter
+    librewolf
+    onlyoffice-bin
+    pinta
+    remmina
+    thunderbird
+    tor-browser
+    typora
 
     # terminals
     kitty

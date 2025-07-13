@@ -14,6 +14,7 @@
     enable = true;
     settings = {
       "privacy.donottrackheader.enabled" = true;
+      "extensions.activeThemeID" = "default-theme@mozilla.org";
     };
     profiles.ryan = {
       isDefault = true;
