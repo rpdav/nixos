@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  osConfig,
   pkgs,
   lib,
   ...
@@ -21,9 +22,7 @@
     grim
 
     # Misc gui apps
-    vlc
     galculator
-    gnome-calendar
     cheese
   ];
 
@@ -62,8 +61,6 @@
     plugins = let
       hyprPlugins = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
     in [
-      hyprPlugins.hyprexpo
-      hyprPlugins.hyprfocus
     ];
     settings = {
       ################
@@ -88,9 +85,9 @@
           (config.monitors))
       ];
 
-      ###################
-      ### MY PROGRAMS ###
-      ###################
+      ################
+      ### PROGRAMS ###
+      ################
 
       "$browser" = "${pkgs.firefox}/bin/firefox";
       "$fileManager" = "${pkgs.nautilus}/bin/nautilus";
@@ -118,7 +115,7 @@
         "XDG_SESSION_DESKTOP,Hyprland"
 
         # Miscellaneous
-        "TZ,${config.systemOpts.timezone}"
+        "TZ,${osConfig.time.timeZone}"
       ];
 
       #####################

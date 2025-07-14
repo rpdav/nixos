@@ -56,5 +56,5 @@
   };
 
   # Time
-  time.timeZone = config.systemOpts.timezone;
+  time.timeZone = "America/Indiana/Indianapolis";
 }

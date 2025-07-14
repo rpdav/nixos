@@ -17,7 +17,6 @@
           borgbackup
           dust
           git
-          git-crypt
           htop
           killall
           nix-output-monitor
@@ -32,8 +31,7 @@
         ]
         ++ lib.lists.optionals config.systemOpts.gui [
           # Core packages for gui systems
-          btrfs-assistant
-          bitwarden-desktop
+          btrfs-assistant # must run as root
         ]
     )
     ++ [

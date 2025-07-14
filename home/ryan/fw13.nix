@@ -19,6 +19,7 @@
     ./common/optional/app/browser
     ./common/optional/app/defaultapps.nix
     ./common/optional/app/games
+    ./common/optional/app/nextcloud.nix
     ./common/optional/app/kitty.nix
     ./common/optional/app/thunderbird.nix
     ./common/optional/app/web-apps
@@ -30,30 +31,13 @@
     (configLib.relativeToRoot "modules/hyprland/monitors.nix")
   ];
 
-  # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    directories = [
-      ".sword"
-      ".config/BraveSoftware"
-      ".config/GIMP"
-      ".config/Nextcloud"
-      ".config/onlyoffice"
-      ".config/remmina"
-    ];
-    files = [
-      ".config/ghostwriterrc"
-      ".config/bluedevelglobalrc" # bluetooth
-    ];
-  };
-
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "24.05"; # don't change without reading release notes
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
   nixpkgs.config.allowUnfree = true;
 
   # Hyprland monitor config
@@ -89,45 +73,4 @@
       enabled = true;
     }
   ];
-
-  home.packages = with pkgs; [
-    audacity
-    bibletime
-    brave
-    gimp
-    jellyfin-media-player
-    kdePackages.ghostwriter
-    librewolf
-    onlyoffice-bin
-    pinta
-    remmina
-    thunderbird
-    tor-browser
-    typora
-
-    # terminals
-    kitty
-    alacritty
-
-    # games
-    kdePackages.knights
-    kdePackages.killbots
-    kdePackages.kgoldrunner
-    kdePackages.kmines
-    kdePackages.kpat
-
-    # scripts
-  ];
-
-  services.nextcloud-client = {
-    enable = true;
-    startInBackground = true;
-  };
-
-  # client starts to early and fails; this delays it a bit
-  systemd.user.services.nextcloud-client = {
-    Unit = {
-      After = pkgs.lib.mkForce "graphical-session.target";
-    };
-  };
 }

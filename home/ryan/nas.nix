@@ -6,17 +6,7 @@
   configLib,
   ...
 }: {
-  ## This file contains all home-manager config unique to user ryan on host vps
-
-  home.username = "ryan";
-  home.homeDirectory = "/home/ryan";
-
-  home.stateVersion = "24.11"; # Please read the comment before changing.
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
+  ## This file contains all home-manager config unique to user ryan on host nas
 
   imports = [
     # core config
@@ -32,56 +22,14 @@
     ./common/optional/config/yubikey.nix
     ./common/optional/wm/gnome.nix
   ];
-  # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    directories = [
-      ".sword"
-      ".config/BraveSoftware"
-      ".config/GIMP"
-      ".config/Nextcloud"
-      ".config/onlyoffice"
-      ".config/remmina"
-    ];
-    files = [
-      ".config/ghostwriterrc"
-      ".config/bluedevelglobalrc" # bluetooth
-    ];
-  };
 
-  home.packages = with pkgs; [
-    thunderbird
-    librewolf
-    brave
-    tor-browser
-    remmina
-    onlyoffice-bin
-    kdePackages.ghostwriter
-    bibletime
-    audacity
-    gimp
-    jellyfin-media-player
+  home.username = "ryan";
+  home.homeDirectory = "/home/ryan";
 
-    # terminals
-    kitty
-    alacritty
+  home.stateVersion = "24.11"; # don't change without reading release notes
 
-    # games
-    kdePackages.knights
-    kdePackages.killbots
-    kdePackages.kgoldrunner
-    kdePackages.kmines
-    kdePackages.kpat
-  ];
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
-  services.nextcloud-client = {
-    enable = true;
-    startInBackground = true;
-  };
-
-  # client starts to early and fails; this delays it a bit
-  systemd.user.services.nextcloud-client = {
-    Unit = {
-      After = pkgs.lib.mkForce "graphical-session.target";
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
 }
