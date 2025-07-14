@@ -1,8 +1,7 @@
 {
   config,
+  osConfig,
   secrets,
-  systemOpts,
-  userOpts,
   lib,
   ...
 }: {
@@ -13,9 +12,12 @@
   };
 
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${osConfig.systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.systemOpts.impermanent {
     directories = [
       ".config/protonmail"
+      ".cache/evolution" #calendar data
+      ".config/evolution" #calendar config
+      ".config/goa-1.0" #dav accounts
     ];
   };
 

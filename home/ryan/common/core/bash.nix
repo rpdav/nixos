@@ -1,15 +1,16 @@
 {
+  config,
+  osConfig,
   systemOpts,
-  userOpts,
   pkgs,
   ...
 }: let
   inherit (pkgs) bat git lazygit lazydocker systemctl-tui;
   # Define appropriate key path depending on whether system is impermanent
-  defaultLocation = "/home/${userOpts.username}/.bash_history";
+  defaultLocation = "${config.home.homeDirectory}/.bash_history";
   historyFile =
-    if systemOpts.impermanent
-    then "${systemOpts.persistVol}/${defaultLocation}"
+    if osConfig.systemOpts.impermanent
+    then "${systemOpts.persistVol}${defaultLocation}"
     else "${defaultLocation}";
 in {
   programs.bash = {

@@ -1,8 +1,12 @@
-{userOpts, ...}: {
+{
+  osConfig,
+  config,
+  ...
+}: {
   programs.git = {
     enable = true;
-    userName = userOpts.username;
-    userEmail = userOpts.githubEmail;
+    userName = config.home.username;
+    userEmail = osConfig.userOpts.githubEmail;
     extraConfig = {
       init.defaultBranch = "main";
       merge.ff = false; # I prefer to see explicit merges

@@ -6,15 +6,6 @@
   config,
   ...
 }: {
-  # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    directories = [
-      ".cache/evolution" #calendar data
-      ".config/evolution" #calendar config
-      ".config/goa-1.0" #dav accounts
-    ];
-  };
-
   ## gtk themes to go here?
 
   # Gnome extensions

@@ -1,13 +1,14 @@
 {
   lib,
-  userOpts,
-  systemOpts,
   config,
+  osConfig,
   configLib,
   ...
 }: let
+  homeDir = config.home.homeDirectory;
+  username = config.home.username;
   # Path to public keys stored in config
-  pathtokeys = configLib.relativeToRoot "hosts/common/users/${userOpts.username}/keys";
+  pathtokeys = configLib.relativeToRoot "hosts/common/users/${username}/keys";
   # List of public keys in path
   yubikeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))
@@ -20,10 +21,10 @@
     (key: {".ssh/${key}.pub".source = "${pathtokeys}/${key}.pub";})
     yubikeys
   );
-in { 
-  # Pull private key from sops
+in {
+  # Pull manual key from sops
   sops.secrets = {
-    "${userOpts.username}/sshKeys/id_manual".path = "/home/${userOpts.username}/.ssh/id_manual";
+    "${username}/sshKeys/id_manual".path = "${homeDir}/.ssh/id_manual";
   };
 
   # symlink public keys
@@ -35,6 +36,7 @@ in {
   # General ssh config
   programs.ssh = {
     enable = true;
-    userKnownHostsFile = lib.mkIf systemOpts.impermanent "${systemOpts.persistVol}/home/${userOpts.username}/.ssh/known_hosts";
+    # For impermanent systems, nown hosts must be written to persistent volume. if !impermanent, it goes to default location.
+    userKnownHostsFile = lib.mkIf osConfig.systemOpts.impermanent "${osConfig.systemOpts.persistVol}${config.home.homeDirectory}/.ssh/known_hosts";
   };
 }

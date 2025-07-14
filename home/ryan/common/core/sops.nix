@@ -1,23 +1,25 @@
 {
   inputs,
-  userOpts,
-  systemOpts,
+  config,
+  osConfig,
   lib,
   ...
 }: let
   secretspath = builtins.toString inputs.nix-secrets;
-
+  homeDir = config.home.homeDirectory;
+  persistVol = osConfig.systemOpts.persistVol;
+  impermanent = osConfig.systemOpts.impermanent;
   # Define appropriate key path depending on whether system is impermanent
-  keyLocation = "/home/${userOpts.username}/.config/sops/age/keys.txt";
+  keyLocation = "${homeDir}/.config/sops/age/keys.txt";
   keyFile =
-    if systemOpts.impermanent
-    then "${systemOpts.persistVol}/${keyLocation}"
+    if impermanent
+    then "${persistVol}/${keyLocation}"
     else "${keyLocation}";
 in {
   imports = [inputs.sops-nix.homeManagerModules.sops];
 
   # Create impermanent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${persistVol}${homeDir}" = lib.mkIf impermanent {
     directories = [
       ".config/sops"
     ];

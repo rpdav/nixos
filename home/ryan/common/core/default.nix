@@ -26,15 +26,15 @@
       (import ../optional/scripts/fs-diff.nix {inherit pkgs;})
       (import ../optional/scripts/clear-testbox.nix {
         inherit pkgs;
-        inherit userOpts;
+        inherit config;
       })
       (import ../optional/scripts/clear-testvm.nix {
         inherit pkgs;
-        inherit userOpts;
+        inherit config;
       })
       (import ../optional/scripts/clear-vps.nix {
         inherit pkgs;
-        inherit userOpts;
+        inherit config;
       })
       (import ../optional/scripts/lish.nix {
         inherit pkgs;
@@ -52,6 +52,7 @@
 
       # media
       audacity
+      vlc
       bibletime
       jellyfin-media-player
 
@@ -66,13 +67,14 @@
 
       # utilities
       remmina
+      bitwarden-desktop
+      gnome-calendar
     ]
   );
 
   # Create persistent directories
-  home.persistence."${config.systemOpts.persistVol}/home/${config.userOpts.username}" = lib.mkIf config.systemOpts.impermanent {
+  home.persistence."${config.systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.systemOpts.impermanent {
     directories = [
-      ".sword"
       ".config/BraveSoftware"
       ".config/GIMP"
       ".config/Nextcloud"
@@ -93,6 +95,6 @@
   programs.ripgrep.enable = true;
 
   home.sessionVariables = {
-    EDITOR = userOpts.editor;
+    EDITOR = osConfig.userOpts.editor;
   };
 }
