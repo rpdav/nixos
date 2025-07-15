@@ -39,7 +39,7 @@
   ];
 
   #needed for waybar
-  users.users.${userOpts.username} = {
+  users.users.ryan = {
     extraGroups = ["input"];
   };
 

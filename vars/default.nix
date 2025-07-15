@@ -105,7 +105,7 @@ in {
         type = types.str;
         default = "105075689+rpdav@users.noreply.github.com";
       };
-      username = mkOption {
+      primaryUser = mkOption {
         type = types.str;
         default = "ryan";
       };
@@ -163,7 +163,7 @@ in {
     serviceOpts = {
       dockerUser = mkOption {
         type = types.str;
-        default = userOpts.username;
+        default = userOpts.primaryUser;
         description = "User under which to run docker services";
       };
       dockerDir = mkOption {

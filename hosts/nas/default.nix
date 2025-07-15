@@ -7,7 +7,7 @@
   ...
 }: let
   # Generates a list of the keys in primary user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../common/users/${userOpts.username}/keys;
+  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
   imports =
     lib.flatten
@@ -46,7 +46,7 @@ in {
     ];
 
   # Variable overrides
-  userOpts.username = "ryan"; #primary user (not necessarily only user)
+  userOpts.primaryUser = "ryan"; #primary user (not necessarily only user)
   systemOpts = {
     swapEnable = true;
     diskDevice = "nvme1n1";

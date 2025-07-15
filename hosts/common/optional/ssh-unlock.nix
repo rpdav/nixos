@@ -4,7 +4,7 @@
   ...
 }: let
   # Generates a list of the keys in primary user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../users/${userOpts.username}/keys;
+  pubKeys = lib.filesystem.listFilesRecursive ../users/ryan/keys;
 in {
   boot.kernelParams = ["ip=dhcp"];
   boot.initrd = {

@@ -14,6 +14,8 @@ let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
+  imports = [inputs.nixos-cli.nixosModules.nixos-cli];
+
   # user--specific variable overrides
   userOpts.wallpaper = "mountain";
   userOpts.cursor = "Bibata-Modern-Ice";
@@ -31,6 +33,23 @@ in {
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+  };
+
+  # Options search and nixos CLI tooling
+  services.nixos-cli = {
+    enable = true;
+    config = {
+      config_location = "${config.users.users.ryan.home}/nixos";
+      apply.use_git_commit_msg = true;
+      apply.imply_impure_with_tag = true;
+      apply.use_nom = true;
+    };
+  };
+  nix.settings = {
+    substituters = ["https://watersucks.cachix.org"];
+    trusted-public-keys = [
+      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
+    ];
   };
 
   # home-manager config

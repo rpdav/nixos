@@ -10,7 +10,7 @@
   ...
 }: let
   # Generates a list of the keys in ./keys
-  pubKeys = lib.filesystem.listFilesRecursive ../common/users/${userOpts.username}/keys;
+  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
   imports =
     lib.flatten
@@ -43,7 +43,7 @@ in {
     ];
 
   # Variable overrides
-  userOpts.username = "ryan"; #primary user (not necessarily only user)
+  userOpts.primaryUser = "ryan"; #primary user (not necessarily only user)
   systemOpts = {
     swapEnable = true;
     swapSize = "2G";
@@ -100,9 +100,9 @@ in {
   ];
 
   # VPS docker directory lives in persistent volume
-  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+  environment.persistence.${config.systemOpts.persistVol} = lib.mkIf config.systemOpts.impermanent {
     directories = [
-      "${serviceOpts.dockerDir}"
+      "${config.serviceOpts.dockerDir}"
     ];
   };
 

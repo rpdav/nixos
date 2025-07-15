@@ -43,12 +43,11 @@
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
   userOpts = {
-    username = "ryan"; #primary user (not necessarily only user)
+    primaryUser = "ryan"; #primary user (not necessarily only user)
     term = "kitty";
   };
   systemOpts = {
@@ -157,7 +156,7 @@
 
   # Add justfile at root
   systemd.tmpfiles.rules = [
-    "f /justfile 0644 ${config.userOpts.username} users - import \\'/home/${config.userOpts.username}/nixos/justfile\\'"
+    "f /justfile 0644 ${config.userOpts.primaryUser}/ users - import \\'/home/${config.userOpts.primaryUser}/nixos/justfile\\'"
   ];
 
   # minimal root user config

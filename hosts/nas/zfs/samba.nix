@@ -25,8 +25,8 @@
           browseable = "yes";
           writeable = "no";
           "read list" = "";
-          "write list" = config.userOpts.username;
-          "valid users" = config.userOpts.username;
+          "write list" = "ryan";
+          "valid users" = "ryan";
         };
       };
     };
@@ -65,7 +65,7 @@
   #      text = ''
   #        PATH=$PATH:${lib.makeBinPath [pkgs.samba]}
   #	IFS= read -r password ${config.sops.secrets."ryan/smbPass".path}
-  #	printf '%s\n%s\n' "$password" "$password" | smbpasswd -a -s ${config.userOpts.username}
+  #	printf '%s\n%s\n' "$password" "$password" | smbpasswd -a -s ${username}
   #      '';
   #      deps = [];
   #    };

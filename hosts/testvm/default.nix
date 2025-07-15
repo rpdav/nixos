@@ -4,12 +4,11 @@
   configLib,
   inputs,
   systemOpts,
-  userOpts,
   config,
   ...
 }: let
   # Generates a list of the keys in primary user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../common/users/${userOpts.username}/keys;
+  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
   ## This file contains host-specific NixOS configuration
 
@@ -39,12 +38,11 @@ in {
 
       # host-specific
       ./hardware-configuration.nix
-      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
   userOpts = {
-    username = "ryan"; #primary user (not necessarily only user)
+    primaryUser = "ryan"; #primary user (not necessarily only user)
     term = "kitty";
   };
   systemOpts = {
@@ -125,7 +123,7 @@ in {
 
   # Add justfile at root
   systemd.tmpfiles.rules = [
-    "f /justfile 0644 ${config.userOpts.username} users - import \\'/home/${config.userOpts.username}/nixos/justfile\\'"
+    "f /justfile 0644 ${config.userOpts.primaryUser} users - import \\'/home/${config.userOpts.primaryUser}/nixos/justfile\\'"
   ];
 
   # allow root ssh login for rebuilds
