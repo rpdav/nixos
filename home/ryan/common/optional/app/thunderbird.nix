@@ -1,11 +1,13 @@
 {
-  systemOpts,
-  userOpts,
+  config,
+  osConfig,
   lib,
   ...
-}: {
+}: let
+  inherit (osConfig) systemOpts;
+in {
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
     directories = [
       ".thunderbird"
     ];
@@ -16,7 +18,7 @@
       "privacy.donottrackheader.enabled" = true;
       "extensions.activeThemeID" = "default-theme@mozilla.org";
     };
-    profiles.ryan = {
+    profiles.${config.home.username} = {
       isDefault = true;
     };
   };

@@ -15,7 +15,7 @@
     # Remove the .pub suffix
     (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
   # Create set of keys to be symlinked by home.file
-  yubikeyPublicKeyEntries = lib.attrsets.mergeAttrsList (
+  publicKeyEntries = lib.attrsets.mergeAttrsList (
     lib.lists.map
     # list of dicts
     (key: {".ssh/${key}.pub".source = "${pathtokeys}/${key}.pub";})
@@ -23,6 +23,7 @@
   );
 in {
   # Pull manual key from sops
+  # This gets overridden by the yubikey module if it's in use
   sops.secrets = {
     "${username}/sshKeys/id_manual".path = "${homeDir}/.ssh/id_manual";
   };
@@ -31,12 +32,13 @@ in {
   home.file =
     {
     }
-    // yubikeyPublicKeyEntries;
+    // publicKeyEntries;
 
   # General ssh config
   programs.ssh = {
     enable = true;
+
     # For impermanent systems, nown hosts must be written to persistent volume. if !impermanent, it goes to default location.
-    userKnownHostsFile = lib.mkIf osConfig.systemOpts.impermanent "${osConfig.systemOpts.persistVol}${config.home.homeDirectory}/.ssh/known_hosts";
+    userKnownHostsFile = lib.mkIf osConfig.systemOpts.impermanent "${osConfig.systemOpts.persistVol}${homeDir}/.ssh/known_hosts";
   };
 }

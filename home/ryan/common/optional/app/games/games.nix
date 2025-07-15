@@ -1,10 +1,12 @@
 {
   pkgs,
-  systemOpts,
-  userOpts,
+  config,
+  osConfig,
   lib,
   ...
 }: let
+  inherit (osConfig) systemOpts;
+  # define cores for retroarch
   retroarchWithCores = pkgs.retroarch.withCores (cores:
     with cores; [
       snes9x
@@ -14,9 +16,8 @@
     ]);
 in {
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
     directories = [
-      #".steam" #normal persistence causes issues. this is mostly symlinks to .local/share/Steam; will try not persisting
       ".config/Moonlight Game Streaming Project"
       ".config/unity3d"
       ".config/retroarch"

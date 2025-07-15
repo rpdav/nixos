@@ -1,13 +1,15 @@
 {
   lib,
-  userOpts,
-  systemOpts,
+  config,
+  osConfig,
   inputs,
   ...
-}: {
+}: let
+  inherit (osConfig) systemOpts;
+in {
   imports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = {
     directories = (
       [
         ### home persistence for all systems ###
@@ -42,9 +44,6 @@
     );
     files = [
       ### Home file persistence for gui systems ###
-
-      # System
-      ".Xauthority"
     ];
     allowOther = true;
   };

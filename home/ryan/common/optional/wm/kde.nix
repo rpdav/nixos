@@ -1,15 +1,17 @@
 {
   pkgs,
   inputs,
-  systemOpts,
-  userOpts,
+  config,
+  osConfig,
   lib,
   ...
-}: {
+}: let
+  inherit (osConfig) systemOpts;
+in {
   imports = [inputs.plasma-manager.homeManagerModules.plasma-manager];
 
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}/home/${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
     directories = [
       ".config/kdedefaults"
       ".config/kde.org"
@@ -34,21 +36,6 @@
   programs.plasma = {
     enable = true;
     overrideConfig = true; # delete existing config on reload
-
-    ## Theming is handled by stylix
-    #    workspace = {
-    #      wallpaper = "/persist/home/${userOpts.username}/Documents/wallpaper.png";
-    #      theme = "breeze-dark";
-    #      colorScheme = "BreezeDark";
-    #      cursor = {
-    #        theme = "Breeze_Light";
-    #        size = 24;
-    #      };
-    #      lookAndFeel = "org.kde.default.desktop"; # this is "Plasma Style" in settings
-    #      iconTheme = "breeze-dark"; # breeze, breeze-dark, or oxygen
-    #      soundTheme = "ocean";
-    #
-    #    };
 
     panels = [
       {

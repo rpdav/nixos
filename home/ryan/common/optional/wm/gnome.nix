@@ -1,11 +1,4 @@
-{
-  pkgs,
-  systemOpts,
-  userOpts,
-  lib,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   ## gtk themes to go here?
 
   # Gnome extensions

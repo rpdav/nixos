@@ -1,14 +1,17 @@
 {
   pkgs,
+  config,
+  osConfig,
   inputs,
-  systemOpts,
-  userOpts,
   lib,
   secrets,
   ...
-}: {
+}: let
+  inherit (osConfig) systemOpts;
+  domain = secrets.selfhosting.domain;
+in {
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
     directories = [
       ".mozilla"
     ];
@@ -19,7 +22,7 @@
       id = 0;
       name = "ryan default";
       settings = {
-        "browser.startup.homepage" = "https://start.${secrets.selfhosting.domain}";
+        "browser.startup.homepage" = "https://start.${domain}";
         "browser.search.region" = "US";
         "browser.search.isUS" = true;
         "extensions.autoDisableScopes" = 0; #automatically enable added extensions
@@ -33,7 +36,7 @@
       };
 
       # Extensions
-      extensions.packages = with inputs.firefox-addons.packages."${systemOpts.arch}"; [
+      extensions.packages = with inputs.firefox-addons.packages."${pkgs.system}"; [
         bitwarden
         ublock-origin
         metamask
@@ -56,14 +59,41 @@
                 ];
               }
             ];
-            icon = "https://search.${secrets.selfhosting.domain}/favicon.ico";
+            icon = "https://search.${domain}/favicon.ico";
             definedAliases = ["@s"];
+          };
+          "Nixos Options" = {
+            urls = [
+              {
+                template = "https://search.nixos.org/options";
+                params = [
+                  {
+                    name = "channel";
+                    value = "unstable";
+                  }
+                  {
+                    name = "type";
+                    value = "packages";
+                  }
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = ["@no"];
           };
           "Nix Packages" = {
             urls = [
               {
                 template = "https://search.nixos.org/packages";
                 params = [
+                  {
+                    name = "channel";
+                    value = "unstable";
+                  }
                   {
                     name = "type";
                     value = "packages";
@@ -77,6 +107,25 @@
             ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = ["@np"];
+          };
+          "Home-Manager Options" = {
+            urls = [
+              {
+                template = "https://home-manager-options.extranix.com/";
+                params = [
+                  {
+                    name = "release";
+                    value = "master";
+                  }
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = ["@ho"];
           };
           "MyNixOS" = {
             urls = [

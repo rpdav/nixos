@@ -1,11 +1,12 @@
 {
-  pkgs,
+  config,
+  osConfig,
   configLib,
-  systemOpts,
-  userOpts,
   lib,
   ...
-}: {
+}: let
+  inherit (osConfig) systemOpts;
+in {
   ## This file contains all home-manager config unique to user ryan on host fw13nix
 
   imports = [
@@ -27,7 +28,7 @@
   ];
 
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
     directories = [
     ];
     files = [
@@ -44,29 +45,4 @@
   programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-
-  home.packages = with pkgs; [
-    librewolf
-    brave
-    onlyoffice-bin
-    kdePackages.ghostwriter
-    audacity
-
-    # terminals
-    kitty
-
-    # scripts
-  ];
-
-  services.nextcloud-client = {
-    enable = true;
-    startInBackground = true;
-  };
-
-  # client starts to early and fails; this delays it a bit
-  systemd.user.services.nextcloud-client = {
-    Unit = {
-      After = lib.mkForce "graphical-session.target";
-    };
-  };
 }
