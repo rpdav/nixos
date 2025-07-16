@@ -23,6 +23,12 @@ in {
     port = 8123;
     protocol = "http";
   };
+  virtualisation.oci-containers.proxy-conf."zwave" = {
+    container = "home-assistant-zwave";
+    subdomain = "zwave";
+    port = 8091;
+    protocol = "http";
+  };
 
   # Secret env file
   sops.secrets."selfhosting/home-assistant/env".owner = config.users.users.${dockerUser}.name;
