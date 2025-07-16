@@ -6,7 +6,7 @@
   # Pull private keys from sops
   sops.secrets = {
     # override default manual key path if yubikey is enabled. If normal key is present in .ssh, sudo will use it over the yubikey.
-    "ryan/sshKeys/id_manual".path = lib.mkForce "/home/ryan/.ssh/id_manual.key";
+    "ryan/sshKeys/id_ed25519".path = lib.mkForce "/home/ryan/.ssh/id_manual.key";
     "ryan/sshKeys/id_yubi5c".path = "/home/ryan/.ssh/id_yubi5c";
     "ryan/sshKeys/id_yubinano".path = "/home/ryan/.ssh/id_yubinano";
   };

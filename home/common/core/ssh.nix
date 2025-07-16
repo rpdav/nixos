@@ -25,7 +25,7 @@ in {
   # Pull manual key from sops
   # This gets overridden by the yubikey module if it's in use
   sops.secrets = {
-    "${username}/sshKeys/id_manual".path = "${homeDir}/.ssh/id_manual";
+    "${username}/sshKeys/id_ed25519".path = "${homeDir}/.ssh/id_manual";
   };
 
   # symlink public keys

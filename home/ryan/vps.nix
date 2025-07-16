@@ -15,14 +15,13 @@
       "home/common/optional/config/persist.nix"
     ])
     # multi-system config for current user
-    ./common/optional/config/yubikey.nix
+    ./common/core
+
+    ./common/optional/yubikey.nix
   ];
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }

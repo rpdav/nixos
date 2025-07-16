@@ -20,16 +20,14 @@
       "home/common/optional/wm/gnome.nix"
     ])
     # multi-system config for current user
-    ./common/optional/config/yubikey.nix
+    ./common/core
+
+    ./common/optional/yubikey.nix
+    ./common/optional/accounts.nix
   ];
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
   home.stateVersion = "24.11"; # don't change without reading release notes
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
 }

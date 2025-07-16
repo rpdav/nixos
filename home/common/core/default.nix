@@ -8,11 +8,16 @@
 }: {
   imports = [
     ./bash.nix
-    ./git.nix
     ./sops.nix
     ./ssh.nix
     ./starship.nix
   ];
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; (
     [

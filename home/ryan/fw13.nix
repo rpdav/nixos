@@ -12,7 +12,6 @@
       "home/common/core"
 
       # optional config
-      "home/common/optional/app/accounts.nix"
       "home/common/optional/app/browser"
       "home/common/optional/app/defaultapps.nix"
       "home/common/optional/app/games"
@@ -27,17 +26,16 @@
       "modules/hyprland/monitors.nix"
     ])
     # multi-system config for current user
+    ./common/core
+
     ./common/optional/yubikey.nix
+    ./common/optional/accounts.nix
   ];
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
   home.stateVersion = "24.05"; # don't change without reading release notes
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-  nixpkgs.config.allowUnfree = true;
 
   # Hyprland monitor config
   monitors = [
