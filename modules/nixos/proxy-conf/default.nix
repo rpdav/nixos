@@ -41,6 +41,20 @@ in {
             description = "Protocol (either http or https)";
             default = "http";
           };
+          extraConfig = mkOption {
+            type = types.str;
+            example = ''
+              location ~ ^(/vaultwarden)?/admin {
+                  # block non-local access to /admin
+                  allow 10.0.0.0/8;
+                  allow 172.16.0.0/12;
+                  allow 192.168.0.0/16;
+                  deny all;
+                  }
+            '';
+            description = "Extra config to insert after primary location block";
+            default = "";
+          };
         };
       })
     );
@@ -66,6 +80,7 @@ in {
                     set $upstream_proto ${val.protocol};
                     proxy_pass $upstream_proto://$upstream_app:$upstream_port;
                 }
+            ${val.extraConfig}
             }
           '';
           # Define tmpfile rule to delete the config when tmpfiles runs (otherwise changes don't get written)

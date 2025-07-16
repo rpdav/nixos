@@ -1,12 +1,4 @@
-{
-  config,
-  pkgs,
-  configLib,
-  systemOpts,
-  userOpts,
-  lib,
-  ...
-}: {
+{configLib, ...}: {
   ## This file contains all home-manager config unique to user ryan on host fw13nix
 
   imports = [
@@ -73,4 +65,5 @@
       enabled = true;
     }
   ];
+  backupOpts.excludeList = ["userExcludes"];
 }
