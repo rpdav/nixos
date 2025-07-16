@@ -9,22 +9,26 @@
 in {
   ## This file contains all home-manager config unique to user ryan on host fw13nix
 
-  imports = [
-    # core config
-    (configLib.relativeToRoot "vars")
-    ./common/core
+  imports = lib.flatten [
+    (map configLib.relativeToRoot [
+      # core config
+      "vars"
+      "home/common/core"
 
-    # optional config
-    #./common/optional/app/accounts.nix
-    ./common/optional/app/browser
-    ./common/optional/app/defaultapps.nix
-    #./common/optional/app/games
-    ./common/optional/app/kitty.nix
-    #./common/optional/app/thunderbird.nix
-    #./common/optional/app/web-apps
-    ./common/optional/config/persist.nix
-    ./common/optional/config/yubikey.nix
-    ./common/optional/wm/cinnamon.nix
+      # optional config
+      "home/common/optional/app/accounts.nix"
+      "home/common/optional/app/browser"
+      "home/common/optional/app/defaultapps.nix"
+      "home/common/optional/app/nextcloud.nix"
+      "home/common/optional/app/kitty.nix"
+      "home/common/optional/config/persist.nix"
+      "home/common/optional/wm/cinnamon.nix"
+
+      # monitor module
+      "modules/hyprland/monitors.nix"
+    ])
+    # multi-system config for current user
+    ./common/optional/yubikey.nix
   ];
 
   # Create persistent directories

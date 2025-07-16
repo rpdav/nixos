@@ -1,17 +1,20 @@
 {
-  pkgs,
+  lib,
   configLib,
   ...
 }: {
   ## This file contains all home-manager config unique to user ryan on host vps
 
-  imports = [
-    # core config
-    (configLib.relativeToRoot "vars")
-    ./common/core
+  imports = lib.flatten [
+    (map configLib.relativeToRoot [
+      # core config
+      "vars"
+      "home/common/core"
 
-    # optional config
-    ./common/optional/config/persist.nix
+      # optional config
+      "home/common/optional/config/persist.nix"
+    ])
+    # multi-system config for current user
     ./common/optional/config/yubikey.nix
   ];
 

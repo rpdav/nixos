@@ -1,19 +1,26 @@
-{configLib, ...}: {
+{
+  lib,
+  configLib,
+  ...
+}: {
   ## This file contains all home-manager config unique to user ryan on host nas
 
-  imports = [
-    # core config
-    (configLib.relativeToRoot "vars")
-    ./common/core
+  imports = lib.flatten [
+    (map configLib.relativeToRoot [
+      # core config
+      "vars"
+      "home/common/core"
 
-    # optional config
-    ./common/optional/app/browser
-    ./common/optional/app/defaultapps.nix
-    ./common/optional/app/games
-    ./common/optional/app/kitty.nix
-    ./common/optional/config/persist.nix
+      # optional config
+      "home/common/optional/app/browser"
+      "home/common/optional/app/defaultapps.nix"
+      "home/common/optional/app/games"
+      "home/common/optional/app/kitty.nix"
+      "home/common/optional/config/persist.nix"
+      "home/common/optional/wm/gnome.nix"
+    ])
+    # multi-system config for current user
     ./common/optional/config/yubikey.nix
-    ./common/optional/wm/gnome.nix
   ];
 
   home.username = "ryan";
