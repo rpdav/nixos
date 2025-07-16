@@ -6,6 +6,10 @@
   inherit (lib) mkIf;
   stylixDisable = !config.stylix.targets.starship.enable;
 in {
+  programs.bash.bashrcExtra = ''
+    eval $(starship init bash)
+  '';
+
   programs.starship = {
     enable = true;
     settings = {
@@ -91,9 +95,9 @@ in {
       };
       hostname = {
         disabled = false;
-        format = "[[$ssh_symbol](bold blue bg:red)@[$hostname]($style) ]($style)";
+        format = "[@[$hostname]($style) [$ssh_symbol](bold blue bg:red)]($style)";
         ssh_only = false;
-        ssh_symbol = " 🌐";
+        ssh_symbol = "🌐 ";
         style = "bg:red fg:black";
       };
       line_break = {disabled = false;};
