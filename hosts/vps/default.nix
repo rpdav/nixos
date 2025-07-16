@@ -2,15 +2,13 @@
   modulesPath,
   lib,
   configLib,
-  userOpts,
   pkgs,
   config,
-  systemOpts,
-  serviceOpts,
   ...
 }: let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
+  inherit (config) systemOpts;
 in {
   imports =
     lib.flatten
@@ -58,7 +56,7 @@ in {
   };
   backupOpts = {
     remoteRepo = "/mnt/B2/borg";
-    sourcePaths = [config.systemOpts.persistVol];
+    sourcePaths = [systemOpts.persistVol];
     excludeList = [
       # Run `borg help patterns` for guidance on exclusion patterns
       "*/home/*/.git/**" #can be restored from repo
@@ -100,7 +98,7 @@ in {
   ];
 
   # VPS docker directory lives in persistent volume
-  environment.persistence.${config.systemOpts.persistVol} = lib.mkIf config.systemOpts.impermanent {
+  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
     directories = [
       "${config.serviceOpts.dockerDir}"
     ];

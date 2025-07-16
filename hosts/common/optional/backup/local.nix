@@ -1,8 +1,4 @@
-{
-  config,
-  userOpts,
-  ...
-}:
+{config, ...}:
 #TODO: get backup monitor working again
 #let
 #  ## Set up notifications in case of failure
@@ -61,7 +57,7 @@
   # Pull passphrase and key for ssh access (not needed for NAS)
   sops.secrets = {
     "borg/passphrase" = {};
-    "${userOpts.primaryUser}/sshKeys/id_borg".path = "/root/.ssh/id_ed25519";
+    "${config.userOpts.primaryUser}/sshKeys/id_borg".path = "/root/.ssh/id_ed25519";
   };
 
   services.borgbackup.jobs."local" = {

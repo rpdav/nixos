@@ -3,12 +3,12 @@
   pkgs,
   configLib,
   inputs,
-  systemOpts,
   config,
   ...
 }: let
   # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
+  inherit (config) systemOpts;
 in {
   ## This file contains host-specific NixOS configuration
 

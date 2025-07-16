@@ -2,10 +2,12 @@
 {
   pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
-}: {
+}: let
+  inherit (config) serviceOpts;
+in {
   # Containers
   virtualisation.oci-containers.containers."unifi-db" = {
     image = "mongo:7.0";

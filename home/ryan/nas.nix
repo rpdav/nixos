@@ -1,11 +1,4 @@
-{
-  pkgs,
-  lib,
-  systemOpts,
-  userOpts,
-  configLib,
-  ...
-}: {
+{configLib, ...}: {
   ## This file contains all home-manager config unique to user ryan on host nas
 
   imports = [

@@ -1,8 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
+  config,
   secrets,
   uptix,
   ...
@@ -18,7 +17,7 @@
       "WEBSOCKET_ENABLED" = "true";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/vaultwarden/config:/data:rw"
+      "${config.serviceOpts.dockerDir}/vaultwarden/config:/data:rw"
     ];
     log-driver = "journald";
     extraOptions = [

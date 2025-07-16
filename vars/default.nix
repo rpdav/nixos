@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  userOpts,
   ...
 }: let
   inherit (lib) mkOption types;
@@ -163,7 +162,7 @@ in {
     serviceOpts = {
       dockerUser = mkOption {
         type = types.str;
-        default = userOpts.primaryUser;
+        default = config.userOpts.primaryUser;
         description = "User under which to run docker services";
       };
       dockerDir = mkOption {
@@ -176,15 +175,6 @@ in {
         default = "${config.serviceOpts.dockerDir}/swag/proxy-confs";
         description = "Where to store swag proxy configs";
       };
-    };
-  };
-
-  config = {
-    _module.args = {
-      systemOpts = config.systemOpts;
-      userOpts = config.userOpts;
-      serviceOpts = config.serviceOpts;
-      backupOpts = config.backupOpts;
     };
   };
 }

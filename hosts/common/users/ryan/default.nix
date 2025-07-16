@@ -3,7 +3,6 @@
   lib,
   inputs,
   secrets,
-  systemOpts,
   pkgs-stable,
   pkgs-unstable,
   configLib,
@@ -66,15 +65,12 @@ in {
       inherit inputs;
       inherit configLib;
       # Pass custom options assigned in nixos module to HM
-      systemOpts = config.systemOpts;
-      userOpts = config.userOpts;
-      serviceOpts = config.serviceOpts;
     };
   };
 
   # Fix file permissions after backup restore
   #TODO make this work for non-persist systems too
   systemd.tmpfiles.rules = [
-    "Z ${systemOpts.persistVol}/home/ryan - ryan users"
+    "Z ${config.systemOpts.persistVol}/home/ryan - ryan users"
   ];
 }

@@ -3,9 +3,9 @@
   config,
   pkgs,
   lib,
-  userOpts,
   ...
 }: let
+  inherit (config) userOpts;
   homeDirectory =
     if pkgs.stdenv.isLinux
     then "/home/${userOpts.primaryUser}"

@@ -1,7 +1,6 @@
 {
   config,
   osConfig,
-  systemOpts,
   pkgs,
   ...
 }: let
@@ -10,7 +9,7 @@
   defaultLocation = "${config.home.homeDirectory}/.bash_history";
   historyFile =
     if osConfig.systemOpts.impermanent
-    then "${systemOpts.persistVol}${defaultLocation}"
+    then "${config.systemOpts.persistVol}${defaultLocation}"
     else "${defaultLocation}";
 in {
   programs.bash = {

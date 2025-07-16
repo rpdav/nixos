@@ -1,10 +1,7 @@
-{
-  systemOpts,
-  ...
-}: {
+{config, ...}: {
   programs.fuse.userAllowOther = true;
 
-  environment.persistence.${systemOpts.persistVol} = {
+  environment.persistence.${config.systemOpts.persistVol} = {
     hideMounts = true;
     directories = [
       "/var/log"

@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  userOpts,
   ...
 }: {
   #  services.greetd = {

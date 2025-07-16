@@ -2,10 +2,12 @@
 {
   pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
-}: {
+}: let
+  inherit (config) serviceOpts;
+in {
   # Containers
   virtualisation.oci-containers.containers."nextcloud" = {
     image = uptix.dockerImage "lscr.io/linuxserver/nextcloud";

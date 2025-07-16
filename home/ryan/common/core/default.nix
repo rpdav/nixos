@@ -4,7 +4,6 @@
   lib,
   secrets,
   pkgs,
-  userOpts,
   ...
 }: {
   imports = [

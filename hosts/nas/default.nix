@@ -3,7 +3,6 @@
   lib,
   config,
   configLib,
-  userOpts,
   ...
 }: let
   # Generates a list of the keys in primary user's directory in this repo

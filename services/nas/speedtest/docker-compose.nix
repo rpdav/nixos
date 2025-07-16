@@ -1,9 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
-  systemOpts,
+  config,
   uptix,
   ...
 }: {
@@ -16,10 +14,10 @@
       "PRUNE_RESULTS_OLDER_THAN" = "365";
       "PUID" = "1000";
       "SPEEDTEST_SCHEDULE" = "0 */6 * * *";
-      "TZ" = "${systemOpts.timezone}";
+      "TZ" = config.systemOpts.timezone;
     };
     volumes = [
-      "${serviceOpts.dockerDir}/speedtest-tracker/config:/config:rw"
+      "${config.serviceOpts.dockerDir}/speedtest-tracker/config:/config:rw"
     ];
     log-driver = "journald";
     extraOptions = [

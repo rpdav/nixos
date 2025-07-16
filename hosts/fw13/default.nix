@@ -3,13 +3,13 @@
   pkgs,
   configLib,
   inputs,
-  systemOpts,
-  userOpts,
   config,
   ...
 }:
 #TODO add system stats here
-{
+let
+  inherit (config) systemOpts;
+in {
   ## This file contains host-specific NixOS configuration
 
   imports =
@@ -59,7 +59,7 @@
   backupOpts = {
     localRepo = "ssh://borg@borg:2222/backup";
     remoteRepo = "/mnt/B2/borg";
-    sourcePaths = [config.systemOpts.persistVol];
+    sourcePaths = [systemOpts.persistVol];
     excludeList = [
       # Run `borg help patterns` for guidance on exclusion patterns
       "*/var/**" #not needed for restore

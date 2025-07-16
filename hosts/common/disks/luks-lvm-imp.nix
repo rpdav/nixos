@@ -1,8 +1,10 @@
 {
-  systemOpts,
+  config,
   inputs,
   ...
-}: {
+}: let
+  inherit (config) systemOpts;
+in {
   # Disko config using luks, lvm, swap, and btrfs subvolumes for use with impermanence module
   imports = [inputs.disko.nixosModules.disko];
   disko.devices = {

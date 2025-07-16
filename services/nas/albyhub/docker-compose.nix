@@ -1,8 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
 }: {
@@ -14,7 +13,7 @@
       "WORK_DIR" = "/data/albyhub";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/albyhub/config:/data/albyhub:rw"
+      "${config.serviceOpts.dockerDir}/albyhub/config:/data/albyhub:rw"
     ];
     log-driver = "journald";
     extraOptions = [

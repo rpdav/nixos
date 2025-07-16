@@ -1,10 +1,10 @@
 {
-  systemOpts,
-  userOpts,
   inputs,
   config,
   ...
-}: {
+}: let
+  inherit (config) systemOpts;
+in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [

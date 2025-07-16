@@ -1,8 +1,4 @@
-{
-  serviceOpts,
-  config,
-  ...
-}: let
+{config, ...}: let
   inherit (config.serviceOpts) dockerDir dockerUser;
 in {
   imports = [./docker-compose.nix];

@@ -1,11 +1,12 @@
 {
   inputs,
-  systemOpts,
+  config,
   pkgs,
   ...
 }:
 # This module uses sshd keys to generate host age keys - sshd must be enabled for system-level sops to work
 let
+  inherit (config) systemOpts;
   secretspath = builtins.toString inputs.nix-secrets;
 
   # Define appropriate key path depending on whether system is impermanent

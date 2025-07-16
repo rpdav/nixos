@@ -3,8 +3,6 @@
   pkgs,
   lib,
   config,
-  serviceOpts,
-  systemOpts,
   uptix,
   ...
 }: {
@@ -14,12 +12,12 @@
     environment = {
       "PGID" = "0";
       "PUID" = "0";
-      "TZ" = "${systemOpts.timezone}";
+      "TZ" = config.systemOpts.timezone;
     };
     volumes = [
       "/:/source:rw"
       "/mnt/storage/backups:/backups:rw"
-      "${serviceOpts.dockerDir}/duplicati/config:/config:rw"
+      "${config.serviceOpts.dockerDir}/duplicati/config:/config:rw"
     ];
     log-driver = "journald";
     extraOptions = [
