@@ -33,6 +33,7 @@ in {
         "dom.security.https_only_mode" = true;
         "extensions.formautofill.addresses.enabled" = false; #disable address autofill
         "extensions.formautofill.creditCards.enabled" = false; #disable payment autofill
+        "widget.non-native-theme.scrollbar.size.override" = 24; #make scrollbar a bit bigger
       };
 
       # Extensions
