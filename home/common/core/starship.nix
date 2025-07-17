@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf strings;
   stylixDisable = !config.stylix.targets.starship.enable;
 in {
   programs.bash.bashrcExtra = ''
@@ -62,7 +62,7 @@ in {
         style = "bg:blue";
         symbol = "";
       };
-      format = builtins.concatStringsSep "" [
+      format = strings.concatStrings [
         "[](red)"
         "$os"
         "$username"

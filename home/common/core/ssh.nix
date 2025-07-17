@@ -10,7 +10,7 @@
   # Path to public keys stored in config
   pathtokeys = configLib.relativeToRoot "hosts/common/users/${username}/keys";
   # List of public keys in path
-  yubikeys =
+  pubKeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))
     # Remove the .pub suffix
     (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
@@ -19,7 +19,7 @@
     lib.lists.map
     # list of dicts
     (key: {".ssh/${key}.pub".source = "${pathtokeys}/${key}.pub";})
-    yubikeys
+    pubKeys
   );
 in {
   # Pull manual key from sops
