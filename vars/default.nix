@@ -146,15 +146,19 @@ in {
         default = "/mnt/B2/borg or something";
         description = "B2 backup target after mounting";
       };
-      sourcePaths = mkOption {
+      sourceDirectories = mkOption {
         type = types.listOf types.str;
         default = [config.systemOpts.persistVol];
         description = "Path(s) to back up";
       };
-      excludeList = mkOption {
+      patterns = mkOption {
         type = types.listOf types.str;
-        default = [".git/**" "etcetera"];
-        description = "List of paths and files to exclude";
+        default = [""];
+        description = "list of borg patterns";
+        example = [
+          " - **/.git"
+          " - **/.Trash*"
+        ];
       };
     };
 

@@ -61,10 +61,10 @@
   };
 
   services.borgbackup.jobs."local" = {
-    paths = config.backupOpts.sourcePaths;
-    exclude = config.backupOpts.excludeList;
+    paths = config.backupOpts.sourceDirectories;
+    patterns = config.backupOpts.patterns;
     user = "root";
-    repo = config.backupOpts.localRepo + ("/" + config.networking.hostName);
+    repo = "${config.backupOpts.localRepo}/${config.networking.hostName}/root";
     doInit = true;
     startAt = ["daily"];
     #    preHook = placeholder for snapshotting/mounting command

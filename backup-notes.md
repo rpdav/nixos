@@ -13,3 +13,5 @@ Could also do a full blown system- and home-manager-compatible module. EmergentM
 
 Migrating from borgbackup to borgmatic:
 borgbackup is set up with an excludeList which creates a file read by --exclude-from. Need to translate this to a patterns file that can be used by both programs.
+
+Question: what keys are being used for borg currently and who has access to them?

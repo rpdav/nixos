@@ -56,11 +56,11 @@ in {
   };
   backupOpts = {
     remoteRepo = "/mnt/B2/borg";
-    sourcePaths = [systemOpts.persistVol];
-    excludeList = [
+    sourceDirectories = [systemOpts.persistVol];
+    patterns = [
       # Run `borg help patterns` for guidance on exclusion patterns
-      "*/home/*/.git/**" #can be restored from repo
-      "*/var/**"
+      "- */home/*/.git/**" #can be restored from repo
+      "- */var/**"
     ];
   };
 

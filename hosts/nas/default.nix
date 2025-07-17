@@ -61,12 +61,12 @@ in {
   backupOpts = {
     localRepo = "/mnt/storage/backups/borg";
     remoteRepo = "/mnt/B2/borg";
-    sourcePaths = [config.systemOpts.persistVol];
-    excludeList = [
+    sourceDirectories = [config.systemOpts.persistVol];
+    patterns = [
       # Run `borg help patterns` for guidance on exclusion patterns
-      "*/home/*/.git/**" #can be restored from repo
-      "**/.local/share/libvirt" #root and user vm images
-      "*/var/**"
+      "- */home/*/.git/**" #can be restored from repo
+      "- **/.local/share/libvirt" #root and user vm images
+      "- */var/**"
     ];
   };
   # disable emergency mode from preventing system boot if there are mounting issues

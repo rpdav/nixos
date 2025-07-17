@@ -51,24 +51,6 @@ in {
     impermanent = true;
     gui = true;
   };
-  #backupOpts = {
-  #  localRepo = "ssh://borg@borg:2222/backup";
-  #  remoteRepo = "/mnt/B2/borg";
-  #  sourcePaths = [config.systemOpts.persistVol];
-  #  excludeList = [
-  #    # Run `borg help patterns` for guidance on exclusion patterns
-  #    "*/var/**" #not needed for restore
-  #    "**/.git" #can be restored from repos
-  #    "**/.Trash*" #automatically made by gui deletions
-  #    "**/.local/share/libvirt" #vdisks made mostly for testing
-  #    "*/home/*/Downloads/" #big files
-  #    "*/home/ryan/Nextcloud" #already on server
-  #    "*/home/*/.thunderbird/*/ImapMail" #email
-  #    "*/home/*/.local/share/Steam" #lots of small files and big games
-  #    "*/home/*/.local/share/lutris" #lots of small files and big games
-  #    "*/home/*/.local/share/protonmail" #email
-  #  ];
-  #};
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "25.05";

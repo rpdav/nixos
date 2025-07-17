@@ -70,5 +70,20 @@
       enabled = true;
     }
   ];
-  backupOpts.excludeList = ["userExcludes"];
+  backupOpts = {
+    patterns = [
+      "- **/.git" #can be restored from repos
+      "- **/.Trash*" #automatically made by gui deletions
+      "- **/.local/share/libvirt" #vdisks made mostly for testing
+      "- */home/*/Downloads/" #big files
+      "- */home/ryan/Nextcloud" #already on server
+      "- */home/*/.thunderbird/*/ImapMail" #email
+      "- */home/*/.local/share/Steam" #lots of small files and big games
+      "- */home/*/.local/share/lutris" #lots of small files and big games
+      "- */home/*/.local/share/protonmail" #email
+    ];
+    sourceDirectories = ["/persist/home/ryan"];
+    localRepo = "";
+    remoteRepo = "";
+  };
 }
