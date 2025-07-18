@@ -15,3 +15,5 @@ Migrating from borgbackup to borgmatic:
 borgbackup is set up with an excludeList which creates a file read by --exclude-from. Need to translate this to a patterns file that can be used by both programs.
 
 Question: what keys are being used for borg currently and who has access to them?
+
+Put borg pubkeys into nas/services/borg/keys and build the list out declaratively! Don't even need persistent storage in this case. May still need to persist the host keys, though.

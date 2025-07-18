@@ -57,13 +57,16 @@
   # Pull passphrase and key for ssh access (not needed for NAS)
   sops.secrets = {
     "borg/passphrase" = {};
-    "${config.userOpts.primaryUser}/sshKeys/id_borg".path = "/root/.ssh/id_ed25519";
+    "root/sshKeys/id_borg" = {};
   };
 
   services.borgbackup.jobs."local" = {
     paths = config.backupOpts.sourceDirectories;
     patterns = config.backupOpts.patterns;
     user = "root";
+    environment = {
+      BORG_RSH = "ssh -i ${config.sops.secrets."root/sshKeys/id_borg".path}";
+    };
     repo = "${config.backupOpts.localRepo}/${config.networking.hostName}/root";
     doInit = true;
     startAt = ["daily"];

@@ -72,17 +72,20 @@
   ];
   backupOpts = {
     patterns = [
-      "- **/.git" #can be restored from repos
-      "- **/.Trash*" #automatically made by gui deletions
-      "- **/.local/share/libvirt" #vdisks made mostly for testing
-      "- */home/*/Downloads/" #big files
-      "- */home/ryan/Nextcloud" #already on server
-      "- */home/*/.thunderbird/*/ImapMail" #email
-      "- */home/*/.local/share/Steam" #lots of small files and big games
-      "- */home/*/.local/share/lutris" #lots of small files and big games
-      "- */home/*/.local/share/protonmail" #email
+      "R /persist/home/ryan/Documents"
+      "- **/*.tar" #omit tar files
+      "- medical" #omit medical directory
+      #"- **/.git" #can be restored from repos
+      #"- **/.Trash*" #automatically made by gui deletions
+      #"- **/.local/share/libvirt" #vdisks made mostly for testing
+      #"- */home/*/Downloads/" #big files
+      #"- */home/ryan/Nextcloud" #already on server
+      #"- */home/*/.thunderbird/*/ImapMail" #email
+      #"- */home/*/.local/share/Steam" #lots of small files and big games
+      #"- */home/*/.local/share/lutris" #lots of small files and big games
+      #"- */home/*/.local/share/protonmail" #email
     ];
-    sourceDirectories = ["/persist/home/ryan"];
+    sourceDirectories = ["/persist/home/ryan/Documents"];
     localRepo = "";
     remoteRepo = "";
   };
