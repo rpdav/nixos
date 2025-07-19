@@ -3,7 +3,7 @@
   osConfig,
   ...
 }: let
-  inherit (config.backupOpts) sourcePaths patterns localRepo;
+  inherit (config.backupOpts) patterns localRepo;
   inherit (config.home) username;
 in {
   sops.secrets = {
@@ -12,11 +12,12 @@ in {
   };
 
   # local backup config
+  services.borgmatic.enable = true;
   programs.borgmatic = {
     enable = true;
-    "${username}-local" = {
+    backups."${username}-local" = {
       location = {
-        inherit sourcePaths;
+        # inherit sourceDirectories;
         inherit patterns;
         repositories = [
           #  {
@@ -24,9 +25,9 @@ in {
           #    label = "remote";
           #  }
           {
-            path = "${localRepo}/${osConfig.networking.hostName}/${username}";
-            label = "local";
-            encryption = "repokey-blake2";
+            "path" = "${localRepo}/${osConfig.networking.hostName}/${username}";
+            "label" = "local";
+            #"encryption" = "repokey-blake2";
           }
         ];
         extraConfig = {
@@ -34,7 +35,7 @@ in {
         };
         excludeHomeManagerSymlinks = true;
       };
-      storage.encryptionPassCommand = "cat ${config.sops.secrets."borg/passphrase".path}";
+      storage.encryptionPasscommand = "cat ${config.sops.secrets."borg/passphrase".path}";
       retention = {
         keepDaily = 7;
         keepWeekly = 4;

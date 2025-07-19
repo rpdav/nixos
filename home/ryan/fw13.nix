@@ -1,6 +1,9 @@
 {
+  pkgs,
   lib,
   configLib,
+  config,
+  osConfig,
   ...
 }: {
   ## This file contains all home-manager config unique to user ryan on host fw13
@@ -21,6 +24,7 @@
       "home/common/optional/app/web-apps"
       "home/common/optional/config/persist.nix"
       "home/common/optional/wm/hyprland"
+      "home/common/optional/config/backup.nix"
 
       # monitor module
       "modules/hyprland/monitors.nix"
@@ -73,8 +77,11 @@
   backupOpts = {
     patterns = [
       "R /persist/home/ryan/Documents"
+      "- medical"
+      "+ ."
       "- **/*.tar" #omit tar files
-      "- medical" #omit medical directory
+      #"+ /persist/home/ryan/Documents" #back up everything else
+
       #"- **/.git" #can be restored from repos
       #"- **/.Trash*" #automatically made by gui deletions
       #"- **/.local/share/libvirt" #vdisks made mostly for testing
@@ -86,7 +93,13 @@
       #"- */home/*/.local/share/protonmail" #email
     ];
     sourceDirectories = ["/persist/home/ryan/Documents"];
-    localRepo = "";
+    localRepo = "/tmp/borg/backups";
     remoteRepo = "";
   };
+  #testing only - allow backups on battery
+  systemd.user.services.borgmatic.Unit.ConditionACPower = lib.mkForce false;
+  systemd.user.services.borgmatic.Service.ExecStartPre = lib.mkForce [
+    "${pkgs.coreutils}/bin/mkdir -p ${config.backupOpts.localRepo}/${osConfig.networking.hostName}/${config.home.username}"
+    "${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2"
+  ];
 }

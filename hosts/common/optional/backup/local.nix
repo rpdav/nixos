@@ -65,6 +65,7 @@
     patterns = config.backupOpts.patterns;
     user = "root";
     environment = {
+      # Use borg-specific key instead of default
       BORG_RSH = "ssh -i ${config.sops.secrets."root/sshKeys/id_borg".path}";
     };
     repo = "${config.backupOpts.localRepo}/${config.networking.hostName}/root";

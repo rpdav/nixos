@@ -17,3 +17,8 @@ borgbackup is set up with an excludeList which creates a file read by --exclude-
 Question: what keys are being used for borg currently and who has access to them?
 
 Put borg pubkeys into nas/services/borg/keys and build the list out declaratively! Don't even need persistent storage in this case. May still need to persist the host keys, though.
+
+# borgmatic setup
+backup won't run if repo hasn't been initialized:
+borgmatic repo-create --encryption repokey-blake2 (could omit encryption if I figure out how to put that in the HM config - that seems to fail)
+repo-create also needs to have the path exist - won't make it first
