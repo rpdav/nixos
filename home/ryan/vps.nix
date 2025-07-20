@@ -24,4 +24,13 @@
   home.homeDirectory = "/home/ryan";
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
+
+  backupOpts = {
+    patterns = [
+      "- **/.git" #can be restored from repos
+      "+ /persist/home/ryan" #back up everything else
+    ];
+    localRepo = "ssh://borg@borg:2222/backup";
+    #remoteRepo = "";
+  };
 }

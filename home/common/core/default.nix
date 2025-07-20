@@ -7,6 +7,7 @@
   ...
 }: {
   imports = [
+    ./backup.nix
     ./bash.nix
     ./sops.nix
     ./ssh.nix

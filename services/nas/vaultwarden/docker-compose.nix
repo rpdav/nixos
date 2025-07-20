@@ -12,7 +12,7 @@
     environment = {
       "INVITATIONS_ALLOWED" = "true";
       "LOG_FILE" = "/data/vaultwarden.log";
-      "SERVER_ADMIN_EMAIL" = "${secrets.personal-mail.address}";
+      "SERVER_ADMIN_EMAIL" = "${secrets.ryan.email.personal-mail.address}";
       "SIGNUPS_ALLOWED" = "false";
       "WEBSOCKET_ENABLED" = "true";
     };

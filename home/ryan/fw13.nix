@@ -24,7 +24,6 @@
       "home/common/optional/app/web-apps"
       "home/common/optional/config/persist.nix"
       "home/common/optional/wm/hyprland"
-      "home/common/optional/config/backup.nix"
 
       # monitor module
       "modules/hyprland/monitors.nix"
@@ -74,24 +73,20 @@
       enabled = true;
     }
   ];
+
   backupOpts = {
     patterns = [
-      "R /persist/home/ryan/Documents"
-      "- /persist/home/ryan/Documents/medical"
-      "- **/*.tar" #omit tar files
-      #"+ /persist/home/ryan/Documents" #back up everything else
-
-      #"- **/.git" #can be restored from repos
-      #"- **/.Trash*" #automatically made by gui deletions
-      #"- **/.local/share/libvirt" #vdisks made mostly for testing
-      #"- */home/*/Downloads/" #big files
-      #"- */home/ryan/Nextcloud" #already on server
-      #"- */home/*/.thunderbird/*/ImapMail" #email
-      #"- */home/*/.local/share/Steam" #lots of small files and big games
-      #"- */home/*/.local/share/lutris" #lots of small files and big games
-      #"- */home/*/.local/share/protonmail" #email
+      "- **/.git" #can be restored from repos
+      "- **/.Trash*" #automatically made by gui deletions
+      "- **/.local/share/libvirt" #vdisks made mostly for testing
+      "- /persist/home/ryan/Downloads/" #big files
+      "- /persist/home/ryan/Nextcloud" #already on server
+      "- /persist/home/ryan/.thunderbird/*/ImapMail" #email
+      "- /persist/home/ryan/.local/share/Steam" #lots of small files and big games
+      "- /persist/home/ryan/.local/share/lutris" #lots of small files and big games
+      "- /persist/home/ryan/.local/share/protonmail" #email
+      "+ /persist/home/ryan" #back up everything else
     ];
-    sourceDirectories = ["/persist/home/ryan/Documents"];
     localRepo = "ssh://borg@borg:2222/backup";
     #remoteRepo = "";
   };

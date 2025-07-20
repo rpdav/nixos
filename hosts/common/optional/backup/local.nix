@@ -45,7 +45,9 @@
 #      );
 #    };
 #in
-{
+let
+  inherit (config.backupOpts) patterns localRepo paths;
+in {
   #  imports = [
   #    borgbackupMonitor
   #  ];
@@ -73,22 +75,18 @@
     '';
   };
 
-  services.borgbackup.jobs."local" = {
-    paths = config.backupOpts.sourceDirectories;
-    patterns = config.backupOpts.patterns;
+  services.borgbackup.jobs."root" = {
+    inherit paths;
+    inherit patterns;
     user = "root";
-    environment = {
-      # Use borg-specific key instead of default
-      #BORG_RSH = "ssh -i ${config.sops.secrets."root/sshKeys/id_borg".path}";
-    };
-    repo = "${config.backupOpts.localRepo}/${config.networking.hostName}/root";
+    repo = "${localRepo}/${config.networking.hostName}/root";
     doInit = true;
     startAt = ["daily"];
     #    preHook = placeholder for snapshotting/mounting command
     #    postHook = placeholder for snapshot deletion/unmount
     encryption = {
       mode = "repokey-blake2";
-      passCommand = "cat ${config.sops.secrets."borg/passphrase".path}"; #This is also in password manager under entry "Borg backup"
+      passCommand = "cat ${config.sops.secrets."borg/passphrase".path}";
     };
     compression = "auto,lzma";
     prune.keep = {

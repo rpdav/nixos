@@ -143,7 +143,7 @@
       "--health-cmd=ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
       "--health-retries=0"
       "--health-timeout=3s"
-      "--hostname=${secrets.admin-mail.host}"
+      "--hostname=${secrets.ryan.email.admin-mail.host}"
       "--network-alias=dms"
       "--network=dms_default"
     ];

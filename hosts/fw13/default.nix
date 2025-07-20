@@ -8,7 +8,7 @@
 }:
 #TODO add system stats here
 let
-  inherit (config) systemOpts;
+  inherit (config.systemOpts) persistVol impermanent;
 in {
   ## This file contains host-specific NixOS configuration
 
@@ -57,6 +57,21 @@ in {
     gui = true;
   };
 
+  # Backup config
+  backupOpts = {
+    localRepo = "ssh://borg@borg:2222/backup";
+    #remoteRepo = "/mnt/B2/borg";
+    paths = [
+      "${persistVol}/etc"
+    ];
+    patterns = [
+      # Run `borg help patterns` for guidance on exclusion patterns
+      "- */var/**" #not needed for restore
+      "- **/.Trash*" #automatically made by gui deletions
+      "- **/libvirt" #vdisks made mostly for testing
+    ];
+  };
+
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
 
@@ -73,7 +88,7 @@ in {
     };
     lanzaboote = {
       enable = true;
-      pkiBundle = "${systemOpts.persistVol}/etc/secureboot";
+      pkiBundle = "${persistVol}/etc/secureboot";
     };
   };
 
@@ -113,10 +128,10 @@ in {
   ];
 
   # Create impermanent directories
-  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
       "/etc/secureboot"
-      "/var/lib/fprint" # fingerprint reader
+      "/var/lib/fprint"
       "/var/lib/bluetooth"
     ];
     files = [

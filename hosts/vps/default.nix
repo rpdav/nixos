@@ -6,9 +6,9 @@
   config,
   ...
 }: let
-  # Generates a list of the keys in ./keys
+  inherit (config.systemOpts) persistVol impermanent;
+  # Generates a list of the keys for primary user
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
-  inherit (config) systemOpts;
 in {
   imports =
     lib.flatten
@@ -22,10 +22,11 @@ in {
         "hosts/common/disks/btrfs-imp.nix"
 
         # optional config
-        "hosts/common/optional/backup/remote.nix"
+        "hosts/common/optional/backup"
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
+        "hosts/common/optional/stylix.nix"
 
         # services
         "services/common"
@@ -54,13 +55,17 @@ in {
     dockerDir = "/opt/docker";
     proxyDir = "/run/selfhosting/proxy-confs";
   };
+
+  # Backup config
   backupOpts = {
-    remoteRepo = "/mnt/B2/borg";
-    sourceDirectories = [systemOpts.persistVol];
+    localRepo = "ssh://borg@borg:2222/backup";
+    #remoteRepo = "/mnt/B2/borg";
+    paths = [
+      "${persistVol}/etc"
+    ];
     patterns = [
       # Run `borg help patterns` for guidance on exclusion patterns
-      "- */home/*/.git/**" #can be restored from repo
-      "- */var/**"
+      "- */var/**" #not needed for restore
     ];
   };
 
@@ -98,7 +103,7 @@ in {
   ];
 
   # VPS docker directory lives in persistent volume
-  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
       "${config.serviceOpts.dockerDir}"
     ];

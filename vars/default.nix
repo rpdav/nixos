@@ -146,7 +146,7 @@ in {
         default = "/mnt/B2/borg or something";
         description = "B2 backup target after mounting";
       };
-      sourceDirectories = mkOption {
+      paths = mkOption {
         type = types.listOf types.str;
         default = [config.systemOpts.persistVol];
         description = "Path(s) to back up";

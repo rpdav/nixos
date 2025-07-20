@@ -5,6 +5,7 @@
   configLib,
   ...
 }: let
+  inherit (config.systemOpts) persistVol;
   # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
@@ -58,10 +59,14 @@ in {
     dockerDir = "/mnt/docker/appdata";
     proxyDir = "/run/selfhosting/proxy-confs";
   };
+
+  # Backup config
   backupOpts = {
     localRepo = "/mnt/storage/backups/borg";
     remoteRepo = "/mnt/B2/borg";
-    sourceDirectories = [config.systemOpts.persistVol];
+    paths = [
+      "${persistVol}/etc"
+    ];
     patterns = [
       # Run `borg help patterns` for guidance on exclusion patterns
       "- */home/*/.git/**" #can be restored from repo
