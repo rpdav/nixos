@@ -13,10 +13,9 @@
 
   # modify ssh config for yubikeys
   programs.ssh = {
-    extraConfig = ''
+    extraConfig = lib.mkAfter ''
       # req'd for enabling yubikey-agent
       AddKeysToAgent yes
-
       Host *
         # symlink to current yubikey
         IdentityFile ~/.ssh/id_yubikey

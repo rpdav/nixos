@@ -77,8 +77,7 @@
   backupOpts = {
     patterns = [
       "R /persist/home/ryan/Documents"
-      "- medical"
-      "+ ."
+      "- /persist/home/ryan/Documents/medical"
       "- **/*.tar" #omit tar files
       #"+ /persist/home/ryan/Documents" #back up everything else
 
@@ -93,13 +92,7 @@
       #"- */home/*/.local/share/protonmail" #email
     ];
     sourceDirectories = ["/persist/home/ryan/Documents"];
-    localRepo = "/tmp/borg/backups";
-    remoteRepo = "";
+    localRepo = "ssh://borg@borg:2222/backup";
+    #remoteRepo = "";
   };
-  #testing only - allow backups on battery
-  systemd.user.services.borgmatic.Unit.ConditionACPower = lib.mkForce false;
-  systemd.user.services.borgmatic.Service.ExecStartPre = lib.mkForce [
-    "${pkgs.coreutils}/bin/mkdir -p ${config.backupOpts.localRepo}/${osConfig.networking.hostName}/${config.home.username}"
-    "${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2"
-  ];
 }

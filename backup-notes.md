@@ -22,3 +22,10 @@ Put borg pubkeys into nas/services/borg/keys and build the list out declarativel
 backup won't run if repo hasn't been initialized:
 borgmatic repo-create --encryption repokey-blake2 (could omit encryption if I figure out how to put that in the HM config - that seems to fail)
 repo-create also needs to have the path exist - won't make it first
+
+# testing over ssh
+need to create directories on nas manually - can't do that through ssh with borg's ssh key. Not sure of a great way to do this declaratively. Might be OK to just treat this as state.
+initial test worked but it was trying to use my yubikey instead of borg. It eventually works but just hangs for a while as it tries all the other keys.
+setting an IdentityFile in user ssh config and assigning ssh_command in the HM config **still** results in the systemd unit using other keys.
+
+there are some limitations to the HM module. It doesn't allow adding anything to a repository block other than path or label (like identity file or encryption). Wonder if it would be better to just set this up as toYAML.

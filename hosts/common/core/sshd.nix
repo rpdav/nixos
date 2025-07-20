@@ -44,11 +44,6 @@ in {
       Hostname 172.233.209.173
       User ryan
 
-    Host borg
-      Hostname 10.10.1.17
-      Port 2222
-      User borg
-
     Host testbox
       Hostname 10.10.1.18
       User ryan
