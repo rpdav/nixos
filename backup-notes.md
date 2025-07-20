@@ -10,8 +10,9 @@ also currently implemented as a systemd (non-user) unit which HM can't call
 Put borg pubkeys into nas/services/borg/keys and build the list out declaratively! Don't even need persistent storage in this case. May still need to persist the host keys, though.
 
 # Todo
-- [ ] reconfigure system backup to be root-specific
+- [x] reconfigure system backup to be root-specific
 - [ ] put in real directory excludes and remove AC power exception
 - [ ] test out on vps and nas?
 - [ ] clean up code - some backupOpts may not be needed. Are the right things being declared in the right places?
-- [ ] start on remote backup
+- [x] start on remote backup
+    - will stick with duplicati for now

@@ -56,18 +56,6 @@ in {
     impermanent = true;
     gui = true;
   };
-  backupOpts = {
-    localRepo = "ssh://borg@borg:2222/backup";
-    remoteRepo = "/mnt/B2/borg";
-    sourceDirectories = [systemOpts.persistVol];
-    patterns = [
-      # Run `borg help patterns` for guidance on exclusion patterns
-      "- */var/**" #not needed for restore
-      "- **/.Trash*" #automatically made by gui deletions
-      "- **/.local/share/libvirt" #vdisks made mostly for testing
-      "- */home" # handled by home-manager backups
-    ];
-  };
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

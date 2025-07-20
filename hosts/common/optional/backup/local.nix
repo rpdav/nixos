@@ -60,13 +60,26 @@
     "root/sshKeys/id_borg" = {};
   };
 
+  # ssh config for borg
+  programs.ssh = {
+    extraConfig = ''
+      Host borg
+        Hostname 10.10.1.17
+        Port 2222
+        User borg
+        IdentityFile ${config.sops.secrets."root/sshKeys/id_borg".path}
+        IdentitiesOnly yes
+        IdentityAgent none
+    '';
+  };
+
   services.borgbackup.jobs."local" = {
     paths = config.backupOpts.sourceDirectories;
     patterns = config.backupOpts.patterns;
     user = "root";
     environment = {
       # Use borg-specific key instead of default
-      BORG_RSH = "ssh -i ${config.sops.secrets."root/sshKeys/id_borg".path}";
+      #BORG_RSH = "ssh -i ${config.sops.secrets."root/sshKeys/id_borg".path}";
     };
     repo = "${config.backupOpts.localRepo}/${config.networking.hostName}/root";
     doInit = true;
