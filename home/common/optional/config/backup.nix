@@ -16,7 +16,7 @@ in {
   #testing only - allow backups on battery
   systemd.user.services.borgmatic.Unit.ConditionACPower = lib.mkForce false;
 
-  # prioritize borg key for borg host
+  # ssh config for borg
   programs.ssh = {
     extraConfig = ''
       Host borg
@@ -25,46 +25,36 @@ in {
         User borg
         IdentityFile ${config.sops.secrets."${username}/sshKeys/id_borg".path}
         IdentitiesOnly yes
+        IdentityAgent none
     '';
   };
 
-  #Ensure repo is created and initialized
+  #Ensure repo is initialized
   systemd.user.services.borgmatic.Service.ExecStartPre = lib.mkForce [
-    #"${pkgs.coreutils}/bin/mkdir -p ${config.backupOpts.localRepo}/${osConfig.networking.hostName}/${config.home.username}"
-    #"${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2"
+    "${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --make-parent-dirs"
   ];
-  # local backup config
+
   services.borgmatic.enable = true;
-  home.packages = [pkgs.borgmatic];
-  #  programs.borgmatic = {
-  #    enable = true;
-  #    backups."${username}" = {
-  #      location = {
-  #        # inherit sourceDirectories;
-  #        inherit patterns;
-  #        repositories = [
-  #          #  {
-  #          #    path = config.backupOpts.remoteRepo;
-  #          #    label = "remote";
-  #          #  }
-  #          {
-  #            "path" = "${localRepo}/${osConfig.networking.hostName}/${username}";
-  #            "label" = "local";
-  #            #"encryption" = "repokey-blake2";
-  #          }
-  #        ];
-  #        extraConfig = {
-  #          ssh_command = "ssh -i ${config.sops.secrets."${username}/sshKeys/id_borg".path} -o IdentitiesOnly=yes";
-  #        };
-  #        excludeHomeManagerSymlinks = true;
-  #      };
-  #      storage.encryptionPasscommand = "cat ${config.sops.secrets."borg/passphrase".path}";
-  #      retention = {
-  #        keepDaily = 7;
-  #        keepWeekly = 4;
-  #        keepMonthly = 12;
-  #        keepYearly = 1;
-  #      };
-  #    };
-  #  };
+  programs.borgmatic = {
+    enable = true;
+    backups."${username}" = {
+      location = {
+        inherit patterns;
+        repositories = [
+          {
+            "path" = "${localRepo}/${osConfig.networking.hostName}/${username}";
+            "label" = "local";
+          }
+        ];
+        excludeHomeManagerSymlinks = true;
+      };
+      storage.encryptionPasscommand = "cat ${config.sops.secrets."borg/passphrase".path}";
+      retention = {
+        keepDaily = 7;
+        keepWeekly = 4;
+        keepMonthly = 12;
+        keepYearly = 1;
+      };
+    };
+  };
 }
