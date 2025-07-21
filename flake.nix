@@ -59,6 +59,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager-unstable";
     };
+    stylix-stable = {
+      url = "github:nix-community/stylix/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.home-manager.follows = "home-manager-stable";
+    };
 
     # Nix-friendly editor
     nvf = {
@@ -139,6 +144,7 @@
           (import ./modules/nixos)
           ./hosts/fw13
           inputs.home-manager-unstable.nixosModules.home-manager
+          inputs.stylix.nixosModules.stylix
         ];
       };
       # Linode VPS
@@ -149,6 +155,7 @@
           (import ./modules/nixos)
           ./hosts/vps
           inputs.home-manager-stable.nixosModules.home-manager
+          inputs.stylix-stable.nixosModules.stylix
         ];
       };
       # Ryzen 5 3600 NAS and virtualization host
@@ -159,6 +166,7 @@
           (import ./modules/nixos)
           ./hosts/nas
           inputs.home-manager-unstable.nixosModules.home-manager
+          inputs.stylix.nixosModules.stylix
         ];
       };
       # Testing box (HP x86 thin client)

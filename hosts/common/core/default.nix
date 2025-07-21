@@ -12,6 +12,7 @@ in {
     ./packages.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys
+    ./stylix.nix
     ./vim.nix
 
     inputs.disko.nixosModules.disko

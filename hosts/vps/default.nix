@@ -26,7 +26,6 @@ in {
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
-        "hosts/common/optional/stylix.nix"
 
         # services
         "services/common"

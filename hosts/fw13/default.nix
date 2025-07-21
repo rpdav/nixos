@@ -29,7 +29,6 @@ in {
         "hosts/common/optional/duplicati.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
-        "hosts/common/optional/stylix.nix"
         "hosts/common/optional/wm/hyprland.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers

@@ -26,7 +26,6 @@ in {
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
         "hosts/common/optional/ssh-unlock.nix"
-        "hosts/common/optional/stylix.nix"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/wm/gnome.nix"
 

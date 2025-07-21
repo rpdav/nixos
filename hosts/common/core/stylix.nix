@@ -34,7 +34,9 @@
     |> builtins.readFile
     |> lib.removeSuffix "\n";
 in {
-  imports = [inputs.stylix.nixosModules.stylix];
+  imports = [
+    #inputs.stylix.nixosModules.stylix # module import is done in flake since stable and unstable are not compatible.
+  ];
 
   stylix = {
     enable = true;
@@ -42,6 +44,10 @@ in {
     inherit image;
     inherit polarity;
     imageScalingMode = "fill";
+  };
+
+  stylix.targets = {
+    console.enable = false;
   };
 
   #TODO add extra gtk theming?
