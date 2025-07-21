@@ -45,7 +45,7 @@ in {
         ];
         excludeHomeManagerSymlinks = true;
       };
-      storage.encryptionPasscommand = "cat ${config.sops.secrets."borg/passphrase".path}";
+      storage.encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
       retention = {
         keepDaily = 7;
         keepWeekly = 4;

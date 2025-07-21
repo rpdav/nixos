@@ -13,7 +13,10 @@ let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
-  imports = [inputs.nixos-cli.nixosModules.nixos-cli];
+  imports = [
+    inputs.nixos-cli.nixosModules.nixos-cli
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
   # user--specific variable overrides
   userOpts.wallpaper = "mountain";

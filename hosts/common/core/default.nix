@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  configLib,
   ...
 }: let
   inherit (config) systemOpts;
@@ -8,6 +9,7 @@ in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
+    (configLib.relativeToRoot "modules/nixos")
     ./tailscale.nix
     ./packages.nix
     ./sops.nix
@@ -25,6 +27,18 @@ in {
       keep-outputs = true
       keep-derivations = true
       warn-dirty = false
+    '';
+  };
+
+  # Allow local users to inhibit sleep (used for some systemd user units)
+  security.polkit = {
+    enable = true;
+    extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if (action.id == "org.freedesktop.login1.inhibit-block-shutdown" &&
+          subject.isInGroup("users"))
+              return polkit.Result.YES;
+      });
     '';
   };
 

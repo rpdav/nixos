@@ -12,13 +12,9 @@
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
-    home-manager-unstable = {
+    home-manager = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    home-manager-stable = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ###### Utilities ######
@@ -41,7 +37,7 @@
     # Secrets
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Impermanence
@@ -57,12 +53,7 @@
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager-unstable";
-    };
-    stylix-stable = {
-      url = "github:nix-community/stylix/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-      inputs.home-manager.follows = "home-manager-stable";
+      inputs.home-manager.follows = "home-manager";
     };
 
     # Nix-friendly editor
@@ -84,7 +75,7 @@
     # Firefox extensions
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Hyprland
@@ -141,21 +132,15 @@
       fw13 = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         modules = [
-          (import ./modules/nixos)
           ./hosts/fw13
-          inputs.home-manager-unstable.nixosModules.home-manager
-          inputs.stylix.nixosModules.stylix
         ];
       };
       # Linode VPS
-      vps = nixpkgs-stable.lib.nixosSystem {
+      vps = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          (import ./modules/nixos)
           ./hosts/vps
-          inputs.home-manager-stable.nixosModules.home-manager
-          inputs.stylix-stable.nixosModules.stylix
         ];
       };
       # Ryzen 5 3600 NAS and virtualization host
@@ -163,18 +148,7 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          (import ./modules/nixos)
           ./hosts/nas
-          inputs.home-manager-unstable.nixosModules.home-manager
-          inputs.stylix.nixosModules.stylix
-        ];
-      };
-      # Testing box (HP x86 thin client)
-      testbox = nixpkgs-stable.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          ./hosts/testbox
         ];
       };
       # Testing VM (QEMU VM running on Unraid)
@@ -182,9 +156,7 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          (import ./modules/nixos)
           ./hosts/testvm
-          inputs.home-manager-unstable.nixosModules.home-manager
         ];
       };
     };

@@ -35,7 +35,7 @@
     |> lib.removeSuffix "\n";
 in {
   imports = [
-    #inputs.stylix.nixosModules.stylix # module import is done in flake since stable and unstable are not compatible.
+    inputs.stylix.nixosModules.stylix
   ];
 
   stylix = {
