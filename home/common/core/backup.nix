@@ -13,9 +13,6 @@ in {
     "${username}/sshKeys/id_borg" = {};
   };
 
-  #testing only - allow backups on battery
-  systemd.user.services.borgmatic.Unit.ConditionACPower = lib.mkForce false;
-
   # ssh config for borg
   programs.ssh = {
     extraConfig = ''

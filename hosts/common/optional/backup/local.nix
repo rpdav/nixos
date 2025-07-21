@@ -81,6 +81,9 @@ in {
     user = "root";
     repo = "${localRepo}/${config.networking.hostName}/root";
     doInit = true;
+    extraInitArgs = [
+      "--make-parent-dirs"
+    ];
     startAt = ["daily"];
     #    preHook = placeholder for snapshotting/mounting command
     #    postHook = placeholder for snapshot deletion/unmount
