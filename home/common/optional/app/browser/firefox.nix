@@ -8,6 +8,7 @@
   ...
 }: let
   inherit (osConfig) systemOpts;
+  inherit (config.home) username;
   domain = secrets.selfhosting.domain;
 in {
   # Create persistent directories
@@ -16,11 +17,15 @@ in {
       ".mozilla"
     ];
   };
+
+  # stylix complains if this isn't set
+  stylix.targets.firefox.profileNames = [username];
+
   programs.firefox = {
     enable = true;
-    profiles.ryan = {
+    profiles.${username} = {
       id = 0;
-      name = "ryan default";
+      name = "${username}";
       settings = {
         "browser.startup.homepage" = "https://start.${domain}";
         "browser.search.region" = "US";

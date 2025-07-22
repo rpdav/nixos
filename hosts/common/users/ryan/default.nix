@@ -67,13 +67,12 @@ in {
       inherit secrets;
       inherit inputs;
       inherit configLib;
-      # Pass custom options assigned in nixos module to HM
     };
   };
 
   # Fix file permissions after backup restore
   #TODO make this work for non-persist systems too
   systemd.tmpfiles.rules = [
-    "Z ${config.systemOpts.persistVol}/home/ryan - ryan users"
+    "Z ${config.systemOpts.persistVol}/home/ryan 0700 ryan users"
   ];
 }

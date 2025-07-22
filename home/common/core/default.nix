@@ -80,6 +80,7 @@
   # Create persistent directories
   home.persistence."${config.systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.systemOpts.impermanent {
     directories = [
+      ".config/Bitwarden"
       ".config/BraveSoftware"
       ".config/GIMP"
       ".config/Nextcloud"
