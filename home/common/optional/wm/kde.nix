@@ -11,7 +11,7 @@ in {
   imports = [inputs.plasma-manager.homeManagerModules.plasma-manager];
 
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}/home/${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/kdedefaults"
       ".config/kde.org"

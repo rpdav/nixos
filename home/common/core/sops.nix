@@ -13,13 +13,13 @@
   keyLocation = "${homeDir}/.config/sops/age/keys.txt";
   keyFile =
     if impermanent
-    then "${persistVol}/${keyLocation}"
+    then "${persistVol}${keyLocation}"
     else "${keyLocation}";
 in {
   imports = [inputs.sops-nix.homeManagerModules.sops];
 
   # Create impermanent directories
-  home.persistence."${persistVol}${homeDir}" = lib.mkIf impermanent {
+  home.persistence."${persistVol}${homeDir}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/sops"
     ];

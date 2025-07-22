@@ -9,7 +9,7 @@
 in {
   imports = [inputs.impermanence.nixosModules.home-manager.impermanence];
 
-  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
     directories = (
       [
         ### home persistence for all systems ###

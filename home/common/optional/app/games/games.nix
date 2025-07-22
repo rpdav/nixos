@@ -16,7 +16,7 @@
     ]);
 in {
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/Moonlight Game Streaming Project"
       ".config/unity3d"

@@ -12,7 +12,7 @@
   };
 
   # Create persistent directories
-  home.persistence."${osConfig.systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.systemOpts.impermanent {
+  home.persistence."${osConfig.systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/protonmail"
       ".cache/evolution" #calendar data

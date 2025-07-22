@@ -10,7 +10,7 @@
   historyFile =
     if osConfig.systemOpts.impermanent
     then "${config.systemOpts.persistVol}${defaultLocation}"
-    else "${defaultLocation}";
+    else defaultLocation;
 in {
   programs.bash = {
     inherit historyFile;

@@ -31,6 +31,10 @@
 
   home.stateVersion = "24.05"; # don't change without reading release notes
 
+  userOpts = {
+    impermanent = false;
+  };
+
   backupOpts = {
     patterns = [
       "- **/.Trash*" #automatically made by gui deletions

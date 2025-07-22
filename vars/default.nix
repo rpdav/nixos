@@ -114,7 +114,7 @@ in {
       };
       wallpaper = mkOption {
         type = types.str;
-        default = "squares";
+        default = "mountain";
       };
       cursor = mkOption {
         type = types.str;
@@ -131,6 +131,11 @@ in {
       fontPkg = mkOption {
         type = types.str;
         default = "nerd-fonts.fira-code";
+      };
+      impermanent = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Boolean for whether to enable user impermanent directories";
       };
     };
 

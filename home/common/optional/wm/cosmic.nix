@@ -7,7 +7,7 @@
 }: let
   inherit (osConfig) systemOpts;
 in {
-  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf systemOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/cosmic"
     ];
