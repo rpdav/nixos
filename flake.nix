@@ -151,6 +151,13 @@
           ./hosts/nas
         ];
       };
+      # Asus vivobook
+      vivobook = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        modules = [
+          ./hosts/vivobook
+        ];
+      };
       # Testing VM (QEMU VM running on Unraid)
       testvm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   inputs,
   secrets,
   pkgs-stable,
@@ -9,10 +8,7 @@
   ...
 }:
 ## This file contains all NixOS config for user ariel
-let
-  # Generates a list of the keys in ./keys
-  pubKeys = lib.filesystem.listFilesRecursive ./keys;
-in {
+{
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -32,37 +28,35 @@ in {
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     home = "/home/ariel";
 
-    # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
-    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
-  };
-
-  environment.persistence.${config.systemOpts.persistVol}.directories = [
-    {
-      directory = "/home/ariel";
-      user = "ariel";
-      mode = "0700";
-    }
-  ];
-
-  # home-manager config
-  home-manager = {
-    useUserPackages = true;
-    users.ariel = import (configLib.relativeToRoot "home/ariel/${config.networking.hostName}.nix");
-    sharedModules = [
-      (import (configLib.relativeToRoot "modules/home-manager"))
+    # persist whole user directory for ariel
+    environment.persistence.${config.systemOpts.persistVol}.directories = [
+      {
+        directory = "/home/ariel";
+        user = "ariel";
+        mode = "0700";
+      }
     ];
-    extraSpecialArgs = {
-      inherit pkgs-stable;
-      inherit pkgs-unstable;
-      inherit secrets;
-      inherit inputs;
-      inherit configLib;
-    };
-  };
 
-  # Fix file permissions after backup restore
-  #TODO make this work for non-persist systems too
-  systemd.tmpfiles.rules = [
-    "Z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
-  ];
+    # home-manager config
+    home-manager = {
+      useUserPackages = true;
+      users.ariel = import (configLib.relativeToRoot "home/ariel/${config.networking.hostName}.nix");
+      sharedModules = [
+        (import (configLib.relativeToRoot "modules/home-manager"))
+      ];
+      extraSpecialArgs = {
+        inherit pkgs-stable;
+        inherit pkgs-unstable;
+        inherit secrets;
+        inherit inputs;
+        inherit configLib;
+      };
+    };
+
+    # Fix file permissions after backup restore
+    #TODO make this work for non-persist systems too
+    systemd.tmpfiles.rules = [
+      "Z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
+    ];
+  };
 }
