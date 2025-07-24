@@ -27,36 +27,35 @@
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     home = "/home/ariel";
-
-    # persist whole user directory for ariel
-    environment.persistence.${config.systemOpts.persistVol}.directories = [
-      {
-        directory = "/home/ariel";
-        user = "ariel";
-        mode = "0700";
-      }
-    ];
-
-    # home-manager config
-    home-manager = {
-      useUserPackages = true;
-      users.ariel = import (configLib.relativeToRoot "home/ariel/${config.networking.hostName}.nix");
-      sharedModules = [
-        (import (configLib.relativeToRoot "modules/home-manager"))
-      ];
-      extraSpecialArgs = {
-        inherit pkgs-stable;
-        inherit pkgs-unstable;
-        inherit secrets;
-        inherit inputs;
-        inherit configLib;
-      };
-    };
-
-    # Fix file permissions after backup restore
-    #TODO make this work for non-persist systems too
-    systemd.tmpfiles.rules = [
-      "Z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
-    ];
   };
+  # persist whole user directory for ariel
+  environment.persistence.${config.systemOpts.persistVol}.directories = [
+    {
+      directory = "/home/ariel";
+      user = "ariel";
+      mode = "0700";
+    }
+  ];
+
+  # home-manager config
+  home-manager = {
+    useUserPackages = true;
+    users.ariel = import (configLib.relativeToRoot "home/ariel/${config.networking.hostName}.nix");
+    sharedModules = [
+      (import (configLib.relativeToRoot "modules/home-manager"))
+    ];
+    extraSpecialArgs = {
+      inherit pkgs-stable;
+      inherit pkgs-unstable;
+      inherit secrets;
+      inherit inputs;
+      inherit configLib;
+    };
+  };
+
+  # Fix file permissions after backup restore
+  #TODO make this work for non-persist systems too
+  systemd.tmpfiles.rules = [
+    "Z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
+  ];
 }
