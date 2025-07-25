@@ -47,7 +47,7 @@ in {
     term = "kitty";
   };
   systemOpts = {
-    diskDevice = "nvme0n1";
+    diskDevice = "vda";
     swapSize = "8G";
     impermanent = true;
     gui = true;
@@ -70,17 +70,11 @@ in {
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "25.05";
 
-  # Boot config with luks
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = false;
-        # more readable boot menu on hidpi display
-        consoleMode = "5";
-        configurationLimit = 30;
-      };
-      efi.canTouchEfiVariables = true;
-    };
+  # bootloader
+  boot.loader.grub = {
+    device = "nodev";
+    efiSupport = true;
+    efiInstallAsRemovable = true;
   };
 
   # Networking
