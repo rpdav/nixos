@@ -13,8 +13,7 @@ in {
   ## This file contains host-specific NixOS configuration
 
   imports =
-    lib.flatten #the list below is a nested list. imports doesn't accept this, so must use lib.flatten
-    
+    lib.flatten
     [
       (map configLib.relativeToRoot [
         # core config
@@ -37,8 +36,6 @@ in {
 
       # host-specific
       ./hardware-configuration.nix
-      inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-      inputs.lanzaboote.nixosModules.lanzaboote
     ];
 
   # Variable overrides
@@ -82,9 +79,6 @@ in {
   networking.networkmanager.enable = true;
 
   # Host-specific tailscale config
-  # This causes TS to use relays to connect to router and nas when on lan. This is a known issue -
-  # https://github.com/tailscale/tailscale/issues/1227. The only way around is to manually add --accept-routes
-  # when remote and --reset when on lan. Since this doesn't really cause much issue on LAN, I'm just leaving it.
   services.tailscale.extraUpFlags = ["--accept-routes"]; #accept tailscale routes to LAN while offsite during reauth.
 
   # Host-specific hardware config
@@ -113,6 +107,17 @@ in {
   environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
       "/var/lib/bluetooth"
+      # Entire user directories are persisted for this host
+      {
+        directory = "/home/ryan";
+        user = "ryan";
+        mode = "0700";
+      }
+      {
+        directory = "/home/ariel";
+        user = "ariel";
+        mode = "0700";
+      }
     ];
     files = [
       "/root/.ssh/known_hosts"

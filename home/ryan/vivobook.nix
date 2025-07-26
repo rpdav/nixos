@@ -32,6 +32,10 @@
 
   home.stateVersion = "25.05"; # don't change without reading release notes
 
+  userOpts = {
+    impermanent = false;
+  };
+
   backupOpts = {
     patterns = [
       "- **/.git" #can be restored from repos

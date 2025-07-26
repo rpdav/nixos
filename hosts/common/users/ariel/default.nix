@@ -28,14 +28,6 @@
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     home = "/home/ariel";
   };
-  # persist whole user directory for ariel
-  environment.persistence.${config.systemOpts.persistVol}.directories = [
-    {
-      directory = "/home/ariel";
-      user = "ariel";
-      mode = "0700";
-    }
-  ];
 
   # home-manager config
   home-manager = {
