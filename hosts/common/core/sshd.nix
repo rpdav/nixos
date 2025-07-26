@@ -40,6 +40,10 @@ in {
       User pi
       Port 22
 
+    Host vivobook
+      Hostname 10.10.1.21
+      User ryan
+
     Host vps
       Hostname 172.233.209.173
       User ryan
@@ -49,7 +53,7 @@ in {
       User ryan
 
     Host testvm
-      Hostname 192.168.122.224
+      Hostname 192.168.122.207
       User root
 
     Host gitea.dfrp.xyz
@@ -61,6 +65,7 @@ in {
   '';
 
   # Enable remote passwordless sudo
+  # this doesn't work :(
   security.pam.services.sudo = {config, ...}: {
     rules.auth.rssh = {
       order = config.rules.auth.ssh_agent_auth.order - 1;

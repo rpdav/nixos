@@ -9,6 +9,8 @@
 #TODO add system stats here
 let
   inherit (config.systemOpts) persistVol impermanent;
+  # Generates a list of the keys in admin user's directory in this repo
+  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
   ## This file contains host-specific NixOS configuration
 
@@ -44,7 +46,7 @@ in {
     term = "kitty";
   };
   systemOpts = {
-    diskDevice = "vda";
+    diskDevice = "nvme0n1";
     swapSize = "8G";
     impermanent = true;
     gui = true;
@@ -126,6 +128,11 @@ in {
 
   # Firmware updates
   services.fwupd.enable = true;
+
+  # allow root ssh login for rebuilds
+  users.users.root = {
+    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+  };
 
   # minimal root user config
   users.users.root = {
