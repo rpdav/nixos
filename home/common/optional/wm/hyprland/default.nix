@@ -45,9 +45,7 @@
   };
 
   # notifications
-  services.dunst = {
-    enable = true;
-  };
+  services.swaync.enable = true;
 
   # flash drive sys tray
   services.udiskie.enable = true;

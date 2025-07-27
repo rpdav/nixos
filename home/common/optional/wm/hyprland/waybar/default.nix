@@ -50,18 +50,37 @@
           "custom/right-divider"
           "idle_inhibitor"
           "custom/divider"
-          "custom/divider"
           "power-profiles-daemon"
-          "custom/divider"
           "custom/divider"
           "network"
           "custom/divider"
-          "custom/divider"
           "bluetooth"
+          "custom/divider"
+          "custom/notifications"
           "custom/divider"
           "tray"
           "custom/divider"
         ];
+        "custom/notifications" = {
+          tooltip = false;
+          format = "{icon}";
+          format-icons = {
+            notification = "<span foreground='red'><sup></sup></span> ";
+            none = " ";
+            dnd-notification = " <span foreground='red'><sup></sup></span> ";
+            dnd-none = " ";
+            inhibited-notification = " <span foreground='red'><sup></sup></span>";
+            inhibited-none = " ";
+            dnd-inhibited-notification = " <span foreground='red'><sup></sup></span>";
+            dnd-inhibited-none = " ";
+          };
+          return-type = "json";
+          exec-if = "which ${pkgs.swaynotificationcenter}/bin/swaync-client";
+          exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
+          on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
+          on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
+          escape = true;
+        };
         "custom/power" = {
           format = " ";
           tooltip = false;
@@ -87,8 +106,8 @@
             critical = 15;
           };
         };
-        "backlight" = {
-          "format" = "{icon}{percent}%";
+        backlight = {
+          format = "{icon}{percent}%";
           format-icons = [" " " " " " " " " " " " " " " " " "];
         };
         "clock#1" = {
@@ -108,9 +127,9 @@
           tooltip = false;
         };
         bluetooth = {
-          format-on = "󰂯 ";
-          format-connected = "󰂱 ";
-          format-disabled = "󰂲 ";
+          format-on = "󰂯";
+          format-connected = "󰂱";
+          format-disabled = "󰂲";
           on-click = "${pkgs.blueman}/bin/blueman-manager";
           tooltip-format = "No devices connected";
           tooltip-format-connected = "{device_enumerate}";
@@ -270,6 +289,10 @@
           padding: 0 8px;
         }
 
+        #custom-notification {
+          font-family: "NotoSansMono Nerd Font";
+        }
+
         #custom-power,
         #workspaces,
         #clock.1,
@@ -288,6 +311,7 @@
         #custom-right-divider,
         #custom-left-divider,
         #custom-divider,
+        #custom-notifications,
         #tray {
         	background: @base02;
         }
