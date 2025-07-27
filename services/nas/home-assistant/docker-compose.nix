@@ -1,9 +1,8 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
   pkgs,
+  config,
   lib,
-  systemOpts,
-  serviceOpts,
   uptix,
   ...
 }: {
@@ -11,7 +10,7 @@
   virtualisation.oci-containers.containers."home-assistant-app" = {
     image = uptix.dockerImage "homeassistant/home-assistant";
     volumes = [
-      "${serviceOpts.dockerDir}/Home-Assistant-Core/config:/config:rw"
+      "${config.serviceOpts.dockerDir}/Home-Assistant-Core/config:/config:rw"
     ];
     ports = [
       "8123:8123/tcp"
@@ -51,10 +50,10 @@
     environment = {
       "PGID" = "1000";
       "PUID" = "1000";
-      "TZ" = "${systemOpts.timezone}";
+      "TZ" = "${config.systemOpts.timezone}";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/Home-Assistant-Core/db:/config:rw"
+      "${config.serviceOpts.dockerDir}/Home-Assistant-Core/db:/config:rw"
     ];
     log-driver = "journald";
     extraOptions = [
@@ -91,8 +90,8 @@
       "ZWAVEJS_EXTERNAL_CONFIG" = "/usr/src/app/store/.config-db";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/Home-Assistant-Core/zwave/data:/usr/src/app/store:rw"
-      "${serviceOpts.dockerDir}/Home-Assistant-Core/zwave/log:/usr/src/app/bin:rw"
+      "${config.serviceOpts.dockerDir}/Home-Assistant-Core/zwave/data:/usr/src/app/store:rw"
+      "${config.serviceOpts.dockerDir}/Home-Assistant-Core/zwave/log:/usr/src/app/bin:rw"
     ];
     ports = [
       "3000:3000/tcp"

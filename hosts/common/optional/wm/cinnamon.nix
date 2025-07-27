@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   services.displayManager.defaultSession = "cinnamon";
 
   services.xserver = {

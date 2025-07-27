@@ -1,9 +1,11 @@
 {
   pkgs,
-  systemOpts,
+  config,
   lib,
   ...
-}: {
+}: let
+  inherit (config) systemOpts;
+in {
   # Create impermanent directory
   environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
     files = [
@@ -38,22 +40,21 @@
       User pi
       Port 22
 
+    Host vivobook
+      Hostname 10.10.1.21
+      User ryan
+
     Host vps
       Hostname 172.233.209.173
       User ryan
-
-    Host borg
-      Hostname 10.10.1.17
-      Port 2222
-      User borg
 
     Host testbox
       Hostname 10.10.1.18
       User ryan
 
     Host testvm
-      Hostname 10.10.1.19
-      User ryan
+      Hostname 192.168.122.207
+      User root
 
     Host gitea.dfrp.xyz
       User git
@@ -64,6 +65,7 @@
   '';
 
   # Enable remote passwordless sudo
+  # this doesn't work :(
   security.pam.services.sudo = {config, ...}: {
     rules.auth.rssh = {
       order = config.rules.auth.ssh_agent_auth.order - 1;

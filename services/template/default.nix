@@ -1,8 +1,6 @@
-{
-  serviceOpts,
-  config,
-  ...
-}: {
+{config, ...}: let
+  inherit (config) serviceOpts;
+in {
   imports = [./docker-compose.nix];
 
   # Create/chmod appdata directories to mount
@@ -20,10 +18,10 @@
   # Option 3: define multiple paths (one for app, one for db, etc)
   virtualisation.oci-containers.mounts = {
     "containerName-app" = {
-      target = "${config.serviceOpts.dockerDir}/containerName/config";
+      target = "${serviceOpts.dockerDir}/containerName/config";
     };
     "containerName-db" = {
-      target = "${config.serviceOpts.dockerDir}/containerName/db";
+      target = "${serviceOpts.dockerDir}/containerName/db";
       user = "999"; # databases often run as different users
       mode = "0755";
     };

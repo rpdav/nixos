@@ -1,12 +1,12 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
   config,
   uptix,
   ...
-}: {
+}: let
+  inherit (config) serviceOpts;
+in {
   # Containers
   virtualisation.oci-containers.containers."uptime-kuma" = {
     image = uptix.dockerImage "louislam/uptime-kuma:1";

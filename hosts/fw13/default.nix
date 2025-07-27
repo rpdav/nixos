@@ -3,13 +3,13 @@
   pkgs,
   configLib,
   inputs,
-  systemOpts,
-  userOpts,
   config,
   ...
 }:
 #TODO add system stats here
-{
+let
+  inherit (config.systemOpts) persistVol impermanent;
+in {
   ## This file contains host-specific NixOS configuration
 
   imports =
@@ -29,25 +29,25 @@
         "hosts/common/optional/duplicati.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
-        "hosts/common/optional/stylix.nix"
         "hosts/common/optional/wm/hyprland.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
+        "hosts/common/optional/virtualization"
 
         # users
         "hosts/common/users/ryan"
+        "hosts/common/users/ariel"
       ])
 
       # host-specific
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
       inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.nixos-cli.nixosModules.nixos-cli
     ];
 
   # Variable overrides
   userOpts = {
-    username = "ryan"; #primary user (not necessarily only user)
+    primaryUser = "ryan"; #primary user (not necessarily only user)
     term = "kitty";
   };
   systemOpts = {
@@ -56,22 +56,19 @@
     impermanent = true;
     gui = true;
   };
+
+  # Backup config
   backupOpts = {
     localRepo = "ssh://borg@borg:2222/backup";
-    remoteRepo = "/mnt/B2/borg";
-    sourcePaths = [config.systemOpts.persistVol];
-    excludeList = [
+    #remoteRepo = "/mnt/B2/borg";
+    paths = [
+      "${persistVol}/etc"
+    ];
+    patterns = [
       # Run `borg help patterns` for guidance on exclusion patterns
-      "*/var/**" #not needed for restore
-      "**/.git" #can be restored from repos
-      "**/.Trash*" #automatically made by gui deletions
-      "**/.local/share/libvirt" #vdisks made mostly for testing
-      "*/home/*/Downloads/" #big files
-      "*/home/ryan/Nextcloud" #already on server
-      "*/home/*/.thunderbird/*/ImapMail" #email
-      "*/home/*/.local/share/Steam" #lots of small files and big games
-      "*/home/*/.local/share/lutris" #lots of small files and big games
-      "*/home/*/.local/share/protonmail" #email
+      "- */var/**" #not needed for restore
+      "- **/.Trash*" #automatically made by gui deletions
+      "- **/libvirt" #vdisks made mostly for testing
     ];
   };
 
@@ -91,7 +88,7 @@
     };
     lanzaboote = {
       enable = true;
-      pkiBundle = "${systemOpts.persistVol}/etc/secureboot";
+      pkiBundle = "${persistVol}/etc/secureboot";
     };
   };
 
@@ -131,10 +128,10 @@
   ];
 
   # Create impermanent directories
-  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
       "/etc/secureboot"
-      "/var/lib/fprint" # fingerprint reader
+      "/var/lib/fprint"
       "/var/lib/bluetooth"
     ];
     files = [
@@ -154,26 +151,9 @@
     path = with pkgs; [gnome-keyring];
   };
 
-  # Options search
-  services.nixos-cli = {
-    enable = true;
-    config = {
-      config_location = "/home/${userOpts.username}/nixos";
-      apply.use_git_commit_msg = true;
-      apply.imply_impure_with_tag = true;
-      apply.use_nom = true;
-    };
-  };
-  nix.settings = {
-    substituters = ["https://watersucks.cachix.org"];
-    trusted-public-keys = [
-      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
-    ];
-  };
-
   # Add justfile at root
   systemd.tmpfiles.rules = [
-    "f /justfile 0644 ${config.userOpts.username} users - import \\'/home/${config.userOpts.username}/nixos/justfile\\'"
+    "f /justfile 0644 ${config.userOpts.primaryUser}/ users - import \\'/home/${config.userOpts.primaryUser}/nixos/justfile\\'"
   ];
 
   # minimal root user config

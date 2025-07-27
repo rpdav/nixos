@@ -1,8 +1,6 @@
-{
-  serviceOpts,
-  config,
-  ...
-}: {
+{config, ...}: let
+  inherit (config) serviceOpts;
+in {
   imports = [./docker-compose.nix];
 
   # Create swag proxy config

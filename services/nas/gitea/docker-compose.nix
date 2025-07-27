@@ -1,8 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
 }: {
@@ -14,7 +13,7 @@
       "USER_UID" = "1000";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/gitea/config:/data:rw"
+      "${config.serviceOpts.dockerDir}/gitea/config:/data:rw"
       "/etc/localtime:/etc/localtime:ro"
     ];
     ports = [

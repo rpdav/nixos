@@ -2,11 +2,13 @@
 {
   pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   secrets,
   ...
-}: {
+}: let
+  inherit (config) serviceOpts;
+in {
   # Containers
   virtualisation.oci-containers.containers."planka-app" = {
     image = uptix.dockerImage "ghcr.io/plankanban/planka:2.0.0-rc.3";

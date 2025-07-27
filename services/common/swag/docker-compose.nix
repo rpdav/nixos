@@ -2,10 +2,7 @@
 {
   lib,
   config,
-  pkgs,
   secrets,
-  systemOpts,
-  serviceOpts,
   uptix,
   ...
 }: {
@@ -14,7 +11,7 @@
     image = uptix.dockerImage "lscr.io/linuxserver/swag:latest";
     environment = {
       "DNSPLUGIN" = "cloudflare";
-      "EMAIL" = "${secrets.admin-mail.address}";
+      "EMAIL" = "${secrets.ryan.email.admin-mail.address}";
       "DOCKER_MODS" = "linuxserver/mods:swag-auto-reload|linuxserver/mods:swag-dashboard";
       "ONLY_SUBDOMAINS" = "true";
       "PGID" = "1000";
@@ -22,13 +19,13 @@
       "PUID" = "1000";
       "STAGING" = "false";
       "SUBDOMAINS" = "wildcard";
-      "TZ" = "${systemOpts.timezone}";
+      "TZ" = "${config.systemOpts.timezone}";
       "URL" = "${secrets.selfhosting.domain}";
       "VALIDATION" = "dns";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/swag/config:/config"
-      "${serviceOpts.proxyDir}:/config/nginx/proxy-confs"
+      "${config.serviceOpts.dockerDir}/swag/config:/config"
+      "${config.serviceOpts.proxyDir}:/config/nginx/proxy-confs"
       "/run/secrets/selfhosting/swag/cloudflareToken:/config/dns-conf/cloudflare.ini"
     ];
     ports = [

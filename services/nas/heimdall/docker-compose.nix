@@ -1,8 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
 }: {
@@ -14,7 +13,7 @@
       "PUID" = "1000";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/heimdall/config:/config:rw"
+      "${config.serviceOpts.dockerDir}/heimdall/config:/config:rw"
     ];
     log-driver = "journald";
     extraOptions = [

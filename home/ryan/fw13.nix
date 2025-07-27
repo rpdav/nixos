@@ -1,60 +1,44 @@
 {
   pkgs,
-  configLib,
-  systemOpts,
-  userOpts,
   lib,
+  configLib,
+  config,
+  osConfig,
   ...
 }: {
-  ## This file contains all home-manager config unique to user ryan on host fw13nix
+  ## This file contains all home-manager config unique to user ryan on host fw13
 
-  imports = [
-    # core config
-    (configLib.relativeToRoot "vars")
+  imports = lib.flatten [
+    (map configLib.relativeToRoot [
+      # core config
+      "vars"
+      "home/common/core"
+
+      # optional config
+      "home/common/optional/app/browser"
+      "home/common/optional/app/defaultapps.nix"
+      "home/common/optional/app/games"
+      "home/common/optional/app/nextcloud.nix"
+      "home/common/optional/app/kitty.nix"
+      "home/common/optional/app/thunderbird.nix"
+      "home/common/optional/app/web-apps"
+      "home/common/optional/config/persist.nix"
+      "home/common/optional/wm/hyprland"
+
+      # monitor module
+      "modules/hyprland/monitors.nix"
+    ])
+    # multi-system config for current user
     ./common/core
 
-    # optional config
-    ./common/optional/app/accounts.nix
-    ./common/optional/app/browser
-    ./common/optional/app/defaultapps.nix
-    ./common/optional/app/games
-    ./common/optional/app/kitty.nix
-    ./common/optional/app/thunderbird.nix
-    ./common/optional/app/web-apps
-    ./common/optional/config/persist.nix
-    ./common/optional/config/yubikey.nix
-    ./common/optional/wm/hyprland
-    #./common/optional/wm/gnome.nix
-
-    # monitor module
-    (configLib.relativeToRoot "modules/hyprland/monitors.nix")
+    ./common/optional/yubikey.nix
+    ./common/optional/accounts.nix
   ];
-
-  # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    directories = [
-      ".sword"
-      ".config/BraveSoftware"
-      ".config/GIMP"
-      ".config/Nextcloud"
-      ".config/onlyoffice"
-      ".config/remmina"
-    ];
-    files = [
-      ".config/ghostwriterrc"
-      ".config/bluedevelglobalrc" # bluetooth
-    ];
-  };
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  home.stateVersion = "24.05"; # Please read the comment before changing.
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
+  home.stateVersion = "24.05"; # don't change without reading release notes
 
   # Hyprland monitor config
   monitors = [
@@ -90,42 +74,20 @@
     }
   ];
 
-  home.packages = with pkgs; [
-    thunderbird
-    librewolf
-    brave
-    tor-browser
-    remmina
-    onlyoffice-bin
-    kdePackages.ghostwriter
-    bibletime
-    audacity
-    gimp
-    jellyfin-media-player
-
-    # terminals
-    kitty
-    alacritty
-
-    # games
-    kdePackages.knights
-    kdePackages.killbots
-    kdePackages.kgoldrunner
-    kdePackages.kmines
-    kdePackages.kpat
-
-    # scripts
-  ];
-
-  services.nextcloud-client = {
-    enable = true;
-    startInBackground = true;
-  };
-
-  # client starts to early and fails; this delays it a bit
-  systemd.user.services.nextcloud-client = {
-    Unit = {
-      After = pkgs.lib.mkForce "graphical-session.target";
-    };
+  backupOpts = {
+    patterns = [
+      "- **/.git" #can be restored from repos
+      "- **/.Trash*" #automatically made by gui deletions
+      "- **/.local/share/libvirt" #vdisks made mostly for testing
+      "- /persist/home/ryan/Downloads/" #big files
+      "- /persist/home/ryan/Nextcloud" #already on server
+      "- /persist/home/ryan/.thunderbird/*/ImapMail" #email
+      "- /persist/home/ryan/.local/share/Steam" #lots of small files and big games
+      "- /persist/home/ryan/.local/share/lutris" #lots of small files and big games
+      "- /persist/home/ryan/.local/share/protonmail" #email
+      "+ /persist/home/ryan" #back up everything else
+    ];
+    localRepo = "ssh://borg@borg:2222/backup";
+    #remoteRepo = "";
   };
 }

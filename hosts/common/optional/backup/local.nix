@@ -1,9 +1,4 @@
-{
-  config,
-  userOpts,
-  ...
-}:
-
+{config, ...}:
 #TODO: get backup monitor working again
 #let
 #  ## Set up notifications in case of failure
@@ -50,7 +45,9 @@
 #      );
 #    };
 #in
-{
+let
+  inherit (config.backupOpts) patterns localRepo paths;
+in {
   #  imports = [
   #    borgbackupMonitor
   #  ];
@@ -62,21 +59,37 @@
   # Pull passphrase and key for ssh access (not needed for NAS)
   sops.secrets = {
     "borg/passphrase" = {};
-    "${userOpts.username}/sshKeys/id_borg".path = "/root/.ssh/id_ed25519";
+    "root/sshKeys/id_borg" = {};
   };
 
-  services.borgbackup.jobs."local" = {
-    paths = config.backupOpts.sourcePaths;
-    exclude = config.backupOpts.excludeList;
+  # ssh config for borg
+  programs.ssh = {
+    extraConfig = ''
+      Host borg
+        Hostname 10.10.1.17
+        Port 2222
+        User borg
+        IdentityFile ${config.sops.secrets."root/sshKeys/id_borg".path}
+        IdentitiesOnly yes
+        IdentityAgent none
+    '';
+  };
+
+  services.borgbackup.jobs."root" = {
+    inherit paths;
+    inherit patterns;
     user = "root";
-    repo = config.backupOpts.localRepo + ("/" + config.networking.hostName);
+    repo = "${localRepo}/${config.networking.hostName}/root";
     doInit = true;
+    extraInitArgs = [
+      "--make-parent-dirs"
+    ];
     startAt = ["daily"];
     #    preHook = placeholder for snapshotting/mounting command
     #    postHook = placeholder for snapshot deletion/unmount
     encryption = {
       mode = "repokey-blake2";
-      passCommand = "cat ${config.sops.secrets."borg/passphrase".path}"; #This is also in password manager under entry "Borg backup"
+      passCommand = "cat ${config.sops.secrets."borg/passphrase".path}";
     };
     compression = "auto,lzma";
     prune.keep = {

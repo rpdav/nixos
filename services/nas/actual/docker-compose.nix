@@ -1,8 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
 }: {
@@ -10,7 +9,7 @@
   virtualisation.oci-containers.containers."actualserver" = {
     image = uptix.dockerImage "actualbudget/actual-server:latest";
     volumes = [
-      "${serviceOpts.dockerDir}/actualserver/config:/data:rw"
+      "${config.serviceOpts.dockerDir}/actualserver/config:/data:rw"
     ];
     log-driver = "journald";
     extraOptions = [

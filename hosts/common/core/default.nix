@@ -1,17 +1,20 @@
 {
-  systemOpts,
-  userOpts,
   inputs,
   config,
+  configLib,
   ...
-}: {
+}: let
+  inherit (config) systemOpts;
+in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
+    (configLib.relativeToRoot "modules/nixos")
     ./tailscale.nix
     ./packages.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys
+    ./stylix.nix
     ./vim.nix
 
     inputs.disko.nixosModules.disko
@@ -27,6 +30,18 @@
     '';
   };
 
+  # Allow local users to inhibit sleep (used for some systemd user units)
+  security.polkit = {
+    enable = true;
+    extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if (action.id == "org.freedesktop.login1.inhibit-block-shutdown" &&
+          subject.isInGroup("users"))
+              return polkit.Result.YES;
+      });
+    '';
+  };
+
   # Automate garbage collection
   nix.gc = {
     automatic = true;
@@ -39,5 +54,5 @@
   environment.enableAllTerminfo = true;
 
   # Time
-  time.timeZone = config.systemOpts.timezone;
+  time.timeZone = "America/Indiana/Indianapolis";
 }

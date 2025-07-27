@@ -1,12 +1,13 @@
 {
   inputs,
   pkgs,
-  serviceOpts,
-  systemOpts,
+  config,
   lib,
   configLib,
   ...
-}: {
+}: let
+  inherit (config) systemOpts serviceOpts;
+in {
   # Create impermanent directory
   environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
     directories = [

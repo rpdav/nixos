@@ -2,7 +2,7 @@
 {
   pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
 }: {
@@ -15,7 +15,7 @@
     };
     volumes = [
       "/mnt/storage/backups/borg:/backup:rw"
-      "${serviceOpts.dockerDir}/borg/sshkeys/:/sshkeys:rw"
+      "${config.serviceOpts.dockerDir}/borg/sshkeys/:/sshkeys:rw"
     ];
     ports = [
       "2222:22/tcp"

@@ -138,7 +138,7 @@
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -475,39 +475,18 @@
         "type": "github"
       }
     },
-    "home-manager-stable": {
+    "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1751468302,
-        "narHash": "sha256-tWosziZTT039x6PgEZUhzGlV8oLvdDmIgKTE8ESMaEA=",
+        "lastModified": 1753056897,
+        "narHash": "sha256-AVVMBFcuOXqIgmShvRv9TED3fkiZhQ0ZvlhsPoFfkNE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "501cfec8277f931a9c9af9f23d3105c537faeafe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-25.05",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager-unstable": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1751589297,
-        "narHash": "sha256-3q35cq6BPuwIRL3IoVKYPc72r3OleeuRyf4YAPjEqzA=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "83f978812c37511ef2ffaf75ffa72160483f738a",
+        "rev": "13a83d1b6545b7f0e8f7689bad62e7a3b1d63771",
         "type": "github"
       },
       "original": {
@@ -906,10 +885,10 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1749330018,
-        "narHash": "sha256-7LM6RMdoUMPFSQlRcYKkR4i2Xk9feFcErWgnyIskMvs=",
+        "lastModified": 1753444964,
+        "narHash": "sha256-/vEm1n8JBD348IU8cjo00UhAm/NfcspWt7lzKmM7aRU=",
         "ref": "main",
-        "rev": "120aeef23d22973bfc35b980e62af9f81990f8a5",
+        "rev": "c9f4181adb4e53a1d8cb7e7cbabb03458320faf5",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/rpdav/nix-secrets.git"
@@ -1219,8 +1198,7 @@
       "inputs": {
         "disko": "disko",
         "firefox-addons": "firefox-addons",
-        "home-manager-stable": "home-manager-stable",
-        "home-manager-unstable": "home-manager-unstable",
+        "home-manager": "home-manager",
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
         "impermanence": "impermanence",
@@ -1284,7 +1262,7 @@
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -1313,7 +1291,7 @@
         "git-hooks": "git-hooks",
         "gnome-shell": "gnome-shell",
         "home-manager": [
-          "home-manager-unstable"
+          "home-manager"
         ],
         "nixpkgs": [
           "nixpkgs"

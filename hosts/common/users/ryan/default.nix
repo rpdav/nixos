@@ -3,7 +3,6 @@
   lib,
   inputs,
   secrets,
-  systemOpts,
   pkgs-stable,
   pkgs-unstable,
   configLib,
@@ -14,6 +13,11 @@ let
   # Generates a list of the keys in ./keys
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in {
+  imports = [
+    inputs.nixos-cli.nixosModules.nixos-cli
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   # user--specific variable overrides
   userOpts.wallpaper = "mountain";
   userOpts.cursor = "Bibata-Modern-Ice";
@@ -33,6 +37,23 @@ in {
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
   };
 
+  # Options search and nixos CLI tooling
+  services.nixos-cli = {
+    enable = true;
+    config = {
+      config_location = "${config.users.users.ryan.home}/nixos";
+      apply.use_git_commit_msg = true;
+      apply.imply_impure_with_tag = true;
+      apply.use_nom = true;
+    };
+  };
+  nix.settings = {
+    substituters = ["https://watersucks.cachix.org"];
+    trusted-public-keys = [
+      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
+    ];
+  };
+
   # home-manager config
   home-manager = {
     useUserPackages = true;
@@ -46,16 +67,12 @@ in {
       inherit secrets;
       inherit inputs;
       inherit configLib;
-      # Pass custom options assigned in nixos module to HM
-      systemOpts = config.systemOpts;
-      userOpts = config.userOpts;
-      serviceOpts = config.serviceOpts;
     };
   };
 
   # Fix file permissions after backup restore
   #TODO make this work for non-persist systems too
   systemd.tmpfiles.rules = [
-    "Z ${systemOpts.persistVol}/home/ryan - ryan users"
+    "Z ${config.systemOpts.persistVol}/home/ryan 0700 ryan users"
   ];
 }

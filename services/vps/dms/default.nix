@@ -1,5 +1,6 @@
-{serviceOpts, ...}:
-{
+{config, ...}: let
+  inherit (config) serviceOpts;
+in {
   imports = [./docker-compose.nix];
 
   # Create directories for appdata
@@ -14,5 +15,4 @@
     "d ${serviceOpts.dockerDir}/dms/mail-logs 0777 113 root"
     "Z ${serviceOpts.dockerDir}/dms/mail-logs - 113 root"
   ];
-
 }

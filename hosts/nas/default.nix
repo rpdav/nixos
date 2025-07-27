@@ -3,11 +3,11 @@
   lib,
   config,
   configLib,
-  userOpts,
   ...
 }: let
+  inherit (config.systemOpts) persistVol;
   # Generates a list of the keys in primary user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../common/users/${userOpts.username}/keys;
+  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
   imports =
     lib.flatten
@@ -26,7 +26,6 @@ in {
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
         "hosts/common/optional/ssh-unlock.nix"
-        "hosts/common/optional/stylix.nix"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/wm/gnome.nix"
 
@@ -46,7 +45,7 @@ in {
     ];
 
   # Variable overrides
-  userOpts.username = "ryan"; #primary user (not necessarily only user)
+  userOpts.primaryUser = "ryan"; #primary user (not necessarily only user)
   systemOpts = {
     swapEnable = true;
     diskDevice = "nvme1n1";
@@ -59,15 +58,19 @@ in {
     dockerDir = "/mnt/docker/appdata";
     proxyDir = "/run/selfhosting/proxy-confs";
   };
+
+  # Backup config
   backupOpts = {
-    localRepo = "/mnt/storage/backups/borg";
+    localRepo = "ssh://borg@borg:2222/backup";
     remoteRepo = "/mnt/B2/borg";
-    sourcePaths = [config.systemOpts.persistVol];
-    excludeList = [
+    paths = [
+      "${persistVol}/etc"
+    ];
+    patterns = [
       # Run `borg help patterns` for guidance on exclusion patterns
-      "*/home/*/.git/**" #can be restored from repo
-      "**/.local/share/libvirt" #root and user vm images
-      "*/var/**"
+      "- */home/*/.git/**" #can be restored from repo
+      "- **/.local/share/libvirt" #root and user vm images
+      "- */var/**"
     ];
   };
   # disable emergency mode from preventing system boot if there are mounting issues

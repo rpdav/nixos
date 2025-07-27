@@ -1,87 +1,53 @@
 {
-  pkgs,
+  config,
   lib,
-  systemOpts,
-  userOpts,
   configLib,
   ...
-}: {
-  ## This file contains all home-manager config unique to user ryan on host vps
+}: let
+  inherit (config.systemOpts) persistVol;
+in {
+  ## This file contains all home-manager config unique to user ryan on host nas
+
+  imports = lib.flatten [
+    (map configLib.relativeToRoot [
+      # core config
+      "vars"
+      "home/common/core"
+
+      # optional config
+      "home/common/optional/app/browser"
+      "home/common/optional/app/defaultapps.nix"
+      "home/common/optional/app/games"
+      "home/common/optional/app/kitty.nix"
+      "home/common/optional/config/persist.nix"
+      "home/common/optional/wm/gnome.nix"
+    ])
+    # multi-system config for current user
+    ./common/core
+
+    ./common/optional/yubikey.nix
+    ./common/optional/accounts.nix
+  ];
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  home.stateVersion = "24.11"; # Please read the comment before changing.
+  home.stateVersion = "24.11"; # don't change without reading release notes
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
-
-  imports = [
-    # core config
-    (configLib.relativeToRoot "vars")
-    ./common/core
-
-    # optional config
-    ./common/optional/app/browser
-    ./common/optional/app/defaultapps.nix
-    ./common/optional/app/games
-    ./common/optional/app/kitty.nix
-    ./common/optional/config/persist.nix
-    ./common/optional/config/yubikey.nix
-    ./common/optional/wm/gnome.nix
-  ];
-  # Create persistent directories
-  home.persistence."${systemOpts.persistVol}/home/${userOpts.username}" = lib.mkIf systemOpts.impermanent {
-    directories = [
-      ".sword"
-      ".config/BraveSoftware"
-      ".config/GIMP"
-      ".config/Nextcloud"
-      ".config/onlyoffice"
-      ".config/remmina"
+  backupOpts = {
+    patterns = [
+      "- **/.git" #can be restored from repos
+      "- **/.Trash*" #automatically made by gui deletions
+      "- **/.local/share/libvirt" #vdisks made mostly for testing
+      "- ${persistVol}/home/ryan/Downloads/" #big files
+      "- ${persistVol}/home/ryan/Nextcloud" #already on server
+      "- ${persistVol}/home/ryan/.thunderbird/*/ImapMail" #email
+      "- ${persistVol}/home/ryan/.local/share/Steam" #lots of small files and big games
+      "- ${persistVol}/home/ryan/.local/share/lutris" #lots of small files and big games
+      "- ${persistVol}/home/ryan/.local/share/protonmail" #email
+      "+ ${persistVol}/home/ryan" #back up everything else
     ];
-    files = [
-      ".config/ghostwriterrc"
-      ".config/bluedevelglobalrc" # bluetooth
-    ];
-  };
-
-  home.packages = with pkgs; [
-    thunderbird
-    librewolf
-    brave
-    tor-browser
-    remmina
-    onlyoffice-bin
-    kdePackages.ghostwriter
-    bibletime
-    audacity
-    gimp
-    jellyfin-media-player
-
-    # terminals
-    kitty
-    alacritty
-
-    # games
-    kdePackages.knights
-    kdePackages.killbots
-    kdePackages.kgoldrunner
-    kdePackages.kmines
-    kdePackages.kpat
-  ];
-
-  services.nextcloud-client = {
-    enable = true;
-    startInBackground = true;
-  };
-
-  # client starts to early and fails; this delays it a bit
-  systemd.user.services.nextcloud-client = {
-    Unit = {
-      After = pkgs.lib.mkForce "graphical-session.target";
-    };
+    localRepo = "ssh://borg@borg:2222/backup";
+    #remoteRepo = "";
   };
 }

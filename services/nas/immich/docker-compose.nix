@@ -2,10 +2,12 @@
 {
   pkgs,
   lib,
-  serviceOpts,
+  config,
   uptix,
   ...
-}: {
+}: let
+  inherit (config) serviceOpts;
+in {
   # Containers
   virtualisation.oci-containers.containers."immich_machine_learning" = {
     image = uptix.dockerImage "ghcr.io/immich-app/immich-machine-learning:release";

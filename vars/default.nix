@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  userOpts,
   ...
 }: let
   inherit (lib) mkOption types;
@@ -105,7 +104,7 @@ in {
         type = types.str;
         default = "105075689+rpdav@users.noreply.github.com";
       };
-      username = mkOption {
+      primaryUser = mkOption {
         type = types.str;
         default = "ryan";
       };
@@ -115,7 +114,7 @@ in {
       };
       wallpaper = mkOption {
         type = types.str;
-        default = "squares";
+        default = "mountain";
       };
       cursor = mkOption {
         type = types.str;
@@ -133,6 +132,11 @@ in {
         type = types.str;
         default = "nerd-fonts.fira-code";
       };
+      impermanent = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Boolean for whether to enable user impermanent directories";
+      };
     };
 
     # ---- BACKUP SETTINGS ---- #
@@ -147,15 +151,19 @@ in {
         default = "/mnt/B2/borg or something";
         description = "B2 backup target after mounting";
       };
-      sourcePaths = mkOption {
+      paths = mkOption {
         type = types.listOf types.str;
         default = [config.systemOpts.persistVol];
         description = "Path(s) to back up";
       };
-      excludeList = mkOption {
+      patterns = mkOption {
         type = types.listOf types.str;
-        default = [".git/**" "etcetera"];
-        description = "List of paths and files to exclude";
+        default = [""];
+        description = "list of borg patterns";
+        example = [
+          " - **/.git"
+          " - **/.Trash*"
+        ];
       };
     };
 
@@ -163,7 +171,7 @@ in {
     serviceOpts = {
       dockerUser = mkOption {
         type = types.str;
-        default = userOpts.username;
+        default = config.userOpts.primaryUser;
         description = "User under which to run docker services";
       };
       dockerDir = mkOption {
@@ -176,15 +184,6 @@ in {
         default = "${config.serviceOpts.dockerDir}/swag/proxy-confs";
         description = "Where to store swag proxy configs";
       };
-    };
-  };
-
-  config = {
-    _module.args = {
-      systemOpts = config.systemOpts;
-      userOpts = config.userOpts;
-      serviceOpts = config.serviceOpts;
-      backupOpts = config.backupOpts;
     };
   };
 }

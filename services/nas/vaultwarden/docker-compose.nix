@@ -1,8 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
 {
-  pkgs,
   lib,
-  serviceOpts,
+  config,
   secrets,
   uptix,
   ...
@@ -13,12 +12,12 @@
     environment = {
       "INVITATIONS_ALLOWED" = "true";
       "LOG_FILE" = "/data/vaultwarden.log";
-      "SERVER_ADMIN_EMAIL" = "${secrets.personal-mail.address}";
+      "SERVER_ADMIN_EMAIL" = "${secrets.ryan.email.personal-mail.address}";
       "SIGNUPS_ALLOWED" = "false";
       "WEBSOCKET_ENABLED" = "true";
     };
     volumes = [
-      "${serviceOpts.dockerDir}/vaultwarden/config:/data:rw"
+      "${config.serviceOpts.dockerDir}/vaultwarden/config:/data:rw"
     ];
     log-driver = "journald";
     extraOptions = [

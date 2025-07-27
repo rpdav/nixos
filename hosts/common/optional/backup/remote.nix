@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-{
-  
+}: {
+  ### This is not up to date with current config - probably needs rebuilt
+
   # Pull B2 config file from secrets
   sops.secrets = {
     "rclone/config" = {};
