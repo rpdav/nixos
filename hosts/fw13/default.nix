@@ -36,7 +36,6 @@ in {
 
         # users
         "hosts/common/users/ryan"
-        "hosts/common/users/ariel"
       ])
 
       # host-specific
