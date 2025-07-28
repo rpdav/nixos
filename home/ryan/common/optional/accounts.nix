@@ -15,7 +15,6 @@
   home.persistence."${osConfig.systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/protonmail"
-      ".cache/evolution" #calendar data
       ".config/evolution" #calendar config
       ".config/goa-1.0" #dav accounts
     ];

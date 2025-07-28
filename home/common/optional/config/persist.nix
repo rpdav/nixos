@@ -19,6 +19,7 @@ in {
 
         # System
         ".config/autostart" #TODO these are all just.desktop files - could be declared
+        ".cache"
       ]
       ++ lib.lists.optionals systemOpts.gui [
         ### additional home persistence for gui systems ###
@@ -32,7 +33,7 @@ in {
         "Videos"
         "Downloads"
 
-        # Nix and other projects
+        # Nix and other projects on main system
         "nixos"
         "nix-secrets"
         "projects"
