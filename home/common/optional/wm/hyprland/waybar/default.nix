@@ -6,6 +6,7 @@
 }: {
   home.packages = with pkgs; [
     font-awesome
+    nvd
   ];
 
   stylix.targets.waybar.addCss = false;
@@ -24,6 +25,8 @@
           "custom/power"
           "custom/divider"
           "custom/divider"
+          "custom/nix-updates"
+          "custom/left-divider"
           "disk"
           "custom/left-divider"
           "memory"
@@ -61,6 +64,23 @@
           "tray"
           "custom/divider"
         ];
+        "custom/nix-updates" = {
+          exec = "/home/ryan/bin/update-checker.sh";
+          signal = 12;
+          on-click = "";
+          on-click-right = "rm ~/.cache/nix-update-last-run";
+          interval = 3600;
+          tooltip = true;
+          return-type = "json";
+          format = "{} {icon}";
+          format-icons = {
+            default = " ";
+            has-updates = "󰚰 ";
+            updating = " ";
+            updated = " ";
+            error = " ";
+          };
+        };
         "custom/notifications" = {
           tooltip = false;
           format = "{icon}";
@@ -262,7 +282,7 @@
 
         * {
             font-family: "monospace";
-            font-size: 10p5;
+            font-size: 10px;
         }
       '';
     in
@@ -284,7 +304,7 @@
 
         #custom-right-divider,
         #custom-left-divider {
-        	color: @base01;
+          color: @base01;
           font-weight: bolder;
           padding: 0 8px;
         }
@@ -312,10 +332,13 @@
         #custom-left-divider,
         #custom-divider,
         #custom-notifications,
+        #custom-nix-updates,
         #tray {
         	background: @base02;
         }
-
+        #custom-nix-updates {
+                color: @base05;
+        }
         #workspaces button {
         	color: @base04;
         }
