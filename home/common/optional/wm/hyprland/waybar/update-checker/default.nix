@@ -1,13 +1,12 @@
 {
   pkgs,
   config,
+  osConfig,
   ...
 }: let
   homeDir = config.home.homeDirectory;
-  update-checker = pkgs.writeShellScriptBin "update-checker" ''
-    # See https://github.com/guttermonk/waybar-nixos-updates
-    # NixOS Update Checker for Waybar
-    # This script checks for NixOS updates and outputs JSON for Waybar integration
+  inherit (pkgs) libnotify nvd;
+  update_checker = pkgs.writeShellScriptBin "update_checker" ''
 
     # ===== Configuration =====
     UPDATE_INTERVAL=3599  # Check interval in seconds (1 hour)
@@ -77,7 +76,7 @@
         local title="$2"
         local message="$3"
         local expire_flag="$4" # Optional fourth parameter for -e flag
-        notify-send "$HOME/.icons/$icon.png" "$title" "$message" $expire_flag
+        ${libnotify}/bin/notify-send -i "$HOME/.icons/$icon.png" "$title" "$message" $expire_flag
     }
 
     function check_boot_resume() {
@@ -201,8 +200,8 @@
             nix flake update
             nix build .#nixosConfigurations.$(hostname).config.system.build.toplevel
             if [ "$?" -eq 0 ]; then
-                updates=$(nvd diff /run/current-system ./result | grep -e '\[U' | wc -l)
-                tooltip=$(nvd diff /run/current-system ./result | grep -e '\[U' | awk '{ for (i=3; i<NF; i++) printf $i " "; if (NF >= 3) print $NF; }' ORS='\\n' | sed 's/\\n$//')
+                updates=$(${nvd}/bin/nvd diff /run/current-system ./result | grep -e '\[U' | wc -l)
+                tooltip=$(${nvd}/bin/nvd diff /run/current-system ./result | grep -e '\[U' | awk '{ for (i=3; i<NF; i++) printf $i " "; if (NF >= 3) print $NF; }' ORS='\\n')
             else
                 return 1
             fi
@@ -213,8 +212,8 @@
             nix flake update
             nix build .#nixosConfigurations.$(hostname).config.system.build.toplevel
             if [ "$?" -eq 0 ]; then
-                updates=$(nvd diff /run/current-system ./result | grep -e '\[U' | wc -l)
-                tooltip=$(nvd diff /run/current-system ./result | grep -e '\[U' | awk '{ for (i=3; i<NF; i++) printf $i " "; if (NF >= 3) print $NF; }' ORS='\\n')
+                updates=$(${nvd}/bin/nvd diff /run/current-system ./result | grep -e '\[U' | wc -l)
+                tooltip=$(${nvd}/bin/nvd diff /run/current-system ./result | grep -e '\[U' | awk '{ for (i=3; i<NF; i++) printf $i " "; if (NF >= 3) print $NF; }' ORS='\\n' | sed 's/\\n$//')
             else
                 return 1
             fi
@@ -322,4 +321,12 @@
     main
   '';
 in {
+  home.packages = [
+    update_checker
+  ];
+
+  home.file.".icons" = {
+    recursive = true;
+    source = ./.icons;
+  };
 }

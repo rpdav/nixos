@@ -4,9 +4,10 @@
   lib,
   ...
 }: {
+  imports = [./update-checker];
+
   home.packages = with pkgs; [
     font-awesome
-    nvd
   ];
 
   stylix.targets.waybar.addCss = false;
