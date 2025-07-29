@@ -56,7 +56,7 @@
       alacritty
 
       # media
-      audacity
+      #audacity
       vlc
       bibletime
       jellyfin-media-player
