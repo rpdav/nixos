@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   inputs,
   secrets,
   pkgs-stable,
@@ -42,9 +43,11 @@ in {
     enable = true;
     config = {
       config_location = "${config.users.users.ryan.home}/nixos";
-      apply.use_git_commit_msg = true;
-      apply.imply_impure_with_tag = true;
-      apply.use_nom = true;
+      use_nvd = true;
+      apply = {
+        use_git_commit_msg = true;
+        use_nom = true;
+      };
     };
   };
   nix.settings = {
@@ -53,6 +56,7 @@ in {
       "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
     ];
   };
+  environment.systemPackages = [pkgs.nvd];
 
   # home-manager config
   home-manager = {
