@@ -60,6 +60,8 @@ in {
           "custom/right-divider"
           "battery"
           "custom/right-divider"
+          "custom/weather"
+          "custom/divider"
           "idle_inhibitor"
           "custom/divider"
           "power-profiles-daemon"
@@ -73,6 +75,18 @@ in {
           "tray"
           "custom/divider"
         ];
+        "custom/weather" = {
+          format = "{}°";
+          tooltip = true;
+          interval = 3600;
+          exec = "${pkgs.wttrbar}/bin/wttrbar --fahrenheit --mph --nerd --location Indianapolis";
+          return-type = "json";
+          #format-icons = {
+          #  fog = "󰖑 ";
+          #  rain = "󰖖 ";
+          #  sunny = " ";
+          #};
+        };
         "custom/nix-updates" = {
           exec = update-checker;
           signal = 12;
@@ -106,8 +120,8 @@ in {
           return-type = "json";
           exec-if = "which ${pkgs.swaynotificationcenter}/bin/swaync-client";
           exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
-          on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
-          on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
+          on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t";
+          on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d";
           escape = true;
         };
         "custom/power" = {
@@ -342,8 +356,12 @@ in {
         #custom-divider,
         #custom-notifications,
         #custom-nix-updates,
+        #custom-weather,
         #tray {
         	background: @base02;
+        }
+        #custom-weather.sunny {
+                color: @base0A;
         }
         #custom-nix-updates {
                 color: @base05;
