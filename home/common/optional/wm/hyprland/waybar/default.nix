@@ -3,12 +3,20 @@
   config,
   lib,
   ...
-}: {
-  imports = [./update-checker];
+}: let
+  update-checker = pkgs.callPackage update-checker/default.nix {inherit pkgs config;};
+in {
+  #imports = [./update-checker];
 
   home.packages = with pkgs; [
     font-awesome
   ];
+
+  # icons for update_checker
+  home.file.".icons" = {
+    recursive = true;
+    source = update-checker/.icons;
+  };
 
   stylix.targets.waybar.addCss = false;
 
@@ -66,7 +74,7 @@
           "custom/divider"
         ];
         "custom/nix-updates" = {
-          exec = "/home/ryan/bin/update-checker.sh";
+          exec = update-checker;
           signal = 12;
           on-click = "";
           on-click-right = "rm ~/.cache/nix-update-last-run";
