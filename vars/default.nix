@@ -72,10 +72,6 @@ in {
 
     # ---- USER SETTINGS ---- #
     userOpts = {
-      editor = mkOption {
-        type = types.str;
-        default = "nvim";
-      };
       name = mkOption {
         type = types.str;
         default = "Ryan";
