@@ -18,7 +18,7 @@ services:
     networks:
       - default
     environment:
-      TZ: $$systemOpts.timezone
+      TZ: config.time.timeZone
       # MYSQL_ROOT_PASSWORD: changeme # pulled from secret env file
       PUID: 1000
       PGID: 1000

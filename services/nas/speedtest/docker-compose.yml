@@ -6,7 +6,7 @@ services:
           - proxynet
         environment:
             - DB_CONNECTION=sqlite
-            - TZ=systemOpts.timezone
+            - TZ=config.time.timeZone
             - PUID=1000
             - PGID=100
             - 'SPEEDTEST_SCHEDULE=0 */6 * * *'

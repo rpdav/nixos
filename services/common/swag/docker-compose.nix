@@ -19,7 +19,7 @@
       "PUID" = "1000";
       "STAGING" = "false";
       "SUBDOMAINS" = "wildcard";
-      "TZ" = "${config.systemOpts.timezone}";
+      "TZ" = config.time.timeZone;
       "URL" = "${secrets.selfhosting.domain}";
       "VALIDATION" = "dns";
     };

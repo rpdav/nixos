@@ -8,10 +8,6 @@ in {
   options = {
     # ---- SYSTEM SETTINGS ---- #
     systemOpts = {
-      timezone = mkOption {
-        type = types.str;
-        default = "America/Indiana/Indianapolis";
-      };
       locale = mkOption {
         type = types.str;
         default = "en_US.UTF-8";

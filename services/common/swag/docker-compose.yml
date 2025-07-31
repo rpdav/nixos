@@ -10,7 +10,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=$$timezone
+      - TZ=config.time.timeZone
       - URL=$$domain
       - VALIDATION=dns
       - SUBDOMAINS=wildcard #optional

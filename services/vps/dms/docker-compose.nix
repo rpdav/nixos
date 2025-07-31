@@ -118,7 +118,7 @@
       "SSL_TYPE" = "letsencrypt";
       "SUPERVISOR_LOGLEVEL" = "";
       "TLS_LEVEL" = "";
-      "TZ" = config.systemOpts.timezone;
+      "TZ" = config.time.timeZone;
       "UPDATE_CHECK_INTERVAL" = "1d";
       "VIRUSMAILS_DELETE_DELAY" = "";
     };

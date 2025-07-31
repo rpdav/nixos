@@ -17,6 +17,7 @@ in {
       "DB_USERNAME" = "postgres";
       "IMMICH_VERSION" = "release";
       "UPLOAD_LOCATION" = "/mnt/docker/photos/immich";
+      "TZ" = config.time.timeZone;
     };
     volumes = [
       "${serviceOpts.dockerDir}/immich/model-cache:/cache:rw"
@@ -131,6 +132,7 @@ in {
       "DB_USERNAME" = "postgres";
       "IMMICH_VERSION" = "release";
       "UPLOAD_LOCATION" = "/mnt/docker/photos/immich";
+      "TZ" = config.time.timeZone;
     };
     volumes = [
       "/etc/localtime:/etc/localtime:ro"

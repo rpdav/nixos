@@ -13,7 +13,7 @@
       "JELLYFIN_PublishedServerUrl" = "http://192.168.0.5";
       "PGID" = "1000";
       "PUID" = "1000";
-      "TZ" = config.systemOpts.timezone;
+      "TZ" = config.time.timeZone;
     };
     volumes = [
       "/mnt/storage/media/movies:/data/movies:rw"

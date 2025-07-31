@@ -18,8 +18,6 @@ Use these vim commands after running compose2nix to replace custom option placeh
 :%s-/config\.serviceOpts\.dockerDir-${config.serviceOpts.dockerDir}-g
 # add uptix function to manage container updates
 :%s-image = -image = uptix.dockerImage -g
-# replace timezone env var
-:%s-config\.systemOpts\.timezone-${config.systemOpts.timezone}-g
 ```
 
 ## Secret environment variables
