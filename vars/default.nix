@@ -8,10 +8,6 @@ in {
   options = {
     # ---- SYSTEM SETTINGS ---- #
     systemOpts = {
-      locale = mkOption {
-        type = types.str;
-        default = "en_US.UTF-8";
-      };
       impermanent = mkOption {
         type = types.bool;
         default = true;
@@ -31,14 +27,6 @@ in {
       diskDevice = mkOption {
         type = types.str;
         default = "/dev/nvme01n1";
-      };
-      hibernate = mkOption {
-        type = types.bool;
-        default = false;
-      };
-      arch = mkOption {
-        type = types.str;
-        default = "x86_64-linux";
       };
       gcInterval = mkOption {
         type = types.str;
