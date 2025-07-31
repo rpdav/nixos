@@ -43,7 +43,6 @@ in {
   # Variable overrides
   userOpts = {
     primaryUser = "ryan"; #primary user (not necessarily only user)
-    term = "kitty";
   };
   systemOpts = {
     diskDevice = "vda";

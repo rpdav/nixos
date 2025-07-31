@@ -72,18 +72,6 @@ in {
 
     # ---- USER SETTINGS ---- #
     userOpts = {
-      name = mkOption {
-        type = types.str;
-        default = "Ryan";
-      };
-      term = mkOption {
-        type = types.str;
-        default = "kitty";
-      };
-      githubEmail = mkOption {
-        type = types.str;
-        default = "105075689+rpdav@users.noreply.github.com";
-      };
       primaryUser = mkOption {
         type = types.str;
         default = "ryan";
