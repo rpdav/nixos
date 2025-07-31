@@ -14,7 +14,7 @@
       "PRUNE_RESULTS_OLDER_THAN" = "365";
       "PUID" = "1000";
       "SPEEDTEST_SCHEDULE" = "0 */6 * * *";
-      "TZ" = config.systemOpts.timezone;
+      "TZ" = config.time.timeZone;
     };
     volumes = [
       "${config.serviceOpts.dockerDir}/speedtest-tracker/config:/config:rw"

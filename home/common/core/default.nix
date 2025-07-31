@@ -101,6 +101,6 @@
   programs.ripgrep.enable = true;
 
   home.sessionVariables = {
-    EDITOR = osConfig.userOpts.editor;
+    EDITOR = "nvim";
   };
 }

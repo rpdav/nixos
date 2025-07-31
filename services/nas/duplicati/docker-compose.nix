@@ -12,7 +12,7 @@
     environment = {
       "PGID" = "0";
       "PUID" = "0";
-      "TZ" = config.systemOpts.timezone;
+      "TZ" = config.time.timeZone;
     };
     volumes = [
       "/:/source:rw"

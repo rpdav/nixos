@@ -50,7 +50,7 @@
     environment = {
       "PGID" = "1000";
       "PUID" = "1000";
-      "TZ" = "${config.systemOpts.timezone}";
+      "TZ" = config.time.timeZone;
     };
     volumes = [
       "${config.serviceOpts.dockerDir}/Home-Assistant-Core/db:/config:rw"

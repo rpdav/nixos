@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  osConfig,
   lib,
   ...
 }: let
@@ -24,7 +25,7 @@ in {
     enable = true;
     systemd.enable = true;
     settings = let
-      timezone = config.systemOpts.timezone;
+      timezone = osConfig.time.timeZone;
     in {
       topbar = {
         layer = "top";

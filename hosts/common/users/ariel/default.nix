@@ -48,6 +48,9 @@
   # Fix file permissions after backup restore
   #TODO make this work for non-persist systems too
   systemd.tmpfiles.rules = [
-    "Z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
+    # make all files in home directory owned by user
+    "Z ${config.systemOpts.persistVol}/home/ariel - ariel users"
+    # make user's home directory not readable by others
+    "z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
   ];
 }

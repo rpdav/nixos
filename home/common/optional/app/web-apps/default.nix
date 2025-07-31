@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   secrets,
   configLib,
   ...
@@ -10,11 +11,11 @@
     domain = secrets.selfhosting.domain;
     commonConfig = {
       enable = true;
-      extensions.packages = with inputs.firefox-addons.packages."${config.systemOpts.arch}"; [
+      extensions.packages = with inputs.firefox-addons.packages."${pkgs.system}"; [
         bitwarden
         ublock-origin
       ];
-      theme = "dark";
+      theme = config.stylix.polarity;
     };
   in {
     # id must be a unique integer. Note that the default firefox profile is 0, so start with 1.

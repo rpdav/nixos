@@ -8,14 +8,6 @@ in {
   options = {
     # ---- SYSTEM SETTINGS ---- #
     systemOpts = {
-      timezone = mkOption {
-        type = types.str;
-        default = "America/Indiana/Indianapolis";
-      };
-      locale = mkOption {
-        type = types.str;
-        default = "en_US.UTF-8";
-      };
       impermanent = mkOption {
         type = types.bool;
         default = true;
@@ -35,14 +27,6 @@ in {
       diskDevice = mkOption {
         type = types.str;
         default = "/dev/nvme01n1";
-      };
-      hibernate = mkOption {
-        type = types.bool;
-        default = false;
-      };
-      arch = mkOption {
-        type = types.str;
-        default = "x86_64-linux";
       };
       gcInterval = mkOption {
         type = types.str;
@@ -88,22 +72,6 @@ in {
 
     # ---- USER SETTINGS ---- #
     userOpts = {
-      editor = mkOption {
-        type = types.str;
-        default = "nvim";
-      };
-      name = mkOption {
-        type = types.str;
-        default = "Ryan";
-      };
-      term = mkOption {
-        type = types.str;
-        default = "kitty";
-      };
-      githubEmail = mkOption {
-        type = types.str;
-        default = "105075689+rpdav@users.noreply.github.com";
-      };
       primaryUser = mkOption {
         type = types.str;
         default = "ryan";
