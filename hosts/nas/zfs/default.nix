@@ -1,7 +1,6 @@
-{ ... }: {
-imports = [
-  ./pools.nix
-  ./sanoid.nix
-  ./samba.nix
-];
+{...}: {
+  imports = [
+    ./pools.nix
+    ./sanoid.nix
+  ];
 }
