@@ -88,7 +88,8 @@
 
     # Private secrets repo
     nix-secrets = {
-      url = "git+ssh://git@github.com/rpdav/nix-secrets.git?ref=main&shallow=1";
+      url = "git+file:///home/ryan/nix-secrets";
+      #url = "git+ssh://git@github.com/rpdav/nix-secrets.git?ref=main&shallow=1";
     };
   };
 
