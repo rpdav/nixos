@@ -6,9 +6,9 @@
   ...
 }: {
   sops.secrets = {
-    "ryan/email/admin-mail/password" = {};
-    "ryan/email/personal-mail/password" = {};
-    "ryan/dav/password" = {};
+    "email/admin-mail/password" = {};
+    "email/personal-mail/password" = {};
+    "dav/password" = {};
   };
 
   # Create persistent directories
@@ -28,7 +28,7 @@
       realName = secrets.ryan.email.personal-mail.realName;
       # protonmail-bridge password is likely to reset on reinstall - pull it fresh from cli tool
       # thunderbird password declaration isn't working - this is must be entered imperatively.
-      passwordCommand = "cat ${config.sops.secrets."ryan/email/personal-mail/password".path}";
+      passwordCommand = "cat ${config.sops.secrets."email/personal-mail/password".path}";
       primary = true;
       imap = {
         host = "127.0.0.1";
@@ -52,7 +52,7 @@
       userName = "${secrets.ryan.email.admin-mail.address}";
       realName = "${secrets.ryan.email.admin-mail.realName}";
       # thunderbird password declaration isn't working - this is must be entered imperatively.
-      passwordCommand = "cat ${config.sops.secrets."ryan/email/admin-mail/password".path}";
+      passwordCommand = "cat ${config.sops.secrets."email/admin-mail/password".path}";
       imap = {
         host = secrets.ryan.email.admin-mail.host;
         tls.enable = true;
@@ -83,7 +83,7 @@
         type = "carddav";
         url = "${secrets.ryan.dav.url}/addressbooks/users/ryan/contacts";
         userName = "${secrets.dav.user}";
-        passwordCommand = "cat ${config.sops.secrets."ryan/dav/password".path}";
+        passwordCommand = "cat ${config.sops.secrets."dav/password".path}";
       };
       local = {
         path = "nextcloud";
@@ -100,7 +100,7 @@
         type = "caldav";
         url = "${secrets.ryan.dav.url}";
         userName = "${secrets.ryan.dav.user}";
-        passwordCommand = "cat ${config.sops.secrets."ryan/dav/password".path}";
+        passwordCommand = "cat ${config.sops.secrets."dav/password".path}";
       };
       local = {
         type = "singlefile";

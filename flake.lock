@@ -823,11 +823,11 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1754081239,
-        "narHash": "sha256-Cwk3O6Ag4W5oYm+YrsrLKUt8NvrJm3XHpdhIHMkkoyE=",
+        "lastModified": 1754135763,
+        "narHash": "sha256-OfY4WczpnPbxTIEGevvGRKsupw8nqDfAQTGHdH151Oo=",
         "ref": "refs/heads/main",
-        "rev": "1148da3a2766122f9bcd4b544c025e9cb8576a96",
-        "revCount": 105,
+        "rev": "48806483de4adc4eadf438d45fdd72888954ed70",
+        "revCount": 106,
         "type": "git",
         "url": "file:///home/ryan/nix-secrets"
       },

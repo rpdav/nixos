@@ -1,5 +1,6 @@
 {
   pkgs,
+  inputs,
   lib,
   config,
   osConfig,
@@ -9,8 +10,10 @@
   inherit (config.home) username;
 in {
   sops.secrets = {
-    "borg/passphrase" = {};
-    "${username}/sshKeys/id_borg" = {};
+    "sshKeys/id_borg" = {};
+    "borg/passphrase" = {
+      sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+    };
   };
 
   # ssh config for borg
@@ -20,7 +23,7 @@ in {
         Hostname 10.10.1.17
         Port 2222
         User borg
-        IdentityFile ${config.sops.secrets."${username}/sshKeys/id_borg".path}
+        IdentityFile ${config.sops.secrets."sshKeys/id_borg".path}
         IdentitiesOnly yes
         IdentityAgent none
     '';
