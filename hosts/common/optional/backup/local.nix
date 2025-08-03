@@ -1,4 +1,8 @@
-{config, ...}:
+{
+  config,
+  inputs,
+  ...
+}:
 #TODO: get backup monitor working again
 #let
 #  ## Set up notifications in case of failure
@@ -47,6 +51,8 @@
 #in
 let
   inherit (config.backupOpts) patterns localRepo paths;
+  sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+  restartUnits = ["borgbackup-job-root"];
 in {
   #  imports = [
   #    borgbackupMonitor
@@ -58,8 +64,14 @@ in {
 
   # Pull passphrase and key for ssh access (not needed for NAS)
   sops.secrets = {
-    "borg/passphrase" = {};
-    "root/sshKeys/id_borg" = {};
+    "borg/passphrase" = {
+      inherit sopsFile;
+      inherit restartUnits;
+    };
+    "root/sshKeys/id_borg" = {
+      inherit sopsFile;
+      inherit restartUnits;
+    };
   };
 
   # ssh config for borg

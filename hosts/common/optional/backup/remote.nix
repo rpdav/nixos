@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -7,9 +8,7 @@
   ### This is not up to date with current config - probably needs rebuilt
 
   # Pull B2 config file from secrets
-  sops.secrets = {
-    "rclone/config" = {};
-  };
+  sops.secrets."rclone/config".sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
 
   environment.etc.rclone-exclude.text = lib.strings.concatLines config.backupOpts.excludeList;
 

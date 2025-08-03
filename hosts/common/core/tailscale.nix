@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   ...
 }: {
@@ -9,7 +10,10 @@
       "/var/lib/tailscale"
     ];
   };
-  sops.secrets."tailscale/authkey" = {};
+  sops.secrets."tailscale/authkey" = {
+    sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+    restartUnits = ["tailscaled-autoconnect.service"];
+  };
 
   # Enable tailscale
   services.tailscale = {
