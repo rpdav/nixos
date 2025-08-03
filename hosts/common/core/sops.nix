@@ -7,8 +7,6 @@
 # This module uses sshd keys to generate host age keys - sshd must be enabled for system-level sops to work
 let
   inherit (config) systemOpts;
-  secretspath = builtins.toString inputs.nix-secrets;
-
   # Define appropriate key path depending on whether system is impermanent
   defaultPath = "/etc/ssh/ssh_host_ed25519_key";
   sshKeyPaths =
@@ -21,7 +19,7 @@ in {
   environment.systemPackages = [pkgs.sops];
 
   sops = {
-    defaultSopsFile = "${secretspath}/secrets.yaml";
+    defaultSopsFile = "${inputs.nix-secrets.outPath}/${config.networking.hostName}.yaml";
     defaultSopsFormat = "yaml";
     age = {
       # Automatically import ssh keys as age keys

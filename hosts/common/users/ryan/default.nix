@@ -26,10 +26,13 @@ in {
 
   # user definition
   users.mutableUsers = false;
-  sops.secrets."ryan/passwordhash".neededForUsers = true;
+  sops.secrets."passwordHashRyan" = {
+    neededForUsers = true;
+    sopsFile = "${inputs.nix-secrets.outPath}/ryan.yaml";
+  };
 
   users.users.ryan = {
-    hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
+    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     home = "/home/ryan";

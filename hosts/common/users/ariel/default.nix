@@ -20,10 +20,13 @@
 
   # user definition
   users.mutableUsers = false;
-  sops.secrets."ariel/passwordhash".neededForUsers = true;
+  sops.secrets."passwordHashAriel" = {
+    neededForUsers = true;
+    sopsFile = "${inputs.nix-secrets.outPath}/ariel.yaml";
+  };
 
   users.users.ariel = {
-    hashedPasswordFile = config.sops.secrets."ariel/passwordhash".path;
+    hashedPasswordFile = config.sops.secrets."passwordHashAriel".path;
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     home = "/home/ariel";
