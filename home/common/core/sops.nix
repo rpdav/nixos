@@ -5,7 +5,6 @@
   lib,
   ...
 }: let
-  secretspath = builtins.toString inputs.nix-secrets;
   homeDir = config.home.homeDirectory;
   persistVol = osConfig.systemOpts.persistVol;
   impermanent = osConfig.systemOpts.impermanent;
@@ -18,7 +17,7 @@
 in {
   imports = [inputs.sops-nix.homeManagerModules.sops];
 
-  # Create impermanent directories
+  # Create persistent directories
   home.persistence."${persistVol}${homeDir}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/sops"
@@ -26,7 +25,7 @@ in {
   };
 
   sops = {
-    defaultSopsFile = "${secretspath}/secrets.yaml";
+    defaultSopsFile = "${inputs.nix-secrets.outPath}/${config.home.username}.yaml";
     defaultSopsFormat = "yaml";
     age = {
       inherit keyFile;

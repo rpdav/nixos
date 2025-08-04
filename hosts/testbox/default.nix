@@ -14,12 +14,12 @@
         "vars"
         "hosts/common/disks/btrfs-imp.nix"
         "hosts/common/core"
-	#TODO move this back into core when done testing
-	"hosts/common/core/packages.nix"
-	"hosts/common/core/sshd.nix"
-	"hosts/common/core/sops.nix"
+        #TODO move this back into core when done testing
+        "hosts/common/core/packages.nix"
+        "hosts/common/core/sshd.nix"
+        "hosts/common/core/sops.nix"
 
-	"hosts/common/optional/persistence"
+        "hosts/common/optional/persistence"
       ])
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware-configuration.nix
@@ -44,10 +44,10 @@
 
   users.mutableUsers = false;
 
-  sops.secrets."ryan/passwordhash".neededForUsers = true;
+  sops.secrets."passwordHashRyan".neededForUsers = true;
 
   users.users.root = {
-    hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
+    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
     # password below is changeme for testing
     hashedPassword = "$6$Mz17vB64XrO4mfoR$tUW5V43Q4l9CL2EeAEy5qf9BhZv0aWojXufoCI2yaZ./3jTRKtHvgvJqWgC9g6Rl45iTtNn/9osJ.Mmgso2wa0";
     openssh.authorizedKeys.keys = [

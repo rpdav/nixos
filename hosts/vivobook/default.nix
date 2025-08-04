@@ -135,6 +135,6 @@ in {
 
   # minimal root user config
   users.users.root = {
-    hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
+    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
   };
 }

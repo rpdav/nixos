@@ -1,11 +1,24 @@
 keys:
   - &users: 
-    - &ryan #standalone age pubkey goes here; used for home-manager secrets
+    - &user1 age1... #standalone age pubkey goes here; used for home-manager secrets
+    - &admin age1... #standalone key for updating secrets
   - &hosts:
-    - &laptop #pubkey derived from host ssh key goes here; used for system secrets
+    - &machine1 age1...  #pubkey derived from host ssh key goes here; used for system secrets
 creation_rules:
-  - path_regex: secrets.yaml$
+  - path_regex: user1.yaml$
     key_groups:
       - age:
-        - *ryan
-        - *laptop
+        - *user1
+        - *admin
+        - *machine1 #user1.yaml contains the user's password hash so machine1 needs access to it
+  - path_regex: machine1.yaml$
+    key_groups:
+      - age:
+        - *admin
+        - *machine1
+  - path_regex: common.yaml$
+    key_groups:
+      - age:
+        - *admin
+        - *user1
+        - *machine1
