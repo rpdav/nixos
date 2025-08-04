@@ -1,0 +1,5 @@
+# This is what common.yaml looks like when being edited using `sops common.yaml` Copy this structure into common.yaml after opening it with sops.
+tailscale:
+    authkey: tskey-auth-12345
+borg:
+    passphrase: correct horse battery staple

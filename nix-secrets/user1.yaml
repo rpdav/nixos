@@ -1,0 +1,13 @@
+# This is what user1.yaml looks like when being edited using `sops user1.yaml` Copy this structure into user1.yaml after opening it with sops.
+passwordHashUser1: 12345 # if multiple users exist, this entry needs the username added to make it unique; otherwise there will be a conflict.
+sshKeys:
+ id_ed25519: |
+   -----BEGIN OPENSSH PRIVATE KEY-----
+   private key	contents go
+   here.	note the indentation
+   which is required for multi-
+   line sops secrets.
+   -----END OPENSSH PRIVATE KEY-----
+u2f_keys: 12345
+email:
+  password: 12345
