@@ -3,6 +3,21 @@
   pkgs,
   ...
 }: {
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.hyprland}/bin/Hyprland";
+        user = "greeter";
+      };
+      default_session = initial_session;
+    };
+  };
+
+  security.pam.services.greetd = {
+    fprintAuth = false;
+    enableGnomeKeyring = true;
+  };
   #  services.greetd = {
   #    enable = true;
   #    settings = {
@@ -26,7 +41,6 @@
 
   # Keyring
   services.gnome.gnome-keyring.enable = true;
-  #security.pam.services.ly.enableGnomeKeyring = true;
 
   nix.settings = {
     substituters = ["https://hyprland.cachix.org"];
