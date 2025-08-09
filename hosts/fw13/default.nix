@@ -32,7 +32,8 @@ in {
         "hosts/common/optional/wm/hyprland.nix"
         "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
-        # "hosts/common/optional/virtualization" #commenting out until needed due to long libvirtd restarts
+        "hosts/common/optional/virtualization" #commenting out until needed due to long libvirtd restarts
+        "hosts/common/optional/wine.nix"
 
         # users
         "hosts/common/users/ryan"
