@@ -180,6 +180,7 @@
           "$mainMod, E, exec, $fileManager"
           "$mainMod, B, exec, $browser"
           "$mainMod, space, exec, $menu"
+          "$mainMod, N, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -t"
           "$mainMod, C, exec, ${pkgs.cliphist}/bin/cliphist list | $menu --dmenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy"
 
           # Lock and suspend
