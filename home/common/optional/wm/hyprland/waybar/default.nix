@@ -82,11 +82,6 @@ in {
           interval = 3600;
           exec = "${pkgs.wttrbar}/bin/wttrbar --fahrenheit --mph --nerd --location Indianapolis";
           return-type = "json";
-          #format-icons = {
-          #  fog = "󰖑 ";
-          #  rain = "󰖖 ";
-          #  sunny = " ";
-          #};
         };
         "custom/nix-updates" = {
           exec = update-checker;
@@ -132,6 +127,7 @@ in {
           menu-file = ./power_menu.xml;
           menu-actions = {
             shutdown = "shutdown";
+            logout = "loginctl terminate-user ${config.home.username}";
             reboot = "reboot";
             suspend = "systemctl suspend";
             lock = "${pkgs.hyprlock}/bin/hyprlock";

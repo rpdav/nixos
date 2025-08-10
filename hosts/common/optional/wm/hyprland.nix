@@ -15,7 +15,9 @@
   };
 
   security.pam.services.greetd = {
+    # Disable fprint and yubikey login
     fprintAuth = false;
+    u2fAuth = false;
     enableGnomeKeyring = true;
   };
   #  services.greetd = {

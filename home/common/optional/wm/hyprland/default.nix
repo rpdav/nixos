@@ -173,6 +173,7 @@
           "$mainMod SHIFT, Q, forcekillactive,"
           "$mainMod, V, togglefloating,"
           "$mainMod, F, fullscreen"
+          "$mainMod, L, exec, logout"
           #", SUPER, hyprexpo:expo, toggle"
 
           # Apps
