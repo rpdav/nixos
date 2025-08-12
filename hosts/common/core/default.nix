@@ -1,4 +1,5 @@
 {
+  pkgs,
   inputs,
   config,
   configLib,
@@ -28,6 +29,14 @@ in {
       keep-derivations = true
       warn-dirty = false
     '';
+  };
+
+  # Base fonts
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts
+    ];
+    fontconfig.enable = true;
   };
 
   # Allow local users to inhibit sleep (used for some systemd user units)
