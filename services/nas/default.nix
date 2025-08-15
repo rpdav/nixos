@@ -11,6 +11,7 @@
     ./immich
     ./jellyfin
     ./nextcloud
+    ./ollama
     ./planka
     ./searxng
     ./silverbullet
