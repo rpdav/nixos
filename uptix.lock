@@ -4,6 +4,7 @@
   "ghcr.io/getalby/hub:latest": "sha256:2fdeba8991028939ee3b98dca83b7bfaa1dbb6b27dc9182b5552d65395213f96",
   "ghcr.io/immich-app/immich-machine-learning:release": "sha256:ef517c041fa4a6a84a6c3c4f88a1124058e686c9c92bf09a973e7e60c3c3ea1e",
   "ghcr.io/immich-app/immich-server:release": "sha256:e517f806457057d44695152a0af2dfa094225a7d85eb37f518925e68864c658d",
+  "ghcr.io/open-webui/open-webui:latest": "sha256:a439e8bcd23a8cc0e9ab742b03f1baecb829281476357b99226e13233e663508",
   "ghcr.io/plankanban/planka:2.0.0-rc.3": "sha256:5a2a69ec7159a2f9c6679c31698e4b5b17ccf254d5bfc6e9be43e411b6de0c3d",
   "gitea/gitea": "sha256:dd29b53ab01132b92aab264aa9289db6f1588cdde2820ddb4d3d0874e0b8f9fd",
   "homeassistant/home-assistant": "sha256:b064da094630c87b97a3b4ac2750a6ee13b251d0b301c8824bb168d57bc12cd0",

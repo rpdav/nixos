@@ -12,6 +12,7 @@
     ./jellyfin
     ./nextcloud
     ./ollama
+    ./open-webui
     ./planka
     ./searxng
     ./silverbullet
