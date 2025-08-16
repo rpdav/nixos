@@ -16,6 +16,7 @@
 
       # optional config
       "home/common/optional/app/browser"
+      "home/common/optional/app/crush.nix"
       "home/common/optional/app/defaultapps.nix"
       "home/common/optional/app/games"
       "home/common/optional/app/nextcloud.nix"
