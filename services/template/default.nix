@@ -35,13 +35,6 @@ in {
     protocol = "http";
   };
 
-  # Create directories for appdata
-  # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
-  systemd.tmpfiles.rules = [
-    "d ${serviceOpts.dockerDir}/_CONTAINER_/config 0700 ${serviceOpts.dockerUser} users"
-    "Z ${serviceOpts.dockerDir}/_CONTAINER_/config - ${serviceOpts.dockerUser} users"
-  ];
-
   # pull secret env file
-  sops.secrets."selfhosting/_CONTAINER_/env".owner = config.users.users.${config.serviceOpts.dockerUser}.name;
+  sops.secrets."selfhosting/containerName/env".owner = config.users.users.${config.serviceOpts.dockerUser}.name;
 }
