@@ -7,7 +7,7 @@
     enable = true;
     settings = rec {
       initial_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.hyprland}/bin/Hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.hyprland}/bin/Hyprland";
         user = "greeter";
       };
       default_session = initial_session;
