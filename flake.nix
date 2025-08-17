@@ -69,6 +69,10 @@
       url = "github:niksingh710/nsearch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Bleeding-edge AI tools
+    nix-ai-tools.url = "github:numtide/nix-ai-tools";
+
     ###### GUI stuff ######
 
     # Firefox extensions

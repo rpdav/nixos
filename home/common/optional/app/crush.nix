@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   crushConfig = builtins.toJSON {
     "$schema" = "https://charm.land/crush.json";
     lsp = {
@@ -40,7 +44,7 @@
   };
 in {
   home.packages = [
-    pkgs.crush
+    inputs.nix-ai-tools.packages.${pkgs.system}.crush
   ];
 
   home.file."crush.json" = {
