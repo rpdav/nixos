@@ -305,6 +305,28 @@ in {
             font-size: 10px;
         }
       '';
+      weatherYellow = ''
+        #custom-weather.clear,
+        #custom-weather.sunny
+      '';
+      weatherBlue = ''
+        #custom-weather.mist,
+        #custom-weather.patchy_rain_possible,
+        #custom-weather.patchy_light_drizzle,
+        #custom-weather.light_drizzle,
+        #custom-weather.thundery_outbreaks_possible,
+        #custom-weather.patchy_light_rain,
+        #custom-weather.light_rain,
+        #custom-weather.moderate_rain_at_times,
+        #custom-weather.moderate_rain,
+        #custom-weather.heavy_rain_at_times,
+        #custom-weather.heavy_rain,
+        #custom-weather.light_rain_shower,
+        #custom-weather.moderate_or_heavy_rain_shower,
+        #custom-weather.torrential_rain_shower,
+        #custom-weather.patchy_light_rain_with_thunder,
+        #custom-weather.moderate_or_heavy_rain_with_thunder
+      '';
     in
       lib.optionalString (!config.stylix.targets.waybar.enable) defaultColors
       + ''
@@ -357,8 +379,11 @@ in {
         #tray {
         	background: @base02;
         }
-        #custom-weather.sunny {
+        ${weatherYellow} {
                 color: @base0A;
+        }
+        ${weatherBlue} {
+                color: @base0D;
         }
         #custom-nix-updates {
                 color: @base05;
