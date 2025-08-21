@@ -93,7 +93,11 @@ in {
 
   # Networking
   networking.hostName = "fw13";
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    #wifi.backend = "iwd";
+  };
+  #networking.wireless.iwd.enable = true;
 
   # Host-specific tailscale config
   # This causes TS to use relays to connect to router and nas when on lan. This is a known issue -
@@ -124,14 +128,16 @@ in {
   # System packages
   environment.systemPackages = with pkgs; [
     qdirstat
+    #impala
   ];
 
   # Create impermanent directories
   environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
-      "/etc/secureboot"
-      "/var/lib/fprint"
       "/var/lib/bluetooth"
+      "/var/lib/fprint"
+      #"/var/lib/iwd"
+      "/etc/secureboot"
     ];
     files = [
       "/root/.ssh/known_hosts"
