@@ -111,7 +111,6 @@ in {
     pulse.enable = true;
   };
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
   services.libinput.enable = true;
 
   # Printing
@@ -127,6 +126,7 @@ in {
 
   # System packages
   environment.systemPackages = with pkgs; [
+    blueberry
     qdirstat
     #impala
   ];

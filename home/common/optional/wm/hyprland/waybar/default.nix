@@ -170,7 +170,7 @@ in {
           format-on = "󰂯";
           format-connected = "󰂱";
           format-disabled = "󰂲";
-          on-click = "${pkgs.blueman}/bin/blueman-manager";
+          on-click = "${pkgs.blueberry}/bin/blueberry";
           tooltip-format = "No devices connected";
           tooltip-format-connected = "{device_enumerate}";
           tooltip-format-enumerate-connected = "{device_alias}";
