@@ -161,6 +161,8 @@ in {
     "f /justfile 0644 ${config.userOpts.primaryUser}/ users - import \\'/home/${config.userOpts.primaryUser}/nixos/justfile\\'"
   ];
 
+  programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];
+
   # minimal root user config
   users.users.root = {
     hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;

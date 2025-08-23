@@ -91,4 +91,8 @@
     localRepo = "ssh://borg@borg:2222/backup";
     #remoteRepo = "";
   };
+  gtk.iconTheme = {
+    name = osConfig.stylix.fonts.emoji.name;
+    package = osConfig.stylix.fonts.emoji.package;
+  };
 }

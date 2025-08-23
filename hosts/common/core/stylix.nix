@@ -96,9 +96,9 @@ in {
       name = "Ubuntu Sans";
       package = pkgs.nerd-fonts.ubuntu-sans;
     };
-    #    emoji = {
-    #      name = "Noto Color Emoji";
-    #      package = pkgs.noto-fonts-emoji-blob-bin;
-    #    };
+    emoji = {
+      name = "Noto Color Emoji";
+      package = pkgs.noto-fonts-color-emoji;
+    };
   };
 }
