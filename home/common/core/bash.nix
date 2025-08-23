@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (pkgs) bat git lazygit lazydocker systemctl-tui;
+  inherit (pkgs) bat eza fzf git lazygit lazydocker systemctl-tui;
   # Define appropriate key path depending on whether system is impermanent
   defaultLocation = "${config.home.homeDirectory}/.bash_history";
   historyFile =
@@ -17,24 +17,28 @@ in {
     enable = true;
     enableCompletion = true;
     shellAliases = {
+      # general
       ".." = "cd ..";
-      ll = "ls -la";
+      ls = "${eza}/bin/eza -lh --group-directories-first --icons=auto";
+      lsa = "ls -a";
+      lt = "${eza}/bin/eza --tree --level=2 --long --icons --git";
+      lta = "lt -a";
+      ff = "${fzf}/bin/fzf --preview '${bat}/bin/bat --style=numbers --color=always {}'";
       sudo = "sudo "; #allows aliases with sudo
       cat = "${bat}/bin/bat --paging=never";
-      jctl = "journalctl -xeu";
-      jctlu = "journalctl --user -xeu";
       nas-boot = "ssh root@nas -p 2220 cryptsetup-askpass";
-      vim = "nvim";
-      ## git
+      # git
       gs = "${git}/bin/git status";
       gc = "${git}/bin/git commit -am";
       gp = "${git}/bin/git push";
       lg = "${lazygit}/bin/lazygit";
-      ## docker
+      # docker
       compose2nix = "nix run github:aksiksi/compose2nix --";
       ld = "${lazydocker}/bin/lazydocker";
-      ## system admin
+      # system admin
       sctl = "${systemctl-tui}/bin/systemctl-tui";
+      jctl = "journalctl -xeu";
+      jctlu = "journalctl --user -xeu";
     };
     bashrcExtra = ''
       # this is overridden if stylix is used

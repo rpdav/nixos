@@ -16,6 +16,8 @@
           bat
           borgbackup
           dust
+          eza
+          fzf
           git
           htop
           killall
