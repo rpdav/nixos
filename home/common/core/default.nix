@@ -27,24 +27,36 @@
       fastfetch
       just
 
-      # scripts
-      (import ../optional/scripts/fs-diff.nix {inherit pkgs;})
-      (import ../optional/scripts/clear-testbox.nix {
+      ### scripts
+
+      # nix file conversion tools
+      (import ./scripts/json2nix.nix {inherit pkgs;})
+      (import ./scripts/toml2nix.nix {inherit pkgs;})
+      (import ./scripts/yaml2nix.nix {inherit pkgs;})
+      (import ./scripts/nix2json.nix {inherit pkgs;})
+      (import ./scripts/nix2toml.nix {inherit pkgs;})
+      (import ./scripts/nix2yaml.nix {inherit pkgs;})
+
+      # remote host management
+      (import ./scripts/clear-testbox.nix {
         inherit pkgs;
         inherit config;
       })
-      (import ../optional/scripts/clear-testvm.nix {
+      (import ./scripts/clear-testvm.nix {
         inherit pkgs;
         inherit config;
       })
-      (import ../optional/scripts/clear-vps.nix {
+      (import ./scripts/clear-vps.nix {
         inherit pkgs;
         inherit config;
       })
-      (import ../optional/scripts/lish.nix {
+      (import ./scripts/lish.nix {
         inherit pkgs;
         inherit secrets;
       })
+
+      # misc
+      (import ./scripts/fs-diff.nix {inherit pkgs;})
     ]
     ++ lib.lists.optionals osConfig.systemOpts.gui [
       # browsers
