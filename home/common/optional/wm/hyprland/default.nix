@@ -187,6 +187,7 @@
           # Lock and suspend
           ", XF86AudioMedia, exec, $lock"
           "$mainMod, XF86AudioMedia, exec, systemctl suspend"
+          "$mainMod SHIFT, XF86AudioMedia, exec, shutdown"
 
           # Screenshotting to clipboard
           ", PRINT, exec, $hyprshot -m output -z --clipboard-only" # Monitor
