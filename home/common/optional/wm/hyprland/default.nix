@@ -7,9 +7,10 @@
   ...
 }: {
   imports = [
-    ./waybar
     ./hyprlock.nix
     ./hypridle.nix
+    ./waybar
+    ./wlogout
   ];
 
   # core utilities
@@ -186,8 +187,7 @@
 
           # Lock and suspend
           ", XF86AudioMedia, exec, $lock"
-          "$mainMod, XF86AudioMedia, exec, systemctl suspend"
-          "$mainMod SHIFT, XF86AudioMedia, exec, shutdown"
+          "$mainMod, XF86AudioMedia, exec, ${pkgs.wlogout}/bin/wlogout"
 
           # Screenshotting to clipboard
           ", PRINT, exec, $hyprshot -m output -z --clipboard-only" # Monitor
