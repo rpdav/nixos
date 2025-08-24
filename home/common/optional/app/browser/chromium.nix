@@ -15,6 +15,9 @@ in {
 
   programs.chromium = {
     enable = true;
+    commandLineArgs = [
+      "--ozone-platform-hint=auto"
+    ];
     extensions = [
       {id = "ddkjiahejlhfcafbddmgiahcphecmpfh";} #ublock origin lite
       {id = "nngceckbapebfimnlniiiahkandclblb";} #bitwarden
