@@ -58,6 +58,9 @@
     extraGroups = ["input"];
   };
 
+  # Misc tweaks
+  services.logind.powerKey = "ignore"; # Override power button behavior to use wlogout
+
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;

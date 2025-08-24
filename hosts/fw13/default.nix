@@ -112,7 +112,6 @@ in {
   };
   hardware.bluetooth.enable = true;
   services.libinput.enable = true;
-  services.logind.powerKey = "suspend";
 
   # Printing
   services.printing.enable = true;

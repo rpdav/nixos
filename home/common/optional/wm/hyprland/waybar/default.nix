@@ -123,15 +123,7 @@ in {
         "custom/power" = {
           format = " ";
           tooltip = false;
-          menu = "on-click";
-          menu-file = ./power_menu.xml;
-          menu-actions = {
-            shutdown = "shutdown";
-            logout = "loginctl terminate-user ${config.home.username}";
-            reboot = "reboot";
-            suspend = "systemctl suspend";
-            lock = "${pkgs.hyprlock}/bin/hyprlock";
-          };
+          on-click = "${pkgs.wlogout}/bin/wlogout";
         };
         memory = {
           format = "  {}%";

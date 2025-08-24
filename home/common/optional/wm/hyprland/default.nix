@@ -147,6 +147,7 @@
           natural_scroll = true;
           drag_lock = 1;
         };
+        kb_options = "compose:XF86AudioMedia";
       };
 
       cursor = {
@@ -174,8 +175,6 @@
           "$mainMod SHIFT, Q, forcekillactive,"
           "$mainMod, V, togglefloating,"
           "$mainMod, F, fullscreen"
-          "$mainMod, L, exec, logout"
-          #", SUPER, hyprexpo:expo, toggle"
 
           # Apps
           "$mainMod, return, exec, $terminal"
@@ -186,8 +185,7 @@
           "$mainMod, C, exec, ${pkgs.cliphist}/bin/cliphist list | $menu --dmenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy"
 
           # Lock and suspend
-          ", XF86AudioMedia, exec, $lock"
-          "$mainMod, XF86AudioMedia, exec, ${pkgs.wlogout}/bin/wlogout"
+          ", XF86PowerOff, exec, ${pkgs.wlogout}/bin/wlogout"
 
           # Screenshotting to clipboard
           ", PRINT, exec, $hyprshot -m output -z --clipboard-only" # Monitor
