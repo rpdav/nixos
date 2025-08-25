@@ -13,7 +13,7 @@
     ./wlogout
   ];
 
-  # core utilities
+  # packages
   home.packages = with pkgs; [
     # services
     libnotify
@@ -48,6 +48,11 @@
   # notifications
   services.swaync.enable = true;
 
+  # OSD for volume and brightness
+  services.swayosd = {
+    enable = true;
+  };
+
   # flash drive sys tray
   services.udiskie.enable = true;
 
@@ -65,6 +70,7 @@
       ################
       ### MONITORS ###
       ################
+
       monitor = lib.flatten [
         ", preferred, auto, 1" # Default for non-defined monitors (e.g. projectors)
 
@@ -95,10 +101,13 @@
       "$bar" = "${pkgs.waybar}/bin/waybar";
       "$lock" = "${pkgs.hyprlock}/bin/hyprlock";
       "$hyprshot" = "${pkgs.hyprshot}/bin/hyprshot";
+      "$osdclient" = "${pkgs.swayosd}/bin/swayosd-client";
 
       #################
       ### AUTOSTART ###
       #################
+
+      # Mostly using services instead of execonce
 
       #############################
       ### ENVIRONMENT VARIABLES ###
@@ -243,19 +252,22 @@
       ];
 
       # Audio and brightness
-      bindel = [
-        ",XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ",XF86AudioMute, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ",XF86AudioMicMute, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl -e4 -n2 set 5%+"
-        ",XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl -e4 -n2 set 5%-"
+      bindeld = [
+        ",XF86AudioRaiseVolume, Volume up, exec, $osdclient --output-volume raise"
+        ",XF86AudioLowerVolume, Volume down, exec, $osdclient --output-volume lower"
+        ",XF86AudioMute, Mute, exec, $osdclient --output-volume mute-toggle"
+        ",XF86AudioMicMute, Mute microphone, exec, $osdclient --input-volume mute-toggle"
+        ",XF86MonBrightnessUp, Brightness up, exec, $osdclient --brightness raise"
+        ",XF86MonBrightnessDown, Brightness down, exec, $osdclient --brightness lower"
       ];
-      bindl = [
-        ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next"
-        ", XF86AudioPause, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-        ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-        ", XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
+      bindd = [
+        ",Caps_Lock, CAPS lock, exec, sleep 0.5 && $osdclient --caps-lock" # added 0.5 s delay to get current status
+      ];
+      bindld = [
+        ", XF86AudioNext, Next track, exec, $osdclient --playerctl next"
+        ", XF86AudioPause, Pause, exec, $osdclient --playerctl play-pause"
+        ", XF86AudioPlay, Play, exec, $osdclient --playerctl play-pause"
+        ", XF86AudioPrev, Previous track, exec, $osdclient --playerctl previous"
       ];
 
       ###############
