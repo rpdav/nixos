@@ -49,7 +49,9 @@ gc:
 ############################################################################
 
 build host:
-  nixos apply /home/ryan/nixos/.#{{host}} --dry
+  # separate build command to get the nice nixos-cli/nvd output
+  # using -o flag to make a gc root and keep builds from being immediatley gc'd
+  nixos apply /home/ryan/nixos/.#{{host}} -o ~/result-nas_{{datetime("%Y-%m-%d_%T")}}
 
 deploy host:
   sudo tailscale up --reset && nixos-rebuild --flake /home/ryan/nixos/.#{{host}} --target-host root@{{host}} switch; sudo tailscale up --accept-routes

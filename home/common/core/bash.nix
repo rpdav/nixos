@@ -33,7 +33,6 @@ in {
       gp = "${git}/bin/git push";
       lg = "${lazygit}/bin/lazygit";
       # docker
-      compose2nix = "nix run github:aksiksi/compose2nix --";
       ld = "${lazydocker}/bin/lazydocker";
       # system admin
       sctl = "${systemctl-tui}/bin/systemctl-tui";
