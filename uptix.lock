@@ -1,5 +1,6 @@
 {
   "actualbudget/actual-server:latest": "sha256:3d7fb08d3b405426e8625013a5ed95f5015e6c04d0f044e2e3fe7d7b7a41951b",
+  "dullage/flatnotes:latest": "sha256:cfa8e12c818a977220677b72649a70db5fa49faf630b2e819e48ed37b1a9cba5",
   "ghcr.io/docker-mailserver/docker-mailserver:latest": "sha256:af51b15dd3fc72153c0e90eb7692bb5e3a463212d87959a80fa7aa89b617d44a",
   "ghcr.io/getalby/hub:latest": "sha256:2fdeba8991028939ee3b98dca83b7bfaa1dbb6b27dc9182b5552d65395213f96",
   "ghcr.io/immich-app/immich-machine-learning:release": "sha256:f34e855424fd91c5990132e5b2bde91e1d178ec5205de293ebd8779839a4a77c",

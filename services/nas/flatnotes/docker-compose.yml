@@ -1,0 +1,21 @@
+services:
+  flatnotes:
+    container_name: flatnotes
+    image: dullage/flatnotes:latest
+    environment:
+      PUID: 1000
+      PGID: 1000
+      FLATNOTES_AUTH_TYPE: "password"
+      #FLATNOTES_PASSWORD: "changeMe!"
+      #FLATNOTES_SECRET_KEY: "aLongRandomSeriesOfCharacters"
+    volumes:
+      - "/config.serviceOpts.dockerDir/flatnotes/data:/data"
+      # Optional. Allows you to save the search index in a different location: 
+      # - "./index:/data/.flatnotes"
+    networks:
+      - proxynet
+    restart: unless-stopped
+
+networks:
+  proxynet:
+    external: true

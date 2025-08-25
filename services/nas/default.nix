@@ -5,6 +5,7 @@
     ./beszel-hub
     ./borg
     ./duplicati
+    ./flatnotes
     ./gitea
     ./heimdall
     ./home-assistant
@@ -15,7 +16,6 @@
     ./open-webui
     ./planka
     ./searxng
-    ./silverbullet
     ./speedtest
     ./unifi
     ./vaultwarden
