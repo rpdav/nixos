@@ -95,5 +95,17 @@
           "Graphics"
         ];
       };
+    flatnotes =
+      commonConfig
+      // {
+        id = 7;
+        url = "https://notes.${domain}";
+        name = "Flatnotes";
+        genericName = "Note Taking";
+        icon = ./icons/flatnotes.png;
+        categories = [
+          "Office"
+        ];
+      };
   };
 }
