@@ -259,6 +259,8 @@
         ",XF86AudioMicMute, Mute microphone, exec, $osdclient --input-volume mute-toggle"
         ",XF86MonBrightnessUp, Brightness up, exec, $osdclient --brightness raise"
         ",XF86MonBrightnessDown, Brightness down, exec, $osdclient --brightness lower"
+        "$mainMod, XF86MonBrightnessUp, Brightness max, exec, $osdclient --brightness +100"
+        "$mainMod, XF86MonBrightnessDown, Brightness min, exec, $osdclient --brightness -100"
       ];
       bindd = [
         ",Caps_Lock, CAPS lock, exec, sleep 0.5 && $osdclient --caps-lock" # added 0.5 s delay to get current status
