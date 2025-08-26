@@ -76,10 +76,6 @@ in {
         type = types.str;
         default = "ryan";
       };
-      base16scheme = mkOption {
-        type = types.str;
-        default = "3024"; #run nix build nixpkgs#base16-schemes and browse result/share/themes
-      };
       wallpaper = mkOption {
         type = types.str;
         default = "mountain";

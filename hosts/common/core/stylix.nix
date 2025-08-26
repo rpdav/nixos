@@ -9,26 +9,22 @@
   inherit (config) userOpts;
   themePath = configLib.relativeToRoot "themes/${userOpts.wallpaper}";
 
+  # choose appropriate wallpaper file type
   image =
     if builtins.pathExists "${themePath}/wallpaper.jpg"
     then "${themePath}/wallpaper.jpg"
     else "${themePath}/wallpaper.png";
 
-  #declare customTheme var if scheme.txt exists alongside wallpaper
-  customTheme =
-    if builtins.pathExists "${themePath}/scheme.txt"
-    then
-      "${themePath}/scheme.txt"
-      |> builtins.readFile
-      |> lib.removeSuffix "\n"
-    else "";
+  # extract theme name from scheme.txt
+  themeName =
+    "${themePath}/scheme.txt"
+    |> builtins.readFile
+    |> lib.removeSuffix "\n";
 
-  # If scheme.txt exists in wallpaper directory, use that; otherwise use userOpts.base16scheme
-  base16Scheme =
-    if customTheme == ""
-    then "${pkgs.base16-schemes}/share/themes/${userOpts.base16scheme}.yaml"
-    else "${pkgs.base16-schemes}/share/themes/${customTheme}.yaml";
+  # pull scheme yaml from base16-schemes
+  base16Scheme = "${pkgs.base16-schemes}/share/themes/${themeName}.yaml";
 
+  # pull polarity from polarity.txt
   polarity =
     "${themePath}/polarity.txt"
     |> builtins.readFile
@@ -49,8 +45,6 @@ in {
   stylix.targets = {
     console.enable = false;
   };
-
-  #TODO add extra gtk theming?
 
   # Favorite schemes:
   # catppuccin-mocha
