@@ -35,7 +35,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 See readme in nix-secrets directory.
 
 ## Selfhosted Services
-The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server. Bootstrapping a container-based service takes a bit more work to bootstrap. I've found a few tools (and wrote a couple simple modules) that help speed that process up. More details in the `services` directory.
+The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server. Bootstrapping a container-based service takes a bit more work than simple compose files. I've found a few tools (and have written a couple simple modules) that help speed that process up. More details in the `services` directory.
 
 ## Impermanence
 
@@ -53,8 +53,8 @@ The other method is to use a tmpfs for `/`. This is simpler but uses more RAM an
 
  You have to decide how granular you want to be in persisting `/home`:
 * You could persist all of `/home`. Cruft will accumulate in `~` and `.config` but you may be OK with that. This can be done by persisting home in the NixOS impermanence module or by having a separate subvolume for `/home` that doesn't get wiped at all.
-* You could persist the main folders, like data folders, `.config`, `.local`, and `.ssh`. This is a good middle ground.
-* You could persist individual folders within `.config` and `.local`. You will have to comb through these folders and determine what you want to keep and throw away. Anything managed by home-manager should be symlinked to `/nix/store` and does not need to be persisted. Some applications spew a lot of loose files and folders in `.config` (looking at you, KDE), so this can be a bit fussy. If you have a lot application churn, you'll have to tweak this frequently. But the more you configure your system with home-manager, the less you will need to persist within `.config`.
+* You could persist the main folders, like user data folders, `.config`, `.local`, and `.ssh`. This is a good middle ground.
+* You could persist individual folders within `.config` and `.local`. You will have to comb through these folders and determine what you want to keep and throw away. Anything managed by home-manager should be declaratively symlinked to `/nix/store` and does not need to be persisted. Some applications spew a lot of loose files and folders in `.config` (looking at you, KDE), so this can be a bit fussy. If you have a lot application churn, you'll have to tweak this frequently. But the more you configure your system with home-manager, the less you will need to persist within `.config`.
 
 My recommendation is to begin by persisting everything and gradually fine-tune it if you want. If something breaks, those files still exist in `/persist` and can be easily restored. If you're not sure where an application is storing its config or data, I include a `fs-diff` script which recursively lists all files in a directory, ignoring bind mounts and symlinks. By storing the output of this script in a file before and after making the change you're interested in, you can run a `diff` on those two files and see where that application is writing its change. I've found this especially useful for window manager files.
 
@@ -63,6 +63,32 @@ NB: If you are using the home-manager impermanence module, and intend to persist
 ## Hyprland
 
 My hyprland config is pretty simple but I'm happy with how it so far. Nix and the hypr ecosystem complement each other very well. It works great with stylix too.
+
+## Custom options
+Several custom options are defined in `vars/default.nix`. These are used to set several system-, user-, or service-related options in each system's or user's config files. This allows shared modules to be tailored to each system/user without rewriting the whole module. Here are a few use cases:
+* Use a common `disko` config but vary the swap file size based on `systemOpts.swapSize` (or disable swap entirely with `systemOpts.swapEnable`)
+* Use a common `packages.nix` to load packages on all system, but exclude gui apps based on `systemOpts.gui`.
+* Use a common `stylix.nix` module for system-wide theming, but each user can set their own `userOpts.theme`, `userOpts.cursor`, and `userOpts.font`.
+
+## Themes
+
+Theming is handled by [Stylix](https://nix-community.github.io/stylix/), a nixos module that applies system-wide colors, fonts, icons, cursors, and wallpapers. My stylix config is defined in `hosts/common/core/stylix.nix`.
+
+`themes` contains subfolders for each theme with a wallpaper, polarity file, and scheme file. These are all accessed by stylix based on the theme chosen through `userOpts.theme`. I currently have the following themes:
+
+| Theme Name  | Base16Scheme              |
+|-------------|---------------------------|
+| everforest  | everforest                |
+| gruvbox     | gruvbox-dark-medium       |
+| latte       | catppuccin-latte          |
+| mocha       | catppuccin-mocha          |
+| moon        | tokyo-night-terminal-dark |
+| mountain    | catppuccin-latte          |
+| nord        | nord                      |
+| rainbow-cat | catppuccin-mocha          |
+| tokyo       | tokyo-night-terminal-dark |
+
+[Base16Schemes](https://github.com/tinted-theming/schemes?tab=readme-ov-file) are a set of 16 coordinated colors. You can also build your own base16 scheme with stylix if you prefer. You can get scheme names by running `nix run nixpkgs#base16-schemes` and browsing to `result/share/themes`.
 
 ## Initial Install
 See readme files in each host's subfolder.
