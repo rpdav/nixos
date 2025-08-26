@@ -1,15 +1,14 @@
-{...}: let
+{config, ...}: let
+  inherit (config.lib.stylix) colors;
   icons = {
-    lock = ./icons/catppuccin-mocha/lock.svg;
-    reboot = ./icons/catppuccin-mocha/reboot.svg;
-    logout = ./icons/catppuccin-mocha/logout.svg;
-    shutdown = ./icons/catppuccin-mocha/shutdown.svg;
-    suspend = ./icons/catppuccin-mocha/suspend.svg;
-    hibernate = ./icons/catppuccin-mocha/hibernate.svg;
+    lock = ./icons/${colors.slug}/lock.svg;
+    reboot = ./icons/${colors.slug}/reboot.svg;
+    logout = ./icons/${colors.slug}/logout.svg;
+    shutdown = ./icons/${colors.slug}/shutdown.svg;
+    suspend = ./icons/${colors.slug}/suspend.svg;
+    hibernate = ./icons/${colors.slug}/hibernate.svg;
   };
 in {
-  # colors taken from https://github.com/catppuccin/wlogout
-  # TODO: integrate this with stylix/system theming sometime
   programs.wlogout = {
     enable = true;
     layout = [
@@ -57,15 +56,15 @@ in {
       }
 
       window {
-      	background-color: rgba(30, 30, 46, 0.90);
+      	background-color: #${colors.base00};
       }
 
       button {
       	border-radius: 0;
-      	border-color: #74c7ec;
-      	text-decoration-color: #cdd6f4;
-      	color: #cdd6f4;
-      	background-color: #181825;
+      	border-color: #${colors.base0C};
+      	text-decoration-color: #${colors.base05};
+      	color: #${colors.base05};
+      	background-color: #${colors.base01};
       	border-style: solid;
       	border-width: 1px;
       	background-repeat: no-repeat;
