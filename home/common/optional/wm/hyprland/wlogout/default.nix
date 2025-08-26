@@ -1,12 +1,15 @@
 {config, ...}: let
   inherit (config.lib.stylix) colors;
   icons = {
-    lock = ./icons/${colors.slug}/lock.svg;
-    reboot = ./icons/${colors.slug}/reboot.svg;
-    logout = ./icons/${colors.slug}/logout.svg;
-    shutdown = ./icons/${colors.slug}/shutdown.svg;
-    suspend = ./icons/${colors.slug}/suspend.svg;
-    hibernate = ./icons/${colors.slug}/hibernate.svg;
+    # The colors of these icons are from catppuccin mocha
+    # https://github.com/catppuccin/wlogout
+    # TODO: make versions for other themes
+    lock = ./icons/lock.svg;
+    reboot = ./icons/reboot.svg;
+    logout = ./icons/logout.svg;
+    shutdown = ./icons/shutdown.svg;
+    suspend = ./icons/suspend.svg;
+    hibernate = ./icons/hibernate.svg;
   };
 in {
   programs.wlogout = {
