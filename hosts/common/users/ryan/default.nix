@@ -20,7 +20,7 @@ in {
   ];
 
   # user--specific variable overrides
-  userOpts.wallpaper = "mountain";
+  userOpts.theme = "rainbow-cat";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
 

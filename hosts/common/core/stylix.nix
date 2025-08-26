@@ -7,7 +7,7 @@
   ...
 }: let
   inherit (config) userOpts;
-  themePath = configLib.relativeToRoot "themes/${userOpts.wallpaper}";
+  themePath = configLib.relativeToRoot "themes/${userOpts.theme}";
 
   # choose appropriate wallpaper file type
   image =

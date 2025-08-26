@@ -76,7 +76,7 @@ in {
         type = types.str;
         default = "ryan";
       };
-      wallpaper = mkOption {
+      theme = mkOption {
         type = types.str;
         default = "mountain";
       };

@@ -14,7 +14,7 @@
   ];
 
   # user--specific variable overrides
-  userOpts.wallpaper = "mountain";
+  userOpts.theme = "mountain";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
 
