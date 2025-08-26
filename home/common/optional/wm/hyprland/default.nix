@@ -21,6 +21,7 @@
     # Screenshot utils
     slurp
     grim
+    hyprpicker
 
     # Misc gui apps
     galculator
@@ -192,6 +193,7 @@
           "$mainMod, space, exec, $menu"
           "$mainMod, N, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -t"
           "$mainMod, C, exec, ${pkgs.cliphist}/bin/cliphist list | $menu --dmenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy"
+          "$mainMod, P, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a"
 
           # Lock and suspend
           ", XF86PowerOff, exec, ${pkgs.wlogout}/bin/wlogout"
