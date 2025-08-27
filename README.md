@@ -88,7 +88,7 @@ Theming is handled by [Stylix](https://nix-community.github.io/stylix/), a nixos
 | rainbow-cat | catppuccin-mocha          |
 | tokyo       | tokyo-night-terminal-dark |
 
-[Base16Schemes](https://github.com/tinted-theming/schemes?tab=readme-ov-file) are a set of 16 coordinated colors. You can also build your own base16 scheme with stylix if you prefer. You can get scheme names by running `nix run nixpkgs#base16-schemes` and browsing to `result/share/themes`.
+[Base16Schemes](https://github.com/tinted-theming/schemes?tab=readme-ov-file) are a set of 16 coordinated colors. You can also build your own base16 scheme with stylix if you prefer. You can get scheme names by running `nix build nixpkgs#base16-schemes` and browsing to `result/share/themes`.
 
 ## Initial Install
 See readme files in each host's subfolder.
