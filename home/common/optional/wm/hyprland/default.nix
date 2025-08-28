@@ -217,12 +217,6 @@
           "$mainMod SHIFT, k, swapwindow, u"
           "$mainMod SHIFT, j, swapwindow, d"
 
-          # Window resize
-          "$mainMod CTRL, h, resizeactive, -10 0"
-          "$mainMod CTRL, l, resizeactive, 10 0"
-          "$mainMod CTRL, k, resizeactive, 0 -10"
-          "$mainMod CTRL, j, resizeactive, 0 10"
-
           # Special workspaces
           "$mainMod, S, togglespecialworkspace, magic"
         ]
@@ -246,6 +240,16 @@
         "$mainMod SHIFT, l, moveactive, 50 0"
         "$mainMod SHIFT, k, moveactive, 0 -50"
         "$mainMod SHIFT, j, moveactive, 0 50"
+
+        # Window resize
+        "$mainMod CTRL, h, resizeactive, -10 0"
+        "$mainMod CTRL, l, resizeactive, 10 0"
+        "$mainMod CTRL, k, resizeactive, 0 -10"
+        "$mainMod CTRL, j, resizeactive, 0 10"
+        "$mainMod CTRL SHIFT, h, resizeactive, -50 0"
+        "$mainMod CTRL SHIFT, l, resizeactive, 50 0"
+        "$mainMod CTRL SHIFT, k, resizeactive, 0 -50"
+        "$mainMod CTRL SHIFT, j, resizeactive, 0 50"
       ];
       # Move/resize windows with mouse
       bindm = [

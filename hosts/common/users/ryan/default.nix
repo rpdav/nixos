@@ -20,7 +20,7 @@ in {
   ];
 
   # user--specific variable overrides
-  userOpts.theme = "gruvbox";
+  userOpts.theme = "tokyo";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
 
