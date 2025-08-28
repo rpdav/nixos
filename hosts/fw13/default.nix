@@ -156,12 +156,8 @@ in {
     path = with pkgs; [gnome-keyring];
   };
 
-  # Add justfile at root
-  systemd.tmpfiles.rules = [
-    "f /justfile 0644 ${config.userOpts.primaryUser}/ users - import \\'/home/${config.userOpts.primaryUser}/nixos/justfile\\'"
-  ];
-
-  programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];
+  # Server for gnome calendar
+  services.gnome.evolution-data-server.enable = true;
 
   # minimal root user config
   users.users.root = {
