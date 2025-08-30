@@ -59,7 +59,7 @@
   };
 
   # Misc tweaks
-  services.logind.powerKey = "ignore"; # Override power button behavior to use wlogout
+  services.logind.settings.Login.HandlePowerKey = "ignore"; # Override power button behavior to use wlogout
 
   programs.hyprland = {
     enable = true;
