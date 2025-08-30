@@ -4,6 +4,7 @@
   lib,
   secrets,
   pkgs,
+  pkgs-stable,
   ...
 }: {
   imports = [
@@ -20,73 +21,80 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  home.packages = with pkgs; (
-    [
-      tree
-      gdu
-      fastfetch
-      just
+  home.packages = (
+    with pkgs;
+      (
+        [
+          tree
+          gdu
+          fastfetch
+          just
 
-      ### scripts
+          ### scripts
 
-      # nix file conversion tools
-      (import ./scripts/json2nix.nix {inherit pkgs;})
-      (import ./scripts/toml2nix.nix {inherit pkgs;})
-      (import ./scripts/yaml2nix.nix {inherit pkgs;})
-      (import ./scripts/nix2json.nix {inherit pkgs;})
-      (import ./scripts/nix2toml.nix {inherit pkgs;})
-      (import ./scripts/nix2yaml.nix {inherit pkgs;})
+          # nix file conversion tools
+          (import ./scripts/json2nix.nix {inherit pkgs;})
+          (import ./scripts/toml2nix.nix {inherit pkgs;})
+          (import ./scripts/yaml2nix.nix {inherit pkgs;})
+          (import ./scripts/nix2json.nix {inherit pkgs;})
+          (import ./scripts/nix2toml.nix {inherit pkgs;})
+          (import ./scripts/nix2yaml.nix {inherit pkgs;})
 
-      # remote host management
-      (import ./scripts/clear-testbox.nix {
-        inherit pkgs;
-        inherit config;
-      })
-      (import ./scripts/clear-testvm.nix {
-        inherit pkgs;
-        inherit config;
-      })
-      (import ./scripts/clear-vps.nix {
-        inherit pkgs;
-        inherit config;
-      })
-      (import ./scripts/lish.nix {
-        inherit pkgs;
-        inherit secrets;
-      })
+          # remote host management
+          (import ./scripts/clear-testbox.nix {
+            inherit pkgs;
+            inherit config;
+          })
+          (import ./scripts/clear-testvm.nix {
+            inherit pkgs;
+            inherit config;
+          })
+          (import ./scripts/clear-vps.nix {
+            inherit pkgs;
+            inherit config;
+          })
+          (import ./scripts/lish.nix {
+            inherit pkgs;
+            inherit secrets;
+          })
 
-      # misc
-      (import ./scripts/fs-diff.nix {inherit pkgs;})
-    ]
-    ++ lib.lists.optionals osConfig.systemOpts.gui [
-      # browsers
-      brave
-      tor-browser
-      librewolf
+          # misc
+          (import ./scripts/fs-diff.nix {inherit pkgs;})
+        ]
+        ++ lib.lists.optionals osConfig.systemOpts.gui [
+          # browsers
+          brave
+          tor-browser
+          librewolf
 
-      # terminals
-      alacritty
+          # terminals
+          alacritty
 
-      # media
-      #audacity
-      vlc
-      bibletime
-      jellyfin-media-player
+          # media
+          #audacity
+          vlc
+          bibletime
 
-      # photos
-      gimp
-      pinta
+          # photos
+          gimp
+          pinta
 
-      # text editors and office
-      typora
-      kdePackages.ghostwriter
-      onlyoffice-bin
+          # text editors and office
+          typora
+          kdePackages.ghostwriter
+          onlyoffice-bin
 
-      # utilities
-      remmina
-      bitwarden-desktop
-      gnome-calendar
-    ]
+          # utilities
+          remmina
+          bitwarden-desktop
+          gnome-calendar
+        ]
+      )
+      ++ (
+        with pkgs-stable; [
+          jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
+        ]
+      )
   );
 
   # Create persistent directories
