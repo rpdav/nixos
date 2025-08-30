@@ -91,8 +91,8 @@ in {
       package = pkgs.nerd-fonts.ubuntu-sans;
     };
     emoji = {
-      name = "Noto Color Emoji";
-      package = pkgs.noto-fonts-color-emoji;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
   };
 }
