@@ -21,9 +21,6 @@
     "home/common/optional/app/web-apps"
     "home/common/optional/config/persist.nix" # user persistence isn't used but this module needs loaded to process conditionals in shared modules
     "home/common/optional/wm/hyprland"
-
-    # monitor module
-    "modules/hyprland/monitors.nix"
   ];
 
   home.username = "ariel";

@@ -3,10 +3,8 @@
   config,
   pkgs,
   secrets,
-  configLib,
   ...
 }: {
-  imports = [(configLib.relativeToRoot "./modules/home-manager/web-app.nix")];
   programs.firefox.webapps = let
     domain = secrets.selfhosting.domain;
     commonConfig = {

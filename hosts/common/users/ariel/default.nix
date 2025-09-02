@@ -36,9 +36,6 @@
   home-manager = {
     useUserPackages = true;
     users.ariel = import (configLib.relativeToRoot "home/ariel/${config.networking.hostName}.nix");
-    sharedModules = [
-      (import (configLib.relativeToRoot "modules/home-manager"))
-    ];
     extraSpecialArgs = {
       inherit pkgs-stable;
       inherit pkgs-unstable;

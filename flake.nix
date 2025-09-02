@@ -93,7 +93,6 @@
     # Private secrets repo
     nix-secrets = {
       url = "git+file:///home/ryan/nix-secrets";
-      #url = "git+ssh://git@github.com/rpdav/nix-secrets.git?ref=main&shallow=1";
     };
   };
 
@@ -141,7 +140,6 @@
       };
       # Linode VPS
       vps = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         inherit specialArgs;
         modules = [
           ./hosts/vps
@@ -149,7 +147,6 @@
       };
       # Ryzen 5 3600 NAS and virtualization host
       nas = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         inherit specialArgs;
         modules = [
           ./hosts/nas
@@ -162,9 +159,8 @@
           ./hosts/vivobook
         ];
       };
-      # Testing VM (QEMU VM running on Unraid)
+      # Testing VM
       testvm = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         inherit specialArgs;
         modules = [
           ./hosts/testvm

@@ -22,9 +22,6 @@ in {
       "home/common/optional/app/kitty.nix"
       "home/common/optional/config/persist.nix"
       "home/common/optional/wm/cinnamon.nix"
-
-      # monitor module
-      "modules/hyprland/monitors.nix"
     ])
     # multi-system config for current user
     ./common/core

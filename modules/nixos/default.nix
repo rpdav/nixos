@@ -6,8 +6,8 @@
 #}
 {
   imports = [
-    ./yubikey
-    ./proxy-conf
-    ./container-mount
+    ./yubikey.nix
+    ./proxy-conf.nix
+    ./container-mount.nix
   ];
 }

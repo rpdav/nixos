@@ -21,9 +21,6 @@
     "home/common/optional/app/web-apps"
     "home/common/optional/config/persist.nix"
     "home/common/optional/wm/hyprland"
-
-    # monitor module
-    "modules/hyprland/monitors.nix"
   ];
 
   home.username = "ariel";

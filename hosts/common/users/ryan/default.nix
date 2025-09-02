@@ -65,9 +65,6 @@ in {
   home-manager = {
     useUserPackages = true;
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
-    sharedModules = [
-      (import (configLib.relativeToRoot "modules/home-manager"))
-    ];
     extraSpecialArgs = {
       inherit pkgs-stable;
       inherit pkgs-unstable;
