@@ -5,11 +5,9 @@
   secrets,
   pkgs,
   pkgs-stable,
-  configLib,
   ...
 }: {
   imports = [
-    (configLib.relativeToRoot "modules/home-manager")
     ./backup.nix
     ./bash.nix
     ./sops.nix

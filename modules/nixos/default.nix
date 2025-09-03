@@ -5,9 +5,12 @@
 #  yubikey = import ./yubikey;
 #}
 {
-  imports = [
-    ./yubikey.nix
-    ./proxy-conf.nix
-    ./container-mount.nix
-  ];
+  #  imports = [
+  #    ./yubikey.nix
+  #    ./proxy-conf.nix
+  #    ./container-mount.nix
+  #  ];
+  yubikey = import ./yubikey.nix;
+  proxy-conf = import ./proxy-conf.nix;
+  container-mount = import ./container-mount.nix;
 }

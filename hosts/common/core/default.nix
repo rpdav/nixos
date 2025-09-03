@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   config,
-  configLib,
   ...
 }: let
   inherit (config) systemOpts;
@@ -10,7 +9,6 @@ in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
-    (configLib.relativeToRoot "modules/nixos")
     ./tailscale.nix
     ./packages.nix
     ./sops.nix

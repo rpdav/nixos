@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  outputs,
   secrets,
   pkgs-stable,
   pkgs-unstable,
@@ -70,6 +71,7 @@ in {
       inherit pkgs-unstable;
       inherit secrets;
       inherit inputs;
+      inherit outputs;
       inherit configLib;
     };
   };

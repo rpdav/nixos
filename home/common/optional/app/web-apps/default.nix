@@ -3,8 +3,11 @@
   config,
   pkgs,
   secrets,
+  outputs,
   ...
 }: {
+  imports = [outputs.homeManagerModules.web-app];
+
   programs.firefox.webapps = let
     domain = secrets.selfhosting.domain;
     commonConfig = {

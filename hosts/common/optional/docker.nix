@@ -4,10 +4,18 @@
   config,
   lib,
   configLib,
+  outputs,
   ...
 }: let
   inherit (config) systemOpts serviceOpts;
+  inherit (outputs.nixosModules) proxy-conf container-mount;
 in {
+  imports = [
+    proxy-conf
+    container-mount
+    (inputs.uptix.nixosModules.uptix (configLib.relativeToRoot "./uptix.lock"))
+  ];
+
   # Create impermanent directory
   environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
     directories = [
@@ -26,8 +34,6 @@ in {
     #      dns_enabled = true;
     #    };
   };
-
-  imports = [(inputs.uptix.nixosModules.uptix (configLib.relativeToRoot "./uptix.lock"))];
 
   virtualisation.oci-containers.backend = "docker";
 

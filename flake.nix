@@ -122,49 +122,39 @@
       inherit pkgs-unstable;
       inherit secrets;
       inherit inputs;
+      inherit (self) outputs;
       inherit configLib;
     };
   in {
-    #TODO The 2 lines below came from EmergentMind's config for yubikey support, but doesn't work for me
-    # for some reason. Instead, I'm importing in each host's modules list.
-    #nixosModules = import ./modules/nixos;
-    #homeManagerModules = import ./modules/home-manager;
+    nixosModules = import ./modules/nixos;
+
+    homeManagerModules = import ./modules/home-manager;
 
     nixosConfigurations = {
       # 2023 Framework 13
       fw13 = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [
-          ./hosts/fw13
-        ];
+        modules = [./hosts/fw13];
       };
       # Linode VPS
       vps = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [
-          ./hosts/vps
-        ];
+        modules = [./hosts/vps];
       };
       # Ryzen 5 3600 NAS and virtualization host
       nas = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [
-          ./hosts/nas
-        ];
+        modules = [./hosts/nas];
       };
       # Asus vivobook
       vivobook = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [
-          ./hosts/vivobook
-        ];
+        modules = [./hosts/vivobook];
       };
       # Testing VM
       testvm = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [
-          ./hosts/testvm
-        ];
+        modules = [./hosts/testvm];
       };
     };
   };
