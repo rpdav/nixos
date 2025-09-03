@@ -50,6 +50,10 @@ in {
     primaryUser = "ryan"; #primary user (not necessarily only user)
   };
   systemOpts = {
+    screenDimTimeout = 600;
+    lockTimeout = 630;
+    screenOffTimeout = 800;
+    suspendTimeout = 900;
     diskDevice = "nvme0n1";
     swapSize = "16G";
     impermanent = true;
