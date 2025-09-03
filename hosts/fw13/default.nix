@@ -46,10 +46,8 @@ in {
     ];
 
   # Variable overrides
-  userOpts = {
-    primaryUser = "ryan"; #primary user (not necessarily only user)
-  };
   systemOpts = {
+    primaryUser = "ryan"; #primary user (not necessarily only user)
     screenDimTimeout = 600;
     lockTimeout = 630;
     screenOffTimeout = 800;

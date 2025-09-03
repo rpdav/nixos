@@ -8,6 +8,10 @@ in {
   options = {
     # ---- SYSTEM SETTINGS ---- #
     systemOpts = {
+      primaryUser = mkOption {
+        type = types.str;
+        default = "ryan";
+      };
       impermanent = mkOption {
         type = types.bool;
         default = true;
@@ -72,10 +76,6 @@ in {
 
     # ---- USER SETTINGS ---- #
     userOpts = {
-      primaryUser = mkOption {
-        type = types.str;
-        default = "ryan";
-      };
       theme = mkOption {
         type = types.str;
         default = "mountain";
@@ -135,7 +135,7 @@ in {
     serviceOpts = {
       dockerUser = mkOption {
         type = types.str;
-        default = config.userOpts.primaryUser;
+        default = config.systemOpts.primaryUser;
         description = "User under which to run docker services";
       };
       dockerDir = mkOption {

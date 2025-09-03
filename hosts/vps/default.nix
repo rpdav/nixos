@@ -42,8 +42,8 @@ in {
     ];
 
   # Variable overrides
-  userOpts.primaryUser = "ryan"; #primary user (not necessarily only user)
   systemOpts = {
+    primaryUser = "ryan"; #primary user (not necessarily only user)
     swapEnable = true;
     swapSize = "2G";
     diskDevice = "sda";

@@ -5,11 +5,11 @@
   lib,
   ...
 }: let
-  inherit (config) userOpts;
+  inherit (config) systemOpts;
   homeDirectory =
     if pkgs.stdenv.isLinux
-    then "/home/${userOpts.primaryUser}"
-    else "/Users/${userOpts.primaryUser}";
+    then "/home/${systemOpts.primaryUser}"
+    else "/Users/${systemOpts.primaryUser}";
   yubikey-up = let
     yubikeyIds = lib.concatStringsSep " " (
       lib.mapAttrsToList (name: id: "[${name}]=\"${builtins.toString id}\"") config.yubikey.identifiers

@@ -41,10 +41,8 @@ in {
     ];
 
   # Variable overrides
-  userOpts = {
-    primaryUser = "ariel"; #primary user (not necessarily only user)
-  };
   systemOpts = {
+    primaryUser = "ariel"; #primary user (not necessarily only user)
     diskDevice = "nvme0n1";
     swapSize = "8G";
     impermanent = true;

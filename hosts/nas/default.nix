@@ -46,10 +46,10 @@ in {
 
   # Variable overrides
   userOpts = {
-    primaryUser = "ryan"; #primary user (not necessarily only user)
-    theme = lib.mkForce "mountain";
+    theme = lib.mkForce "mountain"; #override default in hosts/common/ryan/default.nix
   };
   systemOpts = {
+    primaryUser = "ryan"; #primary user (not necessarily only user)
     swapEnable = true;
     diskDevice = "nvme1n1";
     swapSize = "16G";
