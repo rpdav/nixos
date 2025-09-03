@@ -45,7 +45,10 @@ in {
     ];
 
   # Variable overrides
-  userOpts.primaryUser = "ryan"; #primary user (not necessarily only user)
+  userOpts = {
+    primaryUser = "ryan"; #primary user (not necessarily only user)
+    theme = lib.mkForce "mountain";
+  };
   systemOpts = {
     swapEnable = true;
     diskDevice = "nvme1n1";
