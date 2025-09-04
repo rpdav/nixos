@@ -1,6 +1,6 @@
 {
   inputs,
-  config,
+  osConfig,
   pkgs,
   ...
 }: {
@@ -19,30 +19,30 @@
       listener = [
         # screen dim
         {
-          timeout = config.systemOpts.screenDimTimeout;
+          timeout = osConfig.systemOpts.screenDimTimeout;
           on-timeout = "${brightnessctl} -s set 10";
           on-resume = "${brightnessctl} -r";
         }
         # keyboard dim
         {
-          timeout = config.systemOpts.screenDimTimeout;
+          timeout = osConfig.systemOpts.screenDimTimeout;
           on-timeout = "${brightnessctl} -sd framework_laptop::kbd_backlight set 0";
           on-resume = "${brightnessctl} -rd framework_laptop::kbd_backlight";
         }
         # screen lock
         {
-          timeout = config.systemOpts.lockTimeout;
+          timeout = osConfig.systemOpts.lockTimeout;
           on-timeout = lock_cmd;
         }
         # screen off after lock
         {
-          timeout = config.systemOpts.screenOffTimeout;
+          timeout = osConfig.systemOpts.screenOffTimeout;
           on-timeout = "${hyprctl} dispatch dpms off";
           on-resume = "${hyprctl} dispatch dpms on && ${brightnessctl} -r";
         }
         # sleep
         {
-          timeout = config.systemOpts.suspendTimeout;
+          timeout = osConfig.systemOpts.suspendTimeout;
           on-timeout = "systemctl suspend";
         }
       ];
