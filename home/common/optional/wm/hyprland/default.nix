@@ -111,6 +111,7 @@
       #################
 
       # Mostly using services instead of execonce
+      exec-once = ["${pkgs.steam}/bin/steam -silent %U"];
 
       #############################
       ### ENVIRONMENT VARIABLES ###

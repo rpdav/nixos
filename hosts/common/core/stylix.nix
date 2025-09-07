@@ -43,7 +43,10 @@ in {
   };
 
   stylix.targets = {
-    console.enable = false;
+    console.enable =
+      if config.stylix.polarity == "light"
+      then false
+      else true;
   };
 
   # Favorite schemes:
