@@ -38,6 +38,8 @@ in {
       sctl = "${systemctl-tui}/bin/systemctl-tui";
       jctl = "journalctl -xeu";
       jctlu = "journalctl --user -xeu";
+      na = "nixos apply";
+      ng = "nixos generation";
     };
     bashrcExtra = ''
       # this is overridden if stylix is used

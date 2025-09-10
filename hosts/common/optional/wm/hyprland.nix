@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   pkgs,
   ...
 }: {
@@ -7,12 +8,21 @@
     enable = true;
     settings = rec {
       initial_session = {
+        command = "${pkgs.hyprland}/bin/Hyprland";
+        user = config.systemOpts.primaryUser;
+      };
+      default_session = {
         command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.hyprland}/bin/Hyprland";
         user = "greeter";
       };
-      default_session = initial_session;
     };
   };
+
+  boot.plymouth = {
+    enable = true;
+  };
+
+  boot.loader.timeout = 0;
 
   security.pam.services.greetd = {
     # Disable fprint and yubikey login
