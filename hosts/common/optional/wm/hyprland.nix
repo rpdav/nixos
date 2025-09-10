@@ -24,6 +24,9 @@
 
   boot.loader.timeout = 0;
 
+  # needed for wlogout icons
+  programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];
+
   security.pam.services.greetd = {
     # Disable fprint and yubikey login
     fprintAuth = false;
