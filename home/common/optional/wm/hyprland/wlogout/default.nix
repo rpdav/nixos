@@ -1,27 +1,23 @@
 {config, ...}: let
-  inherit (config.lib.stylix) colors;
-  # The *.nix files in ./icons are svgs expressed as nix strings with a placeholder for stylix colors.
+  # The *.nix files in ./icons are SVGs expressed as nix strings with a placeholder for stylix colors.
   # This let block imports those files so their paths can be inserted into wlogout's style.css.
   # Icons are taken from https://github.com/catppuccin/wlogout
+  inherit (config.lib.stylix) colors;
+
+  # Define a function that imports a file from .icons/${name}.nix,
+  # adds stylix colors, and puts it in /nix/store as ${name}.svg
+  importSVG = {name, ...}:
+    import ./icons/${name}.nix {inherit colors;}
+    |> builtins.toFile "${name}.svg";
+
+  # Apply the function to the icons wlogout needs
   icons = {
-    hibernate =
-      import ./icons/hibernate.nix {inherit colors;}
-      |> builtins.toFile "hibernate.svg";
-    lock =
-      import ./icons/lock.nix {inherit colors;}
-      |> builtins.toFile "lock.svg";
-    logout =
-      import ./icons/logout.nix {inherit colors;}
-      |> builtins.toFile "logout.svg";
-    reboot =
-      import ./icons/reboot.nix {inherit colors;}
-      |> builtins.toFile "reboot.svg";
-    shutdown =
-      import ./icons/shutdown.nix {inherit colors;}
-      |> builtins.toFile "shutdown.svg";
-    suspend =
-      import ./icons/suspend.nix {inherit colors;}
-      |> builtins.toFile "suspend.svg";
+    hibernate = importSVG {name = "hibernate";};
+    lock = importSVG {name = "lock";};
+    logout = importSVG {name = "logout";};
+    reboot = importSVG {name = "reboot";};
+    shutdown = importSVG {name = "shutdown";};
+    suspend = importSVG {name = "suspend";};
   };
 in {
   programs.wlogout = {
