@@ -1,23 +1,13 @@
 {
   pkgs,
-  config,
   osConfig,
-  lib,
   ...
-}: let
-  update-checker = pkgs.callPackage update-checker/default.nix {inherit pkgs config;};
-in {
+}: {
   #imports = [./update-checker];
 
   home.packages = with pkgs; [
     font-awesome
   ];
-
-  # icons for update_checker
-  home.file.".icons" = {
-    recursive = true;
-    source = update-checker/.icons;
-  };
 
   stylix.targets.waybar.addCss = false;
 
@@ -35,8 +25,6 @@ in {
           "custom/power"
           "custom/divider"
           "custom/divider"
-          "custom/nix-updates"
-          "custom/left-divider"
           "disk"
           "custom/left-divider"
           "memory"
@@ -82,23 +70,6 @@ in {
           interval = 3600;
           exec = "${pkgs.wttrbar}/bin/wttrbar --fahrenheit --mph --nerd --location Indianapolis";
           return-type = "json";
-        };
-        "custom/nix-updates" = {
-          exec = update-checker;
-          signal = 12;
-          on-click = "";
-          on-click-right = "rm ~/.cache/nix-update-last-run";
-          interval = 3600;
-          tooltip = true;
-          return-type = "json";
-          format = "{} {icon}";
-          format-icons = {
-            default = " ";
-            has-updates = "󰚰 ";
-            updating = " ";
-            updated = " ";
-            error = " ";
-          };
         };
         "custom/notifications" = {
           tooltip = false;
@@ -321,7 +292,6 @@ in {
       #custom-left-divider,
       #custom-divider,
       #custom-notifications,
-      #custom-nix-updates,
       #custom-weather,
       #tray {
       	background: @base02;
@@ -331,9 +301,6 @@ in {
       }
       ${weatherBlue} {
               color: @base0D;
-      }
-      #custom-nix-updates {
-              color: @base05;
       }
       #workspaces button {
       	color: @base04;
