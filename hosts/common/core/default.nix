@@ -9,11 +9,12 @@ in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
-    ./tailscale.nix
+    ./nebula
     ./packages.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys
     ./stylix.nix
+    ./tailscale.nix
     ./vim.nix
 
     inputs.disko.nixosModules.disko
