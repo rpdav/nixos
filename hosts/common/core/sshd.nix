@@ -1,7 +1,8 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
+  secrets,
   ...
 }: let
   inherit (config) systemOpts;
@@ -45,7 +46,7 @@ in {
       User ryan
 
     Host vps
-      Hostname 172.233.209.173
+      Hostname ${secrets.vps.ip}
       User ryan
 
     Host testbox

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   secrets,
   ...
 }: let
@@ -15,6 +16,9 @@ in {
   # vps: 10.112.1.1
   # fw13: 10.112.1.2
   # nas: 10.112.1.3
+
+  # install binaries
+  environment.systemPackages = [pkgs.nebula];
 
   # decrypt host key
   sops.secrets."nebula/${hostName}.key".owner = "nebula-mesh";
@@ -33,6 +37,29 @@ in {
     lighthouses = mkIf (!isLighthouse) ["10.112.1.1"];
     staticHostMap = mkIf (!isLighthouse) {
       "10.112.1.1" = ["${secrets.vps.ip}:4242"];
+    };
+
+    # firewall rules
+    firewall = {
+      outbound = [
+        {
+          port = "any";
+          proto = "any";
+          host = "any";
+        }
+      ];
+      inbound = [
+        {
+          port = "any";
+          proto = "icmp";
+          host = "any";
+        }
+      ];
+    };
+    settings = {
+      punchy = {
+        punch = true;
+      };
     };
   };
 }
