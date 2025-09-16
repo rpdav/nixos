@@ -24,9 +24,10 @@ in {
 
         # optional config
         "hosts/common/optional/backup"
+        "hosts/common/optional/docker.nix"
+        "hosts/common/optional/nebula/lighthouse.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/yubikey.nix"
-        "hosts/common/optional/docker.nix"
 
         # services
         "services/common"

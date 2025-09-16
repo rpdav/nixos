@@ -22,12 +22,13 @@ in {
 
         # optional config
         "hosts/common/optional/backup"
-        "hosts/common/optional/persistence"
-        "hosts/common/optional/yubikey.nix"
         "hosts/common/optional/docker.nix"
+        "hosts/common/optional/nebula/non-lighthouse.nix"
+        "hosts/common/optional/persistence"
         "hosts/common/optional/ssh-unlock.nix"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/wm/gnome.nix"
+        "hosts/common/optional/yubikey.nix"
 
         # services
         "services/common"

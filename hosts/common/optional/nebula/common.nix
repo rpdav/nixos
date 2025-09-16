@@ -5,22 +5,17 @@
   secrets,
   ...
 }: let
-  inherit (lib) mkIf;
   inherit (config.networking) hostName;
-  isLighthouse =
-    if hostName == "vps"
-    then true
-    else false;
 in {
-  ### Host IPs ###
-  # vps: 10.112.1.1
-  # fw13: 10.112.1.2
-  # nas: 10.112.1.3
+  ##### Host IPs #####
+  # vps: 10.112.1.1  #
+  # fw13: 10.112.1.2 #
+  # nas: 10.112.1.3  #
 
   # install binaries
   environment.systemPackages = [pkgs.nebula];
 
-  # decrypt host key
+  # decrypt host key and make it readable to the service
   sops.secrets."nebula/${hostName}.key".owner = "nebula-mesh";
 
   services.nebula.networks."mesh" = {
@@ -30,14 +25,6 @@ in {
     key = config.sops.secrets."nebula/${hostName}.key".path;
     cert = ./certs/${hostName}.crt;
     ca = ./certs/ca.crt;
-
-    # lighthouse config
-    inherit isLighthouse;
-    # only apply next 2 lines for non-lighthouse hosts
-    lighthouses = mkIf (!isLighthouse) ["10.112.1.1"];
-    staticHostMap = mkIf (!isLighthouse) {
-      "10.112.1.1" = ["${secrets.vps.ip}:4242"];
-    };
 
     # firewall rules
     firewall = {
@@ -54,8 +41,20 @@ in {
           proto = "icmp";
           host = "any";
         }
+        {
+          port = "443";
+          proto = "tcp";
+          host = "any";
+        }
+        {
+          port = "22";
+          proto = "tcp";
+          host = "any";
+        }
       ];
     };
+
+    # other settings
     settings = {
       punchy = {
         punch = true;

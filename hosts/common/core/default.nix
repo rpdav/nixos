@@ -9,7 +9,6 @@ in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
-    ./nebula
     ./packages.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys
