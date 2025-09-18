@@ -18,6 +18,7 @@ in {
   # decrypt host key and make it readable to the service
   sops.secrets."nebula/${hostName}.key".owner = config.systemOpts.primaryUser;
 
+  networking.firewall.allowedUDPPorts = [4242];
   #  services.nebula.networks."mesh" = {
   #    enable = true;
   #

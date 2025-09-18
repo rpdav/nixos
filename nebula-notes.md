@@ -20,5 +20,18 @@ Could just put entries in cloudflare pointing to nebula IP. Would need to update
 
 ## Sources
 A phone - wireguard
-R phone - wireguard?
+R phone - wireguard? actually, there's a nebula iOS app that could be used.
 R laptop - nebula
+
+# Troubleshooting
+## hosts can't ping each other on same network
+* Turned on relay
+    * this works but don't really want to use a relay when on same network
+* Opened firewall for all hosts
+    * I don't think this made a difference
+    * still failed to connect when relay was disabled
+* enabled punchy.respond
+    * did not work
+## handshake errors
+* added lighthouse.local_allow_list.interfaces for all hosts. nas was reporting ipv6 to the lighthouse which caused errors when fw13 tried to use that ip
+    * seems to have fixed it
