@@ -23,7 +23,6 @@ in {
         # optional config
         "hosts/common/optional/backup"
         "hosts/common/optional/docker.nix"
-        "hosts/common/optional/nebula/non-lighthouse.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/ssh-unlock.nix"
         "hosts/common/optional/steam.nix"

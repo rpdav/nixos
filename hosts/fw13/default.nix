@@ -28,7 +28,6 @@ in {
         "hosts/common/optional/backup"
         "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
         "hosts/common/optional/duplicati.nix"
-        "hosts/common/optional/nebula/non-lighthouse.nix"
         "hosts/common/optional/persistence"
         "hosts/common/optional/steam.nix"
         "hosts/common/optional/virtualization"
