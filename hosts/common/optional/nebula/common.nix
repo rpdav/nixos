@@ -16,49 +16,49 @@ in {
   environment.systemPackages = [pkgs.nebula];
 
   # decrypt host key and make it readable to the service
-  sops.secrets."nebula/${hostName}.key".owner = "nebula-mesh";
+  sops.secrets."nebula/${hostName}.key".owner = config.systemOpts.primaryUser;
 
-  services.nebula.networks."mesh" = {
-    enable = true;
-
-    # pull key and certs
-    key = config.sops.secrets."nebula/${hostName}.key".path;
-    cert = ./certs/${hostName}.crt;
-    ca = ./certs/ca.crt;
-
-    # firewall rules
-    firewall = {
-      outbound = [
-        {
-          port = "any";
-          proto = "any";
-          host = "any";
-        }
-      ];
-      inbound = [
-        {
-          port = "any";
-          proto = "icmp";
-          host = "any";
-        }
-        {
-          port = "443";
-          proto = "tcp";
-          host = "any";
-        }
-        {
-          port = "22";
-          proto = "tcp";
-          host = "any";
-        }
-      ];
-    };
-
-    # other settings
-    settings = {
-      punchy = {
-        punch = true;
-      };
-    };
-  };
+  #  services.nebula.networks."mesh" = {
+  #    enable = true;
+  #
+  #    # pull key and certs
+  #    key = config.sops.secrets."nebula/${hostName}.key".path;
+  #    cert = ./certs/${hostName}.crt;
+  #    ca = ./certs/ca.crt;
+  #
+  #    # firewall rules
+  #    firewall = {
+  #      outbound = [
+  #        {
+  #          port = "any";
+  #          proto = "any";
+  #          host = "any";
+  #        }
+  #      ];
+  #      inbound = [
+  #        {
+  #          port = "any";
+  #          proto = "icmp";
+  #          host = "any";
+  #        }
+  #        {
+  #          port = "443";
+  #          proto = "tcp";
+  #          host = "any";
+  #        }
+  #        {
+  #          port = "22";
+  #          proto = "tcp";
+  #          host = "any";
+  #        }
+  #      ];
+  #    };
+  #
+  #    # other settings
+  #    settings = {
+  #      punchy = {
+  #        punch = true;
+  #      };
+  #    };
+  #  };
 }
