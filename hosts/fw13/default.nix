@@ -128,9 +128,8 @@ in {
 
   # System packages
   environment.systemPackages = with pkgs; [
-    blueberry
+    blueman
     qdirstat
-    #impala
   ];
 
   # Create impermanent directories

@@ -1,10 +1,9 @@
 {
-  pkgs,
   osConfig,
+  pkgs,
+  config,
   ...
 }: {
-  #imports = [./update-checker];
-
   home.packages = with pkgs; [
     font-awesome
   ];
@@ -16,6 +15,7 @@
     systemd.enable = true;
     settings = let
       timezone = osConfig.time.timeZone;
+      red = "#${config.lib.stylix.colors.red}";
     in {
       topbar = {
         layer = "top";
@@ -24,14 +24,13 @@
           "custom/divider"
           "custom/power"
           "custom/divider"
-          "custom/divider"
-          "disk"
+          "hyprland/workspaces"
+          "custom/workspace-divider"
+          "battery"
           "custom/left-divider"
-          "memory"
+          "temperature"
           "custom/left-divider"
           "cpu"
-          "custom/left-divider"
-          "hyprland/workspaces"
         ];
         modules-center = [
           "custom/left-divider"
@@ -47,21 +46,15 @@
           "custom/right-divider"
           "backlight"
           "custom/right-divider"
-          "battery"
-          "custom/right-divider"
           "custom/weather"
-          "custom/divider"
+          "custom/right-divider"
           "idle_inhibitor"
           "custom/divider"
           "power-profiles-daemon"
           "custom/divider"
-          "network"
-          "custom/divider"
-          "bluetooth"
+          "tray"
           "custom/divider"
           "custom/notifications"
-          "custom/divider"
-          "tray"
           "custom/divider"
         ];
         "custom/weather" = {
@@ -71,17 +64,21 @@
           exec = "${pkgs.wttrbar}/bin/wttrbar --fahrenheit --mph --nerd --location Indianapolis";
           return-type = "json";
         };
+        temperature = {
+          critical-threshold = 80;
+          format = " {temperatureC}°C";
+        };
         "custom/notifications" = {
           tooltip = false;
           format = "{icon}";
           format-icons = {
-            notification = "<span foreground='red'><sup></sup></span> ";
+            notification = "<span foreground='${red}'></span> ";
             none = " ";
-            dnd-notification = " <span foreground='red'><sup></sup></span> ";
+            dnd-notification = " <span foreground='${red}'></span> ";
             dnd-none = " ";
-            inhibited-notification = " <span foreground='red'><sup></sup></span>";
+            inhibited-notification = " <span foreground='${red}'></span>";
             inhibited-none = " ";
-            dnd-inhibited-notification = " <span foreground='red'><sup></sup></span>";
+            dnd-inhibited-notification = " <span foreground='${red}'><sup></sup></span>";
             dnd-inhibited-none = " ";
           };
           return-type = "json";
@@ -129,16 +126,6 @@
           format = "{:%m-%d}";
           tooltip = false;
         };
-        bluetooth = {
-          format-on = "󰂯";
-          format-connected = "󰂱";
-          format-disabled = "󰂲";
-          on-click = "${pkgs.blueberry}/bin/blueberry";
-          tooltip-format = "No devices connected";
-          tooltip-format-connected = "{device_enumerate}";
-          tooltip-format-enumerate-connected = "{device_alias}";
-          tooltip-format-enumerate-connected-battery = "{device_alias}\t 󰁹 {device_battery_percentage}%";
-        };
         power-profiles-daemon = {
           format = "{icon} ";
           tooltip-format = "Power profile: {profile}\nDriver: {driver}";
@@ -156,15 +143,6 @@
             activated = "󰅶 ";
             deactivated = "󰾫 ";
           };
-        };
-        network = {
-          format-wifi = "󰖩 ";
-          format-ethernet = " ";
-          format-disconnected = "󱚼 ";
-          format-disabled = "󰖪 ";
-          tooltip-format = "{ipaddr} on {essid}, {signalStrength}%";
-          on-click = "${pkgs.networkmanagerapplet}/bin/nm-applet";
-          on-click-right = "pkill nm-applet";
         };
         cpu = {
           format = " {usage:2}%";
@@ -186,6 +164,10 @@
         };
         "custom/right-divider" = {
           format = "\\\\";
+          tooltip = false;
+        };
+        "custom/workspace-divider" = {
+          format = "//";
           tooltip = false;
         };
         disk = {
@@ -219,7 +201,7 @@
           scroll-step = 5;
         };
         tray = {
-          icon-size = 20;
+          icon-size = 15;
           spacing = 5;
         };
       };
@@ -269,6 +251,12 @@
         padding: 0 8px;
       }
 
+      #custom-workspace-divider {
+        color: @base01;
+        font-weight: bolder;
+        padding: 0 8 0 0px;
+      }
+
       #custom-notification {
         font-family: "NotoSansMono Nerd Font";
       }
@@ -281,8 +269,6 @@
       #backlight,
       #power-profiles-daemon,
       #idle_inhibitor,
-      #network,
-      #bluetooth,
       #pulseaudio,
       #memory,
       #cpu,
@@ -291,10 +277,15 @@
       #custom-right-divider,
       #custom-left-divider,
       #custom-divider,
+      #custom-workspace-divider,
       #custom-notifications,
       #custom-weather,
+      #temperature,
       #tray {
       	background: @base02;
+      }
+      #custom-weather {
+        padding: 0 0 0 3px;
       }
       ${weatherYellow} {
               color: @base0A;
@@ -304,6 +295,7 @@
       }
       #workspaces button {
       	color: @base04;
+        padding: 0 8px;
       }
       #workspaces button.active {
       	color: @base0D;
@@ -312,7 +304,7 @@
       #workspaces button:hover {
       	background: @base01;
       }
-      #idle_inhibitor {
+      #idle_inhibitor.deactivated {
               color: @base04;
       }
       #idle_inhibitor.activated {
@@ -330,21 +322,6 @@
       #power-profiles-daemon.power-saver {
               color: @base0B;
       }
-      #bluetooth {
-      	color: @base0D;
-      }
-      #bluetooth.disabled {
-              color: @base04;
-      }
-      #network {
-      	color: @base0E;
-      }
-      #network.disconnected {
-              color: @base08;
-      }
-      #network.disabled {
-              color: @base04;
-      }
       #pulseaudio {
       	color: @base0B;
       }
@@ -359,6 +336,12 @@
       }
       #disk {
       	color: @base0D;
+      }
+      #temperature {
+        color: @base0A;
+      }
+      #temperature.critical {
+        color: @base08;
       }
       #battery {
       	color: @base0B;

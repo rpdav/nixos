@@ -111,7 +111,11 @@
       #################
 
       # Mostly using services instead of execonce
-      exec-once = ["${pkgs.steam}/bin/steam -silent %U"];
+      exec-once = [
+        "${pkgs.steam}/bin/steam -silent %U"
+        "${pkgs.networkmanagerapplet}/bin/nm-applet"
+        "${pkgs.blueman}/bin/blueman-applet"
+      ];
 
       #############################
       ### ENVIRONMENT VARIABLES ###
