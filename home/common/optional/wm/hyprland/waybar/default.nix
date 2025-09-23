@@ -326,7 +326,7 @@
       	color: @base0B;
       }
       #backlight {
-      	color: @base0F;
+      	color: @base0A;
       }
       #memory {
       	color: @base0E;
