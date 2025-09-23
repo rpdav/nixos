@@ -18,10 +18,6 @@
 
   # Enable tailscale
   services.tailscale = {
-    # Skip failing tests caused by kernel regression
-    # Admin panel services list may be broken until patched
-    # See https://github.com/nixos/nixpkgs/issues/438765
-    package = pkgs.tailscale.overrideAttrs {doCheck = false;};
     enable = true;
     authKeyFile = config.sops.secrets."tailscale/authkey".path;
     extraUpFlags = [

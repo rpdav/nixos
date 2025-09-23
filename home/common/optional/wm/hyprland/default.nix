@@ -166,17 +166,21 @@
         };
         kb_options = "compose:XF86AudioMedia";
       };
+      gestures = {
+        workspace_swipe_distance = 200;
+        workspace_swipe_forever = true;
+        workspace_swipe_direction_lock = false;
+      };
 
       cursor = {
         no_warps = true;
       };
 
-      gestures = {
-        workspace_swipe = true;
-        workspace_swipe_distance = 200;
-        workspace_swipe_forever = true;
-        workspace_swipe_direction_lock = false;
-      };
+      gesture = [
+        "3, horizontal, workspace"
+        "3, vertical, fullscreen"
+        "3, vertical, mod: $mainMod, float"
+      ];
 
       ###################
       ### KEYBINDINGS ###
