@@ -66,6 +66,7 @@
         };
         temperature = {
           critical-threshold = 80;
+          thermal-zone = 1;
           format = " {temperatureC}°C";
         };
         "custom/notifications" = {
