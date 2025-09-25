@@ -19,6 +19,5 @@
     ./speedtest
     ./unifi
     ./vaultwarden
-    ./vikunja
   ];
 }
