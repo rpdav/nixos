@@ -95,6 +95,7 @@ in {
     device = "nodev";
     efiSupport = true;
     efiInstallAsRemovable = true;
+    useOSProber = true;
   };
 
   # allow root ssh login for rebuilds
