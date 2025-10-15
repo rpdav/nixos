@@ -5,6 +5,7 @@
 }: {
   home.packages = with pkgs; [
     protonup
+    freetype
   ];
 
   ## This must be imperatively set up by running "protonup". Further updates are handled by steam

@@ -27,4 +27,8 @@ in {
     retroarchWithCores
     pkgs.moonlight-qt
   ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "mbedtls-2.28.10" # insecure dependency for retroarch
+  ];
 }
