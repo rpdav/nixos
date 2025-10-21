@@ -39,6 +39,9 @@ in {
         "hosts/common/users/ryan"
       ])
 
+      # testing stuff
+      ./virt-test
+
       # host-specific
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
