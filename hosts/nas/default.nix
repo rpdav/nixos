@@ -77,9 +77,11 @@ in {
       "- */var/**"
     ];
   };
+
   # disable emergency mode from preventing system boot if there are mounting issues
   systemd.enableEmergencyMode = false;
 
+  # remote desktop
   services.xrdp = {
     enable = true;
     openFirewall = true;
@@ -92,12 +94,16 @@ in {
   networking.hostName = "nas";
   networking.networkmanager.enable = true;
 
+  # Boot
   boot.loader.grub = {
     device = "nodev";
     efiSupport = true;
     efiInstallAsRemovable = true;
-    useOSProber = true;
+    useOSProber = true; # for dual boot
   };
+
+  # use local time so dual boot doesn't mess up HW clock
+  time.hardwareClockInLocalTime = true;
 
   # allow root ssh login for rebuilds
   users.users.root = {
