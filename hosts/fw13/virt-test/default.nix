@@ -1,13 +1,13 @@
 {inputs, ...}: let
-  inherit (inputs) NixVirt;
+  inherit (inputs) nixvirt;
 in {
-  imports = [inputs.NixVirt.nixosModules.default];
+  imports = [inputs.nixvirt.nixosModules.default];
   virtualisation.libvirt = {
     enable = true;
     connections."qemu:///system" = {
       networks = [
         {
-          definition = NixVirt.lib.network.writeXML (NixVirt.lib.network.templates.bridge
+          definition = nixvirt.lib.network.writeXML (nixvirt.lib.network.templates.bridge
             {
               name = "default";
               uuid = "5046a610-afae-4b85-9f00-8beb9c101f95";
@@ -18,7 +18,16 @@ in {
       ];
       domains = [
         {
-          definition = ./ubuntu.xml;
+          #definition = ./ubuntu.xml;
+          definition = nixvirt.lib.domain.writeXML (nixvirt.lib.domain.templates.linux {
+            name = "ubuntu";
+            uuid = "cc7439ed-36af-4696-a6f2-1f0c4474d87e";
+            memory = {
+              count = 6;
+              unit = "GiB";
+            };
+            storage_vol = /var/lib/libvirt/images/ubuntu24.04-1.qcow2;
+          });
           active = true;
         }
       ];
