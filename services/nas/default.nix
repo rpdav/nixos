@@ -11,6 +11,7 @@
     ./home-assistant
     ./immich
     ./jellyfin
+    ./lubelogger
     ./nextcloud
     ./ollama
     ./open-webui

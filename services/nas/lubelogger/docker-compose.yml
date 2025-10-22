@@ -1,0 +1,15 @@
+services:
+  app:
+    image: ghcr.io/hargata/lubelogger:latest
+    container_name: lubelogger
+    restart: unless-stopped
+    # volumes used to keep data persistent
+    volumes:
+      - /config.serviceOpts.dockerDir/lubelogger/data:/App/data
+      - /config.serviceOpts.dockerDir/lubelogger/keys:/root/.aspnet/DataProtection-Keys
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    external: true
