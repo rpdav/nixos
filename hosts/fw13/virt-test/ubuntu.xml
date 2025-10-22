@@ -6,8 +6,8 @@
       <libosinfo:os id="http://ubuntu.com/ubuntu/24.04"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>6192000</memory>
-  <currentMemory unit='KiB'>6192000</currentMemory>
+  <memory unit='KiB'>6000000</memory>
+  <currentMemory unit='KiB'>6000000</currentMemory>
   <vcpu placement='static'>6</vcpu>
   <resource>
     <partition>/machine</partition>
