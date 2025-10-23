@@ -46,22 +46,14 @@
     </disk>
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
+      <!-- uncomment 2 lines below to attach iso as cdrom
       <source file="/home/ryan/Downloads/ubuntu-24.04.3-desktop-amd64.iso" index="3"/>
-      <backingStore/>
+      <backingStore/> -->
       <target dev="sda" bus="sata"/>
       <readonly/>
       <alias name="sata0-0-0"/>
       <address type="drive" controller="0" bus="0" target="0" unit="0"/>
     </disk>
-    <!--
-    <disk type='file' device='cdrom'>
-      <driver name='qemu'/>
-      <target dev='sda' bus='sata'/>
-      <readonly/>
-      <alias name='sata0-0-0'/>
-      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
-    </disk>
-    -->
     <controller type='usb' index='0' model='qemu-xhci' ports='15'>
       <alias name='usb'/>
       <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
