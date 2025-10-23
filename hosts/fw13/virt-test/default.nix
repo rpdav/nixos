@@ -18,16 +18,17 @@ in {
       ];
       domains = [
         {
-          #definition = ./ubuntu.xml;
-          definition = nixvirt.lib.domain.writeXML (nixvirt.lib.domain.templates.linux {
-            name = "ubuntu";
-            uuid = "cc7439ed-36af-4696-a6f2-1f0c4474d87e";
-            memory = {
-              count = 6;
-              unit = "GiB";
-            };
-            storage_vol = /var/lib/libvirt/images/ubuntu24.04-1.qcow2;
-          });
+          definition = ./ubuntu.xml;
+          #definition = nixvirt.lib.domain.getXML {
+          #  name = "ubuntu";
+          #  uuid = "cc7439ed-36af-4696-a6f2-1f0c4474d87e";
+          #  memory = {
+          #    count = 6;
+          #    unit = "GiB";
+          #  };
+          #  storage_vol = /var/lib/libvirt/images/ubuntu24.04-1.qcow2;
+          #  on_reboot = "destroy";
+          #};
           active = true;
         }
       ];
