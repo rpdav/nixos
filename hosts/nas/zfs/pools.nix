@@ -9,7 +9,9 @@
   };
 
   # import zpools
-  # at least one fileSystems parameter must be set, otherwise, boot.zfs.extraPools will not be imported
+  # at least one fileSystems parameter must be set, otherwise, boot.zfs.extraPools will not be imported.
+  # Filesystems mounted using fileSystems."/mount/point" will throw a boot error if the zfs mountpoint property
+  # isn't set to legacy. But they will still eventually mount.
   fileSystems = {
     "/mnt/storage" = {
       device = "storage";
