@@ -1,11 +1,12 @@
 {
   modulesPath,
   lib,
+  pkgs,
   config,
   configLib,
   ...
 }: let
-  inherit (config.systemOpts) persistVol;
+  inherit (config.systemOpts) persistVol impermanent;
   # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
@@ -40,6 +41,7 @@ in {
 
       # host-specific
       ./nvidia.nix
+      ./win-vm
       ./hardware-configuration.nix
       ./zfs
       (modulesPath + "/installer/scan/not-detected.nix")
@@ -78,16 +80,54 @@ in {
     ];
   };
 
+  # Create impermanent directories
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
+    directories = [
+      "/var/lib/private"
+    ];
+  };
+
   # disable emergency mode from preventing system boot if there are mounting issues
   systemd.enableEmergencyMode = false;
 
   # remote desktop
-  services.xrdp = {
-    enable = true;
-    openFirewall = true;
-    sslKey = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/privkey.pem";
-    sslCert = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/cert.pem";
-  };
+  # gnome rdp
+  #  services.gnome.gnome-remote-desktop.enable = true; # 'true' does not make the unit start automatically at boot
+  #  systemd.services.gnome-remote-desktop = {
+  #    wantedBy = ["graphical.target"]; # for starting the unit automatically at boot
+  #  };
+  #  services.displayManager.autoLogin.enable = false;
+  #  services.getty.autologinUser = null;
+  #  networking.firewall.allowedTCPPorts = [3389];
+
+  #rustdesk
+  #services.rustdesk-server = {
+  #  enable = true;
+  #  openFirewall = true;
+  #};
+
+  #xrdp
+  services.xrdp.enable = true;
+
+  # Use the GNOME Wayland session
+  services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
+
+  # XRDP needs the GNOME remote desktop backend to function
+  services.gnome.gnome-remote-desktop.enable = true;
+
+  # Open the default RDP port (3389)
+  services.xrdp.openFirewall = true;
+
+  # Disable autologin to avoid session conflicts
+  services.displayManager.autoLogin.enable = false;
+  services.getty.autologinUser = null;
+  #  services.xrdp = {
+  #    enable = true;
+  #    defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
+  #    openFirewall = true;
+  #    sslKey = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/privkey.pem";
+  #    sslCert = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/cert.pem";
+  #  };
 
   # Networking
   networking.hostId = "7e3de5fa"; # needed for zfs

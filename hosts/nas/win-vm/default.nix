@@ -16,12 +16,12 @@ in {
           active = true;
         }
       ];
-      domains = [
-        {
-          definition = ./win10.xml;
-          active = true;
-        }
-      ];
+      #domains = [
+      #  {
+      #    definition = ./win10.xml;
+      #    active = true;
+      #  }
+      #];
     };
   };
 }
