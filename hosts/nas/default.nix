@@ -83,7 +83,7 @@ in {
   # Create impermanent directories
   environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
-      "/var/lib/private"
+      "/var/lib/private" # for rustdesk
     ];
   };
 
@@ -92,18 +92,19 @@ in {
 
   # remote desktop
   # gnome rdp
-  #  services.gnome.gnome-remote-desktop.enable = true; # 'true' does not make the unit start automatically at boot
-  #  systemd.services.gnome-remote-desktop = {
-  #    wantedBy = ["graphical.target"]; # for starting the unit automatically at boot
-  #  };
-  #  services.displayManager.autoLogin.enable = false;
-  #  services.getty.autologinUser = null;
-  #  networking.firewall.allowedTCPPorts = [3389];
+  #services.gnome.gnome-remote-desktop.enable = true; # 'true' does not make the unit start automatically at boot
+  #systemd.services.gnome-remote-desktop = {
+  #  wantedBy = ["graphical.target"]; # for starting the unit automatically at boot
+  #};
+  #services.displayManager.autoLogin.enable = false;
+  #services.getty.autologinUser = null;
+  #networking.firewall.allowedTCPPorts = [3389];
 
   #rustdesk
   #services.rustdesk-server = {
   #  enable = true;
   #  openFirewall = true;
+  #  signal.relayHosts = ["example.com"]; #dummy value; complains if not filled
   #};
 
   ##xrdp

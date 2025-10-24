@@ -19,7 +19,7 @@
     ./planka
     ./searxng
     ./speedtest
-    ./unifi
+    #./unifi
     ./vaultwarden
   ];
 }
