@@ -91,6 +91,8 @@ in {
   systemd.enableEmergencyMode = false;
 
   # remote desktop
+  # xtogo
+  services.x2goserver.enable = true;
   # gnome rdp
   #services.gnome.gnome-remote-desktop.enable = true; # 'true' does not make the unit start automatically at boot
   #systemd.services.gnome-remote-desktop = {
@@ -131,9 +133,12 @@ in {
   #  };
 
   # Networking
-  networking.hostId = "7e3de5fa"; # needed for zfs
-  networking.hostName = "nas";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostId = "7e3de5fa"; # needed for zfs
+    hostName = "nas";
+    networkmanager.enable = true;
+    useDHCP = lib.mkForce true; # fixes duplicate (broken) network connection due to ssh unlock module
+  };
 
   # Boot
   boot.loader.grub = {
