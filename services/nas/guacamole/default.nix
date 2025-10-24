@@ -7,7 +7,6 @@
               <protocol>rdp</protocol>
               <param name="hostname">localhost</param>
               <param name="port">3389</param>
-              <param name="ignore-cert">true</param>
           </connection>
         </authorize>
     </user-mapping>
@@ -29,6 +28,7 @@ in {
         guacd-hostname = "localhost";
       };
     };
+    tomcat.port = 8085;
     #    tomcat.serverXml = ''
     #      <?xml version="1.0" encoding="UTF-8"?>
     #      <Server port="8005" shutdown="SHUTDOWN">
@@ -68,7 +68,7 @@ in {
     #      </Server>
     #    '';
   };
-  #  networking.firewall.allowedTCPPorts = [8085 8445];
+  networking.firewall.allowedTCPPorts = [8085 8443];
 
   # Create swag proxy config
   virtualisation.oci-containers.proxy-conf."guacamole" = {

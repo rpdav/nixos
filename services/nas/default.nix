@@ -7,7 +7,6 @@
     ./duplicati
     ./flatnotes
     ./gitea
-    ./guacamole
     ./heimdall
     ./home-assistant
     ./immich
@@ -19,7 +18,7 @@
     ./planka
     ./searxng
     ./speedtest
-    #./unifi
+    ./unifi
     ./vaultwarden
   ];
 }
