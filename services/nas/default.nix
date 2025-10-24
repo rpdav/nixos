@@ -7,6 +7,7 @@
     ./duplicati
     ./flatnotes
     ./gitea
+    ./guacamole
     ./heimdall
     ./home-assistant
     ./immich
