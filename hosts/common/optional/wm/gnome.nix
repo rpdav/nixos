@@ -1,14 +1,12 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   ### Default gnome config
   services.displayManager.gdm = {
     enable = true;
-    wayland = true;
+    wayland = false;
+    autoSuspend = false;
   };
   services.desktopManager.gnome.enable = true;
+  services.xserver.enable = true;
 
   # Get rid of welcome screen for impermanent systems
   environment.gnome.excludePackages = [
