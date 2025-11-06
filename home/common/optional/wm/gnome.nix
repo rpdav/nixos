@@ -1,5 +1,56 @@
-{pkgs, ...}: {
-  ## gtk themes to go here?
+{
+  pkgs,
+  outputs,
+  ...
+}: let
+  monitor1 = builtins.elemAt outputs.nixosConfigurations.nas.config.home-manager.users.ryan.monitors 0;
+  monitor2 = builtins.elemAt outputs.nixosConfigurations.nas.config.home-manager.users.ryan.monitors 1;
+  monitorXML = ''
+    <monitors version="2">
+      <configuration>
+        <layoutmode>physical</layoutmode>
+        <logicalmonitor>
+          <x>0</x>
+          <y>0</y>
+          <scale>1</scale>
+          <monitor>
+            <monitorspec>
+              <connector>HDMI-1</connector>
+              <vendor>DEL</vendor>
+              <product>DELL SE2422H</product>
+              <serial>5GBXZN3</serial>
+            </monitorspec>
+            <mode>
+              <width>1920</width>
+              <height>1080</height>
+              <rate>60.000</rate>
+            </mode>
+          </monitor>
+        </logicalmonitor>
+        <logicalmonitor>
+          <x>1920</x>
+          <y>0</y>
+          <scale>1</scale>
+          <primary>yes</primary>
+          <monitor>
+            <monitorspec>
+              <connector>DP-3</connector>
+              <vendor>ACR</vendor>
+              <product>VG240Y P</product>
+              <serial>0x93923d02</serial>
+            </monitorspec>
+            <mode>
+              <width>1920</width>
+              <height>1080</height>
+              <rate>143.855</rate>
+            </mode>
+          </monitor>
+        </logicalmonitor>
+      </configuration>
+    </monitors>
+  '';
+in {
+  imports = [outputs.homeManagerModules.monitors];
 
   # Gnome extensions
   home.packages = with pkgs.gnomeExtensions; [
