@@ -92,15 +92,15 @@ in {
 
   # remote desktop
   # xtogo
-  services.x2goserver.enable = true;
+  #services.x2goserver.enable = true;
   # gnome rdp
-  #services.gnome.gnome-remote-desktop.enable = true; # 'true' does not make the unit start automatically at boot
-  #systemd.services.gnome-remote-desktop = {
-  #  wantedBy = ["graphical.target"]; # for starting the unit automatically at boot
-  #};
-  #services.displayManager.autoLogin.enable = false;
-  #services.getty.autologinUser = null;
-  #networking.firewall.allowedTCPPorts = [3389];
+  services.gnome.gnome-remote-desktop.enable = true; # 'true' does not make the unit start automatically at boot
+  systemd.services.gnome-remote-desktop = {
+    wantedBy = ["graphical.target"]; # for starting the unit automatically at boot
+  };
+  services.displayManager.autoLogin.enable = false;
+  services.getty.autologinUser = null;
+  networking.firewall.allowedTCPPorts = [3389];
 
   #rustdesk
   #services.rustdesk-server = {
