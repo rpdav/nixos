@@ -82,7 +82,7 @@
           # text editors and office
           typora
           kdePackages.ghostwriter
-          onlyoffice-bin
+          onlyoffice-desktopeditors
 
           # utilities
           remmina
