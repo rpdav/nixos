@@ -14,6 +14,7 @@ in {
               subnet_byte = 54;
             });
           active = true;
+          restart = true;
         }
       ];
       #domains = [
