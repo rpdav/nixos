@@ -1,6 +1,6 @@
 <domain type="kvm">
   <name>win10</name>
-  <uuid>46056fd1-1638-4cd3-8247-3ca8d102b0ba</uuid>
+  <uuid>66475cad-859a-4257-9789-8569682954b6</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/10"/>
@@ -141,9 +141,10 @@
       <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
     </controller>
     <interface type="network">
-      <mac address="52:54:00:f1:8f:c1"/>
+      <mac address="52:54:00:b8:51:94"/>
       <source network="default"/>
       <model type="e1000e"/>
+      <link state="up"/>
       <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
     </interface>
     <serial type="pty">
