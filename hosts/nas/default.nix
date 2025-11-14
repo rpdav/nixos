@@ -27,8 +27,8 @@ in {
         "hosts/common/optional/persistence"
         "hosts/common/optional/ssh-unlock.nix"
         "hosts/common/optional/steam.nix"
-        "hosts/common/optional/virtualization"
-        "hosts/common/optional/wm/gnome.nix"
+        #"hosts/common/optional/virtualization"
+        #"hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
 
         # services

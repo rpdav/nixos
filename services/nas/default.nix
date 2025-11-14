@@ -13,8 +13,8 @@
     ./jellyfin
     ./lubelogger
     ./nextcloud
-    ./ollama
-    ./open-webui
+    #./ollama
+    #./open-webui
     ./planka
     ./searxng
     ./speedtest
