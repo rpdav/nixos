@@ -1,6 +1,6 @@
 <domain type="kvm">
   <name>win10</name>
-  <uuid>66475cad-859a-4257-9789-8569682954b6</uuid>
+  <uuid>66475cad-859a-4257-9789-8569682954b2</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/10"/>
@@ -55,7 +55,7 @@
     </disk>
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
-      <source file="/home/ryan/Downloads/Win10_22H2_English_x64v1.iso"/>
+      <!--<source file="/home/ryan/Downloads/Win10_22H2_English_x64v1.iso"/>-->
       <target dev="sdb" bus="sata"/>
       <readonly/>
       <address type="drive" controller="0" bus="0" target="0" unit="1"/>
