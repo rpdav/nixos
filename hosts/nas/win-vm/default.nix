@@ -2,6 +2,17 @@
   inherit (inputs) nixvirt;
 in {
   imports = [inputs.nixvirt.nixosModules.default];
+
+  boot.initrd.kernelModules = [
+    "vfio_pci"
+    "vfio"
+    "vfio_iommu_type1"
+  ];
+  boot.kernelParams = [
+    "amd_iommu=on"
+    "vfio-pci.ids=10de:2182,10de:1aeb,10de:1aec,10de:1aed" # bind gpu to vfio
+  ];
+
   virtualisation.libvirt = {
     enable = true;
     connections."qemu:///system" = {
