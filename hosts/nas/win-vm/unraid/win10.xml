@@ -1,16 +1,11 @@
-<!--
-WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
-OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
-  virsh edit 8e645324-46a9-1149-a905-00d8617bb9b7
-or other application using the libvirt API.
--->
-
 <domain type='kvm'>
-  <name>Windows 10</name>
+  <name>win10</name>
   <uuid>8e645324-46a9-1149-a905-00d8617bb9b7</uuid>
   <description>Gaming VM</description>
   <metadata>
-    <vmtemplate xmlns="unraid" name="Windows 10" icon="windows.png" os="windows10" webui=""/>
+    <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+      <libosinfo:os id="http://microsoft.com/win/10"/>
+    </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>8388608</memory>
   <currentMemory unit='KiB'>8388608</currentMemory>
@@ -34,9 +29,14 @@ or other application using the libvirt API.
     <partition>/machine</partition>
   </resource>
   <os>
-    <type arch='x86_64' machine='pc-i440fx-9.0'>hvm</type>
-    <loader readonly='yes' type='pflash'>/usr/share/qemu/ovmf-x64/OVMF_CODE-pure-efi.fd</loader>
-    <nvram>/etc/libvirt/qemu/nvram/8e645324-46a9-1149-a905-00d8617bb9b7_VARS-pure-efi.fd</nvram>
+    <type arch='x86_64' machine='pc-q35-10.1'>hvm</type>
+    <firmware>
+      <feature enabled="no" name="enrolled-keys"/>
+      <feature enabled="yes" name="secure-boot"/>
+    </firmware>
+    <loader readonly='yes' type='pflash'>/run/libvirt/nix-ovmf/edk2-x86_64-secure-code.fd</loader>
+    <nvram template="/run/libvirt/nix-ovmf/edk2-i386-vars.fd" templateFormat="raw" format="raw">/var/lib/libvirt/qemu/nvram/win10_VARS.fd</nvram>
+    <boot dev="hd"/>
   </os>
   <features>
     <acpi/>
@@ -51,11 +51,7 @@ or other application using the libvirt API.
       <vendor_id state='on' value='none'/>
     </hyperv>
   </features>
-  <cpu mode='host-passthrough' check='none' migratable='on'>
-    <topology sockets='1' dies='1' clusters='1' cores='4' threads='2'/>
-    <cache mode='passthrough'/>
-    <feature policy='require' name='topoext'/>
-  </cpu>
+  <cpu mode='host-passthrough' check='none' migratable='on'/>
   <clock offset='localtime'>
     <timer name='hpet' present='no'/>
     <timer name='hypervclock' present='yes'/>
@@ -65,12 +61,17 @@ or other application using the libvirt API.
   <on_crash>restart</on_crash>
   <devices>
     <emulator>/usr/local/sbin/qemu</emulator>
-    <disk type='block' device='disk'>
-      <driver name='qemu' type='raw'/>
-      <source dev='/dev/zd48'/>
-      <target dev='hdc' bus='virtio'/>
-      <boot order='2'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+    <disk type="block" device="disk">
+      <driver name="qemu" type="raw" cache="none" io="native" discard="unmap"/>
+      <source dev="/dev/zvol/docker/win10"/>
+      <target dev="sda" bus="sata"/>
+      <address type="drive" controller="0" bus="0" target="0" unit="0"/>
+    </disk>
+    <disk type="file" device="cdrom">
+      <driver name="qemu" type="raw"/>
+      <target dev="sdb" bus="sata"/>
+      <readonly/>
+      <address type="drive" controller="0" bus="0" target="0" unit="1"/>
     </disk>
     <controller type='usb' index='0' model='ich9-ehci1'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x7'/>
@@ -91,21 +92,12 @@ or other application using the libvirt API.
     <controller type='virtio-serial' index='0'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
     </controller>
-    <filesystem type='mount' accessmode='passthrough'>
-      <driver type='virtiofs' queue='1024'/>
-      <binary path='/usr/libexec/virtiofsd' xattr='on'>
-        <cache mode='always'/>
-        <sandbox mode='chroot'/>
-      </binary>
-      <source dir='/mnt/storage/'/>
-      <target dir='unraid'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
-    </filesystem>
-    <interface type='bridge'>
-      <mac address='52:54:00:29:3c:fc'/>
-      <source bridge='br0'/>
-      <model type='virtio'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+    <interface type="network">
+      <mac address="52:54:00:2c:76:19"/>
+      <source network="default"/>
+      <model type="e1000e"/>
+      <link state="up"/>
+      <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
     </interface>
     <serial type='pty'>
       <target type='isa-serial' port='0'>
@@ -122,6 +114,8 @@ or other application using the libvirt API.
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
     <audio id='1' type='none'/>
+
+    <!-- GPU passthrough -->
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <driver name='vfio'/>
       <source>
@@ -151,6 +145,10 @@ or other application using the libvirt API.
       </source>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x0a' function='0x0'/>
     </hostdev>
+    <!-- End GPU passthrough -->
+
+    <!-- USB passthrough -->
+    <!--
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <driver name='vfio'/>
       <source>
@@ -158,6 +156,14 @@ or other application using the libvirt API.
       </source>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x0b' function='0x0'/>
     </hostdev>
+    -->
+    <!-- End USB passthrough -->
+
+    <!-- NVME passthrough -->
+    <!--
+    -->
+    <!-- End NVME passthrough -->
+
     <memballoon model='none'/>
   </devices>
   <seclabel type='dynamic' model='dac' relabel='yes'/>
