@@ -17,15 +17,22 @@ in {
     enable = true;
     connections."qemu:///system" = {
       networks = [
+        #{
+        #  definition = nixvirt.lib.network.writeXML (nixvirt.lib.network.templates.bridge
+        #    {
+        #      name = "default";
+        #      uuid = "5046a610-afae-4b85-9f00-8beb9c101f95";
+        #      subnet_byte = 54;
+        #    });
+        #  active = true;
+        #  restart = true;
+        #}
         {
-          definition = nixvirt.lib.network.writeXML (nixvirt.lib.network.templates.bridge
-            {
-              name = "default";
-              uuid = "5046a610-afae-4b85-9f00-8beb9c101f95";
-              subnet_byte = 54;
-            });
-          active = true;
-          restart = true;
+          definition = builtins.toFile "network.xml" (nixvirt.lib.network.getXML {
+            name = "default";
+            forward.mode = "bridge";
+            bridge.name = "br0";
+          });
         }
       ];
       domains = [

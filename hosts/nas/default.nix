@@ -136,8 +136,9 @@ in {
   networking = {
     hostId = "7e3de5fa"; # needed for zfs
     hostName = "nas";
-    networkmanager.enable = true;
-    useDHCP = lib.mkForce true; # fixes duplicate (broken) network connection due to ssh unlock module
+    useDHCP = false;
+    bridges."br0".interfaces = ["enp34s0"];
+    interfaces."br0".useDHCP = true;
   };
 
   # Boot
