@@ -164,17 +164,13 @@
     <console type="pty">
       <target type="serial" port="0"/>
     </console>
-    <input type="tablet" bus="usb">
-      <address type="usb" bus="0" port="1"/>
-    </input>
-    <input type="mouse" bus="ps2"/>
-    <input type="keyboard" bus="ps2"/>
     <watchdog model="itco" action="reset"/>
     <memballoon model="virtio">
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
     </memballoon>
 
     <!-- Install and driver disks -->
+    <!--
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
       <source file="/mnt/storage/isos/win10-vm/Win10_22H2_English_x64v1.iso" index="3"/>
@@ -189,6 +185,7 @@
       <readonly/>
       <address type="drive" controller="0" bus="0" target="0" unit="2"/>
     </disk>
+    -->
 
     <!-- GPU passthrough -->
     <hostdev mode="subsystem" type="pci" managed="yes">
@@ -248,44 +245,13 @@
       <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
     </hostdev>
 
-    <!-- Temporary zvol disk for testing -->
-    <!--
-    <disk type="block" device="disk">
-      <driver name="qemu" type="raw" cache="none" io="native" discard="unmap"/>
-      <source dev="/dev/zvol/docker/win10"/>
-      <target dev="sda" bus="sata"/>
-      <boot order="1"/>
-      <address type="drive" controller="0" bus="0" target="0" unit="0"/>
-    </disk>
-    -->
-
-    <!-- Temporary USB devices until USB passthrough is done -->
-    <!--
-    <hostdev mode="subsystem" type="usb" managed="yes">
-      <source>
-        <vendor id="0x062a"/>
-        <product id="0x38b3"/>
-      </source>
-      <address type="usb" bus="0" port="2"/>
-    </hostdev>
-    <hostdev mode="subsystem" type="usb" managed="yes">
-      <source>
-        <vendor id="0x046d"/>
-        <product id="0xc52b"/>
-      </source>
-      <address type="usb" bus="0" port="3"/>
-    </hostdev>
-    <hostdev mode="subsystem" type="usb" managed="yes">
-      <source>
-        <vendor id="0x31b2"/>
-        <product id="0x0010"/>
-      </source>
-      <address type="usb" bus="0" port="4"/>
-    </hostdev>
-    -->
-
     <!-- Temporary graphics for Nvidia driver install -->
     <!--
+    <input type="tablet" bus="usb">
+      <address type="usb" bus="0" port="1"/>
+    </input>
+    <input type="mouse" bus="ps2"/>
+    <input type="keyboard" bus="ps2"/>
     <graphics type="spice" autoport="yes">
       <listen type="address"/>
       <gl enable="no"/>
