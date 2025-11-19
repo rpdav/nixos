@@ -36,11 +36,13 @@ Devices needing drivers: GPU, mobo audio
 Use virtio network adapter but don't install drivers until after OS install in order to bypass account creation
 
 # Wrapup tasks
-* CPU tuning
 * Reinstall on NVME with correct uuid
 * Install virtio drivers
-* Try passing through GPU without stubbing or blacklisting
 * Get windows reactivated
 * Reinstall games
 * Upgrade to win11? May need tpm support
 * Re-manage cables
+
+# Done
+* CPU tuning
+* Try passing through GPU without stubbing or blacklisting

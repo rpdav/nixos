@@ -1,13 +1,13 @@
 <domain type="kvm">
   <name>win10</name>
-  <uuid>73c0cff5-cdae-4b88-967f-e4ddf3393fcc</uuid>
+  <uuid>8e645324-46a9-1149-a905-00d8617bb9b7</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/10"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit="KiB">8192000</memory>
-  <currentMemory unit="KiB">8192000</currentMemory>
+  <memory unit="MiB">16022</memory>
+  <currentMemory unit="MiB">16022</currentMemory>
   <vcpu placement='static'>8</vcpu>
   <cputune>
     <vcpupin vcpu='0' cpuset='2'/>
@@ -249,6 +249,7 @@
     </hostdev>
 
     <!-- Temporary zvol disk for testing -->
+    <!--
     <disk type="block" device="disk">
       <driver name="qemu" type="raw" cache="none" io="native" discard="unmap"/>
       <source dev="/dev/zvol/docker/win10"/>
@@ -256,6 +257,7 @@
       <boot order="1"/>
       <address type="drive" controller="0" bus="0" target="0" unit="0"/>
     </disk>
+    -->
 
     <!-- Temporary USB devices until USB passthrough is done -->
     <!--
