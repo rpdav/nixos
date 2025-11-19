@@ -83,63 +83,20 @@ in {
   # Create impermanent directories
   environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
-      "/var/lib/private" # for rustdesk
     ];
   };
 
   # disable emergency mode from preventing system boot if there are mounting issues
   systemd.enableEmergencyMode = false;
 
-  # remote desktop
-  # xtogo
-  #services.x2goserver.enable = true;
-  # gnome rdp
-  services.gnome.gnome-remote-desktop.enable = true; # 'true' does not make the unit start automatically at boot
-  systemd.services.gnome-remote-desktop = {
-    wantedBy = ["graphical.target"]; # for starting the unit automatically at boot
-  };
-  services.displayManager.autoLogin.enable = false;
-  services.getty.autologinUser = null;
-  networking.firewall.allowedTCPPorts = [3389];
-
-  #rustdesk
-  #services.rustdesk-server = {
-  #  enable = true;
-  #  openFirewall = true;
-  #  signal.relayHosts = ["example.com"]; #dummy value; complains if not filled
-  #};
-
-  ##xrdp
-  #services.xrdp.enable = true;
-
-  ## Use the GNOME Wayland session
-  #services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-
-  ## XRDP needs the GNOME remote desktop backend to function
-  #services.gnome.gnome-remote-desktop.enable = true;
-
-  ## Open the default RDP port (3389)
-  #services.xrdp.openFirewall = true;
-
-  ## Disable autologin to avoid session conflicts
-  #services.displayManager.autoLogin.enable = false;
-  #services.getty.autologinUser = null;
-  #  services.xrdp = {
-  #    enable = true;
-  #    defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-  #    openFirewall = true;
-  #    sslKey = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/privkey.pem";
-  #    sslCert = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/cert.pem";
-  #  };
-
   # Networking
   networking = {
     hostId = "7e3de5fa"; # needed for zfs
     hostName = "nas";
     useDHCP = false;
+    interfaces."enp34s0".useDHCP = false;
     bridges."br0".interfaces = ["enp34s0"];
     interfaces."br0".useDHCP = true;
-    interfaces."enp34s0".useDHCP = false;
   };
 
   # Boot
