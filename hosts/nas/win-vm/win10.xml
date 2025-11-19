@@ -172,6 +172,7 @@
     </disk>
 
     <!-- GPU passthrough -->
+    <!--
     <hostdev mode="subsystem" type="pci" managed="yes">
       <driver name="vfio"/>
       <source>
@@ -201,6 +202,7 @@
       </source>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x0a" function="0x0"/>
     </hostdev>
+    -->
 
     <!-- Audio passthrough -->
     <hostdev mode="subsystem" type="pci" managed="yes">
