@@ -212,15 +212,13 @@
     </hostdev>
 
     <!-- USB passthrough -->
-    <!--
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <driver name='vfio'/>
       <source>
-        <address domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
+        <address domain='0x0000' bus='0x28' slot='0x00' function='0x3'/>
       </source>
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </hostdev>
-    -->
 
     <!-- NVME passthrough -->
     <hostdev mode="subsystem" type="pci" managed="yes">
@@ -241,6 +239,7 @@
     </disk>
 
     <!-- Temporary USB devices until USB passthrough is done -->
+    <!--
     <hostdev mode="subsystem" type="usb" managed="yes">
       <source>
         <vendor id="0x062a"/>
@@ -262,6 +261,8 @@
       </source>
       <address type="usb" bus="0" port="4"/>
     </hostdev>
+    -->    
+
 
     <!-- Temporary graphics for Nvidia driver install -->
     <!--
