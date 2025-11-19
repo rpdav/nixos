@@ -56,12 +56,6 @@
   </pm>
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
-    <disk type="file" device="cdrom">
-      <driver name="qemu" type="raw"/>
-      <target dev="sdb" bus="sata"/>
-      <readonly/>
-      <address type="drive" controller="0" bus="0" target="0" unit="1"/>
-    </disk>
     <controller type="usb" index="0" model="qemu-xhci" ports="15">
       <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
     </controller>
@@ -143,9 +137,9 @@
       <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
     </controller>
     <interface type="network">
-      <mac address="52:54:00:2c:76:19"/>
+      <mac address="52:54:00:29:3c:fc"/>
       <source network="default"/>
-      <model type="e1000e"/>
+      <model type="virtio"/>
       <link state="up"/>
       <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
     </interface>
@@ -166,13 +160,24 @@
     <memballoon model="virtio">
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
     </memballoon>
+
+    <!-- Install and driver disks -->
+    <disk type="file" device="cdrom">
+      <driver name="qemu" type="raw"/>
+      <source file="/mnt/storage/isos/win10-vm/Win10_22H2_English_x64v1.iso" index="3"/>
+      <source file="/mnt/storage/isos/win10-vm/virtio-win.iso" index="4"/>
+      <target dev="sdb" bus="sata"/>
+      <readonly/>
+      <address type="drive" controller="0" bus="0" target="0" unit="1"/>
+    </disk>
+
     <!-- GPU passthrough -->
     <hostdev mode="subsystem" type="pci" managed="yes">
       <driver name="vfio"/>
       <source>
         <address domain="0x0000" bus="0x26" slot="0x00" function="0x0"/>
       </source>
-      <rom file="/persist/home/ryan/MSI.GTX1660Ti.6144.190313.rom"/>
+      <rom file="/mnt/storage/isos/win10-vm/MSI.GTX1660Ti.6144.190313.rom"/>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x06" function="0x0"/>
     </hostdev>
     <hostdev mode="subsystem" type="pci" managed="yes">
@@ -196,7 +201,15 @@
       </source>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x0a" function="0x0"/>
     </hostdev>
-    <!-- End GPU passthrough -->
+
+    <!-- Audio passthrough -->
+    <hostdev mode="subsystem" type="pci" managed="yes">
+      <driver name="vfio"/>
+      <source>
+        <address domain="0x0000" bus="0x28" slot="0x00" function="0x4"/>
+      </source>
+      <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
+    </hostdev>
 
     <!-- USB passthrough -->
     <!--
@@ -208,7 +221,6 @@
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </hostdev>
     -->
-    <!-- End USB passthrough -->
 
     <!-- NVME passthrough -->
     <hostdev mode="subsystem" type="pci" managed="yes">
@@ -216,9 +228,8 @@
       <source>
         <address domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
       </source>
-      <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
+      <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
     </hostdev>
-    <!-- End NVME passthrough -->
 
     <!-- Temporary zvol disk for testing -->
     <disk type="block" device="disk">
@@ -228,7 +239,6 @@
       <boot order="1"/>
       <address type="drive" controller="0" bus="0" target="0" unit="0"/>
     </disk>
-    <!-- End temp disk -->
 
     <!-- Temporary USB devices until USB passthrough is done -->
     <hostdev mode="subsystem" type="usb" managed="yes">
@@ -252,7 +262,6 @@
       </source>
       <address type="usb" bus="0" port="4"/>
     </hostdev>
-    <!-- End temp USB passthrough -->
 
     <!-- Temporary graphics for Nvidia driver install -->
     <!--
