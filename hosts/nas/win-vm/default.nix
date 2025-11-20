@@ -3,6 +3,12 @@
 in {
   imports = [inputs.nixvirt.nixosModules.default];
 
+  # define bridge network
+  interfaces."enp34s0".useDHCP = false;
+  bridges."br0".interfaces = ["enp34s0"];
+  interfaces."br0".useDHCP = true;
+
+  # kernel modules for passthrough
   boot.initrd.kernelModules = [
     "vfio_pci"
     "vfio"
@@ -16,6 +22,7 @@ in {
     enable = true;
     connections."qemu:///system" = {
       networks = [
+        # bridge network on same subnet as host
         {
           definition = nixvirt.lib.network.writeXML {
             name = "default";
@@ -27,6 +34,7 @@ in {
         }
       ];
       domains = [
+        # win10 vm definition
         {
           definition = ./win10.xml;
           active = true;

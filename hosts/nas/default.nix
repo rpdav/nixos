@@ -87,10 +87,6 @@ in {
   networking = {
     hostId = "7e3de5fa"; # needed for zfs
     hostName = "nas";
-    useDHCP = false;
-    interfaces."enp34s0".useDHCP = false;
-    bridges."br0".interfaces = ["enp34s0"];
-    interfaces."br0".useDHCP = true;
   };
 
   # Boot
