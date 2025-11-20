@@ -25,9 +25,7 @@ in {
         "hosts/common/optional/backup"
         "hosts/common/optional/docker.nix"
         "hosts/common/optional/persistence"
-        "hosts/common/optional/steam.nix"
         "hosts/common/optional/virtualization"
-        #"hosts/common/optional/wm/gnome.nix"
         "hosts/common/optional/yubikey.nix"
 
         # services
@@ -39,7 +37,6 @@ in {
       ])
 
       # host-specific
-      #./nvidia.nix
       ./win-vm
       ./ssh-unlock.nix
       ./hardware-configuration.nix
@@ -48,9 +45,6 @@ in {
     ];
 
   # Variable overrides
-  userOpts = {
-    theme = lib.mkForce "mountain"; #override default in hosts/common/ryan/default.nix
-  };
   systemOpts = {
     primaryUser = "ryan"; #primary user (not necessarily only user)
     swapEnable = true;
@@ -58,7 +52,7 @@ in {
     swapSize = "16G";
     gcRetention = "30d";
     impermanent = true;
-    gui = true;
+    gui = false;
   };
   serviceOpts = {
     dockerDir = "/mnt/docker/appdata";
@@ -104,11 +98,7 @@ in {
     device = "nodev";
     efiSupport = true;
     efiInstallAsRemovable = true;
-    useOSProber = true; # for dual boot
   };
-
-  # use local time so dual boot doesn't mess up HW clock
-  time.hardwareClockInLocalTime = true;
 
   # allow root ssh login for rebuilds
   users.users.root = {

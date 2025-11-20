@@ -16,12 +16,7 @@ in {
       "home/common/core"
 
       # optional config
-      "home/common/optional/app/browser"
-      "home/common/optional/app/defaultapps.nix"
-      "home/common/optional/app/games"
-      "home/common/optional/app/kitty.nix"
       "home/common/optional/config/persist.nix"
-      #"home/common/optional/wm/gnome.nix"
     ])
     # multi-system config for current user
     ./common/core
@@ -32,29 +27,6 @@ in {
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
-
-  #monitors = [
-  #  {
-  #    name = "DP-12";
-  #    width = 1920;
-  #    height = 1080;
-  #    refreshRate = 60;
-  #    x = 0;
-  #    y = 0;
-  #    scaling = 1.0;
-  #    enabled = true;
-  #  }
-  #  {
-  #    name = "DP-10";
-  #    width = 1920;
-  #    height = 1080;
-  #    refreshRate = 144;
-  #    x = 1920;
-  #    y = 0;
-  #    scaling = 1.0;
-  #    enabled = true;
-  #  }
-  #];
 
   home.stateVersion = "24.11"; # don't change without reading release notes
 
