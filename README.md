@@ -31,6 +31,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 * Lanzaboote: secure boot
 * Stylix: system-wide theming
 * Hyprland: like building a desktop environment with legos
+* Nixvirt: declarative VM management
 
 ## Structure
 
@@ -116,6 +117,9 @@ The `themes` directory contains subdirectories for each theme with a wallpaper, 
 | tokyo       | tokyo-night-terminal-dark |
 
 [Base16Schemes](https://github.com/tinted-theming/schemes?tab=readme-ov-file) are a set of 16 coordinated colors. You can also build your own base16 scheme with stylix if you prefer. You can get scheme names and colors by running `nix build nixpkgs#base16-schemes` and browsing to `result/share/themes`.
+
+## Virtualization
+My `nas` system is also a virtualization host running a windows VM with some hardware passthrough (an NVME drive, GPU, and USB controller). I use [nixvirt](https://github.com/AshleyYakeley/NixVirt) which allows libvirt networks and domains (that is, VMs) to be configured with nix expressions. See the readme in `hosts/nas/win-vm` for more details.
 
 ## Initial Install
 See readme files in each host's subfolder.
