@@ -1,9 +1,11 @@
 {...}: {
   programs.git = {
     enable = true;
-    userName = "ryan";
-    userEmail = "105075689+rpdav@users.noreply.github.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "ryan";
+        email = "105075689+rpdav@users.noreply.github.com";
+      };
       init.defaultBranch = "main";
       merge.ff = false; # I prefer to see explicit merges
     };

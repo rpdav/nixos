@@ -2,6 +2,7 @@
   config,
   lib,
   configLib,
+  outputs,
   ...
 }: let
   inherit (config.systemOpts) persistVol;
@@ -15,12 +16,7 @@ in {
       "home/common/core"
 
       # optional config
-      "home/common/optional/app/browser"
-      "home/common/optional/app/defaultapps.nix"
-      "home/common/optional/app/games"
-      "home/common/optional/app/kitty.nix"
       "home/common/optional/config/persist.nix"
-      "home/common/optional/wm/gnome.nix"
     ])
     # multi-system config for current user
     ./common/core

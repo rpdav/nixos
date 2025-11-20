@@ -37,6 +37,6 @@
         ]
     )
     ++ [
-      inputs.nsearch.packages.${pkgs.system}.default
+      inputs.nsearch.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 }

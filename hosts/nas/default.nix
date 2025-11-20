@@ -1,11 +1,12 @@
 {
   modulesPath,
   lib,
+  pkgs,
   config,
   configLib,
   ...
 }: let
-  inherit (config.systemOpts) persistVol;
+  inherit (config.systemOpts) persistVol impermanent;
   # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
@@ -24,9 +25,7 @@ in {
         "hosts/common/optional/backup"
         "hosts/common/optional/docker.nix"
         "hosts/common/optional/persistence"
-        "hosts/common/optional/ssh-unlock.nix"
-        "hosts/common/optional/steam.nix"
-        "hosts/common/optional/wm/gnome.nix"
+        "hosts/common/optional/virtualization"
         "hosts/common/optional/yubikey.nix"
 
         # services
@@ -38,16 +37,14 @@ in {
       ])
 
       # host-specific
-      ./nvidia.nix
+      ./win-vm
+      ./ssh-unlock.nix
       ./hardware-configuration.nix
       ./zfs
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   # Variable overrides
-  userOpts = {
-    theme = lib.mkForce "mountain"; #override default in hosts/common/ryan/default.nix
-  };
   systemOpts = {
     primaryUser = "ryan"; #primary user (not necessarily only user)
     swapEnable = true;
@@ -55,7 +52,7 @@ in {
     swapSize = "16G";
     gcRetention = "30d";
     impermanent = true;
-    gui = true;
+    gui = false;
   };
   serviceOpts = {
     dockerDir = "/mnt/docker/appdata";
@@ -76,26 +73,31 @@ in {
       "- */var/**"
     ];
   };
+
+  # Create impermanent directories
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
+    directories = [
+    ];
+  };
+
   # disable emergency mode from preventing system boot if there are mounting issues
   systemd.enableEmergencyMode = false;
 
-  services.xrdp = {
-    enable = true;
-    openFirewall = true;
-    sslKey = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/privkey.pem";
-    sslCert = "/mnt/docker/appdata/swag/config/etc/letsencrypt/live/dfrp.xyz/cert.pem";
+  # Networking
+  networking = {
+    hostId = "7e3de5fa"; # needed for zfs
+    hostName = "nas";
+    useDHCP = false;
+    interfaces."enp34s0".useDHCP = false;
+    bridges."br0".interfaces = ["enp34s0"];
+    interfaces."br0".useDHCP = true;
   };
 
-  # Networking
-  networking.hostId = "7e3de5fa"; # needed for zfs
-  networking.hostName = "nas";
-  networking.networkmanager.enable = true;
-
+  # Boot
   boot.loader.grub = {
     device = "nodev";
     efiSupport = true;
     efiInstallAsRemovable = true;
-    useOSProber = true;
   };
 
   # allow root ssh login for rebuilds
