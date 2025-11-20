@@ -17,11 +17,13 @@ in {
     connections."qemu:///system" = {
       networks = [
         {
-          definition = builtins.toFile "network.xml" (nixvirt.lib.network.getXML {
+          definition = nixvirt.lib.network.writeXML {
             name = "default";
+            uuid = "e59b4192-e88b-4b6a-a4c3-75c2ae20beac";
             forward.mode = "bridge";
             bridge.name = "br0";
-          });
+          };
+          active = true;
         }
       ];
       domains = [
