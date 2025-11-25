@@ -76,6 +76,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Fancy boot screen
+    mac-style-plymouth = {
+      url = "github:SergioRibera/s4rchiso-plymouth-theme";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Bleeding-edge AI tools
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
 

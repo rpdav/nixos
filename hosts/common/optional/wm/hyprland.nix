@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: {
+  imports = [./plymouth.nix];
+
   services.greetd = {
     enable = true;
     settings = rec {
@@ -18,10 +20,6 @@
     };
   };
 
-  boot.plymouth = {
-    enable = true;
-  };
-
   boot.loader.timeout = 0;
 
   # needed for wlogout icons
@@ -33,26 +31,6 @@
     u2fAuth = false;
     enableGnomeKeyring = true;
   };
-  #  services.greetd = {
-  #    enable = true;
-  #    settings = {
-  #      default_session = {
-  #        command = "${pkgs.hyprland}/bin/hyprctl dispatch exec ${pkgs.greetd.gtkgreet}/bin/gtkgreet -l";
-  #        user = "ryan";
-  #      };
-  #      bash = {
-  #        command = "${pkgs.bash}/bin/bash";
-  #      };
-  #      hyprland = {
-  #        command = "${pkgs.hyprland}/bin/Hyprland";
-  #      };
-  #    };
-  #  };
-
-  #  environment.etc."greetd/environments".text = ''
-  #    bash
-  #    hyprland
-  #  '';
 
   # Keyring
   services.gnome.gnome-keyring.enable = true;
