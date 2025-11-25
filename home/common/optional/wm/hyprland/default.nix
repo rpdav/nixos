@@ -230,6 +230,10 @@
 
           # Special workspaces
           "$mainMod, S, togglespecialworkspace, magic"
+
+          # Switch workspaces
+          "$mainMod, mouse_down, workspace, +1"
+          "$mainMod, mouse_down, workspace, -1"
         ]
         ++ (
           # Workspaces
