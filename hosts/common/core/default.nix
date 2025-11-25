@@ -29,6 +29,9 @@ in {
     '';
   };
 
+  # Put link to current flake in etc to help troubleshooting
+  environment.etc."current-system-flake".source = inputs.self;
+
   # Base fonts
   fonts = {
     packages = with pkgs; [
