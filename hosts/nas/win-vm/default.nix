@@ -1,12 +1,20 @@
-{inputs, ...}: let
+{
+  inputs,
+  pkgs,
+  ...
+}: let
   inherit (inputs) nixvirt;
 in {
   imports = [inputs.nixvirt.nixosModules.default];
 
   # define bridge network
-  interfaces."enp34s0".useDHCP = false;
-  bridges."br0".interfaces = ["enp34s0"];
-  interfaces."br0".useDHCP = true;
+  networking = {
+    interfaces = {
+      "enp34s0".useDHCP = false;
+      "br0".useDHCP = true;
+    };
+    bridges."br0".interfaces = ["enp34s0"];
+  };
 
   # kernel modules for passthrough
   boot.initrd.kernelModules = [

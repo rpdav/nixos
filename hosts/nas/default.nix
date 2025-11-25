@@ -25,6 +25,7 @@ in {
         "hosts/common/optional/backup"
         "hosts/common/optional/docker.nix"
         "hosts/common/optional/persistence"
+        "hosts/common/optional/ssh-unlock.nix"
         "hosts/common/optional/virtualization"
         "hosts/common/optional/yubikey.nix"
 
@@ -38,7 +39,6 @@ in {
 
       # host-specific
       ./win-vm
-      ./ssh-unlock.nix
       ./hardware-configuration.nix
       ./zfs
       (modulesPath + "/installer/scan/not-detected.nix")
