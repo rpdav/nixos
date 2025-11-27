@@ -10,10 +10,11 @@
   };
 in {
   boot = {
+    initrd.systemd.enable = true;
     plymouth = {
       enable = true;
-      theme = lib.mkForce "mac-style";
-      themePackages = [pkgs.mac-style-plymouth];
+      #theme = lib.mkForce "mac-style";
+      #themePackages = [pkgs.mac-style-plymouth];
     };
     kernelParams = [
       "quiet"

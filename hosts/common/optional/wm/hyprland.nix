@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  imports = [./plymouth.nix];
+  imports = [./plymouth];
 
   services.greetd = {
     enable = true;
