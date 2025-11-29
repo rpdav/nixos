@@ -21,7 +21,7 @@ in {
   ];
 
   # user--specific variable overrides
-  userOpts.theme = "nord";
+  userOpts.theme = "everforest";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
 
