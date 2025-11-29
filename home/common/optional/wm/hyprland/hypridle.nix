@@ -7,7 +7,7 @@
   services.hypridle = {
     enable = true;
     settings = let
-      lock_cmd = "${pkgs.procps}/bin/pidof ${pkgs.hyprlock}/bin/hyprlock || ${pkgs.hyprlock}/bin/hyprlock"; # Avoid starting multiple hyprlock instances.
+      lock_cmd = "${pkgs.procps}/bin/pidof ${pkgs.hyprlock}/bin/hyprlock || TZ=${osConfig.time.timeZone} ${pkgs.hyprlock}/bin/hyprlock"; # Avoid starting multiple hyprlock instances and make sure TZ gets passed.
       hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl"; # Use hyprland flake for hyprctl
       brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
     in {

@@ -1,4 +1,9 @@
-{config, ...}: let
+{
+  config,
+  osConfig,
+  pkgs,
+  ...
+}: let
   # The *.nix files in ./icons are SVGs expressed as nix strings with a placeholder for stylix colors.
   # This let block imports those files so their paths can be inserted into wlogout's style.css.
   # Icons are taken from https://github.com/catppuccin/wlogout
@@ -24,7 +29,7 @@ in {
     enable = true;
     layout = [
       {
-        action = "loginctl lock-session";
+        action = "TZ=${osConfig.time.timeZone} ${pkgs.hyprlock}/bin/hyprlock"; # Make sure TZ gets passed.
         keybind = "l";
         label = "lock";
         text = "Lock";
