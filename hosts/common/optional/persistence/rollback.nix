@@ -6,7 +6,7 @@
 }: let
   systemd = config.boot.initrd.systemd.enable;
   script = ''
-    mkdir /btrfs_tmp
+    mkdir /btrfs_tm
     mount /dev/lvm/root /btrfs_tmp
     if [[ -e /btrfs_tmp/root ]]; then
         mkdir -p /btrfs_tmp/old_roots
@@ -34,21 +34,21 @@ in {
   boot.initrd.postDeviceCommands = lib.mkIf (!systemd) (lib.mkAfter script);
 
   # Use a systemd service otherwise
-  boot.initrd.systemd.services."rollback" = lib.mkIf systemd {
-    description = "Create a snapshoot of root and then rollback";
-    script = ''
-      touch /home/ryan/rollback-script-file
-      echo "this is when the rollback script ran"
-    '';
-    #inherit script;
-    wantedBy = ["initrd.target"];
-    after = ["systemd-cryptsetup@crypt.service"];
-    before = ["sysroot.mount"];
-    unitConfig.DefaultDependencies = "no";
-    path = with pkgs; [
-      btrfs-progs
-      coreutils
+  boot.initrd.systemd = lib.mkIf systemd {
+    initrdBin = with pkgs; [
+      util-linux
+      #btrfs-progs
+      #coreutils
     ];
-    serviceConfig.Type = "oneshot";
+    services."rollback" = {
+      description = "Create a snapshoot of root and then rollback";
+      inherit script;
+      wantedBy = ["initrd.target"];
+      after = ["lvm2-activation-early.service" "dev-mapper-lvm-root.device"];
+      #after = ["systemd-cryptsetup@crypt.service"];
+      before = ["sysroot.mount"];
+      unitConfig.DefaultDependencies = "no";
+      serviceConfig.Type = "oneshot";
+    };
   };
 }
