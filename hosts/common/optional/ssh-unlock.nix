@@ -10,7 +10,6 @@ in {
       enable = true;
       ssh = {
         enable = true;
-        port = 2220;
         authorizedKeys = lib.lists.forEach pubKeys (key: builtins.readFile key);
         hostKeys = [/boot/initrd/ssh_host_ed25519_key];
       };

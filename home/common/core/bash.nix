@@ -26,7 +26,7 @@ in {
       ff = "${fzf}/bin/fzf --preview '${bat}/bin/bat --style=numbers --color=always {}'";
       sudo = "sudo "; #allows aliases with sudo
       cat = "${bat}/bin/bat --paging=never";
-      nas-boot = "ssh root@nas -p 2220 cryptsetup-askpass";
+      nas-boot = "ssh root@nas-boot cryptsetup-askpass";
       # git
       gs = "${git}/bin/git status";
       gc = "${git}/bin/git commit -am";
