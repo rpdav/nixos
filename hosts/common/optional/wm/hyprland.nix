@@ -6,19 +6,25 @@
 }: {
   imports = [./plymouth];
 
-  services.greetd = {
-    enable = true;
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.hyprland}/bin/Hyprland";
-        user = config.systemOpts.primaryUser;
-      };
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.hyprland}/bin/Hyprland";
-        user = "greeter";
-      };
+  services.displayManager = {
+    autoLogin.user = "ryan";
+    gdm = {
+      enable = true;
     };
   };
+  #services.greetd = {
+  #  enable = true;
+  #  settings = rec {
+  #    initial_session = {
+  #      command = "${pkgs.hyprland}/bin/Hyprland";
+  #      user = config.systemOpts.primaryUser;
+  #    };
+  #    default_session = {
+  #      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.hyprland}/bin/Hyprland";
+  #      user = "greeter";
+  #    };
+  #  };
+  #};
 
   boot.loader.timeout = 0;
 
