@@ -112,6 +112,7 @@
       ".config/bluedevelglobalrc" # bluetooth
     ];
   };
+
   programs.bat.enable = true;
 
   programs.autojump.enable = true;
