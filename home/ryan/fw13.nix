@@ -92,4 +92,11 @@
     name = osConfig.stylix.fonts.emoji.name;
     package = osConfig.stylix.fonts.emoji.package;
   };
+
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu+ssh://root@10.10.1.17/system" "qemu:///system"];
+      uris = ["qemu+ssh://root@10.10.1.17/system" "qemu:///system"];
+    };
+  };
 }

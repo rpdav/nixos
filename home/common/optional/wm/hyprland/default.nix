@@ -33,7 +33,7 @@
   # clipboard history
   services.cliphist.enable = true;
 
-  # gui app privilege escallation
+  # gui app privilege escalation
   services.hyprpolkitagent.enable = true;
 
   # launcher
@@ -50,11 +50,10 @@
 
   # notifications
   services.swaync.enable = true;
+  dconf.settings."org/gnome/nm-applet".disable-connected-notifications = true;
 
   # OSD for volume and brightness
-  services.swayosd = {
-    enable = true;
-  };
+  services.swayosd.enable = true;
 
   # flash drive sys tray
   services.udiskie.enable = true;
