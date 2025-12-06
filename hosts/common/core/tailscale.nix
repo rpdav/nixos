@@ -24,4 +24,12 @@
       "--reset" # Force Tailscale to only use the declared flags during reauth
     ];
   };
+
+  # Aliases to enable accept routes when travelling
+  # Can't leave it on due to using relays when at home
+  # See https://github.com/tailscale/tailscale/issues/1227
+  programs.bash.shellAliases = {
+    travelmode = "sudo ${pkgs.tailscale}/bin/tailscale up --accept-routes";
+    homemode = "sudo ${pkgs.tailscale}/bin/tailscale up --reset";
+  };
 }

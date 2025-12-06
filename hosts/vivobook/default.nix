@@ -77,9 +77,6 @@ in {
   networking.hostName = "vivobook";
   networking.networkmanager.enable = true;
 
-  # Host-specific tailscale config
-  services.tailscale.extraUpFlags = ["--accept-routes"]; #accept tailscale routes to LAN while offsite during reauth.
-
   # Host-specific hardware config
   services.pipewire = {
     audio.enable = true;

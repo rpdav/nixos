@@ -11,9 +11,6 @@ set positional-arguments
 switch:
   sudo nixos-rebuild switch --flake .
 
-cosmic:
-  sudo nixos-rebuild switch --flake . --specialisation cosmic
-
 dry:
   sudo nixos-rebuild dry-build --flake . 
 
@@ -26,12 +23,6 @@ up:
 # Update specific input
 upp input:
   nix flake update {{input}}
-
-history:
-  nix profile history --profile /nix/var/nix/profiles/system
-
-repl:
-  nix repl -f flake:nixpkgs
 
 clean:
   # remove all generations older than 14 days
@@ -49,13 +40,15 @@ gc:
 ############################################################################
 
 build host:
-  # separate build command to get the nice nixos-cli/nvd output
   # using -o flag to make a gc root and keep builds from being immediatley gc'd
+  # using apply for build process for nice nvd output
   nixos apply /home/ryan/nixos/.#{{host}} -o ~/result-{{host}}_{{datetime("%Y-%m-%d_%T")}}
 
 deploy host:
-  sudo tailscale up --reset && nixos-rebuild --flake /home/ryan/nixos/.#{{host}} --target-host root@{{host}} switch; sudo tailscale up --accept-routes
+  nixos-rebuild --flake /home/ryan/nixos/.#{{host}} --target-host root@{{host}} switch
 
+boot host:
+  nixos-rebuild --flake /home/ryan/nixos/.#{{host}} --target-host root@{{host}} boot
 ############################################################################
 #
 #  nixos-anywhere commands
