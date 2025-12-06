@@ -1,21 +1,24 @@
 {
   inputs,
   lib,
+  pkgs,
   ...
-}: let
-  system = "x86_64-linux";
-  overlays = [inputs.mac-style-plymouth.overlays.default];
-  pkgs = import inputs.nixpkgs {
-    inherit system overlays;
-  };
-in {
+}: {
   boot = {
-    initrd.systemd.enable = true;
+    # enable plymouth
     plymouth = {
       enable = true;
-      #theme = lib.mkForce "mac-style";
-      #themePackages = [pkgs.mac-style-plymouth];
+      theme = lib.mkForce "seal"; # mkForce to override stylix
+      themePackages = with pkgs; [
+        # By default we would install all themes
+        (adi1090x-plymouth-themes.override {
+          selected_themes = ["seal"];
+        })
+      ];
     };
+    initrd.systemd.enable = true; # needed for plymouth display during initrd crypt unlock
+
+    # quiet boot. Works best with gdm for smooth transition.
     kernelParams = [
       "quiet"
       "splash"
