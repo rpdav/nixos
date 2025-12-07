@@ -74,8 +74,7 @@ compose project output='docker-compose.nix':
   nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
 
 uptix:
-  # pinning version due to breaking lock file format changes
-  nix run github:luizribeiro/uptix/0a20d311ce18b0e243ab00233c7cb0ee83836cfa
+  nix run github:luizribeiro/uptix/
 
 ############################################################################
 #
