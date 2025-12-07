@@ -1,11 +1,13 @@
 {inputs, ...}: let
   inherit (inputs) nixvirt;
+  router = "10.10.1.1";
 in {
   imports = [inputs.nixvirt.nixosModules.default];
 
   # define bridge network
   networking = {
-    defaultGateway = "10.10.1.1";
+    defaultGateway = router;
+    nameservers = [router];
     interfaces = {
       "enp34s0".useDHCP = false;
       "br0" = {
