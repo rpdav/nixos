@@ -20,3 +20,5 @@ This contains a folder for each user in use in my config. It contains any user-s
 
 # system/hosts/\<hostname\>
 This is where all host-specific NixOS config lives, like boot devices, hostname, hardware config, and system stateVersion. Any config that can be reused across hosts goes into `common`.
+
+In `flake.nix`, `nixosConfigurations` are generated dynamically based the contents of `system/hosts`. A new host can be created just by adding it to this directory - no edits to `flake.nix` are needed.

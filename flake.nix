@@ -1,113 +1,85 @@
 {
-  #some more changes
-  description = "Ryan's Nixos configs";
+  description = "Ryan's NixOS configs";
 
+  ##########################################################################
+  # INPUTS
+  ##########################################################################
   inputs = {
-    ###### Official Sources ######
-
-    # Default nixpkgs
+    # ── Core Nixpkgs ────────────────────────────────────────
     nixpkgs.url = "nixpkgs/nixos-unstable";
-
-    # Explicitly-defined stable and unstable as alternates
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
+    # ── Home‑manager ────────────────────────────────────────
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ###### Utilities ######
-
-    # Secure Boot
+    # ── Utility flakes – most just follow nixpkgs ───────────────
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Disk partitioning
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Declarative VM management
     nixvirt = {
       url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Hardware configs
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    # Secrets
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Impermanence
     impermanence.url = "github:nix-community/impermanence";
 
-    # Docker utilities
     uptix = {
       url = "github:luizribeiro/uptix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Theming
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Nix-friendly editor
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Useful options search and cli tools
     nixos-cli.url = "github:nix-community/nixos-cli";
-
-    # Interactive pkgs search
     nsearch = {
       url = "github:niksingh710/nsearch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Fancy boot screen
     mac-style-plymouth = {
       url = "github:SergioRibera/s4rchiso-plymouth-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Bleeding-edge AI tools
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
 
-    ###### GUI stuff ######
-
-    # Firefox extensions
+    # ── GUI‑related flakes ───────────────────────────────────────
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
 
-    ###### Personal repos ######
-
-    # Private secrets repo
+    # ── Personal / secret repos ─────────────────────────────────
     nix-secrets = {
       url = "git+file:///home/ryan/nix-secrets";
     };
   };
 
+  ##########################################################################
+  # OUTPUTS
+  ##########################################################################
   outputs = {
     self,
     nixpkgs,
@@ -115,12 +87,12 @@
     nixpkgs-stable,
     ...
   } @ inputs: let
-    secrets = import ./vars/secrets {inherit inputs;};
-    inherit (nixpkgs-unstable) lib;
-
-    configLib = import ./lib {inherit lib;};
+    ######################################################################
+    # Shared helpers
+    ######################################################################
     system = "x86_64-linux";
 
+    # Unfree‑enabled package sets
     pkgs-unstable = import nixpkgs-unstable {
       inherit system;
       config.allowUnfree = true;
@@ -129,45 +101,51 @@
       inherit system;
       config.allowUnfree = true;
     };
-    specialArgs = {
-      inherit pkgs-stable;
-      inherit pkgs-unstable;
-      inherit secrets;
-      inherit inputs;
-      inherit (self) outputs;
-      inherit configLib;
-    };
-  in {
-    nixosModules = import ./modules/nixos;
 
+    # Secrets & library helpers (imported once)
+    secrets = import ./vars/secrets {inherit inputs;};
+    lib = nixpkgs-unstable.lib;
+    configLib = import ./lib {inherit (nixpkgs-unstable) lib;};
+
+    # Arguments passed to every host/module
+    specialArgs = {
+      inherit pkgs-stable pkgs-unstable secrets inputs configLib;
+      inherit (self) outputs;
+    };
+
+    # --------------------------------------------------------------------
+    # Helper to build a NixOS system from a module path
+    # --------------------------------------------------------------------
+    mkHost = modulePath:
+      nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        modules = [modulePath];
+      };
+
+    # --------------------------------------------------------------------
+    # Dynamically discover sub‑directories under ./system/hosts
+    # --------------------------------------------------------------------
+    hostNames =
+      builtins.readDir ./system/hosts
+      |> lib.attrNames;
+
+    generatedConfigs =
+      hostNames
+      |> map (name: {
+        name = name;
+        value = mkHost (./system/hosts + "/${name}");
+      })
+      |> lib.listToAttrs;
+  in {
+    ######################################################################
+    # Exported modules
+    ######################################################################
+    nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
 
-    nixosConfigurations = {
-      # 2023 Framework 13
-      fw13 = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        modules = [./system/hosts/fw13];
-      };
-      # Linode VPS
-      vps = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        modules = [./system/hosts/vps];
-      };
-      # Ryzen 5 3600 NAS and virtualization host
-      nas = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        modules = [./system/hosts/nas];
-      };
-      # Asus vivobook
-      vivobook = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        modules = [./system/hosts/vivobook];
-      };
-      # Testing VM
-      testvm = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        modules = [./system/hosts/testvm];
-      };
-    };
+    ######################################################################
+    # Auto‑generated host configs based on ./system/hosts directory
+    ######################################################################
+    nixosConfigurations = generatedConfigs;
   };
 }
