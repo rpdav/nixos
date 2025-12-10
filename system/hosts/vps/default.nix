@@ -17,23 +17,23 @@ in {
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "hosts/common/core"
+        "system/common/core"
 
         # disk config
-        "hosts/common/disks/btrfs-imp.nix"
+        "system/common/disks/btrfs-imp.nix"
 
         # optional config
-        "hosts/common/optional/backup"
-        "hosts/common/optional/docker.nix"
-        "hosts/common/optional/persistence"
-        "hosts/common/optional/yubikey.nix"
+        "system/common/optional/backup"
+        "system/common/optional/docker.nix"
+        "system/common/optional/persistence"
+        "system/common/optional/yubikey.nix"
 
         # services
         "services/common"
         "services/vps"
 
         # users
-        "hosts/common/users/ryan"
+        "system/common/users/ryan"
       ])
 
       # host-specific

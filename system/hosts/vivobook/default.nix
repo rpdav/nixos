@@ -20,20 +20,20 @@ in {
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "hosts/common/core"
+        "system/common/core"
 
         # disk config
-        "hosts/common/disks/luks-lvm-imp.nix"
+        "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "hosts/common/optional/backup"
-        "hosts/common/optional/duplicati.nix"
-        "hosts/common/optional/persistence"
-        "hosts/common/optional/wm/cinnamon.nix"
+        "system/common/optional/backup"
+        "system/common/optional/duplicati.nix"
+        "system/common/optional/persistence"
+        "system/common/optional/wm/cinnamon.nix"
 
         # users
-        "hosts/common/users/ryan"
-        "hosts/common/users/ariel"
+        "system/common/users/ryan"
+        "system/common/users/ariel"
       ])
 
       # host-specific

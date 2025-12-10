@@ -7,7 +7,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 ```
 .
 ├── home            home-manager configurations
-├── hosts           system (NixOS) configurations
+├── system           system (NixOS) configurations
 ├── lib             custom library to make import paths cleaner (credit to EmergentMind) 
 ├── modules         custom nixos and home-manager modules
 ├── nix-secrets     contains example secrets files from my private secrets repo
@@ -39,17 +39,17 @@ The structure of this repo is designed to make it easy to quickly add new users 
 
 Below gives some examples of what configuration would go where using this structure:
 
-| Location                | Usage                                                        |
-| ----------------------- | ------------------------------------------------------------ |
-| hosts/fw13              | Nixos configuration specific to host fw13 (think hostname, host-specific hardware, `hardware-configuration.nix`). This is the only module called by `flake.nix`. This module imports all other nixos modules used by this host. |
-| hosts/common/core       | Nixos configuration used on all systems - this directory is imported in its entirety on all systems |
-| hosts/common/optional   | Nixos configuration on some (but not all) systems - modules in this directory are imported on a case-by-case basis per host |
-| hosts/common/users/ryan | Nixos configuration for user ryan (on multiple systems). This would include user definition, groups,  password hash, and ssh public keys. This file also includes the home-manager nixos module which points to home/`username`/`hostname`.nix for the actual home-manager configuration. |
-| home/ryan/fw13.nix      | Home-manager configuration specific to user ryan on host fw13. This module |
-| home/common/core        | Home-manager configuration used by all users                 |
-| home/common/optional    | Home-manager configuration used by some (but not all) users. Or by all users but only on certain hosts. |
-| services/common         | Self-hosted services for all systems that run services. Currently just my reverse proxy `swag` |
-| services/nas            | Self-hosted services run on host nas                         |
+| Location                       | Usage                                                        |
+| ------------------------------ | ------------------------------------------------------------ |
+| system/hosts/fw13              | Nixos configuration specific to host fw13 (think hostname, host-specific hardware, `hardware-configuration.nix`). This is the only module called by `flake.nix`. This module imports all other nixos modules used by this host. |
+| system/common/core             | Nixos configuration used on all systems - this directory is imported in its entirety on all systems |
+| system/common/optional         | Nixos configuration on some (but not all) systems - modules in this directory are imported on a case-by-case basis per host |
+| system/common/users/ryan       | Nixos configuration for user ryan (on multiple systems). This would include user definition, groups,  password hash, and ssh public keys. This file also includes the home-manager nixos module which points to home/`username`/`hostname`.nix for the actual home-manager configuration. |
+| home/ryan/fw13.nix             | Home-manager configuration specific to user ryan on host fw13. This module |
+| home/common/core               | Home-manager configuration used by all users                 |
+| home/common/optional           | Home-manager configuration used by some (but not all) users. Or by all users but only on certain hosts. |
+| services/common                | Self-hosted services for all systems that run services. Currently just my reverse proxy `swag` |
+| services/nas                   | Self-hosted services run on host nas                         |
 
 Bringing up a new host or user is as simple as:
 1. Copying a similar host- or user-specific config
@@ -100,7 +100,7 @@ My hyprland config is pretty simple but I'm happy with how it so far. Nix and th
 
 ## Themes
 
-Theming is handled by [Stylix](https://nix-community.github.io/stylix/), a nixos module that applies system-wide colors, fonts, icons, cursors, and wallpapers. My stylix config is defined in `hosts/common/core/stylix.nix`.
+Theming is handled by [Stylix](https://nix-community.github.io/stylix/), a nixos module that applies system-wide colors, fonts, icons, cursors, and wallpapers. My stylix config is defined in `system/common/core/stylix.nix`.
 
 The `themes` directory contains subdirectories for each theme with a wallpaper, polarity file, and scheme file. These are all accessed by stylix based on the theme chosen through `userOpts.theme`. I currently have the following themes:
 
@@ -119,7 +119,7 @@ The `themes` directory contains subdirectories for each theme with a wallpaper, 
 [Base16Schemes](https://github.com/tinted-theming/schemes?tab=readme-ov-file) are a set of 16 coordinated colors. You can also build your own base16 scheme with stylix if you prefer. You can get scheme names and colors by running `nix build nixpkgs#base16-schemes` and browsing to `result/share/themes`.
 
 ## Virtualization
-My `nas` system is also a virtualization host running a windows VM with some hardware passthrough (an NVME drive, GPU, and USB controller). I use [nixvirt](https://github.com/AshleyYakeley/NixVirt) which allows libvirt networks and domains (that is, VMs) to be configured with nix expressions. See the readme in `hosts/nas/win-vm` for more details.
+My `nas` system is also a virtualization host running a windows VM with some hardware passthrough (an NVME drive, GPU, and USB controller). I use [nixvirt](https://github.com/AshleyYakeley/NixVirt) which allows libvirt networks and domains (that is, VMs) to be configured with nix expressions. See the readme in `system/hosts/nas/win-vm` for more details.
 
 ## Initial Install
 See readme files in each host's subfolder.

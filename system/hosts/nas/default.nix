@@ -16,25 +16,25 @@ in {
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "hosts/common/core"
+        "system/common/core"
 
         # disk config
-        "hosts/common/disks/luks-lvm-imp.nix"
+        "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "hosts/common/optional/backup"
-        "hosts/common/optional/docker.nix"
-        "hosts/common/optional/persistence"
-        "hosts/common/optional/ssh-unlock.nix"
-        "hosts/common/optional/virtualization"
-        "hosts/common/optional/yubikey.nix"
+        "system/common/optional/backup"
+        "system/common/optional/docker.nix"
+        "system/common/optional/persistence"
+        "system/common/optional/ssh-unlock.nix"
+        "system/common/optional/virtualization"
+        "system/common/optional/yubikey.nix"
 
         # services
         "services/common"
         "services/nas"
 
         # users
-        "hosts/common/users/ryan"
+        "system/common/users/ryan"
       ])
 
       # host-specific

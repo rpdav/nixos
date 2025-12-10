@@ -84,7 +84,7 @@ This guide requires a separate ~1 GB disk be used for the installer image. The m
 1. Install with `nixos-anywhere` in the same directory as `flake.nix`:
 
 	```command
-	nix run github:nix-community/nixos-anywhere -- --flake .#vps --extra-files ~/anywhere --generate-hardware-config nixos-generate-config ./hosts/vps/hardware-configuration.nix root@vps
+	nix run github:nix-community/nixos-anywhere -- --flake .#vps --extra-files ~/anywhere --generate-hardware-config nixos-generate-config ./system/hosts/vps/hardware-configuration.nix root@vps
 	```
 
 1. Once install completes, boot into the NixOS configuration profile in the Linode console.

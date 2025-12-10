@@ -19,21 +19,21 @@ in {
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "hosts/common/core"
+        "system/common/core"
 
         # disk config
-        "hosts/common/disks/luks-lvm-imp.nix"
+        "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        #"hosts/common/optional/backup"
-        #"hosts/common/optional/duplicati.nix"
-        "hosts/common/optional/persistence"
-        "hosts/common/optional/stylix.nix"
-        "hosts/common/optional/wm/cinnamon.nix"
-        "hosts/common/optional/yubikey.nix"
+        #"system/common/optional/backup"
+        #"system/common/optional/duplicati.nix"
+        "system/common/optional/persistence"
+        "system/common/optional/stylix.nix"
+        "system/common/optional/wm/cinnamon.nix"
+        "system/common/optional/yubikey.nix"
 
         # users
-        "hosts/common/users/ryan"
+        "system/common/users/ryan"
       ])
 
       # host-specific

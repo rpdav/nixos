@@ -16,7 +16,7 @@
 
 ## Installation on New Host
 
-1. Run `nix run github:nix-community/nixos-anywhere -- --flake .#<hostname> --generate-hardware-config nixos-generate-config ./hosts/<hostname>/hardware-configuration.nix root@<IP>`
+1. Run `nix run github:nix-community/nixos-anywhere -- --flake .#<hostname> --generate-hardware-config nixos-generate-config ./system/hosts/<hostname>/hardware-configuration.nix root@<IP>`
 2. After reboot, the machine will successfully boot but won't have secrets. Password login will be disabled, but you can ssh into it.
 3. Restore user age key by copying key from current host or backup to `~/.config/sops/keys.txt` on the remote host
 4. Set up host ssh keys:
@@ -30,7 +30,7 @@
 ## Reinstall of existing host
 
 1. Copy backed up files to `/tmp/backup` or similar directory. This directory should mimic the root of the target host (e.g. `/tmp/backup/persist`, `/tmp/backup/etc`). At a minimum this should have the user age key in `~/.config/sops/keys.txt` and host ssh key in `/etc/ssh`. Docker appdata should be copied as well to prevent the containers from creating boilerplate data that will have to be replaced later
-2. Run `nix run github:nix-community/nixos-anywhere -- --flake .#<hostname> --extra-files /tmp/backup --generate-hardware-config nixos-generate-config ./hosts/testvm/hardware-configuration.nix root@<ip>`
+2. Run `nix run github:nix-community/nixos-anywhere -- --flake .#<hostname> --extra-files /tmp/backup --generate-hardware-config nixos-generate-config ./system/hosts/testvm/hardware-configuration.nix root@<ip>`
 3. After reboot, the machine should be fully restored. `nixos-anywhere` copies files from `/tmp/backup` preserving permissions but assigns ownership to root. This config includes `tmpfiles` Z rules to correct ownership in `~` and the docker service directories.
 
 ## Remote rebuilding

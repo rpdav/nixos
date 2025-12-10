@@ -12,14 +12,14 @@
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "hosts/common/disks/btrfs-imp.nix"
-        "hosts/common/core"
+        "system/common/disks/btrfs-imp.nix"
+        "system/common/core"
         #TODO move this back into core when done testing
-        "hosts/common/core/packages.nix"
-        "hosts/common/core/sshd.nix"
-        "hosts/common/core/sops.nix"
+        "system/common/core/packages.nix"
+        "system/common/core/sshd.nix"
+        "system/common/core/sops.nix"
 
-        "hosts/common/optional/persistence"
+        "system/common/optional/persistence"
       ])
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hardware-configuration.nix

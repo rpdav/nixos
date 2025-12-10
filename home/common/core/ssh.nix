@@ -8,7 +8,7 @@
   homeDir = config.home.homeDirectory;
   username = config.home.username;
   # Path to public keys stored in config
-  pathtokeys = configLib.relativeToRoot "hosts/common/users/${username}/keys";
+  pathtokeys = configLib.relativeToRoot "system/common/users/${username}/keys";
   # List of public keys in path
   pubKeys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))

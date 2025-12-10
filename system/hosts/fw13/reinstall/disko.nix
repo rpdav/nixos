@@ -1,7 +1,7 @@
 {...}: {
 ## Disko config using luks, lvm, swap, and btrfs subvolumes for use with impermanence module.
 ## This is only used to provision a new system. During normal rebuilds, disk configs are found
-## in hosts/common/disks. Custom options (like disk device and swap size) can't be used during 
+## in system/common/disks. Custom options (like disk device and swap size) can't be used during 
 ## provisioning, so they're hard-coded here. 
   disko.devices = {
     disk = {

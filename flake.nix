@@ -146,27 +146,27 @@
       # 2023 Framework 13
       fw13 = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [./hosts/fw13];
+        modules = [./system/hosts/fw13];
       };
       # Linode VPS
       vps = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [./hosts/vps];
+        modules = [./system/hosts/vps];
       };
       # Ryzen 5 3600 NAS and virtualization host
       nas = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [./hosts/nas];
+        modules = [./system/hosts/nas];
       };
       # Asus vivobook
       vivobook = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [./hosts/vivobook];
+        modules = [./system/hosts/vivobook];
       };
       # Testing VM
       testvm = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [./hosts/testvm];
+        modules = [./system/hosts/testvm];
       };
     };
   };

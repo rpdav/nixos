@@ -19,24 +19,24 @@ in {
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "hosts/common/core"
+        "system/common/core"
 
         # disk config
-        "hosts/common/disks/luks-lvm-imp.nix"
+        "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "hosts/common/optional/backup"
-        "hosts/common/optional/docker.nix" # container admin tools, not just for running containers
-        "hosts/common/optional/duplicati.nix"
-        "hosts/common/optional/persistence"
-        "hosts/common/optional/steam.nix"
-        "hosts/common/optional/virtualization"
-        "hosts/common/optional/wine.nix"
-        "hosts/common/optional/wm/hyprland.nix"
-        "hosts/common/optional/yubikey.nix"
+        "system/common/optional/backup"
+        "system/common/optional/docker.nix" # container admin tools, not just for running containers
+        "system/common/optional/duplicati.nix"
+        "system/common/optional/persistence"
+        "system/common/optional/steam.nix"
+        "system/common/optional/virtualization"
+        "system/common/optional/wine.nix"
+        "system/common/optional/wm/hyprland.nix"
+        "system/common/optional/yubikey.nix"
 
         # users
-        "hosts/common/users/ryan"
+        "system/common/users/ryan"
       ])
 
       # host-specific
