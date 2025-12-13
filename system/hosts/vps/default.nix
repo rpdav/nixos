@@ -9,7 +9,7 @@
 }: let
   inherit (config.systemOpts) persistVol impermanent;
   # Generates a list of the keys for primary user
-  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
+  pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
 in {
   imports =
     lib.flatten
