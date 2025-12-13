@@ -8,6 +8,10 @@
   </metadata>
   <memory unit="MiB">16022</memory>
   <currentMemory unit="MiB">16022</currentMemory>
+  <memoryBacking>
+    <source type="memfd"/>
+    <access mode="shared"/>
+  </memoryBacking>
   <vcpu placement='static'>8</vcpu>
   <cputune>
     <vcpupin vcpu='0' cpuset='2'/>
@@ -244,6 +248,14 @@
       </source>
       <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
     </hostdev>
+
+    <!-- Media share passthrough -->
+    <filesystem type="mount" accessmode="passthrough">
+      <driver type="virtiofs"/>
+      <source dir="/mnt/storage/media"/>
+      <target dir="media"/>
+      <address type="pci" domain="0x0000" bus="0x08" slot="0x00" function="0x0"/>
+    </filesystem>
 
     <!-- Temporary graphics for Nvidia driver install -->
     <!--

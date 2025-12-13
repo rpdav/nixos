@@ -28,3 +28,11 @@ This command lists USB controllers and connected devices. If IOMMU groups allow,
 ```
 for usb_ctrl in /sys/bus/pci/devices/*/usb*; do pci_path=${usb_ctrl%/*}; iommu_group=$(readlink $pci_path/iommu_group); echo "Bus $(cat $usb_ctrl/busnum) --> ${pci_path##*/} (IOMMU group ${iommu_group##*/})"; lsusb -s ${usb_ctrl#*/usb}:; echo; done
 ```
+
+## Filesystem passthrough
+To pass through a linux filesystem like a media share:
+1. Enable shared memory in the domain xml
+2. Create the `filesystem` block in the domain xml specifying the source on host and the name on the guest
+3. Install the `virtiofs` drivers on the guest
+4. Install [WinFSP](https://github.com/winfsp/winfsp) on the guest
+5. Enable `VirtioFsSvc` and set it to auto-start
