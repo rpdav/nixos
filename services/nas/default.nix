@@ -15,6 +15,7 @@
     ./nextcloud
     ./planka
     ./searxng
+    ./sunshine
     ./speedtest
     ./unifi
     ./vaultwarden
