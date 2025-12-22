@@ -52,6 +52,8 @@
           "custom/divider"
           "power-profiles-daemon"
           "custom/divider"
+          "custom/tailscale"
+          "custom/right-divider"
           "tray"
           "custom/divider"
           "custom/notifications"
@@ -143,6 +145,17 @@
           format-icons = {
             activated = "󰅶 ";
             deactivated = "󰾫 ";
+          };
+        };
+        "custom/tailscale" = {
+          format = "󰚊 ";
+          menu = "on-click";
+          menu-file = ./tailscale_menu.xml;
+          tooltip = true;
+          tooltip-format = "Tailscale";
+          menu-actions = {
+            home = "sudo ${pkgs.tailscale}/bin/tailscale up --reset";
+            away = "sudo ${pkgs.tailscale}/bin/tailscale up --accept-routes";
           };
         };
         cpu = {
@@ -281,6 +294,7 @@
       #custom-workspace-divider,
       #custom-notifications,
       #custom-weather,
+      #custom-tailscale,
       #temperature,
       #tray {
       	background: @base02;
