@@ -25,7 +25,7 @@ in {
         "system/common/optional/backup"
         "system/common/optional/docker.nix"
         "system/common/optional/persistence"
-        "system/common/optional/ssh-unlock.nix"
+        #"system/common/optional/ssh-unlock.nix"
         "system/common/optional/virtualization"
         "system/common/optional/yubikey.nix"
 
@@ -48,7 +48,7 @@ in {
   systemOpts = {
     primaryUser = "ryan"; #primary user (not necessarily only user)
     swapEnable = true;
-    diskDevice = "nvme1n1";
+    diskDevice = "nvme0n1";
     swapSize = "16G";
     gcRetention = "30d";
     impermanent = true;
@@ -90,10 +90,13 @@ in {
   };
 
   # Boot
-  boot.loader.grub = {
-    device = "nodev";
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+      };
+      efi.canTouchEfiVariables = true;
+    };
   };
 
   # allow root ssh login for rebuilds

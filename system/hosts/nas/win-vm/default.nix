@@ -9,7 +9,7 @@ in {
     defaultGateway = router;
     nameservers = [router];
     interfaces = {
-      "enp34s0".useDHCP = false;
+      "enp42s0".useDHCP = false;
       "br0" = {
         useDHCP = true;
         macAddress = "00:DB:61:CA:AD:BE";
@@ -21,7 +21,7 @@ in {
         ];
       };
     };
-    bridges."br0".interfaces = ["enp34s0"];
+    bridges."br0".interfaces = ["enp42s0"];
   };
   # flush IP from initrd ssh server. Otherwise it
   # keeps the IP even though useDHCP is disabled above.
