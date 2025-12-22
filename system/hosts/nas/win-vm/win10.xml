@@ -223,15 +223,13 @@
     </hostdev>
 
     <!-- Audio passthrough -->
-    <!--
     <hostdev mode="subsystem" type="pci" managed="yes">
       <driver name="vfio"/>
       <source>
-        <address domain="0x0000" bus="0x28" slot="0x00" function="0x4"/>
+        <address domain="0x0000" bus="0x2d" slot="0x00" function="0x4"/>
       </source>
       <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
     </hostdev>
-    -->
 
     <!-- USB passthrough -->
     <hostdev mode='subsystem' type='pci' managed='yes'>

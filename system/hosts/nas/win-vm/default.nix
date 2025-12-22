@@ -58,7 +58,7 @@ in {
         # win10 vm definition
         {
           definition = ./win10.xml;
-          active = false;
+          active = true;
         }
       ];
     };
