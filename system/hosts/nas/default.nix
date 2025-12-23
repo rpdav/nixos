@@ -41,6 +41,7 @@ in {
       ./win-vm
       ./hardware-configuration.nix
       ./zfs
+      ./ups
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
