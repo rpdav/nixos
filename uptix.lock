@@ -34,41 +34,41 @@
     "metadata": {
       "name": "getalby/hub",
       "selected_version": "latest",
-      "resolved_version": "sha256:f3954375b7591f8b4ee564c67a9a4300403519b111ca35da870a398de3bcc265",
+      "resolved_version": "sha256:7b086b7b2e56bced4befffff22041c5c4e2bb423649ee57a06d971384a8f337c",
       "dep_type": "docker",
       "description": "Docker image getalby/hub:latest from ghcr.io"
     },
-    "lock": "sha256:f3954375b7591f8b4ee564c67a9a4300403519b111ca35da870a398de3bcc265"
+    "lock": "sha256:7b086b7b2e56bced4befffff22041c5c4e2bb423649ee57a06d971384a8f337c"
   },
   "ghcr.io/hargata/lubelogger:latest": {
     "metadata": {
       "name": "hargata/lubelogger",
       "selected_version": "latest",
-      "resolved_version": "sha256:9fce15cb8c96e5ad36b0dc810b63caf083bb2d66fa2cb6cfb5152bf97fc2a447",
+      "resolved_version": "sha256:652d69da9c1f54ca15c833ae667e4030ca8fa1d50b1fda50e58172897a150e47",
       "dep_type": "docker",
       "description": "Docker image hargata/lubelogger:latest from ghcr.io"
     },
-    "lock": "sha256:9fce15cb8c96e5ad36b0dc810b63caf083bb2d66fa2cb6cfb5152bf97fc2a447"
+    "lock": "sha256:652d69da9c1f54ca15c833ae667e4030ca8fa1d50b1fda50e58172897a150e47"
   },
   "ghcr.io/immich-app/immich-machine-learning:release": {
     "metadata": {
       "name": "immich-app/immich-machine-learning",
       "selected_version": "release",
-      "resolved_version": "sha256:379e31b8c75107b0af8141904baa8cc933d7454b88fdb204265ef11749d7d908",
+      "resolved_version": "sha256:b3deefd1826f113824e9d7bc30d905e7f823535887d03f869330946b6db3b44a",
       "dep_type": "docker",
       "description": "Docker image immich-app/immich-machine-learning:release from ghcr.io"
     },
-    "lock": "sha256:379e31b8c75107b0af8141904baa8cc933d7454b88fdb204265ef11749d7d908"
+    "lock": "sha256:b3deefd1826f113824e9d7bc30d905e7f823535887d03f869330946b6db3b44a"
   },
   "ghcr.io/immich-app/immich-server:release": {
     "metadata": {
       "name": "immich-app/immich-server",
       "selected_version": "release",
-      "resolved_version": "sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445",
+      "resolved_version": "sha256:e6a6298e67ae077808fdb7d8d5565955f60b0708191576143fc02d30ab1389d1",
       "dep_type": "docker",
       "description": "Docker image immich-app/immich-server:release from ghcr.io"
     },
-    "lock": "sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445"
+    "lock": "sha256:e6a6298e67ae077808fdb7d8d5565955f60b0708191576143fc02d30ab1389d1"
   },
   "ghcr.io/plankanban/planka:2.0.0-rc.3": {
     "metadata": {
@@ -84,21 +84,21 @@
     "metadata": {
       "name": "gitea/gitea",
       "selected_version": "latest",
-      "resolved_version": "sha256:534428e78fc00d3ac8647f3467a3f91252acf23a46ea0c872f03191e3c878f7d",
+      "resolved_version": "sha256:fee0e5e55da6d2d11186bf39023a772fe63d9deffc0a83283e3d8e5d11c2716a",
       "dep_type": "docker",
       "description": "Docker image gitea/gitea:latest from registry-1.docker.io"
     },
-    "lock": "sha256:534428e78fc00d3ac8647f3467a3f91252acf23a46ea0c872f03191e3c878f7d"
+    "lock": "sha256:fee0e5e55da6d2d11186bf39023a772fe63d9deffc0a83283e3d8e5d11c2716a"
   },
   "homeassistant/home-assistant": {
     "metadata": {
       "name": "homeassistant/home-assistant",
       "selected_version": "latest",
-      "resolved_version": "sha256:4e5e81917192e3fa730948964b19d6e03ff3b9c2694894bc6d6b76769e642055",
+      "resolved_version": "sha256:9a5a3eb4a213dfb25932dee9dc6815c9305f78cecb5afa716fa2483163d8fb5b",
       "dep_type": "docker",
       "description": "Docker image homeassistant/home-assistant:latest from registry-1.docker.io"
     },
-    "lock": "sha256:4e5e81917192e3fa730948964b19d6e03ff3b9c2694894bc6d6b76769e642055"
+    "lock": "sha256:9a5a3eb4a213dfb25932dee9dc6815c9305f78cecb5afa716fa2483163d8fb5b"
   },
   "louislam/uptime-kuma:1": {
     "metadata": {
@@ -114,131 +114,131 @@
     "metadata": {
       "name": "linuxserver/duplicati",
       "selected_version": "latest",
-      "resolved_version": "sha256:e8102af032b42636fe85a2633f4cc9c074f4694ab850e3ac419aef12e602094d",
+      "resolved_version": "sha256:82cf812454c74e4beda15f2565522c892fee4a501a7425a0def29d38c87b0c66",
       "dep_type": "docker",
       "description": "Docker image linuxserver/duplicati:latest from lscr.io"
     },
-    "lock": "sha256:e8102af032b42636fe85a2633f4cc9c074f4694ab850e3ac419aef12e602094d"
+    "lock": "sha256:82cf812454c74e4beda15f2565522c892fee4a501a7425a0def29d38c87b0c66"
   },
   "lscr.io/linuxserver/heimdall": {
     "metadata": {
       "name": "linuxserver/heimdall",
       "selected_version": "latest",
-      "resolved_version": "sha256:79cb9ff5d001516f6809d9bf9ef88a20c0a145703c4f7ee0a32722facced14d4",
+      "resolved_version": "sha256:3f6905759c029b3223fb4f2ad2bce67e97fb24f571acade1bbebb69e6d57e083",
       "dep_type": "docker",
       "description": "Docker image linuxserver/heimdall:latest from lscr.io"
     },
-    "lock": "sha256:79cb9ff5d001516f6809d9bf9ef88a20c0a145703c4f7ee0a32722facced14d4"
+    "lock": "sha256:3f6905759c029b3223fb4f2ad2bce67e97fb24f571acade1bbebb69e6d57e083"
   },
   "lscr.io/linuxserver/jellyfin:latest": {
     "metadata": {
       "name": "linuxserver/jellyfin",
       "selected_version": "latest",
-      "resolved_version": "sha256:234ea8d508b2cba26054d0dac9d4c0353435dce483e8b266947d473629774559",
+      "resolved_version": "sha256:747bc6725c5e4f1330e693b50d787e2106e52ac5b25c4174ca5f58915fc17ec8",
       "dep_type": "docker",
       "description": "Docker image linuxserver/jellyfin:latest from lscr.io"
     },
-    "lock": "sha256:234ea8d508b2cba26054d0dac9d4c0353435dce483e8b266947d473629774559"
+    "lock": "sha256:747bc6725c5e4f1330e693b50d787e2106e52ac5b25c4174ca5f58915fc17ec8"
   },
   "lscr.io/linuxserver/mariadb": {
     "metadata": {
       "name": "linuxserver/mariadb",
       "selected_version": "latest",
-      "resolved_version": "sha256:73a403f999eb7317b0fcd084f42bd77ed813f4e09d2a4ebc1ba90ea48e43041a",
+      "resolved_version": "sha256:1fa6fab7aed1a1acbe4a60d62bf89e9ba4d1e16b331c8a64f80b14e0117ebd88",
       "dep_type": "docker",
       "description": "Docker image linuxserver/mariadb:latest from lscr.io"
     },
-    "lock": "sha256:73a403f999eb7317b0fcd084f42bd77ed813f4e09d2a4ebc1ba90ea48e43041a"
+    "lock": "sha256:1fa6fab7aed1a1acbe4a60d62bf89e9ba4d1e16b331c8a64f80b14e0117ebd88"
   },
   "lscr.io/linuxserver/nextcloud": {
     "metadata": {
       "name": "linuxserver/nextcloud",
       "selected_version": "latest",
-      "resolved_version": "sha256:79980f7aa5a0c617e082f36b85273a1cca3903e48bd87542df521a42cdbb5856",
+      "resolved_version": "sha256:ca64c4d003303ecc043cc624933511c275eefcecd871969ae97e3d6ebcff153c",
       "dep_type": "docker",
       "description": "Docker image linuxserver/nextcloud:latest from lscr.io"
     },
-    "lock": "sha256:79980f7aa5a0c617e082f36b85273a1cca3903e48bd87542df521a42cdbb5856"
+    "lock": "sha256:ca64c4d003303ecc043cc624933511c275eefcecd871969ae97e3d6ebcff153c"
   },
   "lscr.io/linuxserver/speedtest-tracker": {
     "metadata": {
       "name": "linuxserver/speedtest-tracker",
       "selected_version": "latest",
-      "resolved_version": "sha256:8f4fc9645a6cfcc8d4bf9afb8f1b40bbe5504903d3d3b1253512dc239bc86e3d",
+      "resolved_version": "sha256:ff645c6421782d14538aa81846ea0f0417064c43c0078ffb047dbce808185bfa",
       "dep_type": "docker",
       "description": "Docker image linuxserver/speedtest-tracker:latest from lscr.io"
     },
-    "lock": "sha256:8f4fc9645a6cfcc8d4bf9afb8f1b40bbe5504903d3d3b1253512dc239bc86e3d"
+    "lock": "sha256:ff645c6421782d14538aa81846ea0f0417064c43c0078ffb047dbce808185bfa"
   },
   "lscr.io/linuxserver/swag:latest": {
     "metadata": {
       "name": "linuxserver/swag",
       "selected_version": "latest",
-      "resolved_version": "sha256:0ba42d50fe3090d9e52caf3c483172d740c0c01690b4ea9cfab1d82b81dc4f7c",
+      "resolved_version": "sha256:23df2cf31c659649448e8ae1a3e25701c875212de6bc995d046b7ba1e23683a3",
       "dep_type": "docker",
       "description": "Docker image linuxserver/swag:latest from lscr.io"
     },
-    "lock": "sha256:0ba42d50fe3090d9e52caf3c483172d740c0c01690b4ea9cfab1d82b81dc4f7c"
+    "lock": "sha256:23df2cf31c659649448e8ae1a3e25701c875212de6bc995d046b7ba1e23683a3"
   },
   "lscr.io/linuxserver/unifi-network-application": {
     "metadata": {
       "name": "linuxserver/unifi-network-application",
       "selected_version": "latest",
-      "resolved_version": "sha256:f782557d505f16a9dac8fac7bfdfc865c272ce497e6fd0b66ef0822a0893f08d",
+      "resolved_version": "sha256:268340299e6a8a85c29800923e242c60ed7baa24557943f0ff5ec4ea52804232",
       "dep_type": "docker",
       "description": "Docker image linuxserver/unifi-network-application:latest from lscr.io"
     },
-    "lock": "sha256:f782557d505f16a9dac8fac7bfdfc865c272ce497e6fd0b66ef0822a0893f08d"
+    "lock": "sha256:268340299e6a8a85c29800923e242c60ed7baa24557943f0ff5ec4ea52804232"
   },
   "nold360/borgserver:latest": {
     "metadata": {
       "name": "nold360/borgserver",
       "selected_version": "latest",
-      "resolved_version": "sha256:5cf74c1e3aee99d8db2239bf745090230861eec8508510a65af10ca56471bd9b",
+      "resolved_version": "sha256:e4d2716b0b156c3755881e5782b9b0845475a713a5a1b176b8d323f112fdf1ae",
       "dep_type": "docker",
       "description": "Docker image nold360/borgserver:latest from registry-1.docker.io"
     },
-    "lock": "sha256:5cf74c1e3aee99d8db2239bf745090230861eec8508510a65af10ca56471bd9b"
+    "lock": "sha256:e4d2716b0b156c3755881e5782b9b0845475a713a5a1b176b8d323f112fdf1ae"
   },
   "searxng/searxng:latest": {
     "metadata": {
       "name": "searxng/searxng",
       "selected_version": "latest",
-      "resolved_version": "sha256:7605237e3d06762975999b1310ea1e5e4d97e165a55a5cfe45abb87ee6830828",
+      "resolved_version": "sha256:472dd0c84b8e2a05bca773b4a430b9fc9e4e92cd4fa0afaa223efab925ab752a",
       "dep_type": "docker",
       "description": "Docker image searxng/searxng:latest from registry-1.docker.io"
     },
-    "lock": "sha256:7605237e3d06762975999b1310ea1e5e4d97e165a55a5cfe45abb87ee6830828"
+    "lock": "sha256:472dd0c84b8e2a05bca773b4a430b9fc9e4e92cd4fa0afaa223efab925ab752a"
   },
   "valkey/valkey:8-alpine": {
     "metadata": {
       "name": "valkey/valkey",
       "selected_version": "8-alpine",
-      "resolved_version": "2025-12-04",
-      "timestamp": "2025-12-04T22:37:38.339789305Z",
+      "resolved_version": "2025-12-22",
+      "timestamp": "2025-12-22T19:54:45.151368839Z",
       "dep_type": "docker",
       "description": "Docker image valkey/valkey:8-alpine from registry-1.docker.io"
     },
-    "lock": "sha256:70aa61b8e741ee66d8976eab1418d408067df3624c3a3732d91f95fdddd4f0e8"
+    "lock": "sha256:3c3ccc8571d4866ec5ac5ffb2519b6b6a1fdbf6b5ff5fdab075413026fbff273"
   },
   "vaultwarden/server": {
     "metadata": {
       "name": "vaultwarden/server",
       "selected_version": "latest",
-      "resolved_version": "sha256:84fd8a47f58d79a1ad824c27be0a9492750c0fa5216b35c749863093bfa3c3d7",
+      "resolved_version": "sha256:1d43c6754a030861f960fd4dab47e1b33fc19f05bd5f8f597ab7236465a6f14b",
       "dep_type": "docker",
       "description": "Docker image vaultwarden/server:latest from registry-1.docker.io"
     },
-    "lock": "sha256:84fd8a47f58d79a1ad824c27be0a9492750c0fa5216b35c749863093bfa3c3d7"
+    "lock": "sha256:1d43c6754a030861f960fd4dab47e1b33fc19f05bd5f8f597ab7236465a6f14b"
   },
   "zwavejs/zwavejs2mqtt": {
     "metadata": {
       "name": "zwavejs/zwavejs2mqtt",
       "selected_version": "latest",
-      "resolved_version": "sha256:44b7c28b61cb0515e7aa48f69bbe4ea4d8b5047c583e69189d62f2944dd8fc47",
+      "resolved_version": "sha256:a42abc1f3185f800afe3c9908629efdbcf743cf7e1d8a3795ff5b442cfff3503",
       "dep_type": "docker",
       "description": "Docker image zwavejs/zwavejs2mqtt:latest from registry-1.docker.io"
     },
-    "lock": "sha256:44b7c28b61cb0515e7aa48f69bbe4ea4d8b5047c583e69189d62f2944dd8fc47"
+    "lock": "sha256:a42abc1f3185f800afe3c9908629efdbcf743cf7e1d8a3795ff5b442cfff3503"
   }
 }
