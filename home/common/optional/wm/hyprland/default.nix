@@ -26,7 +26,7 @@
     hyprpicker
 
     # Misc gui apps
-    galculator
+    gnome-calculator
     cheese
   ];
 
