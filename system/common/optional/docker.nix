@@ -48,6 +48,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    inputs.uptix.packages.${stdenv.hostPlatform.system}.uptix
     oxker
     lazydocker
     beszel

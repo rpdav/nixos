@@ -73,9 +73,6 @@ anywhere host ip:
 compose project output='docker-compose.nix':
   nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
 
-uptix:
-  nix run github:luizribeiro/uptix/
-
 ############################################################################
 #
 #  Backup
