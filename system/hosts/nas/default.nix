@@ -10,44 +10,42 @@
   # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
 in {
-  imports =
-    lib.flatten
-    [
-      (map configLib.relativeToRoot [
-        # core config
-        "vars"
-        "system/common/core"
+  imports = lib.flatten [
+    (map configLib.relativeToRoot [
+      # core config
+      "vars"
+      "system/common/core"
 
-        # disk config
-        "system/common/disks/luks-lvm-imp.nix"
+      # disk config
+      "system/common/disks/luks-lvm-imp.nix"
 
-        # optional config
-        "system/common/optional/backup"
-        "system/common/optional/docker.nix"
-        "system/common/optional/persistence"
-        #"system/common/optional/ssh-unlock.nix"
-        "system/common/optional/virtualization"
-        "system/common/optional/yubikey.nix"
+      # optional config
+      "system/common/optional/backup"
+      "system/common/optional/docker.nix"
+      "system/common/optional/persistence"
+      #"system/common/optional/ssh-unlock.nix"
+      "system/common/optional/virtualization"
+      "system/common/optional/yubikey.nix"
 
-        # services
-        "services/common"
-        "services/nas"
+      # services
+      "services/common"
+      "services/nas"
 
-        # users
-        "system/common/users/ryan"
-      ])
+      # users
+      "system/common/users/ryan"
+    ])
 
-      # host-specific
-      ./win-vm
-      ./hardware-configuration.nix
-      ./zfs
-      ./ups
-      (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+    # host-specific
+    ./win-vm
+    ./hardware-configuration.nix
+    ./zfs
+    ./ups
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   # Variable overrides
   systemOpts = {
-    primaryUser = "ryan"; #primary user (not necessarily only user)
+    primaryUser = "ryan"; # primary user (not necessarily only user)
     swapEnable = true;
     diskDevice = "nvme0n1";
     swapSize = "16G";
@@ -60,6 +58,10 @@ in {
     proxyDir = "/run/selfhosting/proxy-confs";
   };
 
+  # Packages
+  environment.systemPackages = with pkgs; [
+    openrgb-with-all-plugins
+  ];
   # Backup config
   backupOpts = {
     localRepo = "ssh://borg@borg:2222/backup";
@@ -69,8 +71,8 @@ in {
     ];
     patterns = [
       # Run `borg help patterns` for guidance on exclusion patterns
-      "- */home/*/.git/**" #can be restored from repo
-      "- **/.local/share/libvirt" #root and user vm images
+      "- */home/*/.git/**" # can be restored from repo
+      "- **/.local/share/libvirt" # root and user vm images
       "- */var/**"
     ];
   };
@@ -98,6 +100,14 @@ in {
       };
       efi.canTouchEfiVariables = true;
     };
+  };
+
+  # RGB control
+  services.hardware.openrgb = {
+    enable = true;
+    package = pkgs.openrgb-with-all-plugins;
+    motherboard = "amd";
+    server.port = 6742;
   };
 
   # allow root ssh login for rebuilds
