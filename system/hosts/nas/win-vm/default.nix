@@ -37,6 +37,7 @@ in {
   ];
   boot.kernelParams = [
     "amd_iommu=on"
+    "vfio-pci.ids=10de:2182,10de:1aeb,10de:1aec,10de:1aed" # stub GPU
   ];
 
   virtualisation.libvirt = {
