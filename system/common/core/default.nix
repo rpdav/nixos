@@ -59,7 +59,7 @@ in {
   # Automate garbage collection
   nix.gc = {
     automatic = true;
-    dates = systemOpts.gcInterval;
+    dates = "weekly";
     options = "--delete-older-than ${systemOpts.gcRetention}";
   };
 
