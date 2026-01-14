@@ -4,6 +4,7 @@
   pkgs,
   config,
   configLib,
+  outputs,
   ...
 }: let
   inherit (config.systemOpts) persistVol impermanent;
@@ -41,6 +42,7 @@ in {
     ./zfs
     ./ups
     (modulesPath + "/installer/scan/not-detected.nix")
+    outputs.nixosModules.rgb
   ];
 
   # Variable overrides
@@ -108,6 +110,10 @@ in {
     package = pkgs.openrgb-with-all-plugins;
     motherboard = "amd";
     server.port = 6742;
+    autostart = {
+      enable = true;
+      mode = "color shift";
+    };
   };
 
   # allow root ssh login for rebuilds
