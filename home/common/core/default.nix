@@ -85,7 +85,6 @@
           onlyoffice-desktopeditors
 
           # utilities
-          remmina
           bitwarden-desktop
           gnome-calendar
         ]
@@ -120,6 +119,8 @@
   programs.btop.enable = true;
 
   programs.ripgrep.enable = true;
+
+  services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
 
   home.sessionVariables = {
     EDITOR = "nvim";

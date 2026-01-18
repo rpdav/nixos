@@ -61,6 +61,12 @@
   # Stylix overrides for hyprland
   stylix.opacity.terminal = lib.mkForce 1.0;
 
+  # disable hyprland splash; other wallpaper
+  # config is handled by stylix
+  services.hyprpaper.settings = {
+    splash = false;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     # plugins break often due to version mismatches even with version pinning :(
