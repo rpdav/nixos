@@ -12,7 +12,7 @@
   domain = secrets.selfhosting.domain;
 in {
   # Create persistent directories
-  home.persistence."${systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
+  home.persistence."${systemOpts.persistVol}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".mozilla"
     ];

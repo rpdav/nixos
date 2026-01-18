@@ -98,7 +98,7 @@
   );
 
   # Create persistent directories
-  home.persistence."${config.systemOpts.persistVol}${config.home.homeDirectory}" = lib.mkIf config.userOpts.impermanent {
+  home.persistence."${config.systemOpts.persistVol}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/Bitwarden"
       ".config/BraveSoftware"

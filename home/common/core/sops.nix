@@ -18,7 +18,7 @@ in {
   imports = [inputs.sops-nix.homeManagerModules.sops];
 
   # Create persistent directories
-  home.persistence."${persistVol}${homeDir}" = lib.mkIf config.userOpts.impermanent {
+  home.persistence."${persistVol}" = lib.mkIf config.userOpts.impermanent {
     directories = [
       ".config/sops"
     ];
