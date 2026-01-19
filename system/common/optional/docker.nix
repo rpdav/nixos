@@ -9,6 +9,7 @@
 }: let
   inherit (config) systemOpts serviceOpts;
   inherit (outputs.nixosModules) proxy-conf container-mount;
+  compose-targets = "$(systemctl list-units --all --type=target | grep docker-compose | awk '{print $1}')";
 in {
   imports = [
     proxy-conf
@@ -57,9 +58,17 @@ in {
     (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1.service")
     (writeShellScriptBin "dcup" "sudo systemctl restart docker-compose-$1-root.target")
     (writeShellScriptBin "dcdown" "sudo systemctl stop docker-compose-$1-root.target")
-    (writeShellScriptBin "dcpull" "docker pull $(sudo docker inspect $1 | jq -r .[0].ImageName)")
     (writeShellScriptBin "appdata" "cd ${serviceOpts.dockerDir}/$1")
     (writeShellScriptBin "dtail" "docker logs -tf -n 50 $1")
     (writeShellScriptBin "dexec" "docker exec -it $1 /bin/bash")
+    (writeShellScriptBin "dclist" "systemctl list-units --all --type=target | grep -E 'UNIT|docker-compose-'")
+    (writeShellScriptBin "dcupall" ''
+      for i in ${compose-targets}; do sudo systemctl restart $i
+      done
+    '')
+    (writeShellScriptBin "dcdownall" ''
+      for i in ${compose-targets}; do sudo systemctl stop $i
+      done
+    '')
   ];
 }
