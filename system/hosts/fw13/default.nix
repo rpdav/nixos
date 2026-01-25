@@ -61,7 +61,7 @@ in {
   # Backup config
   backupOpts = {
     localRepo = "ssh://borg@borg:2222/backup";
-    #remoteRepo = "/mnt/B2/borg";
+    remoteRepo = "/mnt/B2/borg";
     paths = [
       "${persistVol}/etc"
     ];

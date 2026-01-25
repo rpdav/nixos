@@ -52,7 +52,7 @@
 let
   inherit (config.backupOpts) patterns localRepo paths;
   sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
-  restartUnits = ["borgbackup-job-root"];
+  restartUnits = ["borgbackup-job-local"];
 in {
   #  imports = [
   #    borgbackupMonitor
@@ -65,12 +65,10 @@ in {
   # Pull passphrase and key for ssh access (not needed for NAS)
   sops.secrets = {
     "borg/passphrase" = {
-      inherit sopsFile;
-      inherit restartUnits;
+      inherit sopsFile restartUnits;
     };
     "root/sshKeys/id_borg" = {
-      inherit sopsFile;
-      inherit restartUnits;
+      inherit sopsFile restartUnits;
     };
   };
 
@@ -87,15 +85,11 @@ in {
     '';
   };
 
-  services.borgbackup.jobs."root" = {
-    inherit paths;
-    inherit patterns;
+  services.borgbackup.jobs."local" = {
+    inherit paths patterns;
     user = "root";
     repo = "${localRepo}/${config.networking.hostName}/root";
     doInit = true;
-    extraInitArgs = [
-      "--make-parent-dirs"
-    ];
     startAt = ["daily"];
     #    preHook = placeholder for snapshotting/mounting command
     #    postHook = placeholder for snapshot deletion/unmount
