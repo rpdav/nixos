@@ -11,5 +11,15 @@
         <property name="label">Away</property>
       </object>
     </child>
+    <child>
+      <object class="GtkMenuItem" id="tunnel-home">
+        <property name="label">Tunnel Home</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="tunnel-vps">
+        <property name="label">Tunnel VPS</property>
+      </object>
+    </child>
   </object>
 </interface>

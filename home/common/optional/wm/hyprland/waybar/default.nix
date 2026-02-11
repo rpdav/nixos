@@ -103,7 +103,13 @@
         battery = {
           format = "{icon} {capacity}%";
           format-charging = " {icon} {capacity}%";
-          format-icons = [" " " " " " " " " "];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
           states = {
             warning = 30;
             critical = 15;
@@ -111,7 +117,17 @@
         };
         backlight = {
           format = "{icon}{percent}%";
-          format-icons = [" " " " " " " " " " " " " " " " " "];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
         };
         "clock#1" = {
           inherit timezone;
@@ -155,7 +171,9 @@
           tooltip-format = "Tailscale";
           menu-actions = {
             home = "sudo ${pkgs.tailscale}/bin/tailscale up --reset";
-            away = "sudo ${pkgs.tailscale}/bin/tailscale up --accept-routes";
+            away = "sudo ${pkgs.tailscale}/bin/tailscale up --reset --accept-routes";
+            tunnel-home = "sudo ${pkgs.tailscale}/bin/tailscale up --reset";
+            tunnel-vps = "sudo ${pkgs.tailscale}/bin/tailscale up --accept-routes";
           };
         };
         cpu = {
@@ -207,7 +225,10 @@
           format = "{icon} {volume:2}%";
           format-bluetooth = "{icon} {volume}% ";
           format-icons = {
-            default = [" " " "];
+            default = [
+              " "
+              " "
+            ];
             headphones = " ";
           };
           format-muted = "MUTE";
