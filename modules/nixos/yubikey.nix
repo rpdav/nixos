@@ -132,7 +132,7 @@ in {
       #  ACTION=="add",\
       #  ENV{HID_NAME}=="Yubico YubiKey FIDO",\
       #  RUN+="${pkgs.systemd}/bin/loginctl activate 1"
-      #  #RUN+="${lib.getBin pkgs.xorg.xset}/bin/xset dpms force on"
+      #  #RUN+="${lib.getBin pkgs.xset}/bin/xset dpms force on"
     '';
 
     # Yubikey required services and config. See Dr. Duh NixOS config for
