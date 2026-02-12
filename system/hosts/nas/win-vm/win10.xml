@@ -195,29 +195,15 @@
     <hostdev mode="subsystem" type="pci" managed="yes">
       <driver name="vfio"/>
       <source>
-        <address domain="0x0000" bus="0x2b" slot="0x00" function="0x0"/>
-      </source>
-      <rom file="/mnt/storage/isos/win10-vm/MSI.GTX1660Ti.6144.190313.rom"/>
-      <address type="pci" domain="0x0000" bus="0x00" slot="0x06" function="0x0"/>
-    </hostdev>
-    <hostdev mode="subsystem" type="pci" managed="yes">
-      <driver name="vfio"/>
-      <source>
-        <address domain="0x0000" bus="0x2b" slot="0x00" function="0x1"/>
-      </source>
-      <address type="pci" domain="0x0000" bus="0x00" slot="0x08" function="0x0"/>
-    </hostdev>
-    <hostdev mode="subsystem" type="pci" managed="yes">
-      <driver name="vfio"/>
-      <source>
-        <address domain="0x0000" bus="0x2b" slot="0x00" function="0x2"/>
+        <address domain="0x0000" bus="0x2d" slot="0x00" function="0x0"/>
       </source>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x09" function="0x0"/>
+      <rom bar="on"/>
     </hostdev>
     <hostdev mode="subsystem" type="pci" managed="yes">
       <driver name="vfio"/>
       <source>
-        <address domain="0x0000" bus="0x2b" slot="0x00" function="0x3"/>
+        <address domain="0x0000" bus="0x2e" slot="0x00" function="0x0"/>
       </source>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x0a" function="0x0"/>
     </hostdev>
@@ -226,7 +212,7 @@
     <hostdev mode="subsystem" type="pci" managed="yes">
       <driver name="vfio"/>
       <source>
-        <address domain="0x0000" bus="0x2d" slot="0x00" function="0x4"/>
+        <address domain="0x0000" bus="0x30" slot="0x00" function="0x4"/>
       </source>
       <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
     </hostdev>
@@ -235,7 +221,7 @@
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <driver name='vfio'/>
       <source>
-        <address domain='0x0000' bus='0x2d' slot='0x00' function='0x3'/>
+        <address domain='0x0000' bus='0x30' slot='0x00' function='0x3'/>
       </source>
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </hostdev>
@@ -257,7 +243,7 @@
       <address type="pci" domain="0x0000" bus="0x08" slot="0x00" function="0x0"/>
     </filesystem>
 
-    <!-- Temporary graphics for Nvidia driver install -->
+    <!-- Temporary graphics for driver install -->
     <!--
     <input type="tablet" bus="usb">
       <address type="usb" bus="0" port="1"/>
@@ -277,7 +263,6 @@
       <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x0"/>
       </video>
     -->
-
   </devices>
 </domain>
 

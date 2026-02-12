@@ -1,4 +1,8 @@
-{inputs, ...}: let
+{
+  inputs,
+  lib,
+  ...
+}: let
   inherit (inputs) nixvirt;
   router = "10.10.1.1";
 in {
@@ -35,9 +39,20 @@ in {
     "vfio"
     "vfio_iommu_type1"
   ];
-  boot.kernelParams = [
+  boot.kernelParams = let
+    # Helper function to convert list of PCI IDs into kernel param format
+    pci-ids =
+      "vfio-pci.ids="
+      + (lib.concatStringsSep "," [
+        "8086:e20b" # GPU
+        "8086:e2f7" # GPU audio
+        "8086:e2ff" # PCI bridge
+        "8086:e2f0" # PCI bridge
+        "8086:e2f1" # PCI bridge
+      ]);
+  in [
     "amd_iommu=on"
-    "vfio-pci.ids=10de:2182,10de:1aeb,10de:1aec,10de:1aed" # stub GPU
+    pci-ids
   ];
 
   virtualisation.libvirt = {
