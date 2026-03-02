@@ -1,11 +1,51 @@
-# Auto-generated using compose2nix v0.3.2-pre.
 {
+  pkgs,
   lib,
   config,
   uptix,
+  secrets,
   ...
 }: {
   # Containers
+  virtualisation.oci-containers.containers."actual-api" = {
+    image = uptix.dockerImage "jhonderson/actual-http-api:latest";
+    environment = {
+      "ACTUAL_SERVER_URL" = "http://actualserver:5006";
+      "SWAGGER_HOST" = "budget-api.${secrets.selfhosting.domain}";
+      "SWAGGER_PROTOCOL" = "https";
+    };
+    environmentFiles = [
+      config.sops.secrets."selfhosting/actual-api/env".path
+    ];
+    volumes = [
+      "${config.serviceOpts.dockerDir}/actualserver/config:/data:rw"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=api"
+      "--network=proxynet"
+    ];
+  };
+  systemd.services."docker-actual-api" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+      RestartMaxDelaySec = lib.mkOverride 90 "1m";
+      RestartSec = lib.mkOverride 90 "100ms";
+      RestartSteps = lib.mkOverride 90 9;
+    };
+    after = [
+      "docker-network-actual_default.service"
+    ];
+    requires = [
+      "docker-network-actual_default.service"
+    ];
+    partOf = [
+      "docker-compose-actual-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-actual-root.target"
+    ];
+  };
   virtualisation.oci-containers.containers."actualserver" = {
     image = uptix.dockerImage "actualbudget/actual-server:latest";
     volumes = [
@@ -13,6 +53,7 @@
     ];
     log-driver = "journald";
     extraOptions = [
+      "--network-alias=server"
       "--network=proxynet"
     ];
   };
@@ -20,12 +61,33 @@
     serviceConfig = {
       Restart = lib.mkOverride 90 "no";
     };
+    after = [
+      "docker-network-actual_default.service"
+    ];
+    requires = [
+      "docker-network-actual_default.service"
+    ];
     partOf = [
       "docker-compose-actual-root.target"
     ];
     wantedBy = [
       "docker-compose-actual-root.target"
     ];
+  };
+
+  # Networks
+  systemd.services."docker-network-actual_default" = {
+    path = [pkgs.docker];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "docker network rm -f actual_default";
+    };
+    script = ''
+      docker network inspect actual_default || docker network create actual_default
+    '';
+    partOf = ["docker-compose-actual-root.target"];
+    wantedBy = ["docker-compose-actual-root.target"];
   };
 
   # Root service

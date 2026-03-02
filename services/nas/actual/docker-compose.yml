@@ -1,11 +1,29 @@
 services:
-    actualserver:
-        container_name: actualserver
-        image: 'actualbudget/actual-server:latest'
-        volumes:
-            - '/serviceOpts.dockerDir/actualserver/config:/data:rw'
-        networks:
-          - proxynet
+  server:
+    container_name: actualserver
+    image: 'actualbudget/actual-server:latest'
+    volumes:
+      - '/serviceOpts.dockerDir/actualserver/config:/data:rw'
+    networks:
+      - proxynet
+  api:
+    image: jhonderson/actual-http-api:latest
+    container_name: actual-api
+    volumes:
+      - '/serviceOpts.dockerDir/actualserver/config:/data:rw'
+    environment:
+      - ACTUAL_SERVER_URL=actualserver:5006
+      - API_KEY=config.sops.secrets."selfhosting/actual-api/api-key".path
+      - SWAGGER_HOST=budget-api.secrets.selfhosting.domain
+      - SWAGGER_PROTOCOL=https
+#    Load secrets file in docker-compose.nix after running compose2nix
+#    env_file:
+#      - .env
+    ports:
+      - '5007:5007/tcp'
+    networks:
+      - proxynet
+    restart: unless-stopped
 
 networks:
   proxynet:

@@ -100,6 +100,16 @@
     },
     "lock": "sha256:17441c45ba14560b4ef727ee06aac4d605cf0dc0625fc4f2e043cb2551d72749"
   },
+  "jhonderson/actual-http-api:latest": {
+    "metadata": {
+      "name": "jhonderson/actual-http-api",
+      "selected_version": "latest",
+      "resolved_version": "sha256:bdde1415a0aae01226ce4ea7e7f74c31ebf3ff2f44fa6d0d0c35d91054069d04",
+      "dep_type": "docker",
+      "description": "Docker image jhonderson/actual-http-api:latest from registry-1.docker.io"
+    },
+    "lock": "sha256:bdde1415a0aae01226ce4ea7e7f74c31ebf3ff2f44fa6d0d0c35d91054069d04"
+  },
   "louislam/uptime-kuma:1": {
     "metadata": {
       "name": "louislam/uptime-kuma",
