@@ -93,6 +93,10 @@
     package = osConfig.stylix.fonts.emoji.package;
   };
 
+  home.packages = with pkgs; [
+    parsec-bin
+  ];
+
   # virt-manager settings
   dconf.settings = {
     "org/virt-manager/virt-manager" = {

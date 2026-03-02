@@ -21,11 +21,13 @@ in {
       ".config/Moonlight Game Streaming Project"
       ".config/unity3d"
       ".config/retroarch"
+      ".config/Beyond-All-Reason"
     ];
   };
   home.packages = [
     retroarchWithCores
     pkgs.moonlight-qt
+    pkgs.beyond-all-reason
   ];
 
   nixpkgs.config.permittedInsecurePackages = [

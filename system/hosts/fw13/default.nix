@@ -124,12 +124,7 @@ in {
   environment.systemPackages = with pkgs; [
     blueman
     qdirstat
-
-    # RDP clients for testing
-    freerdp
-    gnome-connections
-    tigervnc
-    turbovnc
+    zoom-us
   ];
 
   # Create impermanent directories
