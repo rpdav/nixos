@@ -1,12 +1,20 @@
 {
   inputs,
   lib,
+  pkgs,
   ...
 }: let
   inherit (inputs) nixvirt;
   router = "10.10.1.1";
 in {
   imports = [inputs.nixvirt.nixosModules.default];
+
+  environment.systemPackages = [pkgs.displaylink];
+  services.xserver.videoDrivers = [
+    "displaylink"
+    "modesetting"
+    #"fbdev"
+  ];
 
   # define bridge network
   networking = {
