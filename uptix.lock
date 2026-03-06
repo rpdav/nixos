@@ -30,6 +30,16 @@
     },
     "lock": "sha256:af51b15dd3fc72153c0e90eb7692bb5e3a463212d87959a80fa7aa89b617d44a"
   },
+  "ghcr.io/esphome/esphome": {
+    "metadata": {
+      "name": "esphome/esphome",
+      "selected_version": "latest",
+      "resolved_version": "sha256:344427c7d9ed64670172def4868daf89537ac121a1a83f080cc74a6ececfb9c7",
+      "dep_type": "docker",
+      "description": "Docker image esphome/esphome:latest from ghcr.io"
+    },
+    "lock": "sha256:344427c7d9ed64670172def4868daf89537ac121a1a83f080cc74a6ececfb9c7"
+  },
   "ghcr.io/getalby/hub:latest": {
     "metadata": {
       "name": "getalby/hub",

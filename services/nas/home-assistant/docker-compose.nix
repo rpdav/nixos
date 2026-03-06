@@ -1,8 +1,7 @@
-# Auto-generated using compose2nix v0.3.2-pre.
 {
   pkgs,
-  config,
   lib,
+  config,
   uptix,
   ...
 }: {
@@ -20,6 +19,7 @@
     ];
     log-driver = "journald";
     extraOptions = [
+      "--network-alias=app"
       "--network-alias=home-assistant"
       "--network=home-assistant_default"
       "--network=proxynet"
@@ -50,7 +50,7 @@
     environment = {
       "PGID" = "1000";
       "PUID" = "1000";
-      "TZ" = config.time.timeZone;
+      "TZ" = "config.time.timeZone";
     };
     volumes = [
       "${config.serviceOpts.dockerDir}/Home-Assistant-Core/db:/config:rw"
@@ -61,7 +61,7 @@
       "--network=home-assistant_default"
     ];
     environmentFiles = [
-      "/run/secrets/selfhosting/home-assistant/env" # contains mysql password
+      config.sops.secrets."selfhosting/home-assistant/env".path # contains mysql password
     ];
   };
   systemd.services."docker-home-assistant-db" = {
@@ -70,6 +70,41 @@
       RestartMaxDelaySec = lib.mkOverride 90 "1m";
       RestartSec = lib.mkOverride 90 "100ms";
       RestartSteps = lib.mkOverride 90 9;
+    };
+    after = [
+      "docker-network-home-assistant_default.service"
+    ];
+    requires = [
+      "docker-network-home-assistant_default.service"
+    ];
+    partOf = [
+      "docker-compose-home-assistant-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-home-assistant-root.target"
+    ];
+  };
+  virtualisation.oci-containers.containers."home-assistant-esphome" = {
+    image = uptix.dockerImage "ghcr.io/esphome/esphome";
+    environment = {
+      "ESPHOME_DASHBOARD_USE_PING" = "true";
+    };
+    volumes = [
+      "${config.serviceOpts.dockerDir}/Home-Assistant-Core/esp:/config:rw"
+    ];
+    ports = [
+      "6052:6052/tcp"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=esphome"
+      "--network=home-assistant_default"
+      "--network=proxynet"
+    ];
+  };
+  systemd.services."docker-home-assistant-esphome" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "no";
     };
     after = [
       "docker-network-home-assistant_default.service"

@@ -14,9 +14,12 @@ in {
     "home-assistant-zwave" = {
       target = "${dockerDir}/Home-Assistant-Core/zwave";
     };
+    "home-assistant-esp" = {
+      target = "${dockerDir}/Home-Assistant-Core/esp";
+    };
   };
 
-  # Create swag proxy config
+  # Create swag proxy configs
   virtualisation.oci-containers.proxy-conf."home-assistant" = {
     container = "home-assistant-app";
     subdomain = "home";
@@ -27,6 +30,12 @@ in {
     container = "home-assistant-zwave";
     subdomain = "zwave";
     port = 8091;
+    protocol = "http";
+  };
+  virtualisation.oci-containers.proxy-conf."esphome" = {
+    container = "home-assistant-esphome";
+    subdomain = "esp";
+    port = 6052;
     protocol = "http";
   };
 
