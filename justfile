@@ -70,8 +70,8 @@ anywhere host ip:
 ############################################################################
 
 [no-cd]
-compose project output='docker-compose.nix':
-  nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project={{project}} -output={{output}}
+compose output='docker-compose.nix':
+  nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project=$(echo ${PWD##*/}) -output={{output}}
 
 ############################################################################
 #
