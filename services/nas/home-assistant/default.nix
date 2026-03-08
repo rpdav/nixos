@@ -1,9 +1,11 @@
 {
   config,
   lib,
+  secrets,
   ...
 }: let
   inherit (config.serviceOpts) dockerDir dockerUser;
+  inherit (config.systemOpts) persistVol impermanent;
 in {
   imports = [./docker-compose.nix];
 
@@ -38,38 +40,29 @@ in {
     protocol = "http";
   };
   virtualisation.oci-containers.proxy-conf."esphome" = {
-    container = "nas.localdomain";
+    container = "nas.${secrets.selfhosting.domain}";
     subdomain = "esp";
     port = 6052;
     protocol = "http";
   };
 
+  #ESPHome config
   services.esphome = {
     enable = true;
     openFirewall = true;
     address = "0.0.0.0";
     #usePing = true;
   };
-  services.avahi.enable = true;
+  services.avahi.enable = true; #required for ESPHome mDNS discovery
 
-  # Override persistent storage location for esphome service
-  systemd.services.esphome = let
-    cfg = config.services.esphome;
-    stateDir = "${dockerDir}/Home-Assistant-Core/esphome";
-    esphomeParams =
-      if cfg.enableUnixSocket
-      then "--socket /run/esphome/esphome.sock"
-      else "--address ${cfg.address} --port ${toString cfg.port}";
-    inherit (lib) mkForce;
-  in {
-    environment = {
-      # platformio fails to determine the home directory when using DynamicUser
-      PLATFORMIO_CORE_DIR = mkForce "${stateDir}/.platformio";
-    };
-    serviceConfig = {
-      ExecStart = mkForce "${cfg.package}/bin/esphome dashboard ${esphomeParams} ${stateDir}";
-      WorkingDirectory = mkForce stateDir;
-    };
+  # Persist ESPHome data
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
+    directories = [
+      {
+        directory = "/var/lib/private/esphome";
+        mode = "0700";
+      }
+    ];
   };
 
   # Secret env file

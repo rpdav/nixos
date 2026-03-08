@@ -40,17 +40,6 @@ services:
     devices:
       - '/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave'
     restart: unless-stopped
-  esphome:
-    image: ghcr.io/esphome/esphome
-    ports:
-      - 6052:6052
-    environment:
-      ESPHOME_DASHBOARD_USE_PING: true
-    volumes:
-      - '/config.serviceOpts.dockerDir/Home-Assistant-Core/esp:/config:rw'
-    networks:
-      - default
-      - proxynet
     
 networks:
   proxynet:
