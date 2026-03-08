@@ -30,10 +30,6 @@
       useTemplate = ["data"];
       recursive = true;
     };
-    datasets."vms" = {
-      useTemplate = ["data"];
-      recursive = true;
-    };
   };
 
   # Replicate ssd pools to hdd pool for local backup
