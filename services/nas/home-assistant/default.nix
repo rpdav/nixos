@@ -46,14 +46,13 @@ in {
     protocol = "http";
   };
 
-  #ESPHome config
+  # ESPHome config
   services.esphome = {
     enable = true;
     openFirewall = true;
     address = "0.0.0.0";
-    #usePing = true;
   };
-  services.avahi.enable = true; #required for ESPHome mDNS discovery
+  services.avahi.enable = true; # required for ESPHome mDNS discovery
 
   # Persist ESPHome data
   environment.persistence.${persistVol} = lib.mkIf impermanent {
@@ -61,9 +60,18 @@ in {
       {
         directory = "/var/lib/private/esphome";
         mode = "0700";
+        user = "esphome";
+        group = "esphome";
       }
     ];
   };
+
+  # Define esphome service user and group; service fails without correct ownership state directory
+  users.users.esphome = {
+    isSystemUser = true;
+    group = "esphome";
+  };
+  users.groups.esphome = {};
 
   # Secret env file
   sops.secrets."selfhosting/home-assistant/env".owner = config.users.users.${dockerUser}.name;
