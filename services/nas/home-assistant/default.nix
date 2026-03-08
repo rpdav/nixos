@@ -1,4 +1,8 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (config.serviceOpts) dockerDir dockerUser;
 in {
   imports = [./docker-compose.nix];
@@ -15,7 +19,8 @@ in {
       target = "${dockerDir}/Home-Assistant-Core/zwave";
     };
     "home-assistant-esp" = {
-      target = "${dockerDir}/Home-Assistant-Core/esp";
+      target = "${dockerDir}/Home-Assistant-Core/esphome";
+      mode = "777";
     };
   };
 
@@ -33,10 +38,38 @@ in {
     protocol = "http";
   };
   virtualisation.oci-containers.proxy-conf."esphome" = {
-    container = "home-assistant-esphome";
+    container = "nas.localdomain";
     subdomain = "esp";
     port = 6052;
     protocol = "http";
+  };
+
+  services.esphome = {
+    enable = true;
+    openFirewall = true;
+    address = "0.0.0.0";
+    #usePing = true;
+  };
+  services.avahi.enable = true;
+
+  # Override persistent storage location for esphome service
+  systemd.services.esphome = let
+    cfg = config.services.esphome;
+    stateDir = "${dockerDir}/Home-Assistant-Core/esphome";
+    esphomeParams =
+      if cfg.enableUnixSocket
+      then "--socket /run/esphome/esphome.sock"
+      else "--address ${cfg.address} --port ${toString cfg.port}";
+    inherit (lib) mkForce;
+  in {
+    environment = {
+      # platformio fails to determine the home directory when using DynamicUser
+      PLATFORMIO_CORE_DIR = mkForce "${stateDir}/.platformio";
+    };
+    serviceConfig = {
+      ExecStart = mkForce "${cfg.package}/bin/esphome dashboard ${esphomeParams} ${stateDir}";
+      WorkingDirectory = mkForce stateDir;
+    };
   };
 
   # Secret env file

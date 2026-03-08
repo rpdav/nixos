@@ -84,41 +84,41 @@
       "docker-compose-home-assistant-root.target"
     ];
   };
-  virtualisation.oci-containers.containers."home-assistant-esphome" = {
-    image = uptix.dockerImage "ghcr.io/esphome/esphome";
-    environment = {
-      "ESPHOME_DASHBOARD_USE_PING" = "true";
-    };
-    volumes = [
-      "${config.serviceOpts.dockerDir}/Home-Assistant-Core/esp:/config:rw"
-    ];
-    ports = [
-      "6052:6052/tcp"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=esphome"
-      "--network=home-assistant_default"
-      "--network=proxynet"
-    ];
-  };
-  systemd.services."docker-home-assistant-esphome" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "no";
-    };
-    after = [
-      "docker-network-home-assistant_default.service"
-    ];
-    requires = [
-      "docker-network-home-assistant_default.service"
-    ];
-    partOf = [
-      "docker-compose-home-assistant-root.target"
-    ];
-    wantedBy = [
-      "docker-compose-home-assistant-root.target"
-    ];
-  };
+  #virtualisation.oci-containers.containers."home-assistant-esphome" = {
+  #  image = uptix.dockerImage "ghcr.io/esphome/esphome";
+  #  environment = {
+  #    "ESPHOME_DASHBOARD_USE_PING" = "true";
+  #  };
+  #  volumes = [
+  #    "${config.serviceOpts.dockerDir}/Home-Assistant-Core/esp:/config:rw"
+  #  ];
+  #  ports = [
+  #    "6052:6052/tcp"
+  #  ];
+  #  log-driver = "journald";
+  #  extraOptions = [
+  #    "--network-alias=esphome"
+  #    "--network=home-assistant_default"
+  #    "--network=proxynet"
+  #  ];
+  #};
+  #systemd.services."docker-home-assistant-esphome" = {
+  #  serviceConfig = {
+  #    Restart = lib.mkOverride 90 "no";
+  #  };
+  #  after = [
+  #    "docker-network-home-assistant_default.service"
+  #  ];
+  #  requires = [
+  #    "docker-network-home-assistant_default.service"
+  #  ];
+  #  partOf = [
+  #    "docker-compose-home-assistant-root.target"
+  #  ];
+  #  wantedBy = [
+  #    "docker-compose-home-assistant-root.target"
+  #  ];
+  #};
   virtualisation.oci-containers.containers."home-assistant-zwave" = {
     image = uptix.dockerImage "zwavejs/zwavejs2mqtt";
     environment = {
