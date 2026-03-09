@@ -51,6 +51,7 @@ in {
       apply = {
         use_git_commit_msg = true;
         use_nom = true;
+        reexec_as_root = true;
       };
     };
   };
