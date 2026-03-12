@@ -39,6 +39,7 @@ in {
     # host-specific
     ./win-vm
     ./hardware-configuration.nix
+    ./displaylink.nix
     ./zfs
     ./ups
     (modulesPath + "/installer/scan/not-detected.nix")
