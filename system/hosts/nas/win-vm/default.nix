@@ -13,7 +13,30 @@ in {
   services.xserver.videoDrivers = [
     "displaylink"
     "modesetting"
-    #"fbdev"
+  ];
+  services.xserver = {
+    enable = true;
+    # Use 'startx' to prevent a graphical login manager (GDM/SDDM) from starting
+    displayManager.startx.enable = true;
+
+    # Manually define the device and point it to your DisplayLink card
+    # Replace 'card1' with whatever your DL card is in /dev/dri/
+    config = ''
+      Section "Device"
+        Identifier "DisplayLink"
+        Driver "modesetting"
+        Option "kmsdev" "/dev/dri/card0"
+        Option "PageFlip" "false"
+      EndSection
+    '';
+  };
+  boot.extraModprobeConfig = "options evdi initial_device_count=1";
+  boot.kernelModules = [
+    "evdi"
+    "fbcon"
+  ];
+  boot.blacklistedKernelModules = [
+    "udl"
   ];
 
   # define bridge network
@@ -35,11 +58,6 @@ in {
     };
     bridges."br0".interfaces = ["enp42s0"];
   };
-  # flush IP from initrd ssh server. Otherwise it
-  # keeps the IP even though useDHCP is disabled above.
-  #boot.initrd.postMountCommands = ''
-  #  ip addr flush dev enp34s0 || true
-  #'';
 
   # kernel modules for passthrough
   boot.initrd.kernelModules = [
@@ -48,7 +66,7 @@ in {
     "vfio_iommu_type1"
   ];
   boot.kernelParams = let
-    # Helper function to convert list of PCI IDs into kernel param format
+    # Helper function to convert nix list of PCI IDs into kernel param format
     pci-ids =
       "vfio-pci.ids="
       + (lib.concatStringsSep "," [
@@ -59,6 +77,11 @@ in {
         "8086:e2f1" # PCI bridge
       ]);
   in [
+    #"udl.fbdev=1" # Forces the udl driver to create a framebuffer
+    "fbcon=map:0" # Maps the console to the newly created fb
+    "fbcon=primary:0"
+    "video=DVI-I-1:1920x1080@60"
+    "video=DVI-I-1:e"
     "amd_iommu=on"
     pci-ids
   ];
@@ -82,7 +105,7 @@ in {
         # win10 vm definition
         {
           definition = ./win10.xml;
-          active = true;
+          active = false;
         }
       ];
     };
