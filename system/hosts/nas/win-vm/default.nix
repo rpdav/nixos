@@ -40,8 +40,8 @@ in {
     pci-ids =
       "vfio-pci.ids="
       + (lib.concatStringsSep "," [
-        "8086:e20b" # GPU
-        "8086:e2f7" # GPU audio
+        #"8086:e20b" # GPU
+        #"8086:e2f7" # GPU audio
         "8086:e2ff" # PCI bridge
         "8086:e2f0" # PCI bridge
         "8086:e2f1" # PCI bridge
