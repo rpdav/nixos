@@ -52,6 +52,9 @@
       "PUID" = "1000";
       "TZ" = "config.time.timeZone";
     };
+    ports = [
+      "3006:3006/tcp"
+    ];
     volumes = [
       "${config.serviceOpts.dockerDir}/Home-Assistant-Core/db:/config:rw"
     ];
@@ -95,6 +98,7 @@
     ];
     ports = [
       "3000:3000/tcp"
+      "8091:8091/tcp"
     ];
     log-driver = "journald";
     extraOptions = [
