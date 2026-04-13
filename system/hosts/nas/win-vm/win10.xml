@@ -1,6 +1,6 @@
 <domain type="kvm">
   <name>win10</name>
-  <uuid>8e645324-46a9-1149-a905-00d8617bb9b7</uuid>
+  <uuid>24878559-c68a-3910-a0b0-345a600288bb</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/10"/>
@@ -12,19 +12,23 @@
     <source type="memfd"/>
     <access mode="shared"/>
   </memoryBacking>
-  <vcpu placement='static'>8</vcpu>
+  <vcpu placement='static'>12</vcpu>
   <cputune>
     <vcpupin vcpu='0' cpuset='2'/>
-    <vcpupin vcpu='1' cpuset='8'/>
+    <vcpupin vcpu='1' cpuset='10'/>
     <vcpupin vcpu='2' cpuset='3'/>
-    <vcpupin vcpu='3' cpuset='9'/>
+    <vcpupin vcpu='3' cpuset='11'/>
     <vcpupin vcpu='4' cpuset='4'/>
-    <vcpupin vcpu='5' cpuset='10'/>
+    <vcpupin vcpu='5' cpuset='12'/>
     <vcpupin vcpu='6' cpuset='5'/>
-    <vcpupin vcpu='7' cpuset='11'/>
+    <vcpupin vcpu='7' cpuset='13'/>
+    <vcpupin vcpu='8' cpuset='6'/>
+    <vcpupin vcpu='9' cpuset='14'/>
+    <vcpupin vcpu='10' cpuset='7'/>
+    <vcpupin vcpu='11' cpuset='15'/>
   </cputune>
   <cpu mode='host-passthrough' check='none'>
-    <topology sockets='1' cores='4' threads='2'/>
+    <topology sockets='1' cores='6' threads='2'/>
     <cache mode='passthrough'/>
   </cpu>
   <os firmware="efi">
