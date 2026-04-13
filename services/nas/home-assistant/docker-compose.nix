@@ -11,18 +11,14 @@
     volumes = [
       "${config.serviceOpts.dockerDir}/Home-Assistant-Core/config:/config:rw"
     ];
-    ports = [
-      "8123:8123/tcp"
-    ];
     dependsOn = [
       "home-assistant-db"
     ];
     log-driver = "journald";
     extraOptions = [
-      "--network-alias=app"
-      "--network-alias=home-assistant"
-      "--network=home-assistant_default"
-      "--network=proxynet"
+      "--network=host"
+      "--privileged"
+      "--cap-add=NET_ADMIN"
     ];
   };
   systemd.services."docker-home-assistant-app" = {
@@ -53,7 +49,7 @@
       "TZ" = "config.time.timeZone";
     };
     ports = [
-      "3006:3006/tcp"
+      "3306:3306/tcp"
     ];
     volumes = [
       "${config.serviceOpts.dockerDir}/Home-Assistant-Core/db:/config:rw"
@@ -98,7 +94,6 @@
     ];
     ports = [
       "3000:3000/tcp"
-      "8091:8091/tcp"
     ];
     log-driver = "journald";
     extraOptions = [

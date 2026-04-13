@@ -26,9 +26,14 @@ in {
     };
   };
 
+  # Open HA port since we're exposing ports and host mode instead of using container DNS
+  networking.firewall.allowedTCPPorts = [
+    8123
+  ];
+
   # Create swag proxy configs
   virtualisation.oci-containers.proxy-conf."home-assistant" = {
-    container = "home-assistant-app";
+    container = "10.10.1.17"; # use host IP since using host networking
     subdomain = "home";
     port = 8123;
     protocol = "http";
