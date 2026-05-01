@@ -73,7 +73,7 @@
 
     # ── Personal / secret repos ─────────────────────────────────
     nix-secrets = {
-      url = "git+file:///home/ryan/nix-secrets";
+      url = "https://git.dfrp.xyz/ryan/nix-secrets";
     };
   };
 

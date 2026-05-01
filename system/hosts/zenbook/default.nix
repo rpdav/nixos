@@ -52,21 +52,6 @@ in {
     gui = true;
   };
 
-  # Backup config
-  backupOpts = {
-    localRepo = "ssh://borg@borg:2222/backup";
-    remoteRepo = "/mnt/B2/borg";
-    paths = [
-      "${persistVol}/etc"
-    ];
-    patterns = [
-      # Run `borg help patterns` for guidance on exclusion patterns
-      "- */var/**" #not needed for restore
-      "- **/.Trash*" #automatically made by gui deletions
-      "- **/libvirt" #vdisks made mostly for testing
-    ];
-  };
-
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "25.11";
 
@@ -84,22 +69,6 @@ in {
   networking.hostName = "zenbook";
   networking.networkmanager = {
     enable = true;
-  };
-
-  # Host-specific hardware config
-  services.pipewire = {
-    audio.enable = true;
-    pulse.enable = true;
-  };
-  hardware.bluetooth.enable = true;
-  services.libinput.enable = true;
-
-  # Printing
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
   };
 
   # System packages
