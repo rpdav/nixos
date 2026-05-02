@@ -2,6 +2,7 @@
   inputs,
   lib,
   pkgs,
+  config,
   ...
 }: let
   inherit (inputs) nixvirt;
@@ -29,6 +30,14 @@ in {
     bridges."br0".interfaces = ["enp42s0"];
   };
 
+  specialisation.no-passthrough.configuration = {
+    # specialization to disable passthrough for host GPU use use and troubleshooting
+    # no config defined here, but some things are disabled below with conditionals:
+    # `lib.mkIf (config.specialisation != {})`
+    # Note this will disable it for ALL specialisations, not just no-passthrough
+    # Currently not using any other specialisations, so this is OK
+  };
+
   # kernel modules for passthrough
   boot.initrd.kernelModules = [
     "vfio_pci"
@@ -48,7 +57,7 @@ in {
       ]);
   in [
     "amd_iommu=on"
-    pci-ids
+    (lib.mkIf (config.specialisation != {}) pci-ids) # disable passthrough if running a specialisation
   ];
 
   virtualisation.libvirt = {
@@ -70,7 +79,11 @@ in {
         # win10 vm definition
         {
           definition = ./win10.xml;
-          active = false;
+          # do not auto-start win10 VM if running a specialisation
+          active =
+            if config.specialisation != {}
+            then true
+            else false;
         }
       ];
     };
