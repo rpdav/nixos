@@ -10,6 +10,7 @@ in {
 
   imports = [
     ./packages.nix
+    ./regressions.nix
     ./sops.nix
     ./sshd.nix #needed for sops keys
     ./stylix.nix
