@@ -132,7 +132,6 @@ in {
     directories = [
       "/var/lib/bluetooth"
       "/var/lib/fprint"
-      #"/var/lib/iwd"
       "/etc/secureboot"
     ];
     files = [

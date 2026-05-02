@@ -14,7 +14,7 @@ in {
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}" = lib.mkIf config.userOpts.impermanent {
     directories = [
-      ".mozilla"
+      ".config/mozilla"
     ];
   };
 
@@ -23,6 +23,7 @@ in {
 
   programs.firefox = {
     enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     profiles.${username} = {
       id = 0;
       name = "${username}";

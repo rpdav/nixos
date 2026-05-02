@@ -43,16 +43,22 @@ in {
   };
 
   # Options search and nixos CLI tooling
-  services.nixos-cli = {
+  programs.nixos-cli = {
     enable = true;
-    config = {
+    settings = {
       config_location = "${config.users.users.ryan.home}/nixos";
-      use_nvd = true;
+      differ.command = [
+        "nvd"
+        "diff"
+      ];
       apply = {
         use_git_commit_msg = true;
         use_nom = true;
         reexec_as_root = true;
       };
+      ssh.known_hosts_files = [
+        (lib.mkIf config.systemOpts.impermanent "${config.systemOpts.persistVol}/home/ryan/.ssh/known_hosts")
+      ];
     };
   };
   nix.settings = {
