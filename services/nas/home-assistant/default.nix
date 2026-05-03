@@ -63,7 +63,7 @@ in {
   environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
       {
-        directory = "/var/lib/private/esphome";
+        directory = "/var/lib/esphome";
         mode = "0700";
         user = "esphome";
         group = "esphome";
