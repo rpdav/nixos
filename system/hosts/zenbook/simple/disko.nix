@@ -1,17 +1,15 @@
 {
   config,
-  inputs,
+  self,
   ...
-}: let
-  inherit (config) systemOpts;
-in {
+}: {
   # Disko config using luks, lvm, swap, and btrfs subvolumes for use with impermanence module
-  imports = [inputs.disko.nixosModules.disko];
+  imports = [self.inputs.disko.nixosModules.disko];
   disko.devices = {
     disk = {
       main = {
         type = "disk";
-        device = "/dev/${systemOpts.diskDevice}";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
@@ -65,12 +63,12 @@ in {
                   mountOptions = ["compress=zstd" "noatime"];
                 };
                 "persist" = {
-                  mountpoint = "${systemOpts.persistVol}";
+                  mountpoint = "/persist";
                   mountOptions = ["compress=zstd" "noatime"];
                 };
                 "swap" = {
                   mountpoint = "/.swap";
-                  swap.swapfile.size = systemOpts.swapSize;
+                  swap.swapfile.size = "8G";
                 };
               };
             };
@@ -79,5 +77,5 @@ in {
       };
     };
   };
-  fileSystems.${systemOpts.persistVol}.neededForBoot = true;
+  fileSystems."/persist".neededForBoot = true;
 }

@@ -6,10 +6,11 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    ./disko.nix
   ];
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 
   # Boot config
   boot = {
@@ -66,16 +67,19 @@
   # root user config
   users.users.root = {
     password = "changeme";
-    openssh.authorizedKeys = [
+    openssh.authorizedKeys.keys = [
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKPkpw5aW6ChMqsuaXlElY/Y4UyNgicjBfo0X3S1r9lxAAAABHNzaDo= ryan@yubi5c"
     ];
   };
 
   # main user config
   users.users.ryan = {
+    isNormalUser = true;
+    group = "ryan";
     password = "changeme";
-    openssh.authorizedKeys = [
+    openssh.authorizedKeys.keys = [
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKPkpw5aW6ChMqsuaXlElY/Y4UyNgicjBfo0X3S1r9lxAAAABHNzaDo= ryan@yubi5c"
     ];
   };
+  users.groups.ryan = {};
 }

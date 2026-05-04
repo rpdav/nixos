@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "Test reinstall flake for zenbook host";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -12,8 +12,11 @@
   outputs = {
     self,
     nixpkgs,
+    disko,
   }: {
     nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = {inherit self;};
       modules = [./configuration.nix];
     };
   };

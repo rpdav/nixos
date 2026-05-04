@@ -4,6 +4,10 @@ Reinstall commands:
 ```
 # Clone repo
 git clone https://github.com/rpdav/nixos
+or
+git clone -b 63-fw13-reinstall https://github.com/rpdav/nixos
+
+
 
 # Install
 sudo nix --extra-experimental-features "nix-command flakes pipe-operators" run 'github:nix-community/disko/latest#disko-install' -- --flake .#zenbook --disk main /dev/nvme0n1
