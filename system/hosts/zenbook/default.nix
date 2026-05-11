@@ -46,7 +46,7 @@ in {
     lockTimeout = 630;
     screenOffTimeout = 800;
     suspendTimeout = 900;
-    diskDevice = "nvme0n1";
+    diskDevice = "vda";
     swapSize = "8G";
     impermanent = true;
     gui = true;

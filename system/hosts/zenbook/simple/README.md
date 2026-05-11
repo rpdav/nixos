@@ -14,9 +14,10 @@ sudo nix --extra-experimental-features "nix-command flakes pipe-operators" run '
 ```
 
 ## Notes during reinstall
-Add zenbook.nix home-manager file
-Add disko-install pipe-operators option
-Switch secrets to gitea?
-Install command requires --disk main /dev/nvme0n1
+using disko-install leads to "no space on device" due to too much being downloaded to /nix on tmpfs.
+using disko command for separate partitioning seems to work but you have to tweak the disko file (no extra args, no importing disko module):
+`sudo nix --extra-experimental-features "nix-command flakes pipe-operators" run 'github:nix-community/disko/latest' -- --mode disko ./disko.nix`
+then install with:
+`sudo nixos-install --flake .#zenbook`
+not sure if this would work with main flake - no way to pass pipe operators
 
-With above changes, getting an out of memory error
