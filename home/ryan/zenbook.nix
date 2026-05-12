@@ -15,28 +15,28 @@
       "home/common/core"
 
       # optional config
-      "home/common/optional/app/browser"
-      "home/common/optional/app/crush.nix"
-      "home/common/optional/app/defaultapps.nix"
-      "home/common/optional/app/games"
-      "home/common/optional/app/nextcloud.nix"
-      "home/common/optional/app/kitty.nix"
-      "home/common/optional/app/thunderbird.nix"
-      "home/common/optional/app/web-apps"
+      #"home/common/optional/app/browser"
+      #"home/common/optional/app/crush.nix"
+      #"home/common/optional/app/defaultapps.nix"
+      #"home/common/optional/app/games"
+      #"home/common/optional/app/nextcloud.nix"
+      #"home/common/optional/app/kitty.nix"
+      #"home/common/optional/app/thunderbird.nix"
+      #"home/common/optional/app/web-apps"
       "home/common/optional/config/persist.nix"
-      "home/common/optional/wm/hyprland"
+      #"home/common/optional/wm/hyprland"
     ])
     # multi-system config for current user
-    ./common/core
+    #./common/core
 
     ./common/optional/yubikey.nix
-    ./common/optional/accounts.nix
+    #./common/optional/accounts.nix
   ];
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  home.stateVersion = "24.05"; # don't change without reading release notes
+  home.stateVersion = "25.11"; # don't change without reading release notes
 
   # Hyprland monitor config
   monitors = [

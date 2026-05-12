@@ -25,11 +25,11 @@ in {
         "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "system/common/optional/docker.nix" # container admin tools, not just for running containers
-        "system/common/optional/duplicati.nix"
+        #"system/common/optional/docker.nix" # container admin tools, not just for running containers
+        #"system/common/optional/duplicati.nix"
         "system/common/optional/persistence"
-        "system/common/optional/wm/hyprland.nix"
-        "system/common/optional/yubikey.nix"
+        #"system/common/optional/wm/hyprland.nix"
+        #"system/common/optional/yubikey.nix"
 
         # users
         "system/common/users/ryan"

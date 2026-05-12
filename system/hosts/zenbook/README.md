@@ -22,4 +22,5 @@ Add zenbook.nix home-manager file
 Add disko-install pipe-operators option
 Has trouble pulling secrets from gitea - test on main machine
 New command with native disko binary:
-sudo disko-install --flake .#zenbook --option extra-experimental-features pipe-operators --disk main /dev/vda
+`sudo disko-install --flake github:rpdav/nixos?ref=63-fw13-reinstall#zenbook --option extra-experimental-features pipe-operators --disk main /dev/vda`
+^-- this still leads to out-of-disk (memory) failures even on a 16GB VM with disko on the iso
