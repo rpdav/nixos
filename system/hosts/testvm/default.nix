@@ -19,7 +19,7 @@ in {
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        "system/common/core"
+        #"system/common/core"
 
         # disk config
         "system/common/disks/luks-lvm-imp.nix"
@@ -28,7 +28,7 @@ in {
         #"system/common/optional/backup"
         #"system/common/optional/docker.nix" # container admin tools, not just for running containers
         #"system/common/optional/duplicati.nix"
-        "system/common/optional/persistence"
+        #"system/common/optional/persistence"
         #"system/common/optional/steam.nix"
         #"system/common/optional/virtualization"
         #"system/common/optional/wine.nix"
@@ -36,7 +36,7 @@ in {
         #"system/common/optional/yubikey.nix"
 
         # users
-        "system/common/users/ryan"
+        #"system/common/users/ryan"
       ])
 
       # host-specific
@@ -78,21 +78,12 @@ in {
   };
   services.libinput.enable = true;
 
-  # Create impermanent directories
-  environment.persistence.${persistVol} = lib.mkIf impermanent {
-    directories = [
-      "/var/lib/bluetooth"
-      "/var/lib/fprint"
-      "/etc/secureboot"
-    ];
-    files = [
-      "/root/.ssh/known_hosts"
-    ];
-  };
-
   # minimal root user config
   users.users.root = {
     password = "changeme";
-    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+  };
+  users.users.ryan = {
+    isNormalUser = true;
+    password = "changeme";
   };
 }
