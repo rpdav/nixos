@@ -16,3 +16,10 @@ Switch secrets to gitea?
 Install command requires --disk main /dev/nvme0n1
 
 With above changes, getting an out of memory error
+
+## Notes from fw13 VM reinstall using zenbook host
+Add zenbook.nix home-manager file
+Add disko-install pipe-operators option
+Has trouble pulling secrets from gitea - test on main machine
+New command with native disko binary:
+sudo disko-install --flake .#zenbook --option extra-experimental-features pipe-operators --disk main /dev/vda

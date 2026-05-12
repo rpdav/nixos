@@ -994,11 +994,11 @@
         "rev": "2ae52678921273ea48a95ff02dbc1441338b5161",
         "revCount": 114,
         "type": "git",
-        "url": "file:///home/ryan/nix-secrets"
+        "url": "https://git.dfrp.xyz/ryan/nix-secrets"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/ryan/nix-secrets"
+        "url": "https://git.dfrp.xyz/ryan/nix-secrets"
       }
     },
     "nixos-cli": {
