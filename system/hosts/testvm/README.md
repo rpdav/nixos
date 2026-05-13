@@ -16,3 +16,31 @@ Has trouble pulling secrets from gitea - test on main machine
 New command with native disko binary:
 `sudo disko-install --flake github:rpdav/nixos?ref=63-fw13-reinstall#testvm --option extra-experimental-features pipe-operators --disk main /dev/vda`
 ^-- this still leads to out-of-disk (memory) failures even on a 16GB VM with disko on the iso when installing full config
+
+## VM install trimmed-down host
+Removed most optional modules and WM
+Still got OOM error
+
+## VM install with super-minimal host
+Removed even more stuff, very minimal config
+This worked!
+
+## VM install with disko, then nixos-install
+This worked fine for the super-minimal config, but the `disko` tool needs a standalone disk config; no custom options
+In contrast, `disko-install` can use my flake and the shared
+If I'm going to maintain a standalone disk config for reinstall of each host, plus the shared one 
+Need to pass --no-root-password to installer since it is declared in the config
+
+## Future setup
+The options are:
+1. Use `disko-install` for reinstall
+  1. Will need to maintain a separate minimal system config that points to the same disk config as the normal `fw13` host
+  2. Once rebooted, restore data and then nixos-rebuild to switch to main config with secrets, etc
+  3. It's possible that if the OOM issue is fixed for `disko-install` that I could drop the minimal config and go straight to the main one
+  4. It's also possible that actually reinstalling on bare metal with 32 GB of RAM (instead of 16 GB VM) won't run into this issue
+2. Use `disko` and `nixos-install`
+  1. Will need to maintain a standalone disk config since `disko` can't use the usual config with custom options
+  2. Install is a bit more complex (2 commands instead of 1!)
+  3. 
+
+## Test on bare metal with extra hard disk
