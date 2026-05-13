@@ -59,7 +59,7 @@ in {
   boot = {
     loader = {
       systemd-boot = {
-        enable = false;
+        enable = true;
       };
       efi.canTouchEfiVariables = true;
     };
