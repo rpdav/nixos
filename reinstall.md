@@ -44,3 +44,4 @@ The options are:
   3. 
 
 ## Test on bare metal with extra hard disk
+Still got OOM error when restoring full config with full 32 GB RAM
