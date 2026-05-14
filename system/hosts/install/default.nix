@@ -27,7 +27,7 @@ in {
   # Enable flakes
   nix = {
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes pipe-operators
     '';
   };
 
@@ -75,7 +75,7 @@ in {
   services.openssh = {
     enable = true;
     ports = [22];
-    settings.PasswordAuthentication = false;
+    settings.PasswordAuthentication = true;
     hostKeys = [
       {
         comment = "server key";

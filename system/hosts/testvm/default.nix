@@ -57,7 +57,7 @@ in {
   boot = {
     loader = {
       systemd-boot = {
-        enable = false;
+        enable = true;
         # more readable boot menu on hidpi display
         consoleMode = "5";
         configurationLimit = 30;
@@ -110,7 +110,6 @@ in {
 
   # minimal root user config
   users.users.root = {
-    password = "changeme";
     hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
   };
 }

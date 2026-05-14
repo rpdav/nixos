@@ -33,7 +33,6 @@ in {
   };
 
   users.users.ryan = {
-    password = "changeme"; # Temporary password for initial reinstall; gets overridden by hashedPasswordFile when rebuilt with secrets
     hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.

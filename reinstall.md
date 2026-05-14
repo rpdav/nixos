@@ -45,3 +45,9 @@ The options are:
 
 ## Test on bare metal with extra hard disk
 Still got OOM error when restoring full config with full 32 GB RAM
+
+## VM testing with install host
+Install and rebuild seemed to go fine
+/nix was 25 GB after rebuild
+Passwords don't seem to be working as expected - `hashedPasswordFile` is set (/run/secrets/...), but the file isn't there. So `password` is overridden, and the user has no password. This will prevent future rebuilds (including enabling secrets). Secrets should be set up while booted in the minimal environment with the temp password
+This means `password` can be removed from the main host config
