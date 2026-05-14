@@ -19,24 +19,18 @@ in {
       (map configLib.relativeToRoot [
         # core config
         "vars"
-        #"system/common/core"
+        "system/common/core"
 
         # disk config
         "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        #"system/common/optional/backup"
-        #"system/common/optional/docker.nix" # container admin tools, not just for running containers
-        #"system/common/optional/duplicati.nix"
-        #"system/common/optional/persistence"
-        #"system/common/optional/steam.nix"
-        #"system/common/optional/virtualization"
-        #"system/common/optional/wine.nix"
-        #"system/common/optional/wm/hyprland.nix"
-        #"system/common/optional/yubikey.nix"
+        "system/common/optional/persistence"
+        "system/common/optional/wm/hyprland.nix"
+        "system/common/optional/yubikey.nix"
 
         # users
-        #"system/common/users/ryan"
+        "system/common/users/ryan"
       ])
 
       # host-specific
@@ -46,10 +40,14 @@ in {
   # Variable overrides
   systemOpts = {
     primaryUser = "ryan"; #primary user (not necessarily only user)
-    diskDevice = "vda";
+    screenDimTimeout = 600;
+    lockTimeout = 630;
+    screenOffTimeout = 800;
+    suspendTimeout = 900;
+    diskDevice = "/dev/vda";
     swapSize = "16G";
     impermanent = true;
-    gui = false;
+    gui = true;
   };
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
@@ -59,14 +57,17 @@ in {
   boot = {
     loader = {
       systemd-boot = {
-        enable = true;
+        enable = false;
+        # more readable boot menu on hidpi display
+        consoleMode = "5";
+        configurationLimit = 30;
       };
       efi.canTouchEfiVariables = true;
     };
   };
 
   # Networking
-  networking.hostName = "testvm";
+  networking.hostName = "fw13";
   networking.networkmanager = {
     enable = true;
   };
@@ -76,14 +77,40 @@ in {
     audio.enable = true;
     pulse.enable = true;
   };
+  hardware.bluetooth.enable = true;
   services.libinput.enable = true;
+
+  # Printing
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  # Disable fingerprint for login (causes gnome-keyring unlock to fail)
+  security.pam.services.login.fprintAuth = false;
+
+  # System packages
+  environment.systemPackages = with pkgs; [
+    qdirstat
+  ];
+
+  # Create impermanent directories
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
+    directories = [
+      "/var/lib/bluetooth"
+      "/var/lib/fprint"
+      "/etc/secureboot"
+    ];
+    files = [
+      "/root/.ssh/known_hosts"
+    ];
+  };
 
   # minimal root user config
   users.users.root = {
     password = "changeme";
-  };
-  users.users.ryan = {
-    isNormalUser = true;
-    password = "changeme";
+    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
   };
 }
