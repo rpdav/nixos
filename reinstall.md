@@ -50,4 +50,18 @@ Still got OOM error when restoring full config with full 32 GB RAM
 Install and rebuild seemed to go fine
 /nix was 25 GB after rebuild
 Passwords don't seem to be working as expected - `hashedPasswordFile` is set (/run/secrets/...), but the file isn't there. So `password` is overridden, and the user has no password. This will prevent future rebuilds (including enabling secrets). Secrets should be set up while booted in the minimal environment with the temp password
-This means `password` can be removed from the main host config
+This means `password` can be removed from theage1y9h8h2ug59kkshnv3cu7rpgtulmnp628zzm9qfqjmf3sekvpnawqj5krl3age1y9h8h2ug59kkshnv3cu7rpgtulmnp628zzm9qfqjmf3sekvpnawqj5krl3age1y9h8h2ug59kkshnv3cu7rpgtulmnp628zzm9qfqjmf3sekvpnawqj5krl3 main host config
+
+## VM install with secrets setup
+Secrets need to be copied to /persist/etc and /persist/home/ryan/.config...otherwise they get blown away on rollback
+May also need to delete existing keys in /etc/ssh, otherwise symlinking might not work
+Directory /run/secrets-for-users is not getting generated, which is where passwordHash is supposed to live. Not sure why.
+
+## Test VM RAM limits
+### Non-custom iso
+8GB - fail
+16GB - OK
+
+### custom iso
+4GB - fail
+8GB - OK

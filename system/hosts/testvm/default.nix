@@ -69,7 +69,7 @@ in {
   };
 
   # Networking
-  networking.hostName = "fw13";
+  networking.hostName = "testvm";
   networking.networkmanager = {
     enable = true;
   };

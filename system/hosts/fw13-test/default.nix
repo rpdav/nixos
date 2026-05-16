@@ -42,7 +42,6 @@ in {
       # host-specific
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-      inputs.lanzaboote.nixosModules.lanzaboote
     ];
 
   # Variable overrides
@@ -52,7 +51,7 @@ in {
     lockTimeout = 630;
     screenOffTimeout = 800;
     suspendTimeout = 900;
-    diskDevice = "vdb";
+    diskDevice = "sda";
     swapSize = "16G";
     impermanent = true;
     gui = true;
@@ -87,19 +86,13 @@ in {
       };
       efi.canTouchEfiVariables = true;
     };
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "${persistVol}/etc/secureboot";
-    };
   };
 
   # Networking
   networking.hostName = "fw13";
   networking.networkmanager = {
     enable = true;
-    #wifi.backend = "iwd";
   };
-  #networking.wireless.iwd.enable = true;
 
   # Host-specific hardware config
   services.pipewire = {
@@ -124,7 +117,6 @@ in {
   environment.systemPackages = with pkgs; [
     blueman
     qdirstat
-    zoom-us
   ];
 
   # Create impermanent directories
@@ -142,18 +134,6 @@ in {
 
   # Firmware updates
   services.fwupd.enable = true;
-
-  # pmail bridge must be configured imperatively using the cli tool.
-  # State in ~/.config is persisted. Runs as a user service even though
-  # it's in system config.
-  services.protonmail-bridge = {
-    enable = true;
-    # make gnome keyring available to bridge in case I'm running KDE
-    path = with pkgs; [gnome-keyring];
-  };
-
-  # Server for gnome calendar
-  services.gnome.evolution-data-server.enable = true;
 
   # minimal root user config
   users.users.root = {
