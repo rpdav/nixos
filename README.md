@@ -7,7 +7,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 ```
 .
 ├── home            home-manager configurations
-├── system           system (NixOS) configurations
+├── system          system (NixOS) configurations
 ├── lib             custom library to make import paths cleaner (credit to EmergentMind) 
 ├── modules         custom nixos and home-manager modules
 ├── nix-secrets     contains example secrets files from my private secrets repo
@@ -122,7 +122,7 @@ The `themes` directory contains subdirectories for each theme with a wallpaper, 
 My `nas` system is also a virtualization host running a windows VM with some hardware passthrough (an NVME drive, GPU, and audio and USB controllers). I use [nixvirt](https://github.com/AshleyYakeley/NixVirt) which allows libvirt networks and domains (that is, VMs) to be configured with nix expressions. See the readme in `system/hosts/nas/win-vm` for more details.
 
 ## Install and Reinstall
-There are two methods for installing hosts from this config - locally via disko and remotely via `nixos-anywhere` (which uses disko under the hood). See the readme files in each host's subfolder for host-specific instructions.
+There are two methods for installing hosts from this config - locally via `disko` and remotely via `nixos-anywhere` (which uses disko under the hood). See the readme files in each host's subfolder for host-specific instructions.
 
 If a new host is being installed, then secrets will need to be initialized for the host:
 1. Generate an ed25519 ssh host key pair for the new host. Run `ssh-to-age -i /path/to/key.pub` to generate an age public key.
@@ -139,15 +139,15 @@ This flake offers an `iso` host. It's nearly identical to official minimal (no g
 Remote install via `nixos-anywhere` is preferred since partitioning, install, and secrets can all be handled in one command. RAM constraints are much lower (2 GB needed for kexec) than for local install with `disko-install`. The minimum requirements for this method are 1) a target host booted into linux (live iso works too) and 2) a provisioning host running nix or nixos with flakes which can ssh into the target host as root.
 
 1. At a minimum, copy the keys used by sops to `/tmp/nixos-anywhere` on the provisioning host, mimicking the directory structure they should have on the target system:
-  1. ssh keys should be in `/tmp/nixos-anywhere/persist/etc/ssh`
-  2. user age keys should be in `/tmp/nixos-anywhere/persist/home/<username>/.config/sops/age`
+    1. ssh keys should be in `/tmp/nixos-anywhere/persist/etc/ssh`
+    2. user age keys should be in `/tmp/nixos-anywhere/persist/home/<username>/.config/sops/age`
 2. Install on the remote host with the following command:
 ```
-nix run github:nix-community/nixos-anywhere -- \ # run the nixos-anywhere tool directly from the flake
+nix run github:nix-community/nixos-anywhere -- \                            # run the nixos-anywhere tool directly from the flake
 --flake "github:rpdav/nixos#<hostname>" --extra-files /tmp/nixos-anywhere \ # choose host config from this flake and point to extra files
---generate-hardware-config nixos-generate-config \ # generate a hardware config during install
-./hardware-configuration.nix \ # write that hardware configuration to the current directory
-root@<ip> # target host ip
+--generate-hardware-config nixos-generate-config \                          # generate a hardware config during install
+./hardware-configuration.nix \                                              # write that hardware configuration to the current directory
+root@<ip>                                                                   # target host ip
 ```
 3. Enter the disk encryption passphrase when prompted and reboot after install is complete
 4. If the generated `hardware-configuration.nix` differs from the one the repo, commit and push the updated config to the repo for future rebuilds.
@@ -159,14 +159,14 @@ Local installation is done using a live iso when another nix system is not avail
 1. Boot into a live nixos environment such as one of the official isos from nixos or the custom iso in this repo.
 2. If running one of the official isos, run:
 ```
-sudo nix --extra-experimental-features "nix-command flakes pipe-operators" run \ # first two are needed for flake support.
-                                                                                 # Pipe operators are also used by my config. 
-"github:nix-community/disko/latest#disko-install" \ # run the disko-install binary from the nix-community flake
---option extra-experimental-features pipe-operators \ # pipe operators are not automatically enabled when disko-install runs nixos-install
---write-efi-boot-entries \ # use this flag if the target drive is non-removable
---flake "github:rpdav/nixos#install" \ # tell it to install the minimal install host
---disk main /dev/sda # replace /dev/sda with your target disk. Don't worry about /dev/sda not being consistent across boots;
-                     # Future boots will be done using partition labels
+sudo nix --extra-experimental-features "nix-command flakes pipe-operators" \ # first two are needed for flake support.
+                                                                             # pipe operators are also used by my config. 
+run "github:nix-community/disko/latest#disko-install" \                      # run the disko-install binary from the nix-community flake
+--option extra-experimental-features pipe-operators \                        # pipe operators are not automatically enabled when disko-install runs nixos-install
+--write-efi-boot-entries \                                                   # use this flag if the target drive is non-removable
+--flake "github:rpdav/nixos#install" \                                       # tell it to install the minimal install host
+--disk main /dev/sda                                                         # replace /dev/sda with your target disk. Don't worry about /dev/sda not being consistent across boots;
+                                                                             # Future boots will be done using partition labels
 ```
 3. If running on my custom iso, it's a bit simpler:
 ```
@@ -179,8 +179,8 @@ sudo disko-install \
 4. Enter the disk encryption passphrase when prompted.
 5. Once install is complete, reboot
 6. Once rebooted, copy the keys needed for secrets:
-  1. ssh host keys go in `/etc/ssh` (or `/persist/etc/ssh` for impermanent systems
-  2. User age keys go in `~/.config/sops/age`
+    1. ssh host keys go in `/etc/ssh` (or `/persist/etc/ssh` for impermanent systems
+    2. User age keys go in `~/.config/sops/age`
 7. Install the full system by running `sudo nixos-rebuild boot --flake "github:rpdav/nixos#hostname"`
 8. Reboot to activate the full config
 
@@ -190,7 +190,6 @@ sudo disko-install \
 Even the minimal install has some RAM constraints - if using the official minimal iso, it requires 16 GB. If using my custom iso, it requires 8 GB. If you see an "out of disk space" error during install, you ran out of RAM.
 
 #### Alternative for low-RAM systems
-
 The RAM constraints can be skipped by using `disko` instead of `disko-install`. This requires an independent disk config rather than a module. The disk configs in my repo will work as long as they are modified to remove any custom options (such as swap size).
 
 1. Boot into an install environment
