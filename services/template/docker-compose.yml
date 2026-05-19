@@ -1,14 +1,14 @@
 services:
-  [CONTAINER]:
-    image: [IMAGE-URL]:latest
-    container_name: [CONTAINER]
+  <CONTAINER>:
+    image: <IMAGE-URL>:latest
+    container_name: <CONTAINER>
     volumes:
-      - /config.serviceOpts.dockerDir/[CONTAINER]/config:/container/path
+      - /config.serviceOpts.dockerDir/<CONTAINER>/config:/container/path
     ports:
-      - [HOST-PORT]:[CONTAINER-PORT]
+      - <HOST-PORT>:<CONTAINER-PORT>
     networks:
-      - proxynet #if proxied
-      - default #default must be declared for multi-container compose and external networks
+      - proxynet # if proxied
+      - default # default must be declared for multi-container compose and external networks
     restart: unless-stopped
 
 networks:

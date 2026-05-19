@@ -6,6 +6,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 
 ```
 .
+├── docs            documentation
 ├── home            home-manager configurations
 ├── system          system (NixOS) configurations
 ├── lib             custom library to make import paths cleaner (credit to EmergentMind) 
@@ -66,10 +67,6 @@ Several custom options are defined in `vars/default.nix`. These are used to set 
 ## Secrets
 
 See readme in nix-secrets directory.
-
-## Selfhosted Services
-
-The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server. Bootstrapping a container-based service takes a bit more work than simple compose files. I've found a few tools (and have written a couple simple modules) that help speed that process up. More details in the `services` directory.
 
 ## Impermanence
 

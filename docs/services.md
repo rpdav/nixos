@@ -1,11 +1,11 @@
 # Selfhosted Services
 
-I run most of my selfhosted services using containers. Some services could be run as native nix modules like nginx and nextcloud, but I'm sticking with containers right now for a couple reasons:
+The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server. Bootstrapping a container-based service takes a bit more work than simple compose files. I've found a few tools (and have written a couple simple modules) that help speed that process up. An example service is in the `services` directory.
 
-1. My first goal is to transition my VPS and NAS over to Nixos and they exclusively use containers
-2. I'm much more familiar with containers and compose
+Some services could be run as native nix modules like nginx and nextcloud, but I'm sticking mostly with containers right now for a couple reasons:
 
-After getting everything transitioned, I may look into transitioning to Nixos modules.
+1. I'm much more familiar with containers and compose
+2. I use custom docker networks to allow most service-to-service communication and don't have to manage so many host port mappings.
 
 ## Docker vs Podman
 
@@ -23,7 +23,7 @@ The `mounts` and `proxy-conf` modules in `default.nix` make use of `systemd.tmpf
 
 ### Volume creation and ownership
 
-I prefer to create manual directories to pass through as volume mounts to containers. I create these declaratively using a custom module called `virtualisation.oci-containers.mounts`. This module will add `tmpfiles` entries - a `d` rule to create directories if they don't exist yet and a `Z` rule to recursively change ownership to the user running the container, which is typically `config.serviceOpts.dockerUser`.
+I prefer to create manual directories to pass through as volume mounts to containers rather than docker volumes. I create these declaratively using a custom module called `virtualisation.oci-containers.mounts`. This module will add `tmpfiles` entries - a `d` rule to create directories if they don't exist yet and a `Z` rule to recursively change ownership to the user running the container, which is typically `config.serviceOpts.dockerUser`.
 
 If a directory to be mounted into a container doesn't exist at run time, the container run command will fail. The `d` rule ensures this folder exists prior to running the container for the first time. After first run, this rule does nothing since the directory will already exist.
 
@@ -35,7 +35,7 @@ When `tmpfiles` creates a directory owned by a user, if parent directories also 
 
 Many of the webapps that I run are accessed through my reverse proxy (`swag`), which uses nginx. Services are configured through individual nginx configuration files. I defined a custom module `virtualisation.oci-containers.proxy-conf` where the relevant options for each service can be defined (container name, port, and protocol, as well as the subdomain nginx should listen for). The module then builds a config file using `systemd.tmpfiles.rules` and places it at location defined in `config.serviceOpts.proxyDir`. 
 
-I set my `proxyDir` to be in `/run` so that it gets cleared on reboot and rebuilt during boot. This keeps old configs from unused services from staying around indefinitely.
+I set my `proxyDir` to be in `/run` so that it gets rebuilt during each boot. This keeps old configs from unused services from staying around indefinitely.
 
 ## services/\<host\>\<name\>/docker-compose.nix
 
@@ -46,7 +46,7 @@ Some post-creation edits are needed to add in secrets and custom options (e.g. `
 
 I keep `docker-compose.yml` around in case any upstream edits are made by the image maintainers. If edits are needed, just rerun `compose2nix` to regenerate `docker-compose.nix`. It will overwrite your post-generation edits but it's easy to pick out which edits you want to keep vs discard using git diffs.
 
-### uptix
+## uptix
 
 I use [uptix](https://github.com/luizribeiro/uptix) to manage container updates. It creates a version-pinned `uptix.lock` file in the root of the repo much like flake.lock. This lock file determines the version of the image that is assigned to the container.
 
@@ -54,4 +54,4 @@ The lock file is created by running the `uptix` binary, but by default the binar
 
 ## Docker secrets
 
-Since symlinks don't work with docker, secrets need to be mounted directly to `/run/secrets/foo/bar`.
+I use `sops-nix` for secrets management, including docker secrets. If a container needs declared secrets, I create a `secrets.env` file within sops and point to it within `docker-compose.nix` at `config.sops.secrets.someSecret.path`. See secrets documentation for more details.

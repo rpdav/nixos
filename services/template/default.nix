@@ -4,7 +4,7 @@ in {
   imports = [./docker-compose.nix];
 
   # Create/chmod appdata directories to mount
-  # Option 1: This will create a directory at ${dockerDir}/serviceName/config owned by ${dockerUser}:users with mode 0700
+  # Option 1: This will create a directory at ${dockerDir}/serviceName/config owned by ${serviceOpts.dockerUser}:users with mode 0700
   virtualisation.oci-containers.mounts."containerName" = {};
 
   # Option 2: Define paths explicitly
@@ -31,10 +31,10 @@ in {
   virtualisation.oci-containers.proxy-conf."serviceName" = {
     container = "containerName"; # defaults to serviceName if blank
     subdomain = "www"; # defaults to serviceName if blank
-    port = 8080;
+    port = 8080; # this must be the internal port the container listens on, not one mapped to the host
     protocol = "http";
   };
 
-  # pull secret env file
+  # Pull secret env file
   sops.secrets."selfhosting/containerName/env".owner = config.users.users.${config.serviceOpts.dockerUser}.name;
 }
