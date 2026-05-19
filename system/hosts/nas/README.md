@@ -1,27 +1,8 @@
 # NAS host notes
 
-My NAS is a 6-drive Ryzen 5 3600 system. Before it was `nix`ed it ran Unraid. I primarily use it for docker services, running a Windows VM with passed through GPU for gaming (WIP on Nixos), and a few simple network shares.
+My NAS is a 6-drive Ryzen 7 5700X3D system. Before it was `nix`ed it ran Unraid. I primarily use it for docker services, running a Windows VM with passed through GPU for gaming (WIP on Nixos), and a few simple network shares.
 
-## Install
-
-Install is done remotely from another machine with Nix or Nixos installed. It requires the target host to be booted into a nixos installer, be accessible over ssh for root, and target install disk has been added to `default.nix` (i.e. `systemOpts.diskDevice = "nvme1n1";`) within this config.
-
-### ssh key initialization
-
-1. Copy ssh keys from the existing host (or create new keys if totally fresh) to `/tmp/backup/persist/etc/ssh` or similar directory
-2. Generate an age pubkey from the host ssh pubkey: `cat /tmp/backup/persist/etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age`
-3. Add the age pubkey to `.sops.yaml` within the private `nix-secrets` repo
-4. Re-encrypt `sops.yaml` by running `sops updateKeys secrets.yaml`
-5. Commit and push the secrets to the `nix-secrets` remote
-6. Within the main repo, update the `nix-secrets` input
-
-### Remote install with nixos-anywhere
-
-1. Copy backed up files to `/tmp/backup` or similar directory. This directory should mimic the root of the target host (e.g. `/tmp/backup/persist`, `/tmp/backup/etc`). At a minimum this should have the user age key in `/persist/home/user/.config/sops/keys.txt` and host ssh key in `/persist/etc/ssh`. Docker appdata should be copied as well to prevent the containers from creating boilerplate data that will have to be replaced later unless it's already on
-2. Run `nix run github:nix-community/nixos-anywhere -- --flake .#<hostname> --extra-files /tmp/backup --generate-hardware-config nixos-generate-config ./system/hosts/<hostname>/hardware-configuration.nix root@<ip>`
-3. After reboot, the machine should be fully restored. `nixos-anywhere` copies files from `/tmp/backup` preserving permissions but assigns ownership to root. This config includes `tmpfiles` Z rules to correct ownership in `~` and the docker service directories.
-
-## ZFS drives
+## ZFS data drives
 
 The main config difference between NAS and my other systems is the data drives, so most of this config is in `system/hosts/nas/zfs` rather than common.
 
@@ -35,12 +16,11 @@ Below is the high level filesystem structure:
 │   ├── appdata     Contains child filesystems for each service I run. This lets them receive independent snapshots so they can be rolled back individually if needed.
 │   ├── nextcloud   Data directory for Nextcloud (config is still in appdata)
 │   └── photos      Data directory for photos. I don't have a ton so they're on ssds for performance on Immich
-├── storage         Mirrored zpool using 4 TB sata HDDs
-│   ├── backups     Target for all local backups, including FW13 host (using borg), Windows laptop (using Veeam), and some legacy data from Unraid
-│   ├── isos        For real, this is actually linux ISOs
-│   ├── media       iTunes media which is mounted into a Windows VM, as well as some backed up DVDs
-│   └── syncoid     docker and vms pools synchronize to this filesystem. I consider this the 'local backup' for that data
-└── vms             Single drive zpool using a 1 TB NVME with subvolumes for VMs
+└── storage         Mirrored zpool using 4 TB sata HDDs
+    ├── backups     Target for all local backups, including FW13 host (using borg), Windows laptop (using Veeam), and some legacy data from Unraid
+    ├── isos        For real, this is actually linux ISOs
+    ├── media       iTunes media which is mounted into a Windows VM, as well as some backed up DVDs
+    └── syncoid     docker and vms pools synchronize to this filesystem. I consider this the 'local backup' for that data
 ```
 
 ### Import and mounting

@@ -1,13 +1,5 @@
 # Linode VPS Nixos
 
-## nixos-anywhere notes
-
-`nixos-anywhere` authenticates over ssh several times in the install process, so if keys are used it will prompt for the passphrase or yubikey touch several times. I recommend sticking with password ssh for the install because it doesn't really take long.
-
-`nixos-anywhere` expects to be run in the same directory as `flake.nix`. It won't seach upward like `nixos-rebuild`
-
-`nixos-anywhere` can either install onto a machine booted into a nixos installer or onto a separate booted linux distro by using kexec. The docs say that a minimum of 1 GB RAM is needed for kexec, but I had better luck with 2 GB.
-
 ## VPS prep
 
 This is adapted from the [Linode NixOS guide](https://www.linode.com/docs/guides/install-nixos-on-linode/).
@@ -79,19 +71,4 @@ This guide requires a separate ~1 GB disk be used for the installer image. The m
 
 ## Install
 
-1. Copy any files that need to be on the new host to `~/anywhere` (this can of course be changed). This directory should mimic the root of the target host (e.g. `~/anywhere/persist`, `~/anywhere/etc`). At a minimum this should include the user age key in `~/.config/sops/keys.txt` and host ssh key in `/etc/ssh`. If the system is impermanent, use the file locations within the persistent directory. Docker persistent data should be copied as well to prevent the containers from creating boilerplate data that will have to be replaced later.
-
-1. Install with `nixos-anywhere` in the same directory as `flake.nix`:
-
-	```command
-	nix run github:nix-community/nixos-anywhere -- --flake .#vps --extra-files ~/anywhere --generate-hardware-config nixos-generate-config ./system/hosts/vps/hardware-configuration.nix root@vps
-	```
-
-1. Once install completes, boot into the NixOS configuration profile in the Linode console.
-
-1. Once rebooted, ssh in and verify everything looks good.
-
-1. Delete the Installer volume and downgrade to a nanode if desired.
-
-## Remote rebuilding
-Rebuild remotely using `nixos-rebuild --flake .vps --target-host root@vps switch`. `sudo` isn't necessary since you're connecting as root. If you use `sudo` it will try to use root's ssh keys.
+Installation is done as described in the main repo readme.
