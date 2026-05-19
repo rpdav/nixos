@@ -5,10 +5,12 @@
   inputs,
   config,
   ...
-}: let
+}:
+#TODO add system stats here
+let
+  inherit (config.systemOpts) persistVol impermanent;
   # Generates a list of the keys in primary user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
-  inherit (config) systemOpts;
+  pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
 in {
   ## This file contains host-specific NixOS configuration
 
@@ -25,11 +27,8 @@ in {
         "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        #"system/common/optional/backup"
-        #"system/common/optional/duplicati.nix"
         "system/common/optional/persistence"
-        "system/common/optional/stylix.nix"
-        "system/common/optional/wm/cinnamon.nix"
+        "system/common/optional/wm/hyprland.nix"
         "system/common/optional/yubikey.nix"
 
         # users
@@ -43,24 +42,37 @@ in {
   # Variable overrides
   systemOpts = {
     primaryUser = "ryan"; #primary user (not necessarily only user)
-    diskDevice = "vda";
-    swapSize = "6G";
+    screenDimTimeout = 600;
+    lockTimeout = 630;
+    screenOffTimeout = 800;
+    suspendTimeout = 900;
+    diskDevice = "/dev/vda";
+    swapSize = "16G";
     impermanent = true;
     gui = true;
   };
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
-  boot.loader.grub = {
-    device = "nodev";
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+  # Boot config with luks
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        # more readable boot menu on hidpi display
+        consoleMode = "5";
+        configurationLimit = 30;
+      };
+      efi.canTouchEfiVariables = true;
+    };
   };
 
   # Networking
   networking.hostName = "testvm";
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+  };
 
   # Host-specific hardware config
   services.pipewire = {
@@ -68,7 +80,6 @@ in {
     pulse.enable = true;
   };
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
   services.libinput.enable = true;
 
   # Printing
@@ -79,26 +90,29 @@ in {
     openFirewall = true;
   };
 
+  # Disable fingerprint for login (causes gnome-keyring unlock to fail)
+  security.pam.services.login.fprintAuth = false;
+
   # System packages
   environment.systemPackages = with pkgs; [
     qdirstat
   ];
 
   # Create impermanent directories
-  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+  environment.persistence.${persistVol} = lib.mkIf impermanent {
     directories = [
       "/var/lib/bluetooth"
+      "/var/lib/fprint"
+      "/etc/secureboot"
     ];
     files = [
       "/root/.ssh/known_hosts"
     ];
   };
 
-  # allow root ssh login for rebuilds
+  # minimal root user config
   users.users.root = {
-    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
-  };
-  users.users.root = {
-    hashedPasswordFile = config.sops.secrets."ryan/passwordhash".path;
+    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key); #allow root ssh for troubleshooting
   };
 }
