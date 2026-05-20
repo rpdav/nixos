@@ -6,14 +6,15 @@
   config,
   ...
 }:
-#TODO add system stats here
+## This file contains host-specific NixOS configuration for host vivobook
+## CPU: AMD Ryzen 5 3500U 4-core
+## GPU: AMD Radeon 760M Vega Mobile Graphics
+## RAM: 8 GB
 let
   inherit (config.systemOpts) persistVol impermanent;
   # Generates a list of the keys in admin user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
-  ## This file contains host-specific NixOS configuration
-
   imports =
     lib.flatten
     [

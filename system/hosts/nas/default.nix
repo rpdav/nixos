@@ -6,7 +6,12 @@
   configLib,
   outputs,
   ...
-}: let
+}:
+## This file contains host-specific NixOS configuration for host nas
+## CPU: AMD Ryzen 7 5700X3D 8-core
+## GPU: Intel B580 12 GB
+## RAM: 32 GB
+let
   inherit (config.systemOpts) persistVol impermanent;
   # Generates a list of the keys in primary user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;

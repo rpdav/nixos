@@ -6,12 +6,13 @@
   config,
   ...
 }:
-#TODO add system stats here
+## This file contains host-specific NixOS configuration for host fw13
+## CPU: AMD Ryzen 5 7640U 6-core
+## GPU: AMD Radeon 760M integrated graphics
+## RAM: 32 GB
 let
   inherit (config.systemOpts) persistVol impermanent;
 in {
-  ## This file contains host-specific NixOS configuration
-
   imports =
     lib.flatten #the list below is a nested list. imports doesn't accept this, so must use lib.flatten
     

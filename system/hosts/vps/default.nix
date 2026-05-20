@@ -6,7 +6,12 @@
   pkgs,
   config,
   ...
-}: let
+}:
+## This file contains host-specific NixOS configuration for host vps
+## CPU: AMD MD EPYC 7713 single core (VM)
+## GPU: None
+## RAM: 1 GB
+let
   inherit (config.systemOpts) persistVol impermanent;
   # Generates a list of the keys for primary user
   pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
