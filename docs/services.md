@@ -15,7 +15,7 @@ In case I ever switch to rootless, I currently have a designated docker user (us
 
 Note that if you switch between docker and podman, they handle some things differently. For instance, when switching from podman to docker, `swag` lost dns resolution because it wrote the podman default (`10.89.0.1`) to `/config/nginx/resolver.conf` whereas docker uses `127.0.0.11`. If switching, it is worth considering just rebuilding all appdata in case there are other differences in there somewhere.
 
-## services/\<host\>/\<name\>/default.nix
+## services/`host`/`name`/default.nix
 
 This file contains any service-related config that isn't in `docker-compose.nix`.
 

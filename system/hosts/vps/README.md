@@ -71,4 +71,4 @@ This guide requires a separate ~1 GB disk be used for the installer image. The m
 
 ## Install
 
-Installation is done as described in the main repo readme.
+Installation is done as described in the install readme.

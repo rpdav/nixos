@@ -54,8 +54,16 @@ Bringing up a new host or user is as simple as:
 2. Making any needed host-specific changes (e.g. updating usernames, hostnames, hardware tweaks)
 3. Choosing which optional modules will be imported for the new host or user
 
-## Secrets
+## Documentation Index
+* [Impermanence](./docs/impermanence.md)
+* [How to Install](./docs/install.md)
+* [Custom Options](./docs/options.md)
+* [Secrets](./nix-secrets/README.md)
+* [Selfhosted Services](./docs/services.md)
+* [Themes](./docs/theming.md)
+* [Virtualization](./docs/virtualization.md)
 
+## Secrets
 See readme in nix-secrets directory.
 
 ## Acknowledgements
@@ -66,7 +74,4 @@ See readme in nix-secrets directory.
 * [TheMaxMur's config](https://github.com/TheMaxMur/NixOS-Configuration) - Great documentation and contains a lot of features I borrowed from, like disko and lanzaboote.
 * [NixOS: Everything Everywhere All At Once](https://www.youtube.com/watch?v=CwfKlX3rA6E) - This convinced me to jump down the NixOS rabbit hole in the first place.
 * [DHH's Omarchy](https://github.com/basecamp/omarchy) - A beautiful, batteries-included hyprland config based on Arch. I borrowed some of his themes, keybinds, and apps for hyprland.
-
-## Virtualization
-My `nas` system is also a virtualization host running a windows VM with some hardware passthrough (an NVME drive, GPU, and audio and USB controllers). I use [nixvirt](https://github.com/AshleyYakeley/NixVirt) which allows libvirt networks and domains (that is, VMs) to be configured with nix expressions. See the readme in `system/hosts/nas/win-vm` for more details.
 

@@ -1,7 +1,14 @@
 # Install and Reinstall
 There are two methods for installing hosts from this config - locally via `disko` and remotely via `nixos-anywhere` (which uses disko under the hood). See the readme files in each host's subfolder for host-specific instructions.
 
-If a new host is being installed, then secrets will need to be initialized for the host:
+## Creating a new host
+To create a new host:
+1. Add a new `nixosConfiguration` entry in `flake.nix` for the host
+2. Create a new base host config in `system/common/hosts/<hostname>/default.nix`
+3. If using home-manager, create a new base home config in `home/<user>/<hostname>.nix`
+4. Make sure all new files are staged before trying to rebuild
+
+Secrets will need to be initialized for the host:
 1. Generate an ed25519 ssh host key pair for the new host. Run `ssh-to-age -i /path/to/key.pub` to generate an age public key.
 2. Add the new key to `.sops.yaml` in the secrets repo and run `sops updatekeys *` to add that key to the relevant files.
 3. Commit and push the updated secrets.

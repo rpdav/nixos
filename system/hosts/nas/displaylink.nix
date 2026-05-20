@@ -2,9 +2,12 @@
   pkgs,
   inputs,
   ...
-}: let
-  pkgs-ly = import inputs.nixpkgs-ly {system = "x86-64_linux";}; # v 1.3.1
-in {
+}: {
+  # NAS uses GPU passthrough and its CPU does not have integrated graphics.
+  # This means that if anything goes wrong after stage 1 boot,
+  # there is no display output to troubleshoot. Displaylink acts as an
+  # external GPU for this purpose.
+
   environment.systemPackages = [pkgs.displaylink];
   services.xserver.videoDrivers = [
     "displaylink"
@@ -29,6 +32,9 @@ in {
     #    ${pkgs.alacritty}/bin/alacritty --command tmux &
     #  '';
     #};
+
+    # Displaylink does not seem to work with a simple tty.
+    # A simple displayManager and windowManager are needed.
     displayManager.session = [
       {
         manage = "desktop";
@@ -46,14 +52,6 @@ in {
     enable = true;
   };
   programs.hyprland.enable = true;
-
-  #services.displayManager.sddm = {
-  #  enable = true;
-  #  wayland.enable = true;
-  #};
-  #services.displayManager.ly = {
-  #  enable = true;
-  #};
 
   boot.extraModprobeConfig = "options evdi initial_device_count=1";
   boot.kernelModules = [

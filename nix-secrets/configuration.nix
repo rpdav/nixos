@@ -24,6 +24,8 @@ in {
     ssh-to-age
   ];
 
+  networking.hostName = "machine1";
+
   sops = {
     # Default sops file is the system-specific one. This assumes machine1 is the hostname of the machine.
     defaultSopsFile = "${inputs.nix-secrets.outPath}/${config.networking.hostName}.yaml";
@@ -47,7 +49,6 @@ in {
     # Calling the secret with an empty set is all that's needed for sops to decrypt it.
     "machine1-service/apiKey" = {};
     # Enable a system secret from user1.yaml
-    # If multiple users are defined, they must have unique passwordHash keys
     passwordHashUser1 = {
       neededForUsers = true; # this must be set to use sops-nix for user password management.
       sopsFile = "${inputs.nix-secrets.outPath}/user1.yaml";

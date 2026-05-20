@@ -15,7 +15,7 @@ This repo contains 2 sources of secrets:
 
 ## SOPS file structure
 
-`.sops.yaml` contains a list of public keys and the files that are to be encrypted with those public keys. The simplest method is to have one file encrypted with all user and host keys, but this lets all users see each others' secrets as well as system secrets. That may be fine depending 
+`.sops.yaml` contains a list of public keys and the files that are to be encrypted with those public keys. The simplest method is to have one file encrypted with all user and host keys, but this lets all users see each others' secrets as well as system secrets.
 
 This repo has a separate yaml file for each user and each machine, as well as a `common.yaml` file with shared secrets. This keeps users and machines from seeing secrets they don't need to see. This is probably overkill for my use case but I wanted to try it as a project.
 
