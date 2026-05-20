@@ -3,7 +3,6 @@
 This is my NixOS configuration. I'm a newbie to Nix and this is my first public repo. Caveat emptor.
 
 ## Repo Tree
-
 ```
 .
 ├── docs            documentation
@@ -22,7 +21,6 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 ```
 
 ## Features
-
 * Flakes: better control of depencies and reproducibility
 * Impermanence: auto-delete cruft to keep that "new computer smell"
 * Home-manager: manage user applications and configuration across multiple systems
@@ -35,7 +33,6 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 * Nixvirt: declarative VM management
 
 ## Structure
-
 The structure of this repo is designed to make it easy to quickly add new users and hosts while also sharing as much common configuration as possible for each user/host. If you're starting out with a single host and user, this may seem overkill but if you think you might ever branch out in the future, it's much easier to add more with this sort of structure in place.
 
 Below gives some examples of what configuration would go where using this structure:
@@ -54,153 +51,12 @@ Below gives some examples of what configuration would go where using this struct
 
 Bringing up a new host or user is as simple as:
 1. Copying a similar host- or user-specific config
-2. Making any needed host-specific changes (e.g. updating usernames, hostnames, device tweaks)
+2. Making any needed host-specific changes (e.g. updating usernames, hostnames, hardware tweaks)
 3. Choosing which optional modules will be imported for the new host or user
-
-## Custom options
-
-Several custom options are defined in `vars/default.nix`. These are used to set several system-, user-, or service-related options in each system's or user's config files. This allows shared modules to be tailored to each system/user without rewriting the whole module. Here are a few use cases:
-* Use a common `disko` config but vary the swap file size based on `systemOpts.swapSize` (or disable swap entirely with `systemOpts.swapEnable`)
-* Use a common `packages.nix` to load packages on all system, but exclude gui apps for headless systems based on `systemOpts.gui` being set to false.
-* Use a common `stylix.nix` module for system-wide theming, but each user can set their own `userOpts.theme`, `userOpts.cursor`, and `userOpts.font`.
 
 ## Secrets
 
 See readme in nix-secrets directory.
-
-## Impermanence
-
-[Impermanence](https://github.com/nix-community/impermanence) is a community module that is designed with the intention of deleting all of `/` during boot with the exception of `/boot`, `/nix`, and `/persist` (and optionally `/home`). Most of the contents of `/etc`, `/usr`, and `/bin` are just symlinks to `/nix/store` and these are rebuilt at boot if they don't already exist. [GrahamC's blog](https://grahamc.com/blog/erase-your-darlings/) goes into further detail about why you would want to do this.
-
-Not everything can be fully declared in the NixOS config, so some critical files in `/etc` and `/var/lib` are symlinked or bind-mounted to files in `/persist` using the impermanence module. There is both a NixOS module and a home-manager module for dotfiles in `/home`.
-
-### Methods of wiping `/`
-
-The impermanence module does not include a function to wipe the non-persistent directories. This config uses btrfs subvolumes and wipes them using a script taken from the [impermanence repo](https://github.com/nix-community/impermanence?tab=readme-ov-file#btrfs-subvolumes). This has the advantage of keeping a handful of recently deleted roots as btrfs snapshots. If I forget to persist something and reboot, it can be recovered by mounting that snapshot. This method works for zfs as well but would need a different wiping script. GrahamC's blog linked above has one.
-
-The other method is to use a tmpfs for `/`. This is simpler but uses more RAM and doesn't preserve the recently deleted root volumes.
-
-### How to persist `/home`
-
- You have to decide how granular you want to be in persisting `/home`:
-* You could persist all of `/home`. Cruft will accumulate in `~` and `.config` but you may be OK with that. This can be done by persisting home in the NixOS impermanence module or by having a separate subvolume for `/home` that doesn't get wiped at all.
-* You could persist the main folders, like user data folders, `.config`, `.local`, and `.ssh`. This is a good middle ground.
-* You could persist individual folders within `.config` and `.local`. You will have to comb through these folders and determine what you want to keep and throw away. Anything managed by home-manager should be declaratively symlinked to `/nix/store` and does not need to be persisted. Some applications spew a lot of loose files and folders in `.config` (looking at you, KDE), so this can be a bit fussy. If you have a lot application churn, you'll have to tweak this frequently. But the more you configure your system with home-manager, the less you will need to persist within `.config`.
-
-My recommendation is to begin by persisting everything and gradually fine-tune it if you want. If something breaks, those files still exist in `/persist` and can be easily restored. If you're not sure where an application is storing its config or data, I include a `fs-diff` script which recursively lists all files in a directory, ignoring bind mounts and symlinks. By storing the output of this script in a file before and after making the change you're interested in, you can run a `diff` on those two files and see where that application is writing its change. I've found this especially useful for window manager files.
-
-NB: If you are using the home-manager impermanence module, and intend to persist `~/.config/systemd` (or all of `~/.config`), do it through the **system** impermanence config, not home-manager. The bind mounts made by impermanence are done using systemd, which themselves live in `~/.config/systemd` for home-manager services. Home-manager will fail if you try to do this using its impermanence module. You probably don't need to persist `~/.config/systemd` itself though since its contents should be in your config.
-
-## Hyprland
-
-My hyprland config is pretty simple but I'm happy with how it so far. Nix and the hypr ecosystem complement each other very well. It works great with stylix too.
-
-## Themes
-
-Theming is handled by [Stylix](https://nix-community.github.io/stylix/), a nixos module that applies system-wide colors, fonts, icons, cursors, and wallpapers. My stylix config is defined in `system/common/core/stylix.nix`.
-
-The `themes` directory contains subdirectories for each theme with a wallpaper, polarity file, and scheme file. These are all accessed by stylix based on the theme chosen through `userOpts.theme`. I currently have the following themes:
-
-| Theme Name  | Base16Scheme              |
-|-------------|---------------------------|
-| everforest  | everforest                |
-| gruvbox     | gruvbox-dark-medium       |
-| latte       | catppuccin-latte          |
-| mocha       | catppuccin-mocha          |
-| moon        | tokyo-night-terminal-dark |
-| mountain    | catppuccin-latte          |
-| nord        | nord                      |
-| rainbow-cat | catppuccin-mocha          |
-| tokyo       | tokyo-night-terminal-dark |
-
-[Base16Schemes](https://github.com/tinted-theming/schemes?tab=readme-ov-file) are a set of 16 coordinated colors. You can also build your own base16 scheme with stylix if you prefer. You can get scheme names and colors by running `nix build nixpkgs#base16-schemes` and browsing to `result/share/themes`.
-
-## Virtualization
-My `nas` system is also a virtualization host running a windows VM with some hardware passthrough (an NVME drive, GPU, and audio and USB controllers). I use [nixvirt](https://github.com/AshleyYakeley/NixVirt) which allows libvirt networks and domains (that is, VMs) to be configured with nix expressions. See the readme in `system/hosts/nas/win-vm` for more details.
-
-## Install and Reinstall
-There are two methods for installing hosts from this config - locally via `disko` and remotely via `nixos-anywhere` (which uses disko under the hood). See the readme files in each host's subfolder for host-specific instructions.
-
-If a new host is being installed, then secrets will need to be initialized for the host:
-1. Generate an ed25519 ssh host key pair for the new host. Run `ssh-to-age -i /path/to/key.pub` to generate an age public key.
-2. Add the new key to `.sops.yaml` in the secrets repo and run `sops updatekeys *` to add that key to the relevant files.
-3. Commit and push the updated secrets.
-4. In the main repo. Update the secrets input, commit, and push the updated `flake.lock` to the remote repo.
-
-### Building a custom iso
-
-This flake offers an `iso` host. It's nearly identical to official minimal (no gui) installer, but it comes with disko pre-installed. This helps with RAM constraints since disko will be installed on this iso itself instead of the tmpfs ramdisk.
-
-### Remote install
-
-Remote install via `nixos-anywhere` is preferred since partitioning, install, and secrets can all be handled in one command. RAM constraints are much lower (2 GB needed for kexec) than for local install with `disko-install`. The minimum requirements for this method are 1) a target host booted into linux (live iso works too) and 2) a provisioning host running nix or nixos with flakes which can ssh into the target host as root.
-
-1. At a minimum, copy the keys used by sops to `/tmp/nixos-anywhere` on the provisioning host, mimicking the directory structure they should have on the target system:
-    1. ssh keys should be in `/tmp/nixos-anywhere/persist/etc/ssh`
-    2. user age keys should be in `/tmp/nixos-anywhere/persist/home/<username>/.config/sops/age`
-2. Install on the remote host with the following command:
-```
-nix run github:nix-community/nixos-anywhere -- \                            # run the nixos-anywhere tool directly from the flake
---flake "github:rpdav/nixos#<hostname>" --extra-files /tmp/nixos-anywhere \ # choose host config from this flake and point to extra files
---generate-hardware-config nixos-generate-config \                          # generate a hardware config during install
-./hardware-configuration.nix \                                              # write that hardware configuration to the current directory
-root@<ip>                                                                   # target host ip
-```
-3. Enter the disk encryption passphrase when prompted and reboot after install is complete
-4. If the generated `hardware-configuration.nix` differs from the one the repo, commit and push the updated config to the repo for future rebuilds.
-
-### Local install
-
-Local installation is done using a live iso when another nix system is not available to bootstrap the new one. It is done using `disko-install` which combines both `disko` for declarative disk partitioning and `nixos-install` to install the actual config.
-
-1. Boot into a live nixos environment such as one of the official isos from nixos or the custom iso in this repo.
-2. If running one of the official isos, run:
-```
-sudo nix --extra-experimental-features "nix-command flakes pipe-operators" \ # first two are needed for flake support.
-                                                                             # pipe operators are also used by my config. 
-run "github:nix-community/disko/latest#disko-install" \                      # run the disko-install binary from the nix-community flake
---option extra-experimental-features pipe-operators \                        # pipe operators are not automatically enabled when disko-install runs nixos-install
---write-efi-boot-entries \                                                   # use this flag if the target drive is non-removable
---flake "github:rpdav/nixos#install" \                                       # tell it to install the minimal install host
---disk main /dev/sda                                                         # replace /dev/sda with your target disk. Don't worry about /dev/sda not being consistent across boots;
-                                                                             # Future boots will be done using partition labels
-```
-3. If running on my custom iso, it's a bit simpler:
-```
-sudo disko-install \
---option extra-experimental-features pipe-operators \
---write-efi-boot-entries \
---flake "github:rpdav/nixos#install" \
---disk main /dev/sda
-```
-4. Enter the disk encryption passphrase when prompted.
-5. Once install is complete, reboot
-6. Once rebooted, copy the keys needed for secrets:
-    1. ssh host keys go in `/etc/ssh` (or `/persist/etc/ssh` for impermanent systems
-    2. User age keys go in `~/.config/sops/age`
-7. Install the full system by running `sudo nixos-rebuild boot --flake "github:rpdav/nixos#hostname"`
-8. Reboot to activate the full config
-
-#### RAM considerations
-`disko-install` downloads the config to be built to `/nix/store` before partitioning the new drive. Since the iso is read-only, this all goes into a tmpfs ramdisk. My `fw13` config is too big for even 32 GB RAM, so I use a minimal `install` config for the initial install.
-
-Even the minimal install has some RAM constraints - if using the official minimal iso, it requires 16 GB. If using my custom iso, it requires 8 GB. If you see an "out of disk space" error during install, you ran out of RAM.
-
-#### Alternative for low-RAM systems
-The RAM constraints can be skipped by using `disko` instead of `disko-install`. This requires an independent disk config rather than a module. The disk configs in my repo will work as long as they are modified to remove any custom options (such as swap size).
-
-1. Boot into an install environment
-2. Clone this repo
-3. Modify the disk config for use with `disko` as described above
-4. Partition the disk by running: 
-```
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format.mount ./path/to/disk-config.nix
-```
-5. Install by running:
-```
-sudo nixos-install --option extra-experimental-features "nix-command flakes pipe-operators" --flake "github:rpdav/nixos#install"
-```
-6. Set up secrets as described in local install
 
 ## Acknowledgements
 * [LibrePhoenix](https://github.com/librephoenix/nixos-config) - Phoenix's videos were a big help in setting up my initial system.
@@ -210,3 +66,7 @@ sudo nixos-install --option extra-experimental-features "nix-command flakes pipe
 * [TheMaxMur's config](https://github.com/TheMaxMur/NixOS-Configuration) - Great documentation and contains a lot of features I borrowed from, like disko and lanzaboote.
 * [NixOS: Everything Everywhere All At Once](https://www.youtube.com/watch?v=CwfKlX3rA6E) - This convinced me to jump down the NixOS rabbit hole in the first place.
 * [DHH's Omarchy](https://github.com/basecamp/omarchy) - A beautiful, batteries-included hyprland config based on Arch. I borrowed some of his themes, keybinds, and apps for hyprland.
+
+## Virtualization
+My `nas` system is also a virtualization host running a windows VM with some hardware passthrough (an NVME drive, GPU, and audio and USB controllers). I use [nixvirt](https://github.com/AshleyYakeley/NixVirt) which allows libvirt networks and domains (that is, VMs) to be configured with nix expressions. See the readme in `system/hosts/nas/win-vm` for more details.
+
