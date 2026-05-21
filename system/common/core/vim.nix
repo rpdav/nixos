@@ -33,6 +33,7 @@
           enableTreesitter = true;
           nix = {
             enable = true;
+            lsp.servers = ["nixd"];
             format.enable = true;
           };
           markdown.enable = true;
