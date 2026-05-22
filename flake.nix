@@ -56,10 +56,6 @@
       url = "github:nix-community/nixos-cli";
       # separate cache server - no follow nixpkgs
     };
-    nix-ai-tools = {
-      url = "github:numtide/nix-ai-tools";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # ── GUI‑related flakes ───────────────────────────────────────
     firefox-addons = {
