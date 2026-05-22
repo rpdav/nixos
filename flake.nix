@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # ── Utility flakes – most just follow nixpkgs ───────────────
+    # ── Utility flakes ──────────────────────────────────────
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,14 +29,17 @@
       url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      # nixos-hardware does not use nixpkgs as an input; no override
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    impermanence.url = "github:nix-community/impermanence";
-
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
     uptix = {
       url = "github:luizribeiro/uptix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,23 +52,24 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-cli.url = "github:nix-community/nixos-cli";
-    nsearch = {
-      url = "github:niksingh710/nsearch";
+    nixos-cli = {
+      url = "github:nix-community/nixos-cli";
+      # separate cache server - no follow nixpkgs
+    };
+    nix-ai-tools = {
+      url = "github:numtide/nix-ai-tools";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-style-plymouth = {
-      url = "github:SergioRibera/s4rchiso-plymouth-theme";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-ai-tools.url = "github:numtide/nix-ai-tools";
 
     # ── GUI‑related flakes ───────────────────────────────────────
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      # separate cache server - no follow nixpkgs
+    };
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
