@@ -87,55 +87,35 @@
     nixpkgs-stable,
     ...
   } @ inputs: let
-    ######################################################################
-    # Shared helpers
-    ######################################################################
     system = "x86_64-linux";
 
-    # Unfree‑enabled package sets
-    pkgs-unstable = import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
     pkgs-stable = import nixpkgs-stable {
       inherit system;
       config.allowUnfree = true;
     };
 
-    # Secrets & library helpers (imported once)
+    # Secrets & library helpers
     secrets = import ./vars/secrets {inherit inputs;};
-    lib = nixpkgs-unstable.lib;
     configLib = import ./lib {inherit (nixpkgs-unstable) lib;};
 
-    # Arguments passed to every host/module
     specialArgs = {
-      inherit pkgs-stable pkgs-unstable secrets inputs configLib;
+      inherit pkgs-stable secrets inputs configLib;
       inherit (self) outputs;
     };
 
-    # --------------------------------------------------------------------
-    # Helper to build a NixOS system from a module path
-    # --------------------------------------------------------------------
-    mkHost = modulePath:
-      nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        modules = [modulePath];
-      };
-
-    # --------------------------------------------------------------------
-    # Dynamically discover sub‑directories under ./system/hosts
-    # --------------------------------------------------------------------
-    hostNames =
-      builtins.readDir ./system/hosts
-      |> lib.attrNames;
-
-    generatedConfigs =
-      hostNames
-      |> map (name: {
-        name = name;
-        value = mkHost (./system/hosts + "/${name}");
+    # Config generator function
+    mkConfigurations = hosts:
+      hosts
+      # Map each hostname to a name-value pair
+      |> map (host: {
+        name = host;
+        value = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [./system/hosts/${host}];
+        };
       })
-      |> lib.listToAttrs;
+      # Convert the list of pairs into a single attribute set
+      |> builtins.listToAttrs;
   in {
     ######################################################################
     # Exported modules
@@ -144,8 +124,19 @@
     homeManagerModules = import ./modules/home-manager;
 
     ######################################################################
-    # Auto‑generated host configs based on ./system/hosts directory
+    # Generate nixosConfigurations based on helper function and host list
     ######################################################################
-    nixosConfigurations = generatedConfigs;
+    nixosConfigurations = mkConfigurations [
+      # Main hosts
+      "fw13"
+      "nas"
+      "vps"
+      # Installation configs
+      "install"
+      "iso"
+      # Testing hosts
+      "vivobook"
+      "testvm"
+    ];
   };
 }
