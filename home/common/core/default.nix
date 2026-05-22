@@ -58,6 +58,8 @@
             inherit secrets;
           })
 
+          (import ./scripts/nix-search-tv.nix {inherit pkgs;})
+
           # misc
           (import ./scripts/fs-diff.nix {inherit pkgs;})
         ]
