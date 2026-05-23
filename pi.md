@@ -16,6 +16,12 @@ After reboot (with systemctl poweroff), couldn't get display. Toggling the kvm s
 
 ### first rebuild
 
-## Move to standalone flake config
+Accidentally made it a flake build (even without `nixos-rebuild switch --flake`) because flake.nix was in /etc/nixos. Didn't even require --extra-experimental-features
+
+Seemed to build fine, but got a "fatal error-code 45" from rpi bootloader when trying to boot.
+
+Rebooting again and hitting escape during bootloader process seemed to make it work. Hard to know what's going on because display doesn't initialize right away.
+
+### Flesh out rpi config
 
 ## Bring into main config

@@ -1,27 +1,29 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "pi-test"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "America/Indiana/Indianapolis";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -37,9 +39,6 @@
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-
-
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -60,22 +59,22 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     tree
-  #   ];
-  # };
+  users.users.ryan = {
+    isNormalUser = true;
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+    password = "changeme";
+  };
+
+  users.users.root.password = "changeme";
 
   # programs.firefox.enable = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  # ];
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -88,7 +87,10 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh = {
+    settings.PasswordAuthentication = true;
+    enable = true;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -119,6 +121,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?
-
 }
-
