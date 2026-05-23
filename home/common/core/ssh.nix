@@ -29,10 +29,7 @@ in {
   };
 
   # symlink public keys
-  home.file =
-    {
-    }
-    // publicKeyEntries;
+  home.file = {} // publicKeyEntries;
 
   # General ssh config
   programs.ssh = {
