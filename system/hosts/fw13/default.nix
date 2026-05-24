@@ -140,6 +140,9 @@ in {
     ];
   };
 
+  # Allow building arm packages
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
   # Firmware updates
   services.fwupd.enable = true;
 

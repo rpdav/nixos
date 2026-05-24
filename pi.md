@@ -22,6 +22,15 @@ Seemed to build fine, but got a "fatal error-code 45" from rpi bootloader when t
 
 Rebooting again and hitting escape during bootloader process seemed to make it work. Hard to know what's going on because display doesn't initialize right away.
 
+### remote deploy on separate flake
+need `boot.binfmt.emulatedSystems = [ "aarch64-linux" ];` to allow emulation.
+
+starting with just native `nixos-rebuild` tooling; I'm not sure how nixos apply would work here yet.
+
+That seemed to work, although I couldn't ssh in as root. used regular user and sudo
+
+### Bring into main config
+
 ### Flesh out rpi config
 
 ## Bring into main config
