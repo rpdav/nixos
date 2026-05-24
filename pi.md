@@ -30,7 +30,25 @@ starting with just native `nixos-rebuild` tooling; I'm not sure how nixos apply 
 That seemed to work, although I couldn't ssh in as root. used regular user and sudo
 
 ### Bring into main config
+Had to set nix.settings.trusted-users to `["@wheel"]` but that's because ssh as root was messed up. Shouldn't be needed in main config.
+
+Worked as easily as separate flake
 
 ### Flesh out rpi config
+* core packages
+* secrets, ssh, etc
 
-## Bring into main config
+### Reinstall/redeploy
+
+## Declarative deploy
+
+### Create ext4 disk with disko
+
+### Create btrfs disk with disko
+
+### Update deployment tooling
+* 
+
+## Final config
+
+### Retroarch displayManager

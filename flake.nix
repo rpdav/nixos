@@ -128,6 +128,7 @@
       # Testing hosts
       "vivobook"
       "testvm"
+      "pi-test"
     ];
   };
 }
