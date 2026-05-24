@@ -8,7 +8,6 @@
     # ── Core Nixpkgs ────────────────────────────────────────
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     # ── Home‑manager ────────────────────────────────────────
     home-manager = {
@@ -83,23 +82,15 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
     nixpkgs-stable,
     ...
   } @ inputs: let
-    system = "x86_64-linux";
-
-    pkgs-stable = import nixpkgs-stable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
     # Secrets & library helpers
     secrets = import ./vars/secrets {inherit inputs;};
-    configLib = import ./lib {inherit (nixpkgs-unstable) lib;};
+    configLib = import ./lib {inherit (nixpkgs) lib;};
 
     specialArgs = {
-      inherit pkgs-stable secrets inputs configLib;
+      inherit nixpkgs-stable secrets inputs configLib;
       inherit (self) outputs;
     };
 

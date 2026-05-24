@@ -5,8 +5,7 @@
   inputs,
   outputs,
   secrets,
-  pkgs-stable,
-  pkgs-unstable,
+  nixpkgs-stable,
   configLib,
   ...
 }:
@@ -74,8 +73,7 @@ in {
     #useUserPackages = true;
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
     extraSpecialArgs = {
-      inherit pkgs-stable;
-      inherit pkgs-unstable;
+      inherit nixpkgs-stable;
       inherit secrets;
       inherit inputs;
       inherit outputs;

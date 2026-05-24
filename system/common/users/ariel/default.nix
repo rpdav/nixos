@@ -2,8 +2,7 @@
   config,
   inputs,
   secrets,
-  pkgs-stable,
-  pkgs-unstable,
+  nixpkgs-stable,
   configLib,
   ...
 }:
@@ -37,8 +36,7 @@
     useUserPackages = true;
     users.ariel = import (configLib.relativeToRoot "home/ariel/${config.networking.hostName}.nix");
     extraSpecialArgs = {
-      inherit pkgs-stable;
-      inherit pkgs-unstable;
+      inherit nixpkgs-stable;
       inherit secrets;
       inherit inputs;
       inherit configLib;

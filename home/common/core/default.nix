@@ -4,9 +4,11 @@
   lib,
   secrets,
   pkgs,
-  pkgs-stable,
+  nixpkgs-stable,
   ...
-}: {
+}: let
+  pkgs-stable = nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   imports = [
     ./backup.nix
     ./bash.nix
