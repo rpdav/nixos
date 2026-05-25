@@ -49,7 +49,7 @@
     };
     nvf = {
       url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # separate cache server - no follow nixpkgs
     };
     nixos-cli = {
       url = "github:nix-community/nixos-cli";

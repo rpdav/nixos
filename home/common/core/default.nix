@@ -94,7 +94,7 @@ in {
           gnome-calendar
         ]
       )
-      ++ (
+      ++ lib.lists.optionals osConfig.systemOpts.gui (
         with pkgs-stable; [
           jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
         ]

@@ -37,7 +37,10 @@ in {
     enableDefaultConfig = false;
     matchBlocks."*" = {
       # For impermanent systems, known hosts must be written to persistent volume. if !impermanent, it goes to default location.
-      userKnownHostsFile = lib.mkIf osConfig.systemOpts.impermanent "${osConfig.systemOpts.persistVol}${homeDir}/.ssh/known_hosts";
+      userKnownHostsFile =
+        if osConfig.systemOpts.impermanent
+        then "${osConfig.systemOpts.persistVol}${homeDir}/.ssh/known_hosts"
+        else "${homeDir}/.ssh/known_hosts";
       # The options below are defaults from programs.ssh.enableDefaultConfig, which is deprecated
       # May want to revisit these someday
       forwardAgent = false;

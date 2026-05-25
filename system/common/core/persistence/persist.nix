@@ -1,7 +1,11 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   programs.fuse.userAllowOther = true;
 
-  environment.persistence.${config.systemOpts.persistVol} = {
+  environment.persistence.${config.systemOpts.persistVol} = lib.mkIf config.systemOpts.impermanent {
     hideMounts = true;
     directories = [
       "/var/log"

@@ -871,11 +871,11 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1778845546,
-        "narHash": "sha256-pZbOnJJUFWU2jemlj0UL4rULg861HJFouS1wlj++y9I=",
+        "lastModified": 1779709925,
+        "narHash": "sha256-uwtuvsWv+pmK4zdTSCkH/DUxPXxDwqDOKIdNItAT7Kk=",
         "ref": "refs/heads/main",
-        "rev": "cba9f5e1fa59d68925bf12333f4df2b6d320c457",
-        "revCount": 117,
+        "rev": "6429f00031b3e820bac5a97cfbab9c959fffcae8",
+        "revCount": 118,
         "type": "git",
         "url": "https://git.dfrp.xyz/ryan/nix-secrets"
       },
@@ -1014,6 +1014,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1779508470,
+        "narHash": "sha256-Ap9KJX+5xHIn3bPIpfNgT6MEXdAECECwo4/rmlQD74M=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "29916453413845e54a65b8a1cf996842300cd299",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvirt": {
       "inputs": {
         "nixpkgs": [
@@ -1064,9 +1080,7 @@
         "flake-parts": "flake-parts_3",
         "mnw": "mnw",
         "ndg": "ndg",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_5",
         "systems": "systems_2"
       },
       "locked": {

@@ -35,8 +35,10 @@ Had to set nix.settings.trusted-users to `["@wheel"]` but that's because ssh as 
 Worked as easily as separate flake
 
 ### Flesh out rpi config
-* core packages
-* secrets, ssh, etc
+[x] core packages
+[x] secrets, ssh, etc
+[ ] nvf (rebuild with cache enabled)
+[ ] nixos-hardware (need to keep kernel cache miss)
 
 ### Reinstall/redeploy
 
@@ -47,7 +49,10 @@ Worked as easily as separate flake
 ### Create btrfs disk with disko
 
 ### Update deployment tooling
-* 
+* make sure `nixos apply` just commands work for arm systems
+* update ssh hosts
+
+### USB drive boot?
 
 ## Final config
 
