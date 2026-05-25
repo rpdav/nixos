@@ -9,6 +9,7 @@ in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
+    ./persistence
     ./packages.nix
     ./regressions.nix
     ./sops.nix

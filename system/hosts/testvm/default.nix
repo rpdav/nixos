@@ -27,7 +27,6 @@ in {
         "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "system/common/optional/persistence"
         "system/common/optional/wm/hyprland.nix"
         "system/common/optional/yubikey.nix"
 

@@ -17,7 +17,6 @@
       # optional config
       "home/common/optional/app/browser"
       "home/common/optional/app/kitty.nix"
-      "home/common/optional/config/persist.nix"
       "home/common/optional/wm/hyprland"
     ])
     # multi-system config for current user

@@ -29,7 +29,6 @@ in {
         "system/common/optional/backup"
         "system/common/optional/docker.nix" # container admin tools, not just for running containers
         "system/common/optional/duplicati.nix"
-        "system/common/optional/persistence"
         "system/common/optional/steam.nix"
         "system/common/optional/virtualization"
         "system/common/optional/wine.nix"

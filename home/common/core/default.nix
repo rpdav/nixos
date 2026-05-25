@@ -12,6 +12,7 @@ in {
   imports = [
     ./backup.nix
     ./bash.nix
+    ./persist.nix
     ./sops.nix
     ./ssh.nix
     ./starship.nix

@@ -19,7 +19,6 @@
     "home/common/optional/app/nextcloud.nix"
     "home/common/optional/app/kitty.nix"
     "home/common/optional/app/web-apps"
-    "home/common/optional/config/persist.nix"
     "home/common/optional/wm/hyprland"
   ];
 

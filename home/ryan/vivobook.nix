@@ -19,7 +19,6 @@
       "home/common/optional/app/defaultapps.nix"
       "home/common/optional/app/kitty.nix"
       "home/common/optional/app/web-apps"
-      "home/common/optional/config/persist.nix"
       "home/common/optional/wm/cinnamon.nix"
     ])
     # multi-system config for current user

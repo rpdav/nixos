@@ -12,7 +12,6 @@
       "home/common/core"
 
       # optional config
-      "home/common/optional/config/persist.nix"
     ])
     # multi-system config for current user
     ./common/core

@@ -29,7 +29,6 @@ in {
         # optional config
         "system/common/optional/backup"
         "system/common/optional/duplicati.nix"
-        "system/common/optional/persistence"
         "system/common/optional/wm/cinnamon.nix"
 
         # users

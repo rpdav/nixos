@@ -28,7 +28,6 @@ in {
       # optional config
       "system/common/optional/backup"
       "system/common/optional/docker.nix"
-      "system/common/optional/persistence"
       "system/common/optional/ssh-unlock.nix"
       "system/common/optional/virtualization"
       "system/common/optional/yubikey.nix"
