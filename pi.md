@@ -42,6 +42,8 @@ Worked as easily as separate flake
 
 nvf still seems to need to compile dotnet even with cache enabled. stopped after 4.75 hours. Will have to omit from pi for now. Would nixvim be better?
 
+retroarch install seemed to work fine. swapped out snes9x for bsnes because 9x is unfree and had to be compiled
+
 ### Reinstall/redeploy
 
 ## Declarative deploy

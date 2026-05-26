@@ -12,7 +12,7 @@
 }:
 ## This file contains host-specific NixOS configuration for host pi-test
 ## CPU: Cortex-A72 4-core
-## GPU: Integrated
+## GPU: Broadcom VideoCore VI
 ## RAM: 2 GB
 let
   inherit (config.systemOpts) persistVol impermanent;
@@ -81,6 +81,31 @@ in {
     neovim
   ];
 
+  # Window Manager
+  services.displayManager = {
+    lightdm.enable = true;
+    autoLogin = {
+      enable = true;
+      user = config.systemOpts.primaryUser;
+    };
+  };
+  services.xserver = {
+    enable = true;
+    desktopManager.retroarch = let
+      retroarchWithCores = pkgs.retroarch.withCores (cores:
+        with cores; [
+          bsnes
+          dolphin
+          melonds
+          mupen64plus
+          vba-m
+        ]);
+    in {
+      enable = true;
+      package = retroarchWithCores; # testing without cores first to make sure it builds ok
+    };
+  };
+
   # Networking
   networking = {
     hostName = "pi-test"; # Define your hostname.
@@ -106,6 +131,7 @@ in {
   };
 
   # RPi-specific Hardware config
+  hardware.graphics.enable = true;
   #hardware.raspberry-pi."4" = {
   #  audio.enable = true;
   #  bluetooth.enable = true;
