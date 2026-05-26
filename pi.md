@@ -38,7 +38,9 @@ Worked as easily as separate flake
 [x] core packages
 [x] secrets, ssh, etc
 [ ] nvf (rebuild with cache enabled)
-[ ] nixos-hardware (need to keep kernel cache miss)
+[x] nixos-hardware (need to keep kernel cache miss)
+
+nvf still seems to need to compile dotnet even with cache enabled. stopped after 4.75 hours. Will have to omit from pi for now. Would nixvim be better?
 
 ### Reinstall/redeploy
 

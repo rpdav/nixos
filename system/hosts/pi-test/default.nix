@@ -43,7 +43,7 @@ in {
     # nixos-hardware causes kernel to need to be compiled locally.
     # may be able to avoid this by setting boot.kernelPackages = pkgs.linuxPackages;
     # for now, just disabling
-    #inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
   ];
 
   # Variable overrides
@@ -77,6 +77,10 @@ in {
   #  ];
   #};
 
+  environment.systemPackages = with pkgs; [
+    neovim
+  ];
+
   # Networking
   networking = {
     hostName = "pi-test"; # Define your hostname.
@@ -91,6 +95,10 @@ in {
     # Enables the generation of /boot/extlinux/extlinux.conf
     generic-extlinux-compatible.enable = true;
   };
+
+  # Don't use linux-rpi kernel from nixos-hardware
+  # Pull from nixpkgs cache instead. Otherwise, kernel will be compiled
+  boot.kernelPackages = pkgs.linuxPackages;
 
   # allow root ssh login for rebuilds
   users.users.root = {
