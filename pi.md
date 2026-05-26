@@ -38,11 +38,13 @@ Worked as easily as separate flake
 [x] core packages
 [x] secrets, ssh, etc
 [ ] nvf (rebuild with cache enabled)
-[x] nixos-hardware (need to keep kernel cache miss)
+[x] nixos-hardware (need to fix kernel cache miss)
 
 nvf still seems to need to compile dotnet even with cache enabled. stopped after 4.75 hours. Will have to omit from pi for now. Would nixvim be better?
 
 retroarch install seemed to work fine. swapped out snes9x for bsnes because 9x is unfree and had to be compiled
+
+performance is OK for snes and gba. DS and GCN are choppy - especially audio. Don't have a 64 to test yet 
 
 ### Reinstall/redeploy
 
@@ -59,5 +61,8 @@ retroarch install seemed to work fine. swapped out snes9x for bsnes because 9x i
 ### USB drive boot?
 
 ## Final config
+
+[ ] try to enable more rpi-hardware config
+[ ] make different user?
 
 ### Retroarch displayManager

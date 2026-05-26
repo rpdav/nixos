@@ -56,6 +56,7 @@ in {
     impermanent = false; # to be changed after enabling disko
     gui = false;
   };
+  userOpts.theme = lib.mkForce "retroarch";
 
   # Backup config
   backupOpts = {
@@ -82,15 +83,14 @@ in {
   ];
 
   # Window Manager
-  services.displayManager = {
-    lightdm.enable = true;
-    autoLogin = {
-      enable = true;
-      user = config.systemOpts.primaryUser;
-    };
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = config.systemOpts.primaryUser;
   };
+
   services.xserver = {
     enable = true;
+    displayManager.lightdm.enable = true;
     desktopManager.retroarch = let
       retroarchWithCores = pkgs.retroarch.withCores (cores:
         with cores; [
