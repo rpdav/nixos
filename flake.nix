@@ -55,6 +55,11 @@
       url = "github:nix-community/nixos-cli";
       # separate cache server - no follow nixpkgs
     };
+    nixos-raspberrypi = {
+      url = "github:nvmd/nixos-raspberrypi/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # separate cache server - no follow nixpkgs
+    };
 
     # ── GUI‑related flakes ───────────────────────────────────────
     firefox-addons = {
@@ -83,6 +88,7 @@
     self,
     nixpkgs,
     nixpkgs-stable,
+    nixos-raspberrypi,
     ...
   } @ inputs: let
     # Secrets & library helpers
@@ -90,7 +96,7 @@
     configLib = import ./lib {inherit (nixpkgs) lib;};
 
     specialArgs = {
-      inherit nixpkgs-stable secrets inputs configLib;
+      inherit nixpkgs-stable secrets inputs configLib nixos-raspberrypi;
       inherit (self) outputs;
     };
 
@@ -130,5 +136,15 @@
       "testvm"
       "pi-test"
     ];
+    #nixosConfigurations.pi-test = nixos-raspberrypi.lib.nixosSystem {
+    #  inherit specialArgs;
+    #  modules = [
+    #    ./system/hosts/pi-test
+    #  ];
+    #};
+    #nixosConfigurations.fw13 = nixpkgs.lib.nixosSystem {
+    #  inherit specialArgs;
+    #  modules = [./system/hosts/fw13];
+    #};
   };
 }

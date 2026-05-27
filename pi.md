@@ -50,11 +50,23 @@ performance is OK for snes and gba. DS and GCN are choppy - especially audio. Do
 
 #### [nixos-raspberrypi](https://github.com/nvmd/nixos-raspberrypi)
 
+The imports described in the section about using `nixpkgs.lib.nixosSystem` are incorrect - check these against the actual flake outputs.
+
+At a minimum, need the base image imported.
+
+Getting an error that `services.displayManager.generic` does not exist when rebuilding using the custom system builder function. I think this is because the nixos-raspberrpi flake is based on stable pkgs, but the rest of my config (specifically stylix) is pulling the `generic` option from unstable, which doesn't exist in stable. Can overcome this by having nixos-raspberrypi follow nixpkgs, but then I'll miss out on the binary cache. Maybe skipping binary cache is OK as long as I stick with nixpkgs kernel; what I want most is the integration with disko.
+
+The default options from `nixos-raspberrypi` seem to not conflict with current setup. Will leave these options alone for now and move on to disko testing; can do more tweaking later. Things to revisit:
+* hardware options (bluetooth, wlan)
+* get `nixos-raspberrypi` cache working and try other kernels
+
 #### [raspberry-pi-nix](https://github.com/nix-community/raspberry-pi-nix)
 
-Repo is archived
+Repo is archived; skipping for now.
 
 ### Reinstall/redeploy
+
+Skipping - going directly to disko setup
 
 ## Declarative deploy
 

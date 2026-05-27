@@ -7,7 +7,7 @@
   config,
   configLib,
   inputs,
-  outputs,
+  nixos-raspberrypi,
   ...
 }:
 ## This file contains host-specific NixOS configuration for host pi-test
@@ -40,10 +40,12 @@ in {
 
     # host-specific
     ./hardware-configuration.nix
-    # nixos-hardware causes kernel to need to be compiled locally.
-    # may be able to avoid this by setting boot.kernelPackages = pkgs.linuxPackages;
-    # for now, just disabling
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    nixos-raspberrypi.nixosModules.raspberry-pi-4.bluetooth
+    nixos-raspberrypi.nixosModules.raspberry-pi-4.base
+    # include these when using vanilla nixpkgs.lib.nixosSystem builder:
+    nixos-raspberrypi.lib.inject-overlays
+    nixos-raspberrypi.nixosModules.nixpkgs-rpi
+    #nixos-raspberrypi.lib.inject-overlays-global # may cause lots of rebuilds
   ];
 
   # Variable overrides
@@ -121,7 +123,7 @@ in {
     generic-extlinux-compatible.enable = true;
   };
 
-  # Don't use linux-rpi kernel from nixos-hardware
+  # Don't use linux-rpi kernel from nixos-raspberrypi
   # Pull from nixpkgs cache instead. Otherwise, kernel will be compiled
   boot.kernelPackages = pkgs.linuxPackages;
 
@@ -137,11 +139,6 @@ in {
     enable = true;
     pulse.enable = true;
   };
-  # most of the options below seem to not work if using mainline linux kernel
-  #hardware.raspberry-pi."4" = {
-  #audio.enable = true;
-  #bluetooth.enable = true;
-  #};
 
   system.stateVersion = "26.05"; # Did you read the comment?
 }
