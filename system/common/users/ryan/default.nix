@@ -60,13 +60,9 @@ in {
       ];
     };
   };
-  nix.settings = {
-    substituters = ["https://watersucks.cachix.org"];
-    trusted-public-keys = [
-      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
-    ];
-  };
-  environment.systemPackages = [pkgs.nvd];
+  environment.systemPackages = [
+    pkgs.nvd # diffing tool
+  ];
 
   # home-manager config
   home-manager = {
