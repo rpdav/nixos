@@ -132,9 +132,15 @@ in {
 
   # RPi-specific Hardware config
   hardware.graphics.enable = true;
+  hardware.bluetooth.enable = true;
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+  };
+  # most of the options below seem to not work if using mainline linux kernel
   #hardware.raspberry-pi."4" = {
-  #  audio.enable = true;
-  #  bluetooth.enable = true;
+  #audio.enable = true;
+  #bluetooth.enable = true;
   #};
 
   system.stateVersion = "26.05"; # Did you read the comment?

@@ -44,7 +44,15 @@ nvf still seems to need to compile dotnet even with cache enabled. stopped after
 
 retroarch install seemed to work fine. swapped out snes9x for bsnes because 9x is unfree and had to be compiled
 
-performance is OK for snes and gba. DS and GCN are choppy - especially audio. Don't have a 64 to test yet 
+performance is OK for snes and gba. DS and GCN are choppy - especially audio. Don't have a 64 to test. enabling pipewire didn't help. 
+
+### try alternate raspberry pi flakes
+
+#### [nixos-raspberrypi](https://github.com/nvmd/nixos-raspberrypi)
+
+#### [raspberry-pi-nix](https://github.com/nix-community/raspberry-pi-nix)
+
+Repo is archived
 
 ### Reinstall/redeploy
 
@@ -63,6 +71,6 @@ performance is OK for snes and gba. DS and GCN are choppy - especially audio. Do
 ## Final config
 
 [ ] try to enable more rpi-hardware config
-[ ] make different user?
+[ ] make different user
 
 ### Retroarch displayManager
