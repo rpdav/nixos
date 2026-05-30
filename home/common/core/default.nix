@@ -114,17 +114,20 @@
     ];
   };
 
-  programs.bat.enable = true;
-
-  programs.autojump.enable = true;
-
-  programs.btop.enable = true;
-
-  programs.ripgrep.enable = true;
-
+  # misc programs
+  programs = {
+    bat.enable = true;
+    autojump.enable = true;
+    btop.enable = true;
+    ripgrep.enable = true;
+  };
   services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
 
+  # session variables
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
+  # theming
+  gtk.gtk4.theme = config.gtk.theme;
 }
