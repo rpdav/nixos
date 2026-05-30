@@ -34,20 +34,17 @@ in {
   # General ssh config
   programs.ssh = {
     enable = true;
-    enableDefaultConfig = false;
-    matchBlocks."*" = {
+    enableDefaultConfig = false; #this will eventually be deprecated and can be removed
+    settings."*" = {
       # For impermanent systems, known hosts must be written to persistent volume. if !impermanent, it goes to default location.
       userKnownHostsFile =
-        if osConfig.systemOpts.impermanent
+        if config.userOpts.impermanent
         then "${osConfig.systemOpts.persistVol}${homeDir}/.ssh/known_hosts"
         else "${homeDir}/.ssh/known_hosts";
-      # The options below are defaults from programs.ssh.enableDefaultConfig, which is deprecated
-      # May want to revisit these someday
       forwardAgent = false;
       serverAliveInterval = 0;
       serverAliveCountMax = 3;
       compression = false;
-      addKeysToAgent = "no";
       hashKnownHosts = false;
       controlMaster = "no";
       controlPath = "~/.ssh/master-%r@%n:%p";

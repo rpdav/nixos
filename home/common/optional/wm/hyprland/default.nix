@@ -69,6 +69,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    configType = "hyprlang";
     # plugins break often due to version mismatches even with version pinning :(
     plugins = let
       hyprPlugins = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};

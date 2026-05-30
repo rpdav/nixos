@@ -19,7 +19,7 @@
   ];
 
   userOpts = {
-    impermanent = false; # while testing
+    impermanent = false;
   };
 
   home.username = "ryan";
