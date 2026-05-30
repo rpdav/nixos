@@ -68,9 +68,25 @@ Repo is archived; skipping for now.
 
 Skipping - going directly to disko setup
 
+Coming back after having trouble with disko below. Followed these steps:
+1. flashed sd card with official image from hydra
+2. copied over ssh and age keys
+3. booted up pi and set root pw to allow ssh
+4. pushed a rebuild over ssh, omitting all `disko` and `nixos-raspberrypi` config (having it enabled caused rebuild to fail due to boot issues.
+5. reboot and system is back up
+
+rebuilding again with `nixos-raspberrypi` is still failing; not sure why it was working before. 
+
 ## Declarative deploy
 
+nixos-anywhere failed, saying kexec didn't work. not sure why kexec would be needed since it's already running nix? may need to read about kexec on arm on the nixos-anywhere project. For now going to focus on using disko-install on the sd card on another system
+
 ### Create ext4 disk with disko
+doing a fat /boot and ext4 / led to disko-install saying it failed. the ext4 partition was formatted and installed, but boot was empty (and not mounted). trying again with a simple ext4 and no extra boot partition.
+
+disko-install with ext4-only also failed - said it could not find the activation binary and bootloader was not installed.
+
+repeating with nixos-install led to the same error. A [2023 discourse thread](https://discourse.nixos.org/t/nixos-install-and-nixos-enter-chroot-failed-to-run-command-nix-var-nix-profiles-system-activate-no-such-file-or-directory/32071/15) talked about this, but no solution; they just did a manual install instead.
 
 ### Create btrfs disk with disko
 

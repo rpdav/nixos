@@ -40,9 +40,10 @@ in {
 
     # host-specific
     ./hardware-configuration.nix
+    #./disk-ext4.nix
     nixos-raspberrypi.nixosModules.raspberry-pi-4.bluetooth
     nixos-raspberrypi.nixosModules.raspberry-pi-4.base
-    # include these when using vanilla nixpkgs.lib.nixosSystem builder:
+    ## include these when using vanilla nixpkgs.lib.nixosSystem builder:
     nixos-raspberrypi.lib.inject-overlays
     nixos-raspberrypi.nixosModules.nixpkgs-rpi
     #nixos-raspberrypi.lib.inject-overlays-global # may cause lots of rebuilds
