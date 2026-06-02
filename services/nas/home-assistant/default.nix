@@ -20,10 +20,6 @@ in {
     "home-assistant-zwave" = {
       target = "${dockerDir}/Home-Assistant-Core/zwave";
     };
-    "home-assistant-esp" = {
-      target = "${dockerDir}/Home-Assistant-Core/esphome";
-      mode = "777";
-    };
   };
 
   # Open HA port since we're exposing ports and host mode instead of using container DNS
