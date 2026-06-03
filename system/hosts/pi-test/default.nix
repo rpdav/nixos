@@ -28,6 +28,7 @@ in {
       #"system/common/disks/luks-lvm-imp.nix"
 
       # optional config
+      "system/common/optional/wm/retroarch.nix"
       #"system/common/optional/backup"
       #"system/common/optional/docker.nix"
       #"system/common/optional/ssh-unlock.nix"
@@ -84,30 +85,6 @@ in {
   environment.systemPackages = with pkgs; [
     neovim
   ];
-
-  # Window Manager
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = config.systemOpts.primaryUser;
-  };
-
-  services.xserver = {
-    enable = true;
-    displayManager.lightdm.enable = true;
-    desktopManager.retroarch = let
-      retroarchWithCores = pkgs.retroarch.withCores (cores:
-        with cores; [
-          bsnes
-          dolphin
-          melonds
-          mupen64plus
-          vba-m
-        ]);
-    in {
-      enable = true;
-      package = retroarchWithCores; # testing without cores first to make sure it builds ok
-    };
-  };
 
   # Networking
   networking = {
