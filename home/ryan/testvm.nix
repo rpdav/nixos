@@ -11,7 +11,6 @@
   imports = lib.flatten [
     (map configLib.relativeToRoot [
       # core config
-      "vars"
       "home/common/core"
 
       # optional config

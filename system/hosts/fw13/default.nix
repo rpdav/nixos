@@ -19,7 +19,6 @@ in {
     [
       (map configLib.relativeToRoot [
         # core config
-        "vars"
         "system/common/core"
 
         # disk config
@@ -31,6 +30,7 @@ in {
         "system/common/optional/duplicati.nix"
         "system/common/optional/steam.nix"
         "system/common/optional/virtualization"
+        "system/common/optional/wifi.nix"
         "system/common/optional/wine.nix"
         "system/common/optional/wm/hyprland.nix"
         "system/common/optional/yubikey.nix"
@@ -54,6 +54,7 @@ in {
     suspendTimeout = 900;
     diskDevice = "nvme0n1";
     swapSize = "16G";
+    wifiInterface = "wlp1s0";
     impermanent = true;
     gui = true;
   };

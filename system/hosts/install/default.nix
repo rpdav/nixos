@@ -2,12 +2,9 @@
   lib,
   pkgs,
   configLib,
-  inputs,
   config,
   ...
-}: let
-  inherit (config.systemOpts) persistVol impermanent;
-in {
+}: {
   ## This file contains host-specific NixOS configuration for my minimal install host
   ## Will be rebuilt after install using a permanent host
 

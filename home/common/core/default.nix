@@ -2,6 +2,7 @@
   config,
   osConfig,
   lib,
+  configLib,
   secrets,
   pkgs,
   nixpkgs-stable,
@@ -10,6 +11,7 @@
   pkgs-stable = nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [
+    (configLib.relativeToRoot "vars")
     ./backup.nix
     ./bash.nix
     ./persist.nix

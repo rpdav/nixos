@@ -10,7 +10,6 @@
 
   imports = map configLib.relativeToRoot [
     # core config
-    "vars"
     "home/common/core"
 
     # optional config

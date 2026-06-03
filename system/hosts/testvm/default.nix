@@ -20,7 +20,6 @@ in {
     [
       (map configLib.relativeToRoot [
         # core config
-        "vars"
         "system/common/core"
 
         # disk config

@@ -22,7 +22,6 @@ in {
   imports = lib.flatten [
     (map configLib.relativeToRoot [
       # core config
-      "vars"
       "system/common/core"
 
       # disk config

@@ -2,7 +2,6 @@
   pkgs,
   lib,
   configLib,
-  config,
   osConfig,
   ...
 }: {
@@ -11,7 +10,6 @@
   imports = lib.flatten [
     (map configLib.relativeToRoot [
       # core config
-      "vars"
       "home/common/core"
 
       # optional config
