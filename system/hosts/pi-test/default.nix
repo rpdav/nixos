@@ -31,6 +31,7 @@ in {
       #"system/common/optional/backup"
       #"system/common/optional/docker.nix"
       #"system/common/optional/ssh-unlock.nix"
+      "system/common/optional/wifi.nix"
       "system/common/optional/yubikey.nix"
 
       # users
@@ -113,7 +114,6 @@ in {
     hostName = "pi-test"; # Define your hostname.
     networkmanager.enable = true;
   };
-  #TODO: add wifi config here?
 
   # Boot
   boot.loader = {
