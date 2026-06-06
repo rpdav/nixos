@@ -92,13 +92,13 @@ in {
           onlyoffice-desktopeditors
 
           # utilities
-          bitwarden-desktop
           gnome-calendar
         ]
       )
       ++ lib.lists.optionals osConfig.systemOpts.gui (
         with pkgs-stable; [
           jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
+          bitwarden-desktop # reverting to stable due to electron insecurity in unstable
         ]
       )
   );
@@ -132,7 +132,4 @@ in {
   home.sessionVariables = {
     EDITOR = "nvim";
   };
-
-  # theming
-  gtk.gtk4.theme = config.gtk.theme;
 }
