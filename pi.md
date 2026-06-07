@@ -70,7 +70,7 @@ Skipping - going directly to disko setup
 
 Coming back after having trouble with disko below. Followed these steps:
 1. flashed sd card with official image from hydra
-2. copied over ssh and age keys
+2. copied over ssh and age keys (need to be mindful of permissions here - rebuild failed because ownership of `/home/ryan` wasn't changed to `ryan` recursively.
 3. booted up pi and set root pw to allow ssh
 4. pushed a rebuild over ssh, omitting all `disko` and `nixos-raspberrypi` config (having it enabled caused rebuild to fail due to boot issues.
 5. reboot and system is back up
@@ -90,15 +90,19 @@ repeating with nixos-install led to the same error. A [2023 discourse thread](ht
 
 ### Create btrfs disk with disko
 
+skipped
+
 ### Update deployment tooling
 * make sure `nixos apply` just commands work for arm systems
 * update ssh hosts
-
-### USB drive boot?
 
 ## Final config
 
 [ ] try to enable more rpi-hardware config
 [ ] make different user
+
+will not use disko or impermanence
+
+### USB drive boot?
 
 ### Retroarch displayManager
