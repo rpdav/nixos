@@ -16,7 +16,6 @@ in {
     ./bash.nix
     ./persist.nix
     ./sops.nix
-    ./ssh.nix
     ./starship.nix
   ];
 
@@ -34,39 +33,6 @@ in {
           gdu
           fastfetch
           just
-
-          ### scripts
-
-          # nix file conversion tools
-          (import ./scripts/json2nix.nix {inherit pkgs;})
-          (import ./scripts/toml2nix.nix {inherit pkgs;})
-          (import ./scripts/yaml2nix.nix {inherit pkgs;})
-          (import ./scripts/nix2json.nix {inherit pkgs;})
-          (import ./scripts/nix2toml.nix {inherit pkgs;})
-          (import ./scripts/nix2yaml.nix {inherit pkgs;})
-
-          # remote host management
-          (import ./scripts/clear-testbox.nix {
-            inherit pkgs;
-            inherit config;
-          })
-          (import ./scripts/clear-testvm.nix {
-            inherit pkgs;
-            inherit config;
-          })
-          (import ./scripts/clear-vps.nix {
-            inherit pkgs;
-            inherit config;
-          })
-          (import ./scripts/lish.nix {
-            inherit pkgs;
-            inherit secrets;
-          })
-
-          (import ./scripts/nix-search-tv.nix {inherit pkgs;})
-
-          # misc
-          (import ./scripts/fs-diff.nix {inherit pkgs;})
         ]
         ++ lib.lists.optionals osConfig.systemOpts.gui [
           # browsers
@@ -111,25 +77,10 @@ in {
       ".config/GIMP"
       ".config/Nextcloud"
       ".config/onlyoffice"
-      ".config/remmina"
     ];
     files = [
       ".config/ghostwriterrc"
       ".config/bluedevelglobalrc" # bluetooth
     ];
-  };
-
-  # misc programs
-  programs = {
-    bat.enable = true;
-    autojump.enable = true;
-    btop.enable = true;
-    ripgrep.enable = true;
-  };
-  services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
-
-  # session variables
-  home.sessionVariables = {
-    EDITOR = "nvim";
   };
 }
