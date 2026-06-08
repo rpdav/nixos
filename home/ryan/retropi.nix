@@ -3,7 +3,7 @@
   configLib,
   ...
 }: {
-  ## This file contains all home-manager config unique to user ryan on host pi-test
+  ## This file contains all home-manager config unique to user ryan on host retropi
 
   imports = lib.flatten [
     (map configLib.relativeToRoot [

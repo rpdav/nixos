@@ -128,23 +128,13 @@
       "fw13"
       "nas"
       "vps"
+      "retropi"
       # Installation configs
       "install"
       "iso"
       # Testing hosts
       "vivobook"
       "testvm"
-      "pi-test"
     ];
-    #nixosConfigurations.pi-test = nixos-raspberrypi.lib.nixosSystem {
-    #  inherit specialArgs;
-    #  modules = [
-    #    ./system/hosts/pi-test
-    #  ];
-    #};
-    #nixosConfigurations.fw13 = nixpkgs.lib.nixosSystem {
-    #  inherit specialArgs;
-    #  modules = [./system/hosts/fw13];
-    #};
   };
 }

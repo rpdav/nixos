@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
   lib,
   pkgs,
@@ -8,7 +5,7 @@
   configLib,
   ...
 }:
-## This file contains host-specific NixOS configuration for host pi-test
+## This file contains host-specific NixOS configuration for host retropi
 ## CPU: Cortex-A72 4-core
 ## GPU: Broadcom VideoCore VI
 ## RAM: 2 GB
@@ -40,7 +37,7 @@ in {
   # Variable overrides
   systemOpts = {
     primaryUser = "retro"; # primary user (not necessarily only user)
-    wifiInterface = "wlp1s0";
+    wifiInterface = "wlan0";
     gcRetention = "30d";
     impermanent = false; # to be changed after enabling disko
     gui = false;
@@ -66,7 +63,7 @@ in {
 
   # Networking
   networking = {
-    hostName = "pi-test"; # Define your hostname.
+    hostName = "retropi"; # Define your hostname.
     networkmanager.enable = true;
   };
 

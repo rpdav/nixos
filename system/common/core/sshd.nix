@@ -57,7 +57,7 @@ in {
       Hostname 192.168.122.207
       User root
 
-    Host pi-test
+    Host retropi
       Hostname 10.10.1.10
       User ryan
 

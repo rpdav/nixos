@@ -5,8 +5,7 @@
   configLib,
   ...
 }: let
-  homeDir = config.home.homeDirectory;
-  username = config.home.username;
+  inherit (config.home) homeDirectory username;
   # Path to public keys stored in config
   pathtokeys = configLib.relativeToRoot "system/common/users/${username}/keys";
   # List of public keys in path
@@ -25,7 +24,7 @@ in {
   # Pull manual key from sops
   # This gets overridden by the yubikey module if it's in use
   sops.secrets = {
-    "sshKeys/id_ed25519".path = "${homeDir}/.ssh/id_manual";
+    "sshKeys/id_ed25519".path = "${homeDirectory}/.ssh/id_manual";
   };
 
   # symlink public keys
@@ -36,11 +35,7 @@ in {
     enable = true;
     enableDefaultConfig = false; #this will eventually be deprecated and can be removed
     settings."*" = {
-      # For impermanent systems, known hosts must be written to persistent volume. if !impermanent, it goes to default location.
-      userKnownHostsFile =
-        if config.userOpts.impermanent
-        then "${osConfig.systemOpts.persistVol}${homeDir}/.ssh/known_hosts"
-        else "${homeDir}/.ssh/known_hosts";
+      userKnownHostsFile = "${osConfig.systemOpts.persistVol}${homeDirectory}/.ssh/known_hosts";
       forwardAgent = false;
       serverAliveInterval = 0;
       serverAliveCountMax = 3;
