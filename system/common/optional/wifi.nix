@@ -35,6 +35,7 @@
           key-mgmt = "wpa-psk";
           psk = "$WIFI_PSK";
         };
+        ipv4.method = "auto";
       };
     };
   };

@@ -28,6 +28,7 @@ Unlike my `x86` hosts, the `retropi` host is installed by flashing an image onto
 1. It uses a fat32 `/boot` partition and an ext4 `/` partition, rather than btrfs
 2. Since it is pre-partitioned, `disko` is not used. The filesystems are declared in `hardware-configuration.nix` like a vanilla non-`disko` system.
 3. The system is not impermanent.
+4. The root partition is not encrypted.
 
 ### Install procedure
 1. Download a copy of the sd card image from [hydra](https://hydra.nixos.org/job/nixos/trunk-combined/nixos.sd_image.aarch64-linux)
@@ -37,5 +38,6 @@ Unlike my `x86` hosts, the `retropi` host is installed by flashing an image onto
   * `/etc/ssh/authorized_keys.d/root`: add pubkeys to be able to initially ssh into for rebuilding
   * `/home/<user>/.config/sops/age/keys.txt`: age keys for each user on the system
   * `/etc/NetworkManager/system-connections/<ssid>.nmconnection`: nmconnection file with wireless network credentials if provisioning over wifi
+  command to run: `sudo rsync -r ~/hosts/retropi-files/* /run/media/ryan/NIXOS_SD`
 4. Boot the pi with the sd card and rebuild from the provisioning host with `nixos-rebuild boot --flake github:rpdav/nixos#retropi --target-host root@<pi-ip>`
 5. Reboot the pi and it should be up and running

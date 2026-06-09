@@ -32,6 +32,7 @@ in {
         "Downloads"
 
         # Nix and other projects on main system
+        "hosts" # files for reinstalling/restoring hosts
         "nixos"
         "nix-secrets"
         "projects"
