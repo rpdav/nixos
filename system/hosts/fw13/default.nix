@@ -54,7 +54,6 @@ in {
     suspendTimeout = 900;
     diskDevice = "nvme0n1";
     swapSize = "16G";
-    wifiInterface = "wlp1s0";
     impermanent = true;
     gui = true;
   };

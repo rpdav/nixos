@@ -37,7 +37,6 @@ in {
   # Variable overrides
   systemOpts = {
     primaryUser = "retro"; # primary user (not necessarily only user)
-    wifiInterface = "wlan0";
     gcRetention = "30d";
     impermanent = false; # to be changed after enabling disko
     gui = false;
@@ -86,6 +85,18 @@ in {
   services.pipewire = {
     enable = true;
     pulse.enable = true;
+  };
+
+  ### Fix wifi not connecting due to broadcom bug
+  networking.localCommands = ''
+    ${pkgs.iw}/bin/iw reg set US
+  '';
+  boot.extraModprobeConfig = ''
+    # Disable OBSS scanning feature which triggers chanspec -52 failure
+    options brcmfmac feature_disable=0x200000
+  '';
+  networking.networkmanager = {
+    wifi.scanRandMacAddress = false; # Disables randomization during background scans
   };
 
   system.stateVersion = "26.05"; # Did you read the comment?

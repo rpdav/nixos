@@ -11,12 +11,6 @@
     restartUnits = ["network-online.target"];
   };
 
-  # not compatible with network manager
-  #networking.wireless.secretsFile = config.sops.secrets.wifi.path;
-  #networking.wireless.networks = {
-  #  skynet.pskRaw = "ext:skynet";
-  #};
-
   networking.networkmanager = {
     enable = true;
     ensureProfiles.environmentFiles = [config.sops.secrets.wifi_env.path];
@@ -25,11 +19,9 @@
         connection = {
           id = "skynet";
           type = "wifi";
-          interface-name = config.systemOpts.wifiInterface;
         };
         wifi = {
           ssid = "$WIFI_SSID";
-          mode = "infrastructure";
         };
         wifi-security = {
           key-mgmt = "wpa-psk";

@@ -57,14 +57,6 @@ in {
           Just check that the device is correct during the install session.
         '';
       };
-      wifiInterface = mkOption {
-        type = types.str;
-        default = "wlan0";
-        example = "wlp1s0";
-        description = ''
-          Name of the wifi interface for wifi-enabled systems.
-        '';
-      };
       gcRetention = mkOption {
         type = types.str;
         default = "30d";

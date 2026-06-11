@@ -11,10 +11,10 @@ There are some pi-focused flakes that may be better optimized for the pi's hardw
 * I may revisit this later to pull in some of the other custom options
 
 ### [raspberry-pi-nix](https://github.com/nix-community/raspberry-pi-nix)
-Repo is archived; didn't pursue this much |
+Repo is archived; didn't pursue this much
 
 ### [nixos-raspberrypi](https://github.com/nvmd/nixos-raspberrypi)
-* There are alternate kernels which are supposedly in the binary cache, but I never got them to pull from the cache 
+* There are alternate optimized kernels which are supposedly in the binary cache for this flake, but I never got them to pull from the cache 
 * The main thing I wanted to use this repo for was the ability to install with `nixos-anywhere` or `disko-install`, but had trouble with both:   
   * `nixos-anywhere` ran into a kexec error; I'm not sure why it was trying to use kexec since I was installing to a pi booted into nixos   
   * `disko-install` directly onto the sd card also failed; but so did manually partitioning and trying to install with `nixos-install`
@@ -31,13 +31,13 @@ Unlike my `x86` hosts, the `retropi` host is installed by flashing an image onto
 4. The root partition is not encrypted.
 
 ### Install procedure
-1. Download a copy of the sd card image from [hydra](https://hydra.nixos.org/job/nixos/trunk-combined/nixos.sd_image.aarch64-linux)
-2. Flash the image to an sd card.
-3. While it's mounted on the provisioning host, make sure the sd card has any needed files in the proper places, such as:
+1. Build an sd-card image from this flake:
+`nixos-rebuild --flake /home/ryan/nixos#retropi build-image --image-variant sd-card`
+2. Decompress the generated image:
+`zstd -d -o ~/sd-image.img result/sd-image/nixos-image-sd-card*.img.zst`
+3. Flash the image onto the sd card:
+`sudo dd if=./sd-image.img of=/dev/sda`
+4. While it's mounted on the provisioning host, make sure the sd card has any needed files in the proper places, such as:
   * `/etc/ssh`: ssh server keys that have been previously added to sops
-  * `/etc/ssh/authorized_keys.d/root`: add pubkeys to be able to initially ssh into for rebuilding
   * `/home/<user>/.config/sops/age/keys.txt`: age keys for each user on the system
-  * `/etc/NetworkManager/system-connections/<ssid>.nmconnection`: nmconnection file with wireless network credentials if provisioning over wifi
-  command to run: `sudo rsync -r ~/hosts/retropi-files/* /run/media/ryan/NIXOS_SD`
-4. Boot the pi with the sd card and rebuild from the provisioning host with `nixos-rebuild boot --flake github:rpdav/nixos#retropi --target-host root@<pi-ip>`
-5. Reboot the pi and it should be up and running
+`sudo rsync -r ~/hosts/retropi-files/* /run/media/ryan/NIXOS_SD`
