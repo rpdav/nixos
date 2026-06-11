@@ -8,7 +8,6 @@
     # ── Core Nixpkgs ────────────────────────────────────────
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     # ── Home‑manager ────────────────────────────────────────
     home-manager = {
@@ -50,10 +49,15 @@
     };
     nvf = {
       url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # separate cache server - no follow nixpkgs
     };
     nixos-cli = {
       url = "github:nix-community/nixos-cli";
+      # separate cache server - no follow nixpkgs
+    };
+    nixos-raspberrypi = {
+      url = "github:nvmd/nixos-raspberrypi/main";
+      inputs.nixpkgs.follows = "nixpkgs";
       # separate cache server - no follow nixpkgs
     };
 
@@ -83,23 +87,16 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
     nixpkgs-stable,
+    nixos-raspberrypi,
     ...
   } @ inputs: let
-    system = "x86_64-linux";
-
-    pkgs-stable = import nixpkgs-stable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
     # Secrets & library helpers
     secrets = import ./vars/secrets {inherit inputs;};
-    configLib = import ./lib {inherit (nixpkgs-unstable) lib;};
+    configLib = import ./lib {inherit (nixpkgs) lib;};
 
     specialArgs = {
-      inherit pkgs-stable secrets inputs configLib;
+      inherit nixpkgs-stable secrets inputs configLib nixos-raspberrypi;
       inherit (self) outputs;
     };
 
@@ -131,6 +128,7 @@
       "fw13"
       "nas"
       "vps"
+      "retropi"
       # Installation configs
       "install"
       "iso"

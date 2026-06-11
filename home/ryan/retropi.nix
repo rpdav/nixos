@@ -3,7 +3,7 @@
   configLib,
   ...
 }: {
-  ## This file contains all home-manager config unique to user ryan on host vps
+  ## This file contains all home-manager config unique to user ryan on host retropi
 
   imports = lib.flatten [
     (map configLib.relativeToRoot [
@@ -14,9 +14,12 @@
     ])
     # multi-system config for current user
     ./common/core
-
     ./common/optional/yubikey.nix
   ];
+
+  userOpts = {
+    impermanent = false;
+  };
 
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";

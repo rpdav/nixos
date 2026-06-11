@@ -2,7 +2,6 @@
   pkgs,
   lib,
   configLib,
-  config,
   osConfig,
   ...
 }: {
@@ -11,7 +10,6 @@
   imports = lib.flatten [
     (map configLib.relativeToRoot [
       # core config
-      "vars"
       "home/common/core"
 
       # optional config
@@ -22,7 +20,6 @@
       "home/common/optional/app/kitty.nix"
       "home/common/optional/app/thunderbird.nix"
       "home/common/optional/app/web-apps"
-      "home/common/optional/config/persist.nix"
       "home/common/optional/wm/hyprland"
     ])
     # multi-system config for current user

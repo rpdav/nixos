@@ -27,11 +27,11 @@ Remote install via `nixos-anywhere` is preferred since partitioning, install, an
     2. user age keys should be in `/tmp/nixos-anywhere/persist/home/<username>/.config/sops/age`
 2. Install on the remote host with the following command:
 ```
-nix run github:nix-community/nixos-anywhere -- \                            # run the nixos-anywhere tool directly from the flake
---flake "github:rpdav/nixos#<hostname>" --extra-files /tmp/nixos-anywhere \ # choose host config from this flake and point to extra files
---generate-hardware-config nixos-generate-config \                          # generate a hardware config during install
-./hardware-configuration.nix \                                              # write that hardware configuration to the current directory
-root@<ip>                                                                   # target host ip
+nix run github:nix-community/nixos-anywhere -- \                           
+--flake "github:rpdav/nixos#<hostname>" --extra-files /tmp/nixos-anywhere \
+--generate-hardware-config nixos-generate-config \                         
+./hardware-configuration.nix \                                             
+root@<ip>                                                                  
 ```
 3. Enter the disk encryption passphrase when prompted and reboot after install is complete
 4. If the generated `hardware-configuration.nix` differs from the one the repo, commit and push the updated config to the repo for future rebuilds.

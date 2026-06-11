@@ -66,7 +66,10 @@ in {
       };
       persistVol = mkOption {
         type = types.str;
-        default = "/persist";
+        default =
+          if config.systemOpts.impermanent
+          then "/persist"
+          else "";
         description = ''
           Where to mount the persistent drive. Only applies to impermanent systems.
         '';
@@ -142,7 +145,7 @@ in {
       };
       impermanent = mkOption {
         type = types.bool;
-        default = true;
+        default = config.systemOpts.impermanent;
         description = ''
           Boolean for whether to enable user impermanent directories
         '';
@@ -209,5 +212,10 @@ in {
         '';
       };
     };
+  };
+  config = {
+    warnings = lib.mkIf (!config.systemOpts.impermanent && config.systemOpts.persistVol != "") [
+      "Warning: Impermanence is disabled through `systemOpts.impermanent = false;` but systemOpts.persistVol is set. This may lead to unexpected behavior. Either set `systemOpts.impermanent` to true or delete an assigned value for `systemOpts.persistVol` to remove this warning."
+    ];
   };
 }

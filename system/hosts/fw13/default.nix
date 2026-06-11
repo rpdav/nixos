@@ -19,7 +19,6 @@ in {
     [
       (map configLib.relativeToRoot [
         # core config
-        "vars"
         "system/common/core"
 
         # disk config
@@ -29,9 +28,9 @@ in {
         "system/common/optional/backup"
         "system/common/optional/docker.nix" # container admin tools, not just for running containers
         "system/common/optional/duplicati.nix"
-        "system/common/optional/persistence"
         "system/common/optional/steam.nix"
         "system/common/optional/virtualization"
+        "system/common/optional/wifi.nix"
         "system/common/optional/wine.nix"
         "system/common/optional/wm/hyprland.nix"
         "system/common/optional/yubikey.nix"
@@ -139,6 +138,9 @@ in {
       "/root/.ssh/known_hosts"
     ];
   };
+
+  # Allow building arm packages
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   # Firmware updates
   services.fwupd.enable = true;

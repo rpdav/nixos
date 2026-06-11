@@ -1,25 +1,40 @@
 {
   config,
-  pkgs,
+  secrets,
   ...
 }: let
-  inherit (config.serviceOpts) dockerUser dockerDir;
+  inherit (config.serviceOpts) dockerDir;
 in {
   networking.firewall = {
     allowedTCPPorts = [8090];
   };
 
-  systemd.services.beszel-hub = {
-    description = "Beszel Hub";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 3;
-      User = "${dockerUser}";
-      WorkingDirectory = "${dockerDir}/beszel-hub";
-      ExecStart = "${pkgs.beszel}/bin/beszel-hub serve --http \"0.0.0.0:8090\"";
+  # Enable service
+  services.beszel.hub = {
+    enable = true;
+    host = "0.0.0.0";
+    dataDir = "${dockerDir}/beszel-hub";
+    environment = {
+      APP_URL = "https://status.${secrets.selfhosting.domain}";
+      BASE_PATH = "/";
+    };
+  };
+
+  # Define service user and group
+  users = {
+    users.beszel-hub = {
+      isSystemUser = true;
+      group = "beszel-hub";
+    };
+    groups.beszel-hub = {};
+  };
+
+  # Create/chmod appdata directories
+  virtualisation.oci-containers.mounts = {
+    "beszel-hub" = {
+      target = "${dockerDir}/beszel-hub/beszel_data";
+      user = "beszel-hub";
+      mode = "0755";
     };
   };
 

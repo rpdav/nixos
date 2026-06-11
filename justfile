@@ -42,7 +42,7 @@ gc:
 build host:
   # using -o flag to make a gc root and keep builds from being immediatley gc'd
   # using apply for build process for nice nvd output
-  nixos apply /home/ryan/nixos/.#{{host}} -o ~/result-{{host}}_{{datetime("%Y-%m-%d_%T")}}
+  nixos apply /home/ryan/nixos/.#{{host}} --no-boot --no-activate -o ~/result-{{host}}_{{datetime("%Y-%m-%d_%T")}}
 
 deploy host:
   nixos-rebuild --flake /home/ryan/nixos/.#{{host}} --target-host root@{{host}} switch

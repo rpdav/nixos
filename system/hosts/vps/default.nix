@@ -21,7 +21,6 @@ in {
     [
       (map configLib.relativeToRoot [
         # core config
-        "vars"
         "system/common/core"
 
         # disk config
@@ -30,7 +29,6 @@ in {
         # optional config
         "system/common/optional/backup"
         "system/common/optional/docker.nix"
-        "system/common/optional/persistence"
         "system/common/optional/yubikey.nix"
 
         # services

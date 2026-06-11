@@ -32,7 +32,7 @@ in {
     '';
     postHook = "${pkgs.rclone}/bin/rclone sync ${remoteRepo} B2-crypt:${hostName}/root --config ${
       config.sops.secrets."rclone/config".path
-    }";
+    }"; #TODO convert the config file to a sops template so more of it can live in main repo
     encryption = {
       mode = "repokey-blake2";
       passCommand = "cat ${config.sops.secrets."borg/passphrase".path}"; # This is also in password manager under entry "Borg backup"

@@ -5,8 +5,7 @@
   inputs,
   outputs,
   secrets,
-  pkgs-stable,
-  pkgs-unstable,
+  nixpkgs-stable,
   configLib,
   ...
 }:
@@ -61,21 +60,16 @@ in {
       ];
     };
   };
-  nix.settings = {
-    substituters = ["https://watersucks.cachix.org"];
-    trusted-public-keys = [
-      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
-    ];
-  };
-  environment.systemPackages = [pkgs.nvd];
+  environment.systemPackages = [
+    pkgs.nvd # diffing tool
+  ];
 
   # home-manager config
   home-manager = {
     #useUserPackages = true;
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
     extraSpecialArgs = {
-      inherit pkgs-stable;
-      inherit pkgs-unstable;
+      inherit nixpkgs-stable;
       inherit secrets;
       inherit inputs;
       inherit outputs;
@@ -84,7 +78,6 @@ in {
   };
 
   # Fix file permissions after backup restore
-  #TODO make this work for non-persist systems too
   systemd.tmpfiles.rules = [
     # make all files in home directory owned by user
     "Z ${config.systemOpts.persistVol}/home/ryan - ryan users"

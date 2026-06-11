@@ -20,14 +20,12 @@ in {
     [
       (map configLib.relativeToRoot [
         # core config
-        "vars"
         "system/common/core"
 
         # disk config
         "system/common/disks/luks-lvm-imp.nix"
 
         # optional config
-        "system/common/optional/persistence"
         "system/common/optional/wm/hyprland.nix"
         "system/common/optional/yubikey.nix"
 

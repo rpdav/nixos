@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   config,
+  configLib,
   ...
 }: let
   inherit (config) systemOpts;
@@ -9,6 +10,8 @@ in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
+    (configLib.relativeToRoot "vars")
+    ./persistence
     ./packages.nix
     ./regressions.nix
     ./sops.nix
@@ -28,6 +31,24 @@ in {
       keep-derivations = true
       warn-dirty = false
     '';
+  };
+
+  # Cache substituters
+  # Putting all config-wide substituters here so that hosts can use them for building
+  # even if they aren't needed for all hosts
+  nix.settings = {
+    substituters = [
+      "https://nvf.cachix.org"
+      "https://hyprland.cachix.org"
+      "https://watersucks.cachix.org"
+      "https://nixos-raspberrypi.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nvf.cachix.org-1:GMQWiUhZ6ux9D5CvFFMwnc2nFrUHTeGaXRlVBXo+naI="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+    ];
   };
 
   environment.variables = {

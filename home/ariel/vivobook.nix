@@ -10,7 +10,6 @@
 
   imports = map configLib.relativeToRoot [
     # core config
-    "vars"
     "home/common/core"
 
     # optional config
@@ -19,7 +18,6 @@
     "home/common/optional/app/nextcloud.nix"
     "home/common/optional/app/kitty.nix"
     "home/common/optional/app/web-apps"
-    "home/common/optional/config/persist.nix" # user persistence isn't used but this module needs loaded to process conditionals in shared modules
     "home/common/optional/wm/hyprland"
   ];
 
