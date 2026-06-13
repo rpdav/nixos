@@ -28,8 +28,6 @@
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  home.stateVersion = "25.05"; # don't change without reading release notes
-
   userOpts = {
     impermanent = false;
   };

@@ -13,8 +13,6 @@
   home.username = "retro";
   home.homeDirectory = "/home/retro";
 
-  home.stateVersion = "24.11"; # don't change without reading release notes
-
   userOpts = {
     impermanent = false;
   };

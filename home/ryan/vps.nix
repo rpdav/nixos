@@ -21,8 +21,6 @@
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  home.stateVersion = "24.11"; # Please read the comment before changing.
-
   backupOpts = {
     patterns = [
       "- **/.git" #can be restored from repos

@@ -24,8 +24,6 @@
   home.username = "ariel";
   home.homeDirectory = "/home/ariel";
 
-  home.stateVersion = "25.05"; # don't change without reading release notes
-
   userOpts = {
     impermanent = false;
   };

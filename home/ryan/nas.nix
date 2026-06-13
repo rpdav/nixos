@@ -65,8 +65,6 @@ in {
     '';
   };
 
-  home.stateVersion = "24.11"; # don't change without reading release notes
-
   backupOpts = {
     patterns = [
       "- **/.git" # can be restored from repos

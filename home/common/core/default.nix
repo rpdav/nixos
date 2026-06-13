@@ -19,6 +19,8 @@ in {
     ./starship.nix
   ];
 
+  home.stateVersion = "24.05"; # HM version I built this config around
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -58,13 +60,13 @@ in {
           onlyoffice-desktopeditors
 
           # utilities
-          bitwarden-desktop
           gnome-calendar
         ]
       )
       ++ lib.lists.optionals osConfig.systemOpts.gui (
         with pkgs-stable; [
           jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
+          #bitwarden-desktop # electron 39.8.10 marked insecure
         ]
       )
   );
@@ -83,7 +85,4 @@ in {
       ".config/bluedevelglobalrc" # bluetooth
     ];
   };
-
-  # theming
-  gtk.gtk4.theme = config.gtk.theme;
 }
