@@ -18,6 +18,8 @@ Secrets will need to be initialized for the host:
 
 This flake offers an `iso` host. It's nearly identical to official minimal (no gui) installer, but it comes with disko pre-installed. This helps with RAM constraints since disko will be installed on this iso itself instead of the tmpfs ramdisk.
 
+You can build the iso with the command `nix build .#nixosConfigurations.iso.config.system.build.isoImage`
+
 ## Remote install
 
 Remote install via `nixos-anywhere` is preferred since partitioning, install, and secrets can all be handled in one command. RAM constraints are much lower (2 GB needed for kexec) than for local install with `disko-install`. The minimum requirements for this method are 1) a target host booted into linux (live iso works too) and 2) a provisioning host running nix or nixos with flakes which can ssh into the target host as root.

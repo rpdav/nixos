@@ -7,7 +7,7 @@
   inputs = {
     # ── Core Nixpkgs ────────────────────────────────────────
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-26.05";
 
     # ── Home‑manager ────────────────────────────────────────
     home-manager = {
@@ -88,7 +88,6 @@
     self,
     nixpkgs,
     nixpkgs-stable,
-    nixos-raspberrypi,
     ...
   } @ inputs: let
     # Secrets & library helpers
@@ -96,7 +95,7 @@
     configLib = import ./lib {inherit (nixpkgs) lib;};
 
     specialArgs = {
-      inherit nixpkgs-stable secrets inputs configLib nixos-raspberrypi;
+      inherit nixpkgs-stable secrets inputs configLib;
       inherit (self) outputs;
     };
 
