@@ -11,32 +11,13 @@
     gdm = {
       enable = true;
     };
+    defaultSession = "hyprland";
   };
-  #services.greetd = {
-  #  enable = true;
-  #  settings = rec {
-  #    initial_session = {
-  #      command = "${pkgs.hyprland}/bin/Hyprland";
-  #      user = config.systemOpts.primaryUser;
-  #    };
-  #    default_session = {
-  #      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.hyprland}/bin/Hyprland";
-  #      user = "greeter";
-  #    };
-  #  };
-  #};
 
   boot.loader.timeout = 0;
 
   # needed for wlogout icons
   programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];
-
-  security.pam.services.greetd = {
-    # Disable fprint and yubikey login
-    fprintAuth = false;
-    u2fAuth = false;
-    enableGnomeKeyring = true;
-  };
 
   # Keyring
   services.gnome.gnome-keyring.enable = true;
