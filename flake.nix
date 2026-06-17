@@ -84,13 +84,8 @@
   ##########################################################################
   # OUTPUTS
   ##########################################################################
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    # Secrets & library helpers
-    configLib = import ./lib {inherit (nixpkgs) lib;};
+  outputs = {self, ...} @ inputs: let
+    configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
 
     specialArgs = {
       inherit configLib inputs self;
@@ -102,9 +97,11 @@
       # Map each hostname to a name-value pair
       |> map (host: {
         name = host;
-        value = nixpkgs.lib.nixosSystem {
+        value = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [./system/hosts/${host}];
+          modules = [
+            ./system/hosts/${host}
+          ];
         };
       })
       # Convert the list of pairs into a single attribute set
