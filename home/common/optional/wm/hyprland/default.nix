@@ -12,7 +12,7 @@
     ./hypridle.nix
     ./waybar
     ./wlogout
-    self.homeManagerModules.monitors
+    self.homeModules.monitors
   ];
 
   # packages

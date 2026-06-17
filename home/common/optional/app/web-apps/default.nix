@@ -5,7 +5,7 @@
   self,
   ...
 }: {
-  imports = [self.homeManagerModules.web-app];
+  imports = [self.homeModules.web-app];
 
   programs.firefox.webapps = let
     inherit (inputs.nix-secrets.selfhosting) domain;

@@ -7,7 +7,7 @@
 }: let
   homeDir = config.home.homeDirectory;
 in {
-  imports = [self.homeManagerModules.yubikey-touch-detector];
+  imports = [self.homeModules.yubikey-touch-detector];
   # Pull private keys from sops
   sops.secrets = {
     # override default manual key path if yubikey is enabled. If normal key is present in .ssh, sudo will use it over the yubikey.

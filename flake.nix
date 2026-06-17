@@ -20,6 +20,10 @@
       url = "github:hercules-ci/flake-parts";
       # flake-parts does not use nixpkgs as an input; no override
     };
+    import-tree = {
+      url = "github:vic/import-tree";
+      # import-tree does not use nixpkgs as an input; no override
+    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -91,7 +95,14 @@
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake
     {inherit inputs;} {
-      imports = [];
+      imports = [
+        inputs.home-manager.flakeModules.home-manager # needed to merge homeModules. Move to config later
+        # Add modules here as they are brought into flake-parts
+        # Once conversion is done, this will be replaced with import-tree
+        # This list will get really long
+        ./modules/nixos
+        ./modules/home-manager
+      ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let
         configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
@@ -117,12 +128,6 @@
           # Convert the list of pairs into a single attribute set
           |> builtins.listToAttrs;
       in {
-        ######################################################################
-        # Exported modules
-        ######################################################################
-        nixosModules = import ./modules/nixos;
-        homeManagerModules = import ./modules/home-manager;
-
         ######################################################################
         # Generate nixosConfigurations based on helper function and host list
         ######################################################################
