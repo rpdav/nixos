@@ -27,6 +27,7 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # In system, this is in a separate packages.nix - consider matching?
   home.packages = (
     with pkgs;
       (
