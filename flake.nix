@@ -108,6 +108,7 @@
 
         # system modules
         ./system/common/core
+        ./system/common/optional/vim.nix
       ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let

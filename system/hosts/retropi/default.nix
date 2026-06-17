@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  config,
+  self,
   configLib,
   ...
 }:
@@ -26,6 +26,11 @@ in {
       "system/common/users/ryan"
       "system/common/users/retro"
     ])
+    # core config
+    self.nixosModules.core
+
+    # optional
+    self.nixosModules.vim
 
     # host-specific
     ./hardware-configuration.nix
@@ -52,10 +57,6 @@ in {
     patterns = [
     ];
   };
-
-  environment.systemPackages = with pkgs; [
-    neovim # nvf causes compilation; just using vanilla nvim for pi
-  ];
 
   # Networking
   networking = {

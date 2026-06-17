@@ -39,6 +39,9 @@ in {
       # core config
       self.nixosModules.core
 
+      # optional
+      self.nixosModules.vim
+
       # host-specific
       ./hardware-configuration.nix
       (modulesPath + "/installer/scan/not-detected.nix")

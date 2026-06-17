@@ -38,6 +38,9 @@ in {
     # core config
     self.nixosModules.core
 
+    # optional config
+    self.nixosModules.vim
+
     # host-specific
     ./win-vm
     ./hardware-configuration.nix

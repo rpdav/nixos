@@ -8,7 +8,6 @@
     ./sshd.nix #needed for sops keys
     ./stylix.nix
     ./tailscale.nix
-    ./vim.nix
   ];
   flake.nixosModules.core = {
     pkgs,

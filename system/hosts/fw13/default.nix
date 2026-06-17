@@ -39,6 +39,9 @@ in {
       # core config
       self.nixosModules.core
 
+      # optional config
+      self.nixosModules.vim
+
       # host-specific
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
