@@ -20,7 +20,7 @@ in {
   ];
 
   # user--specific variable overrides
-  userOpts.theme = "astronaut";
+  userOpts.theme = "rainbow-cat";
   userOpts.cursor = "Bibata-Modern-Ice";
   userOpts.cursorPkg = "bibata-cursors";
 
@@ -66,7 +66,6 @@ in {
 
   # home-manager config
   home-manager = {
-    #useUserPackages = true;
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
     extraSpecialArgs = {
       inherit nixpkgs-stable;
