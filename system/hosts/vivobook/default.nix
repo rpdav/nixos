@@ -2,7 +2,7 @@
   lib,
   pkgs,
   configLib,
-  inputs,
+  self,
   config,
   ...
 }:
@@ -22,9 +22,6 @@ in {
         # core config
         "system/common/core"
 
-        # disk config
-        "system/common/disks/luks-lvm-imp.nix"
-
         # optional config
         "system/common/optional/backup"
         "system/common/optional/duplicati.nix"
@@ -34,6 +31,9 @@ in {
         "system/common/users/ryan"
         "system/common/users/ariel"
       ])
+
+      # disk config
+      self.diskoConfigurations.luks-lvm-imp
 
       # host-specific
       ./hardware-configuration.nix

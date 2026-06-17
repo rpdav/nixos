@@ -1,9 +1,6 @@
 {
-  pkgs,
   lib,
   configLib,
-  config,
-  osConfig,
   ...
 }: {
   ## This file contains all home-manager config unique to user ryan on host fw13

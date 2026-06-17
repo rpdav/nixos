@@ -31,6 +31,7 @@
   # Variable overrides
   systemOpts = {
     diskDevice = "/dev/vda";
+    swapEnable = true;
     swapSize = "16G";
     impermanent = true;
   };

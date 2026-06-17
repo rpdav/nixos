@@ -18,9 +18,6 @@ let
 in {
   imports = lib.flatten [
     (map configLib.relativeToRoot [
-      # disk config
-      "system/common/disks/luks-lvm-imp.nix"
-
       # optional config
       "system/common/optional/backup"
       "system/common/optional/docker.nix"
@@ -40,6 +37,9 @@ in {
 
     # optional config
     self.nixosModules.vim
+
+    # disk config
+    self.diskoConfigurations.luks-lvm-imp
 
     # host-specific
     ./win-vm

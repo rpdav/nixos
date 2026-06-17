@@ -106,6 +106,10 @@
         ./modules/home-manager
         ./vars
 
+        # disk configs
+        ./system/common/disks/luks-lvm-imp.nix
+        ./system/common/disks/btrfs-imp.nix
+
         # system modules
         ./system/common/core
         ./system/common/optional/vim.nix

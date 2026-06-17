@@ -19,9 +19,6 @@ in {
     
     [
       (map configLib.relativeToRoot [
-        # disk config
-        "system/common/disks/luks-lvm-imp.nix"
-
         # optional config
         "system/common/optional/wm/hyprland.nix"
         "system/common/optional/yubikey.nix"
@@ -35,6 +32,9 @@ in {
       #optional
       self.nixosModules.vim
 
+      # disk config
+      self.diskoConfigurations.luks-lvm-imp
+
       # host-specific
       ./hardware-configuration.nix
     ];
@@ -47,6 +47,7 @@ in {
     screenOffTimeout = 800;
     suspendTimeout = 900;
     diskDevice = "/dev/vda";
+    swapEnable = true;
     swapSize = "16G";
     impermanent = true;
     gui = true;

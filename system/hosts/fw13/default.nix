@@ -19,9 +19,6 @@ in {
     
     [
       (map configLib.relativeToRoot [
-        # disk config
-        "system/common/disks/luks-lvm-imp.nix"
-
         # optional config
         "system/common/optional/backup"
         "system/common/optional/docker.nix" # container admin tools, not just for running containers
@@ -42,6 +39,9 @@ in {
       # optional config
       self.nixosModules.vim
 
+      # disk config
+      self.diskoConfigurations.luks-lvm-imp
+
       # host-specific
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.framework-13-7040-amd
@@ -56,6 +56,7 @@ in {
     screenOffTimeout = 800;
     suspendTimeout = 900;
     diskDevice = "nvme0n1";
+    swapEnable = true;
     swapSize = "16G";
     impermanent = true;
     gui = true;

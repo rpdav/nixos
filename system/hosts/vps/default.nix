@@ -21,9 +21,6 @@ in {
     lib.flatten
     [
       (map configLib.relativeToRoot [
-        # disk config
-        "system/common/disks/btrfs-imp.nix"
-
         # optional config
         "system/common/optional/backup"
         "system/common/optional/docker.nix"
@@ -41,6 +38,9 @@ in {
 
       # optional
       self.nixosModules.vim
+
+      # disk config
+      self.diskoConfigurations.btrfs-imp
 
       # host-specific
       ./hardware-configuration.nix
