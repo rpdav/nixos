@@ -3,9 +3,7 @@
   lib,
   pkgs,
   inputs,
-  outputs,
-  secrets,
-  nixpkgs-stable,
+  self,
   configLib,
   ...
 }:
@@ -68,11 +66,7 @@ in {
   home-manager = {
     users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
     extraSpecialArgs = {
-      inherit nixpkgs-stable;
-      inherit secrets;
-      inherit inputs;
-      inherit outputs;
-      inherit configLib;
+      inherit inputs self configLib;
     };
   };
 

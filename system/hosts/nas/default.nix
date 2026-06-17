@@ -4,7 +4,7 @@
   pkgs,
   config,
   configLib,
-  outputs,
+  self,
   ...
 }:
 ## This file contains host-specific NixOS configuration for host nas
@@ -46,7 +46,7 @@ in {
     ./zfs
     ./ups
     (modulesPath + "/installer/scan/not-detected.nix")
-    outputs.nixosModules.rgb
+    self.nixosModules.rgb
   ];
 
   # Variable overrides

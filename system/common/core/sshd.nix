@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  secrets,
+  inputs,
   ...
 }: let
   inherit (config) systemOpts;
@@ -46,7 +46,7 @@ in {
       User ryan
 
     Host vps
-      Hostname ${secrets.vps.ip}
+      Hostname ${inputs.nix-secrets.vps.ip}
       User ryan
 
     Host testbox

@@ -4,7 +4,7 @@
   osConfig,
   pkgs,
   lib,
-  outputs,
+  self,
   ...
 }: {
   imports = [
@@ -12,7 +12,7 @@
     ./hypridle.nix
     ./waybar
     ./wlogout
-    outputs.homeManagerModules.monitors
+    self.homeManagerModules.monitors
   ];
 
   # packages

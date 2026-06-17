@@ -3,6 +3,7 @@
   inputs,
   config,
   configLib,
+  self,
   ...
 }: let
   inherit (config) systemOpts;
@@ -56,7 +57,7 @@ in {
   };
 
   # Put link to current flake in etc to help troubleshooting
-  environment.etc."current-system-flake".source = inputs.self;
+  environment.etc."current-system-flake".source = self;
 
   # Base fonts
   fonts = {

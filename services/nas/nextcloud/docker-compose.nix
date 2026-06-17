@@ -64,7 +64,7 @@ in {
       "--network=nextcloud_default"
     ];
     environmentFiles = [
-      "/run/secrets/selfhosting/nextcloud/env"
+      config.sops.secrets."selfhosting/nextcloud/env".path
     ];
   };
   systemd.services."docker-nextcloud-db" = {

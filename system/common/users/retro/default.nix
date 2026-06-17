@@ -1,9 +1,8 @@
 {
   config,
   inputs,
-  secrets,
-  nixpkgs-stable,
   configLib,
+  self,
   ...
 }:
 ## This file contains all NixOS config for user retro
@@ -35,10 +34,7 @@
     useUserPackages = true;
     users.retro = import (configLib.relativeToRoot "home/retro/${config.networking.hostName}.nix");
     extraSpecialArgs = {
-      inherit nixpkgs-stable;
-      inherit secrets;
-      inherit inputs;
-      inherit configLib;
+      inherit inputs self configLib;
     };
   };
 

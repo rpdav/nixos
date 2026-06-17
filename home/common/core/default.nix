@@ -3,12 +3,11 @@
   osConfig,
   lib,
   configLib,
-  secrets,
   pkgs,
-  nixpkgs-stable,
+  inputs,
   ...
 }: let
-  pkgs-stable = nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [
     (configLib.relativeToRoot "vars")

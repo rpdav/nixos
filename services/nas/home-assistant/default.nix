@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  secrets,
+  inputs,
   ...
 }: let
   inherit (config.serviceOpts) dockerDir dockerUser;
@@ -41,7 +41,7 @@ in {
     protocol = "http";
   };
   virtualisation.oci-containers.proxy-conf."esphome" = {
-    container = "nas.${secrets.selfhosting.domain}";
+    container = "nas.${inputs.nix-secrets.selfhosting.domain}";
     subdomain = "esp";
     port = 6052;
     protocol = "http";

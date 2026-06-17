@@ -1,9 +1,9 @@
 {
-  outputs,
+  self,
   lib,
   ...
 }: {
-  imports = [outputs.nixosModules.yubikey];
+  imports = [self.nixosModules.yubikey];
   # enable keys and set identifiers
   yubikey = {
     enable = true;

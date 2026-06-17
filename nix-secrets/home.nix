@@ -2,10 +2,8 @@
 # This would live in the main repo, not the
 {
   inputs,
-  secrets,
   config,
   osConfig,
-  lib,
   ...
 }: let
   homeDir = config.home.homeDirectory;
@@ -46,7 +44,7 @@ in {
   accounts.email.accounts = {
     personal = {
       # email address can't be pulled from sops since it wants the actual value, not a command or path. Using secrets input from flake.nix.
-      address = secrets.user1.email.personal-mail.address;
+      address = inputs.nix-secrets.user1.email.personal-mail.address;
       passwordCommand = "cat ${config.sops.secrets."email/personal-mail/password".path}";
     };
   };

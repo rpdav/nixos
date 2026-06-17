@@ -3,7 +3,7 @@
   lib,
   config,
   osConfig,
-  secrets,
+  inputs,
   ...
 }: {
   imports = [
@@ -41,7 +41,7 @@
     })
     (import ./scripts/lish.nix {
       inherit pkgs;
-      inherit secrets;
+      inherit inputs;
     })
 
     (import ./scripts/nix-search-tv.nix {inherit pkgs;})

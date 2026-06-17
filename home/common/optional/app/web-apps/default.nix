@@ -2,14 +2,13 @@
   inputs,
   config,
   pkgs,
-  secrets,
-  outputs,
+  self,
   ...
 }: {
-  imports = [outputs.homeManagerModules.web-app];
+  imports = [self.homeManagerModules.web-app];
 
   programs.firefox.webapps = let
-    domain = secrets.selfhosting.domain;
+    inherit (inputs.nix-secrets.selfhosting) domain;
     commonConfig = {
       enable = true;
       extensions.packages = with inputs.firefox-addons.packages."${pkgs.stdenv.hostPlatform.system}"; [

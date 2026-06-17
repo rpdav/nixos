@@ -4,11 +4,11 @@
   config,
   lib,
   configLib,
-  outputs,
+  self,
   ...
 }: let
   inherit (config) systemOpts serviceOpts;
-  inherit (outputs.nixosModules) proxy-conf container-mount;
+  inherit (self.nixosModules) proxy-conf container-mount;
   compose-targets = "$(systemctl list-units --all --type=target | grep docker-compose | awk '{print $1}')";
 in {
   imports = [

@@ -3,7 +3,6 @@
   lib,
   configLib,
   pkgs,
-  outputs,
   ...
 }: let
   inherit (config.systemOpts) persistVol;

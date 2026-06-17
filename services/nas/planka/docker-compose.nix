@@ -4,7 +4,7 @@
   lib,
   config,
   uptix,
-  secrets,
+  inputs,
   ...
 }: let
   inherit (config) serviceOpts;
@@ -13,7 +13,7 @@ in {
   virtualisation.oci-containers.containers."planka-app" = {
     image = uptix.dockerImage "ghcr.io/plankanban/planka:2.0.0-rc.3";
     environment = {
-      "BASE_URL" = "https://projects.${secrets.selfhosting.domain}";
+      "BASE_URL" = "https://projects.${inputs.nix-secrets.selfhosting.domain}";
       "DATABASE_URL" = "postgresql://postgres@postgres/planka";
       "LOG_LEVEL" = "warn";
       "TRUST_PROXY" = "true";
@@ -37,7 +37,7 @@ in {
       "--network=proxynet"
     ];
     environmentFiles = [
-      "/run/secrets/selfhosting/planka/env"
+      config.sops.secrets."selfhosting/planka/env".path
     ];
   };
   systemd.services."docker-planka-app" = {

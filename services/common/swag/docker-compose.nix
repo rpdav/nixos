@@ -2,7 +2,7 @@
 {
   lib,
   config,
-  secrets,
+  inputs,
   uptix,
   ...
 }: {
@@ -11,7 +11,7 @@
     image = uptix.dockerImage "lscr.io/linuxserver/swag:latest";
     environment = {
       "DNSPLUGIN" = "cloudflare";
-      "EMAIL" = "${secrets.ryan.email.admin-mail.address}";
+      "EMAIL" = "${inputs.nix-secrets.ryan.email.admin-mail.address}";
       "DOCKER_MODS" = "linuxserver/mods:swag-auto-reload|linuxserver/mods:swag-dashboard";
       "ONLY_SUBDOMAINS" = "true";
       "PGID" = "1000";
@@ -20,7 +20,7 @@
       "STAGING" = "false";
       "SUBDOMAINS" = "wildcard";
       "TZ" = config.time.timeZone;
-      "URL" = "${secrets.selfhosting.domain}";
+      "URL" = "${inputs.nix-secrets.selfhosting.domain}";
       "VALIDATION" = "dns";
     };
     volumes = [

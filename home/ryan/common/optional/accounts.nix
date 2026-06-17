@@ -1,10 +1,12 @@
 {
   config,
   osConfig,
-  secrets,
+  inputs,
   lib,
   ...
-}: {
+}: let
+  inherit (inputs.nix-secrets.ryan) email dav;
+in {
   sops.secrets = {
     "email/admin-mail/password" = {};
     "email/personal-mail/password" = {};
@@ -23,9 +25,9 @@
   # Email
   accounts.email.accounts = {
     personal = {
-      address = secrets.ryan.email.personal-mail.address;
-      userName = secrets.ryan.email.personal-mail.address;
-      realName = secrets.ryan.email.personal-mail.realName;
+      address = email.personal-mail.address;
+      userName = email.personal-mail.address;
+      realName = email.personal-mail.realName;
       # protonmail-bridge password is likely to reset on reinstall - pull it fresh from cli tool
       # thunderbird password declaration isn't working - this is must be entered imperatively.
       passwordCommand = "cat ${config.sops.secrets."email/personal-mail/password".path}";
@@ -48,18 +50,18 @@
       };
     };
     admin = {
-      address = "${secrets.ryan.email.admin-mail.address}";
-      userName = "${secrets.ryan.email.admin-mail.address}";
-      realName = "${secrets.ryan.email.admin-mail.realName}";
+      address = email.admin-mail.address;
+      userName = email.admin-mail.address;
+      realName = email.admin-mail.realName;
       # thunderbird password declaration isn't working - this is must be entered imperatively.
       passwordCommand = "cat ${config.sops.secrets."email/admin-mail/password".path}";
       imap = {
-        host = secrets.ryan.email.admin-mail.host;
+        host = email.admin-mail.host;
         tls.enable = true;
         port = 993;
       };
       smtp = {
-        host = secrets.ryan.email.admin-mail.host;
+        host = email.admin-mail.host;
         tls.enable = true;
         port = 465;
       };
@@ -81,8 +83,8 @@
     accounts.nextcloud = {
       remote = {
         type = "carddav";
-        url = "${secrets.ryan.dav.url}/addressbooks/users/ryan/contacts";
-        userName = "${secrets.dav.user}";
+        url = "${dav.url}/addressbooks/users/ryan/contacts";
+        userName = "${dav.user}";
         passwordCommand = "cat ${config.sops.secrets."dav/password".path}";
       };
       local = {
@@ -98,8 +100,8 @@
     accounts.nextcloud = {
       remote = {
         type = "caldav";
-        url = "${secrets.ryan.dav.url}";
-        userName = "${secrets.ryan.dav.user}";
+        url = dav.url;
+        userName = dav.user;
         passwordCommand = "cat ${config.sops.secrets."dav/password".path}";
       };
       local = {

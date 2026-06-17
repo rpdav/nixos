@@ -2,7 +2,7 @@
 {
   pkgs,
   lib,
-  secrets,
+  inputs,
   uptix,
   config,
   ...
@@ -11,7 +11,7 @@
   virtualisation.oci-containers.containers."searxng-app" = {
     image = uptix.dockerImage "searxng/searxng:latest";
     environment = {
-      "SEARXNG_BASE_URL" = "https://search.${secrets.selfhosting.domain}";
+      "SEARXNG_BASE_URL" = "https://search.${inputs.nix-secrets.selfhosting.domain}";
       "UWSGI_THREADS" = "2";
       "UWSGI_WORKERS" = "2";
     };

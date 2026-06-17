@@ -4,12 +4,11 @@
   osConfig,
   inputs,
   lib,
-  secrets,
   ...
 }: let
   inherit (osConfig) systemOpts;
   inherit (config.home) username;
-  domain = secrets.selfhosting.domain;
+  inherit (inputs.nix-secrets.selfhosting) domain;
 in {
   # Create persistent directories
   home.persistence."${systemOpts.persistVol}" = lib.mkIf config.userOpts.impermanent {
@@ -57,7 +56,7 @@ in {
           "SearX" = {
             urls = [
               {
-                template = "https://search.${secrets.selfhosting.domain}";
+                template = "https://search.${domain}";
                 params = [
                   {
                     name = "q";

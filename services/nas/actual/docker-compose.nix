@@ -3,7 +3,7 @@
   lib,
   config,
   uptix,
-  secrets,
+  inputs,
   ...
 }: {
   # Containers
@@ -11,7 +11,7 @@
     image = uptix.dockerImage "jhonderson/actual-http-api:latest";
     environment = {
       "ACTUAL_SERVER_URL" = "http://actualserver:5006";
-      "SWAGGER_HOST" = "budget-api.${secrets.selfhosting.domain}";
+      "SWAGGER_HOST" = "budget-api.${inputs.nix-secrets.selfhosting.domain}";
       "SWAGGER_PROTOCOL" = "https";
     };
     environmentFiles = [

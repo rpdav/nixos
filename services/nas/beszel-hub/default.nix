@@ -1,6 +1,6 @@
 {
   config,
-  secrets,
+  inputs,
   ...
 }: let
   inherit (config.serviceOpts) dockerDir;
@@ -15,7 +15,7 @@ in {
     host = "0.0.0.0";
     dataDir = "${dockerDir}/beszel-hub";
     environment = {
-      APP_URL = "https://status.${secrets.selfhosting.domain}";
+      APP_URL = "https://status.${inputs.nix-secrets.selfhosting.domain}";
       BASE_PATH = "/";
     };
   };

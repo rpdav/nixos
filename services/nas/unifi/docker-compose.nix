@@ -58,7 +58,7 @@ in {
       "${serviceOpts.dockerDir}/unifi-network-application/config:/config:rw"
     ];
     environmentFiles = [
-      "/run/secrets/selfhosting/unifi-network-application/env"
+      config.sops.secrets."selfhosting/unifi-network-application/env".path
     ];
     ports = [
       "8443:8443/tcp"

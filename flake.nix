@@ -87,16 +87,13 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-stable,
     ...
   } @ inputs: let
     # Secrets & library helpers
-    secrets = import ./vars/secrets {inherit inputs;};
     configLib = import ./lib {inherit (nixpkgs) lib;};
 
     specialArgs = {
-      inherit nixpkgs-stable secrets inputs configLib;
-      inherit (self) outputs;
+      inherit configLib inputs self;
     };
 
     # Config generator function
