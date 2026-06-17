@@ -16,6 +16,10 @@
     };
 
     # ── Utility flakes ──────────────────────────────────────
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      # flake-parts does not use nixpkgs as an input; no override
+    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -84,50 +88,57 @@
   ##########################################################################
   # OUTPUTS
   ##########################################################################
-  outputs = {self, ...} @ inputs: let
-    configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake
+    {inherit inputs;} {
+      imports = [];
+      systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
+      flake = {...}: let
+        configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
 
-    specialArgs = {
-      inherit configLib inputs self;
-    };
-
-    # Config generator function
-    mkConfigurations = hosts:
-      hosts
-      # Map each hostname to a name-value pair
-      |> map (host: {
-        name = host;
-        value = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [
-            ./system/hosts/${host}
-          ];
+        specialArgs = {
+          inherit configLib inputs;
+          inherit (inputs) self;
         };
-      })
-      # Convert the list of pairs into a single attribute set
-      |> builtins.listToAttrs;
-  in {
-    ######################################################################
-    # Exported modules
-    ######################################################################
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
 
-    ######################################################################
-    # Generate nixosConfigurations based on helper function and host list
-    ######################################################################
-    nixosConfigurations = mkConfigurations [
-      # Main hosts
-      "fw13"
-      "nas"
-      "vps"
-      "retropi"
-      # Installation configs
-      "install"
-      "iso"
-      # Testing hosts
-      "vivobook"
-      "testvm"
-    ];
-  };
+        # Config generator function
+        mkConfigurations = hosts:
+          hosts
+          # Map each hostname to a name-value pair
+          |> map (host: {
+            name = host;
+            value = inputs.nixpkgs.lib.nixosSystem {
+              inherit specialArgs;
+              modules = [
+                ./system/hosts/${host}
+              ];
+            };
+          })
+          # Convert the list of pairs into a single attribute set
+          |> builtins.listToAttrs;
+      in {
+        ######################################################################
+        # Exported modules
+        ######################################################################
+        nixosModules = import ./modules/nixos;
+        homeManagerModules = import ./modules/home-manager;
+
+        ######################################################################
+        # Generate nixosConfigurations based on helper function and host list
+        ######################################################################
+        nixosConfigurations = mkConfigurations [
+          # Main hosts
+          "fw13"
+          "nas"
+          "vps"
+          "retropi"
+          # Installation configs
+          "install"
+          "iso"
+          # Testing hosts
+          "vivobook"
+          "testvm"
+        ];
+      };
+    };
 }
