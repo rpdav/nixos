@@ -3,6 +3,7 @@
   inputs,
   lib,
   configLib,
+  self,
   pkgs,
   config,
   ...
@@ -20,9 +21,6 @@ in {
     lib.flatten
     [
       (map configLib.relativeToRoot [
-        # core config
-        "system/common/core"
-
         # disk config
         "system/common/disks/btrfs-imp.nix"
 
@@ -38,6 +36,8 @@ in {
         # users
         "system/common/users/ryan"
       ])
+      # core config
+      self.nixosModules.core
 
       # host-specific
       ./hardware-configuration.nix

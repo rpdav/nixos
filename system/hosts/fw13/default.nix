@@ -3,6 +3,7 @@
   pkgs,
   configLib,
   inputs,
+  self,
   config,
   ...
 }:
@@ -18,9 +19,6 @@ in {
     
     [
       (map configLib.relativeToRoot [
-        # core config
-        "system/common/core"
-
         # disk config
         "system/common/disks/luks-lvm-imp.nix"
 
@@ -38,6 +36,8 @@ in {
         # users
         "system/common/users/ryan"
       ])
+      # core config
+      self.nixosModules.core
 
       # host-specific
       ./hardware-configuration.nix

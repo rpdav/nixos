@@ -1,7 +1,12 @@
-{inputs, ...}: {
+{...}: {
+  #TODO remove after import-tree
   imports = [
-    inputs.impermanence.nixosModules.impermanence
     ./rollback.nix
     ./persist.nix
   ];
+  flake.nixosModules.core = {inputs, ...}: {
+    imports = [
+      inputs.impermanence.nixosModules.impermanence
+    ];
+  };
 }

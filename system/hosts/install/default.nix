@@ -2,7 +2,7 @@
   lib,
   pkgs,
   configLib,
-  config,
+  self,
   ...
 }: {
   ## This file contains host-specific NixOS configuration for my minimal install host
@@ -12,11 +12,11 @@
     lib.flatten
     [
       (map configLib.relativeToRoot [
-        # import custom options
-        "vars"
         # disk config
         "system/common/disks/luks-lvm-imp.nix"
       ])
+      # import custom options
+      self.nixosModules.opts
       # host-specific
       ./hardware-configuration.nix
     ];

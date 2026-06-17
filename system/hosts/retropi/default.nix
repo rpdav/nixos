@@ -15,9 +15,6 @@ let
 in {
   imports = lib.flatten [
     (map configLib.relativeToRoot [
-      # core config
-      "system/common/core"
-
       # optional config
       "system/common/optional/wm/retroarch.nix"
       "system/common/optional/backup"

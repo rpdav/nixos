@@ -28,8 +28,6 @@
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  home.stateVersion = "25.11"; # don't change without reading release notes
-
   # Hyprland monitor config
   monitors = [
     {

@@ -105,6 +105,9 @@
         ./modules/nixos
         ./modules/home-manager
         ./vars
+
+        # system modules
+        ./system/common/core
       ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let
