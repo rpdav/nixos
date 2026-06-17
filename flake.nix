@@ -100,8 +100,11 @@
         # Add modules here as they are brought into flake-parts
         # Once conversion is done, this will be replaced with import-tree
         # This list will get really long
+
+        # general modules
         ./modules/nixos
         ./modules/home-manager
+        ./vars
       ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let

@@ -2,7 +2,7 @@
   config,
   osConfig,
   lib,
-  configLib,
+  self,
   pkgs,
   inputs,
   ...
@@ -10,7 +10,7 @@
   pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [
-    (configLib.relativeToRoot "vars")
+    self.homeModules.opts
     ./backup.nix
     ./bash.nix
     ./persist.nix

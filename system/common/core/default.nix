@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   config,
-  configLib,
   self,
   ...
 }: let
@@ -11,7 +10,7 @@ in {
   ## This file contains NixOS configuration common to all hosts
 
   imports = [
-    (configLib.relativeToRoot "vars")
+    self.nixosModules.opts
     ./persistence
     ./packages.nix
     ./regressions.nix
