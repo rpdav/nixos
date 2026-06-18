@@ -1,4 +1,4 @@
-{...}: {
+{self, ...}: {
   flake.homeModules."ryan@retropi" = {
     lib,
     configLib,
@@ -6,13 +6,14 @@
   }: {
     ## This file contains all home-manager config unique to user ryan on host retropi
 
-    imports = map configLib.relativeToRoot [
+    imports = lib.flatten [
+      (map configLib.relativeToRoot [
+        # optional config
+      ])
       # core config
-      "home/common/core"
-
-      # optional config
-      "home/common/optional/yubikey.nix"
+      self.homeModules.core
     ];
+
     userOpts = {
       impermanent = false;
     };

@@ -1,22 +1,17 @@
 {...}: {
   flake.homeModules."ryan@nas" = {
     config,
-    lib,
-    configLib,
     pkgs,
+    self,
     ...
   }: let
     inherit (config.systemOpts) persistVol;
   in {
     ## This file contains all home-manager config unique to user ryan on host nas
 
-    imports = map configLib.relativeToRoot [
+    imports = [
       # core config
-      "home/common/core"
-
-      # optional config
-      "home/common/optional/yubikey.nix"
-      "home/common/optional/accounts.nix"
+      self.homeModules.core
     ];
 
     home.username = "ryan";

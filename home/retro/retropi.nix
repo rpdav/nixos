@@ -1,14 +1,14 @@
 {...}: {
-  flake.homeModules."retro@retropi" = {configLib, ...}: {
+  flake.homeModules."retro@retropi" = {self, ...}: {
     ## This file contains all home-manager config unique to user retro on host retropi
     ## This is a service account only for accessing the retroarch ui
 
-    imports = map configLib.relativeToRoot [
+    imports = [
       # core config
-      "home/common/core"
+      self.homeModules.core
 
       # optional config
-      "home/common/optional/wm/retroarch.nix"
+      #"home/common/optional/wm/retroarch.nix"
     ];
 
     home.username = "retro";

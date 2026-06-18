@@ -1,18 +1,22 @@
-{...}: {
-  flake.homeModules."ryan@vivobook" = {configLib, ...}: {
+{self, ...}: {
+  flake.homeModules."ryan@vivobook" = {
+    lib,
+    configLib,
+    ...
+  }: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
-    imports = map configLib.relativeToRoot [
+    imports = lib.flatten [
+      (map configLib.relativeToRoot [
+        # optional config
+        "home/common/optional/app/browser"
+        "home/common/optional/app/defaultapps.nix"
+        "home/common/optional/app/kitty.nix"
+        "home/common/optional/app/web-apps"
+        "home/common/optional/wm/cinnamon.nix"
+      ])
       # core config
-      "home/common/core"
-
-      # optional config
-      "home/common/optional/app/browser"
-      "home/common/optional/app/defaultapps.nix"
-      "home/common/optional/app/kitty.nix"
-      "home/common/optional/app/web-apps"
-      "home/common/optional/wm/cinnamon.nix"
-      "home/common/optional/yubikey.nix"
+      self.homeModules.core
     ];
 
     home.username = "ryan";

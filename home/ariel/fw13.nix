@@ -1,18 +1,18 @@
 {...}: {
-  flake.homeModules."ariel@fw13" = {configLib, ...}: {
+  flake.homeModules."ariel@fw13" = {self, ...}: {
     ## This file contains all home-manager config unique to user ariel on host fw13
 
-    imports = map configLib.relativeToRoot [
+    imports = [
       # core config
-      "home/common/core"
+      self.homeModules.core
 
       # optional config
-      "home/common/optional/app/browser" # is A good with this config?
-      "home/common/optional/app/defaultapps.nix"
-      "home/common/optional/app/nextcloud.nix"
-      "home/common/optional/app/kitty.nix"
-      "home/common/optional/app/web-apps"
-      "home/common/optional/wm/hyprland"
+      #"home/common/optional/app/browser" # is A good with this config?
+      #"home/common/optional/app/defaultapps.nix"
+      #"home/common/optional/app/nextcloud.nix"
+      #"home/common/optional/app/kitty.nix"
+      #"home/common/optional/app/web-apps"
+      #"home/common/optional/wm/hyprland"
     ];
 
     home.username = "ariel";

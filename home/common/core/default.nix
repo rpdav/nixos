@@ -1,16 +1,6 @@
-{
-  config,
-  osConfig,
-  lib,
-  self,
-  pkgs,
-  inputs,
-  ...
-}: let
-  pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in {
+{...}: {
   imports = [
-    self.homeModules.opts
+    #TODO delete this after parts is imported
     ./backup.nix
     ./bash.nix
     ./persist.nix
@@ -19,129 +9,144 @@ in {
     ./git.nix
     ./ssh.nix
   ];
-
-  home.stateVersion = "24.05"; # HM version I built this config around
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # In system, this is in a separate packages.nix - consider matching?
-  home.packages = (
-    with pkgs;
-      (
-        [
-          tree
-          gdu
-          fastfetch
-          just
-        ]
-        ++ lib.lists.optionals osConfig.systemOpts.gui [
-          # browsers
-          brave
-          tor-browser
-          librewolf
-
-          # terminals
-          alacritty
-
-          # media
-          #audacity
-          vlc
-          bibletime
-
-          # photos
-          gimp
-          pinta
-
-          # text editors and office
-          typora
-          kdePackages.ghostwriter
-          onlyoffice-desktopeditors
-
-          # utilities
-          gnome-calendar
-        ]
-      )
-      ++ lib.lists.optionals osConfig.systemOpts.gui (
-        with pkgs-stable; [
-          jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
-          #bitwarden-desktop # electron 39.8.10 marked insecure
-        ]
-      )
-      ++ [
-        ### scripts (copied from ryan/core - refactor this)
-        # nix file conversion tools
-        (import ./scripts/json2nix.nix {inherit pkgs;})
-        (import ./scripts/toml2nix.nix {inherit pkgs;})
-        (import ./scripts/yaml2nix.nix {inherit pkgs;})
-        (import ./scripts/nix2json.nix {inherit pkgs;})
-        (import ./scripts/nix2toml.nix {inherit pkgs;})
-        (import ./scripts/nix2yaml.nix {inherit pkgs;})
-
-        # remote host management
-        (import ./scripts/clear-testbox.nix {
-          inherit pkgs;
-          inherit config;
-        })
-        (import ./scripts/clear-testvm.nix {
-          inherit pkgs;
-          inherit config;
-        })
-        (import ./scripts/clear-vps.nix {
-          inherit pkgs;
-          inherit config;
-        })
-        (import ./scripts/lish.nix {
-          inherit pkgs;
-          inherit inputs;
-        })
-
-        (import ./scripts/nix-search-tv.nix {inherit pkgs;})
-
-        # misc
-        (import ./scripts/fs-diff.nix {inherit pkgs;})
-      ]
-  );
-
-  # Create persistent directories
-  home.persistence."${config.systemOpts.persistVol}" = lib.mkIf config.userOpts.impermanent {
-    directories = [
-      ".config/Bitwarden"
-      ".config/BraveSoftware"
-      ".config/GIMP"
-      ".config/Nextcloud"
-      ".config/onlyoffice"
-      ".config/remmina"
+  flake.homeModules.core = {
+    config,
+    osConfig,
+    lib,
+    self,
+    pkgs,
+    inputs,
+    ...
+  }: let
+    pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  in {
+    imports = [
+      self.homeModules.opts
     ];
-    files = [
-      ".config/ghostwriterrc"
-      ".config/bluedevelglobalrc" # bluetooth
-    ];
-  };
 
-  ### below was copied from ryan/core/default. consider refactoring this.
+    home.stateVersion = "24.05"; # HM version I built this config around
 
-  programs.lazydocker = {
-    enable = true;
-    settings = {
-      gui.returnImmediately = true;
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
+
+    # Allow unfree packages
+    nixpkgs.config.allowUnfree = true;
+
+    # In system, this is in a separate packages.nix - consider matching?
+    home.packages = (
+      with pkgs;
+        (
+          [
+            tree
+            gdu
+            fastfetch
+            just
+          ]
+          ++ lib.lists.optionals osConfig.systemOpts.gui [
+            # browsers
+            brave
+            tor-browser
+            librewolf
+
+            # terminals
+            alacritty
+
+            # media
+            #audacity
+            vlc
+            bibletime
+
+            # photos
+            gimp
+            pinta
+
+            # text editors and office
+            typora
+            kdePackages.ghostwriter
+            onlyoffice-desktopeditors
+
+            # utilities
+            gnome-calendar
+          ]
+        )
+        ++ lib.lists.optionals osConfig.systemOpts.gui (
+          with pkgs-stable; [
+            jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
+            #bitwarden-desktop # electron 39.8.10 marked insecure
+          ]
+        )
+        ++ [
+          ### scripts (copied from ryan/core - refactor this with perSystem)
+          # nix file conversion tools
+          (import ./scripts/json2nix.nix {inherit pkgs;})
+          (import ./scripts/toml2nix.nix {inherit pkgs;})
+          (import ./scripts/yaml2nix.nix {inherit pkgs;})
+          (import ./scripts/nix2json.nix {inherit pkgs;})
+          (import ./scripts/nix2toml.nix {inherit pkgs;})
+          (import ./scripts/nix2yaml.nix {inherit pkgs;})
+
+          # remote host management
+          (import ./scripts/clear-testbox.nix {
+            inherit pkgs;
+            inherit config;
+          })
+          (import ./scripts/clear-testvm.nix {
+            inherit pkgs;
+            inherit config;
+          })
+          (import ./scripts/clear-vps.nix {
+            inherit pkgs;
+            inherit config;
+          })
+          (import ./scripts/lish.nix {
+            inherit pkgs;
+            inherit inputs;
+          })
+
+          (import ./scripts/nix-search-tv.nix {inherit pkgs;})
+
+          # misc
+          (import ./scripts/fs-diff.nix {inherit pkgs;})
+        ]
+    );
+
+    # Create persistent directories
+    home.persistence."${config.systemOpts.persistVol}" = lib.mkIf config.userOpts.impermanent {
+      directories = [
+        ".config/Bitwarden"
+        ".config/BraveSoftware"
+        ".config/GIMP"
+        ".config/Nextcloud"
+        ".config/onlyoffice"
+        ".config/remmina"
+      ];
+      files = [
+        ".config/ghostwriterrc"
+        ".config/bluedevelglobalrc" # bluetooth
+      ];
     };
-  };
 
-  # misc programs
-  programs = {
-    bat.enable = true;
-    autojump.enable = true;
-    btop.enable = true;
-    ripgrep.enable = true;
-  };
-  services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
+    ### below was copied from ryan/core/default. consider refactoring this.
 
-  # session variables
-  home.sessionVariables = {
-    EDITOR = "nvim";
+    programs.lazydocker = {
+      enable = true;
+      settings = {
+        gui.returnImmediately = true;
+      };
+    };
+
+    # misc programs
+    programs = {
+      bat.enable = true;
+      autojump.enable = true;
+      btop.enable = true;
+      ripgrep.enable = true;
+    };
+    services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
+
+    # session variables
+    home.sessionVariables = {
+      EDITOR = "nvim";
+    };
   };
 }

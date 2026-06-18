@@ -1,4 +1,4 @@
-{...}: {
+{self, ...}: {
   flake.homeModules."ryan@testvm" = {
     lib,
     configLib,
@@ -7,15 +7,15 @@
   }: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
-    imports = map configLib.relativeToRoot [
+    imports = lib.flatten [
+      (map configLib.relativeToRoot [
+        # optional config
+        "home/common/optional/app/browser"
+        "home/common/optional/app/kitty.nix"
+        "home/common/optional/wm/hyprland"
+      ])
       # core config
-      "home/common/core"
-
-      # optional config
-      "home/common/optional/app/browser"
-      "home/common/optional/app/kitty.nix"
-      "home/common/optional/wm/hyprland"
-      "home/common/optional/yubikey.nix"
+      self.homeModules.core
     ];
 
     home.username = "ryan";

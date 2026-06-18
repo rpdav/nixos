@@ -1,13 +1,10 @@
-{...}: {
-  flake.homeModules."ryan@vps" = {configLib, ...}: {
+{self, ...}: {
+  flake.homeModules."ryan@vps" = {...}: {
     ## This file contains all home-manager config unique to user ryan on host vps
 
-    imports = map configLib.relativeToRoot [
+    imports = [
       # core config
-      "home/common/core"
-
-      # optional config
-      "home/common/optional/yubikey.nix"
+      self.homeModules.core
     ];
 
     home.username = "ryan";

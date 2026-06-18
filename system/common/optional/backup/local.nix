@@ -1,5 +1,5 @@
-{...}: let
-  backupModule = {
+{...}: {
+  flake.nixosModules.backupLocal = {
     config,
     inputs,
     ...
@@ -107,7 +107,4 @@
       };
     };
   };
-in {
-  flake.nixosModules.backupLocal = backupModule;
-  flake.homeModules.backupLocal = backupModule;
 }

@@ -164,6 +164,9 @@
         ./home/ryan/nas.nix
         ./home/ryan/testvm.nix
         ./home/ryan/vps.nix
+
+        # home core
+        ./home/common/core
       ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let
