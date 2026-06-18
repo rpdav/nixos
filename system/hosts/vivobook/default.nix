@@ -19,21 +19,21 @@ in {
     lib.flatten
     [
       (map configLib.relativeToRoot [
-        # core config
-        "system/common/core"
-
-        # optional config
-        "system/common/optional/backup"
-        "system/common/optional/duplicati.nix"
-        "system/common/optional/wm/cinnamon.nix"
-
         # users
         "system/common/users/ryan"
         "system/common/users/ariel"
       ])
+      # core config
+      self.nixosModules.core
 
       # disk config
       self.diskoConfigurations.luks-lvm-imp
+
+      # optional config
+      self.nixosModules.backupLocal
+      self.nixosModules.backupRemote
+      self.nixosModules.duplicati
+      self.nixosModules.cinnamon
 
       # host-specific
       ./hardware-configuration.nix

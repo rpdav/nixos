@@ -1,74 +1,76 @@
-{
-  inputs,
-  pkgs,
-  config,
-  lib,
-  configLib,
-  self,
-  ...
-}: let
-  inherit (config) systemOpts serviceOpts;
-  inherit (self.nixosModules) proxy-conf container-mount;
-  compose-targets = "$(systemctl list-units --all --type=target | grep docker-compose | awk '{print $1}')";
-in {
-  imports = [
-    proxy-conf
-    container-mount
-    (inputs.uptix.nixosModules.uptix (configLib.relativeToRoot "./uptix.lock"))
-  ];
+{...}: {
+  flake.nixosModules.docker = {
+    inputs,
+    pkgs,
+    config,
+    lib,
+    configLib,
+    self,
+    ...
+  }: let
+    inherit (config) systemOpts serviceOpts;
+    inherit (self.nixosModules) proxy-conf container-mount;
+    compose-targets = "$(systemctl list-units --all --type=target | grep docker-compose | awk '{print $1}')";
+  in {
+    imports = [
+      proxy-conf
+      container-mount
+      (inputs.uptix.nixosModules.uptix (configLib.relativeToRoot "./uptix.lock"))
+    ];
 
-  # Create impermanent directory
-  environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
-    directories = [
-      "/var/lib/docker"
+    # Create impermanent directory
+    environment.persistence.${systemOpts.persistVol} = lib.mkIf systemOpts.impermanent {
+      directories = [
+        "/var/lib/docker"
+      ];
+    };
+
+    # Enable docker
+    virtualisation.docker = {
+      enable = true;
+      autoPrune.enable = true;
+      #podman-only config below in case I switch back
+      #    dockerCompat = true;
+      #    defaultNetwork.settings = {
+      #      # Required for container networking to be able to use names.
+      #      dns_enabled = true;
+      #    };
+    };
+
+    virtualisation.oci-containers.backend = "docker";
+
+    # Open firewall port for dns resolution
+    networking.firewall = {
+      allowedUDPPorts = [53];
+    };
+
+    # Add user to docker group
+    users.users.${serviceOpts.dockerUser} = {
+      extraGroups = ["docker"];
+    };
+
+    environment.systemPackages = with pkgs; [
+      inputs.uptix.packages.${stdenv.hostPlatform.system}.uptix
+      oxker
+      lazydocker
+      beszel
+      jq
+      (writeShellScriptBin "dup" "sudo systemctl restart docker-$1.service")
+      (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1.service")
+      (writeShellScriptBin "dcup" "sudo systemctl restart docker-compose-$1-root.target")
+      (writeShellScriptBin "dcdown" "sudo systemctl stop docker-compose-$1-root.target")
+      (writeShellScriptBin "appdata" "cd ${serviceOpts.dockerDir}/$1")
+      (writeShellScriptBin "dtail" "docker logs -tf -n 50 $1")
+      (writeShellScriptBin "dexec" "docker exec -it $1 /bin/bash")
+      (writeShellScriptBin "dclist" "systemctl list-units --all --type=target | grep -E 'UNIT|docker-compose-'")
+      (writeShellScriptBin "dcupall" ''
+        for i in ${compose-targets}; do sudo systemctl restart $i
+        done
+      '')
+      (writeShellScriptBin "dcdownall" ''
+        for i in ${compose-targets}; do sudo systemctl stop $i
+        done
+      '')
     ];
   };
-
-  # Enable docker
-  virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
-    #podman-only config below in case I switch back
-    #    dockerCompat = true;
-    #    defaultNetwork.settings = {
-    #      # Required for container networking to be able to use names.
-    #      dns_enabled = true;
-    #    };
-  };
-
-  virtualisation.oci-containers.backend = "docker";
-
-  # Open firewall port for dns resolution
-  networking.firewall = {
-    allowedUDPPorts = [53];
-  };
-
-  # Add user to docker group
-  users.users.${serviceOpts.dockerUser} = {
-    extraGroups = ["docker"];
-  };
-
-  environment.systemPackages = with pkgs; [
-    inputs.uptix.packages.${stdenv.hostPlatform.system}.uptix
-    oxker
-    lazydocker
-    beszel
-    jq
-    (writeShellScriptBin "dup" "sudo systemctl restart docker-$1.service")
-    (writeShellScriptBin "ddown" "sudo systemctl stop docker-$1.service")
-    (writeShellScriptBin "dcup" "sudo systemctl restart docker-compose-$1-root.target")
-    (writeShellScriptBin "dcdown" "sudo systemctl stop docker-compose-$1-root.target")
-    (writeShellScriptBin "appdata" "cd ${serviceOpts.dockerDir}/$1")
-    (writeShellScriptBin "dtail" "docker logs -tf -n 50 $1")
-    (writeShellScriptBin "dexec" "docker exec -it $1 /bin/bash")
-    (writeShellScriptBin "dclist" "systemctl list-units --all --type=target | grep -E 'UNIT|docker-compose-'")
-    (writeShellScriptBin "dcupall" ''
-      for i in ${compose-targets}; do sudo systemctl restart $i
-      done
-    '')
-    (writeShellScriptBin "dcdownall" ''
-      for i in ${compose-targets}; do sudo systemctl stop $i
-      done
-    '')
-  ];
 }

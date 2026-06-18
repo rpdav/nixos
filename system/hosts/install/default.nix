@@ -1,25 +1,21 @@
 {
-  lib,
   pkgs,
-  configLib,
   self,
   ...
 }: {
   ## This file contains host-specific NixOS configuration for my minimal install host
   ## Will be rebuilt after install using a permanent host
 
-  imports =
-    lib.flatten
-    [
-      (map configLib.relativeToRoot [
-        # disk config
-        "system/common/disks/luks-lvm-imp.nix"
-      ])
-      # import custom options
-      self.nixosModules.opts
-      # host-specific
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # import custom options
+    self.nixosModules.opts
+
+    # disk config
+    self.diskoConfigurations.luks-lvm-imp
+
+    # host-specific
+    ./hardware-configuration.nix
+  ];
 
   # Enable flakes
   nix = {

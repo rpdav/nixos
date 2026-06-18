@@ -19,18 +19,16 @@ in {
     
     [
       (map configLib.relativeToRoot [
-        # optional config
-        "system/common/optional/wm/hyprland.nix"
-        "system/common/optional/yubikey.nix"
-
         # users
         "system/common/users/ryan"
       ])
       # core config
       self.nixosModules.core
 
-      #optional
+      # optional
       self.nixosModules.vim
+      self.nixosModules.hyprland
+      self.nixosModules.yubikeyConfig
 
       # disk config
       self.diskoConfigurations.luks-lvm-imp

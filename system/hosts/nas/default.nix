@@ -18,13 +18,6 @@ let
 in {
   imports = lib.flatten [
     (map configLib.relativeToRoot [
-      # optional config
-      "system/common/optional/backup"
-      "system/common/optional/docker.nix"
-      "system/common/optional/ssh-unlock.nix"
-      "system/common/optional/virtualization"
-      "system/common/optional/yubikey.nix"
-
       # services
       "services/common"
       "services/nas"
@@ -37,6 +30,12 @@ in {
 
     # optional config
     self.nixosModules.vim
+    self.nixosModules.backupLocal
+    self.nixosModules.backupRemote
+    self.nixosModules.docker
+    self.nixosModules.ssh-unlock
+    self.nixosModules.virtualization
+    self.nixosModules.yubikeyConfig
 
     # disk config
     self.diskoConfigurations.luks-lvm-imp

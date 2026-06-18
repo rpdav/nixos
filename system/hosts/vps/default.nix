@@ -22,9 +22,6 @@ in {
     [
       (map configLib.relativeToRoot [
         # optional config
-        "system/common/optional/backup"
-        "system/common/optional/docker.nix"
-        "system/common/optional/yubikey.nix"
 
         # services
         "services/common"
@@ -38,6 +35,10 @@ in {
 
       # optional
       self.nixosModules.vim
+      self.nixosModules.backupLocal
+      self.nixosModules.backupRemote
+      self.nixosModules.docker
+      self.nixosModules.yubikeyConfig
 
       # disk config
       self.diskoConfigurations.btrfs-imp

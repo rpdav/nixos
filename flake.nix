@@ -113,6 +113,20 @@
         # system modules
         ./system/common/core
         ./system/common/optional/vim.nix
+        ./system/common/optional/backup
+        ./system/common/optional/docker.nix
+        ./system/common/optional/duplicati.nix
+        ./system/common/optional/plymouth.nix
+        ./system/common/optional/ssh-unlock.nix
+        ./system/common/optional/steam.nix
+        ./system/common/optional/vim.nix
+        ./system/common/optional/wifi.nix
+        ./system/common/optional/wine.nix
+        ./system/common/optional/yubikey.nix
+        ./system/common/optional/virtualization
+        ./system/common/optional/wm/cinnamon.nix
+        ./system/common/optional/wm/hyprland.nix
+        ./system/common/optional/wm/retroarch.nix
       ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let

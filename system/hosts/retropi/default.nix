@@ -16,10 +16,6 @@ in {
   imports = lib.flatten [
     (map configLib.relativeToRoot [
       # optional config
-      "system/common/optional/wm/retroarch.nix"
-      "system/common/optional/backup"
-      "system/common/optional/wifi.nix"
-      "system/common/optional/yubikey.nix"
       "services/common/beszel-agent"
 
       # users
@@ -31,6 +27,11 @@ in {
 
     # optional
     self.nixosModules.vim
+    self.nixosModules.retroarch
+    self.nixosModules.backupLocal
+    self.nixosModules.backupRemote
+    self.nixosModules.wifi
+    self.nixosModules.yubikeyConfig
 
     # host-specific
     ./hardware-configuration.nix

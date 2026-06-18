@@ -20,15 +20,6 @@ in {
     [
       (map configLib.relativeToRoot [
         # optional config
-        "system/common/optional/backup"
-        "system/common/optional/docker.nix" # container admin tools, not just for running containers
-        "system/common/optional/duplicati.nix"
-        "system/common/optional/steam.nix"
-        "system/common/optional/virtualization"
-        "system/common/optional/wifi.nix"
-        "system/common/optional/wine.nix"
-        "system/common/optional/wm/hyprland.nix"
-        "system/common/optional/yubikey.nix"
 
         # users
         "system/common/users/ryan"
@@ -38,6 +29,17 @@ in {
 
       # optional config
       self.nixosModules.vim
+      self.nixosModules.backupLocal
+      self.nixosModules.backupRemote
+      self.nixosModules.docker # container admin tools, not just for running containers
+      self.nixosModules.duplicati
+      self.nixosModules.plymouth
+      self.nixosModules.steam
+      self.nixosModules.virtualization
+      self.nixosModules.wifi
+      self.nixosModules.wine
+      self.nixosModules.hyprland
+      self.nixosModules.yubikeyConfig
 
       # disk config
       self.diskoConfigurations.luks-lvm-imp
