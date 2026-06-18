@@ -16,6 +16,8 @@ in {
     ./persist.nix
     ./sops.nix
     ./starship.nix
+    ./git.nix
+    ./ssh.nix
   ];
 
   home.stateVersion = "24.05"; # HM version I built this config around
@@ -69,6 +71,39 @@ in {
           #bitwarden-desktop # electron 39.8.10 marked insecure
         ]
       )
+      ++ [
+        ### scripts (copied from ryan/core - refactor this)
+        # nix file conversion tools
+        (import ./scripts/json2nix.nix {inherit pkgs;})
+        (import ./scripts/toml2nix.nix {inherit pkgs;})
+        (import ./scripts/yaml2nix.nix {inherit pkgs;})
+        (import ./scripts/nix2json.nix {inherit pkgs;})
+        (import ./scripts/nix2toml.nix {inherit pkgs;})
+        (import ./scripts/nix2yaml.nix {inherit pkgs;})
+
+        # remote host management
+        (import ./scripts/clear-testbox.nix {
+          inherit pkgs;
+          inherit config;
+        })
+        (import ./scripts/clear-testvm.nix {
+          inherit pkgs;
+          inherit config;
+        })
+        (import ./scripts/clear-vps.nix {
+          inherit pkgs;
+          inherit config;
+        })
+        (import ./scripts/lish.nix {
+          inherit pkgs;
+          inherit inputs;
+        })
+
+        (import ./scripts/nix-search-tv.nix {inherit pkgs;})
+
+        # misc
+        (import ./scripts/fs-diff.nix {inherit pkgs;})
+      ]
   );
 
   # Create persistent directories
@@ -79,10 +114,34 @@ in {
       ".config/GIMP"
       ".config/Nextcloud"
       ".config/onlyoffice"
+      ".config/remmina"
     ];
     files = [
       ".config/ghostwriterrc"
       ".config/bluedevelglobalrc" # bluetooth
     ];
+  };
+
+  ### below was copied from ryan/core/default. consider refactoring this.
+
+  programs.lazydocker = {
+    enable = true;
+    settings = {
+      gui.returnImmediately = true;
+    };
+  };
+
+  # misc programs
+  programs = {
+    bat.enable = true;
+    autojump.enable = true;
+    btop.enable = true;
+    ripgrep.enable = true;
+  };
+  services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
+
+  # session variables
+  home.sessionVariables = {
+    EDITOR = "nvim";
   };
 }

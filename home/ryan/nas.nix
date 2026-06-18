@@ -10,18 +10,13 @@
   in {
     ## This file contains all home-manager config unique to user ryan on host nas
 
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # core config
-        "home/common/core"
+    imports = map configLib.relativeToRoot [
+      # core config
+      "home/common/core"
 
-        # optional config
-      ])
-      # multi-system config for current user
-      ./common/core
-
-      ./common/optional/yubikey.nix
-      ./common/optional/accounts.nix
+      # optional config
+      "home/common/optional/yubikey.nix"
+      "home/common/optional/accounts.nix"
     ];
 
     home.username = "ryan";

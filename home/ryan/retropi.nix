@@ -6,18 +6,13 @@
   }: {
     ## This file contains all home-manager config unique to user ryan on host retropi
 
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # core config
-        "home/common/core"
+    imports = map configLib.relativeToRoot [
+      # core config
+      "home/common/core"
 
-        # optional config
-      ])
-      # multi-system config for current user
-      ./common/core
-      ./common/optional/yubikey.nix
+      # optional config
+      "home/common/optional/yubikey.nix"
     ];
-
     userOpts = {
       impermanent = false;
     };
