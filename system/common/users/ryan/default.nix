@@ -65,7 +65,7 @@
 
     # home-manager config
     home-manager = {
-      users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
+      users.ryan = self.homeModules."ryan@${config.networking.hostName}";
       extraSpecialArgs = {
         inherit inputs self configLib;
       };

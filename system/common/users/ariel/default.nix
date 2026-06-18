@@ -34,7 +34,7 @@
     # home-manager config
     home-manager = {
       useUserPackages = true;
-      users.ariel = import (configLib.relativeToRoot "home/ariel/${config.networking.hostName}.nix");
+      users.ariel = self.homeModules."ariel@${config.networking.hostName}";
       extraSpecialArgs = {
         inherit inputs self configLib;
       };

@@ -33,7 +33,7 @@
     # home-manager config
     home-manager = {
       useUserPackages = true;
-      users.retro = import (configLib.relativeToRoot "home/retro/${config.networking.hostName}.nix");
+      users.retro = self.homeModules."retro@${config.networking.hostName}";
       extraSpecialArgs = {
         inherit inputs self configLib;
       };

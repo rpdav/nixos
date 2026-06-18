@@ -39,7 +39,7 @@
     systemOpts = {
       primaryUser = "retro"; # primary user (not necessarily only user)
       gcRetention = "30d";
-      impermanent = false; # to be changed after enabling disko
+      impermanent = false;
       gui = false;
     };
 

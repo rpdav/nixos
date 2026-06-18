@@ -153,6 +153,17 @@
         ./system/common/optional/wm/cinnamon.nix
         ./system/common/optional/wm/hyprland.nix
         ./system/common/optional/wm/retroarch.nix
+
+        # home configs
+        ./home/ariel/fw13.nix
+        ./home/ariel/vivobook.nix
+        ./home/retro/retropi.nix
+        ./home/ryan/fw13.nix
+        ./home/ryan/vivobook.nix
+        ./home/ryan/retropi.nix
+        ./home/ryan/nas.nix
+        ./home/ryan/testvm.nix
+        ./home/ryan/vps.nix
       ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let
