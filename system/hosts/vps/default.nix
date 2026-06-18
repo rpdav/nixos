@@ -1,127 +1,124 @@
-{
-  modulesPath,
-  inputs,
-  lib,
-  configLib,
-  self,
-  pkgs,
-  config,
-  ...
-}:
-## This file contains host-specific NixOS configuration for host vps
-## CPU: AMD MD EPYC 7713 single core (VM)
-## GPU: None
-## RAM: 1 GB
-let
-  inherit (config.systemOpts) persistVol impermanent;
-  # Generates a list of the keys for primary user
-  pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
-in {
-  imports =
-    lib.flatten
-    [
-      (map configLib.relativeToRoot [
-        # optional config
+{...}: {
+  flake.nixosModules.vpsSystem = {
+    inputs,
+    lib,
+    configLib,
+    self,
+    pkgs,
+    config,
+    ...
+  }:
+  ## This file contains host-specific NixOS configuration for host vps
+  ## CPU: AMD MD EPYC 7713 single core (VM)
+  ## GPU: None
+  ## RAM: 1 GB
+  let
+    inherit (config.systemOpts) persistVol impermanent;
+    # Generates a list of the keys for primary user
+    pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
+  in {
+    imports =
+      lib.flatten
+      [
+        (map configLib.relativeToRoot [
+          # optional config
 
-        # services
-        "services/common"
-        "services/vps"
-      ])
-      # core config
-      self.nixosModules.core
+          # services
+          "services/common"
+          "services/vps"
+        ])
+        # core config
+        self.nixosModules.core
 
-      # optional
-      self.nixosModules.vim
-      self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
-      self.nixosModules.docker
-      self.nixosModules.yubikeyConfig
+        # optional
+        self.nixosModules.vim
+        self.nixosModules.backupLocal
+        self.nixosModules.backupRemote
+        self.nixosModules.docker
+        self.nixosModules.yubikeyConfig
 
-      # users
-      self.nixosModules.userRyan
+        # users
+        self.nixosModules.userRyan
 
-      # disk config
-      self.diskoConfigurations.btrfs-imp
+        # disk config
+        self.diskoConfigurations.btrfs-imp
+      ];
 
-      # host-specific
-      ./hardware-configuration.nix
-      (modulesPath + "/installer/scan/not-detected.nix")
+    # Variable overrides
+    systemOpts = {
+      primaryUser = "ryan"; #primary user (not necessarily only user)
+      swapEnable = true;
+      swapSize = "2G";
+      diskDevice = "sda";
+      gcRetention = "7d";
+      impermanent = true;
+      gui = false;
+    };
+    serviceOpts = {
+      dockerDir = "/opt/docker";
+      proxyDir = "/run/selfhosting/proxy-confs";
+    };
+
+    # Backup config
+    backupOpts = {
+      localRepo = "ssh://borg@borg:2222/backup";
+      #remoteRepo = "/mnt/B2/borg";
+      paths = [
+        "${persistVol}/etc"
+      ];
+      patterns = [
+        # Run `borg help patterns` for guidance on exclusion patterns
+        "- */var/**" #not needed for restore
+      ];
+    };
+
+    # Enable LISH console
+    boot.kernelParams = ["console=ttyS0,19200n8"];
+    boot.loader.grub.extraConfig = ''
+      serial --speed=19200 --unit=0 --word=8 --parity=no --stop=1;
+      terminal_input serial;
+      terminal_output serial
+    '';
+
+    # Allow time for LISH connection delay
+    boot.loader.grub.device = "nodev";
+    boot.loader.timeout = 10;
+
+    # networking
+    networking = {
+      hostName = "vps";
+      usePredictableInterfaceNames = false; # Linode doesn't use predictable network names
+      useDHCP = false; # IP is assigned by Linode statically
+      interfaces.eth0.useDHCP = true; # Required for SSH
+    };
+    services.tailscale.extraUpFlags = ["--accept-routes" "--advertise-exit-node"]; #accept tailscale routes to LAN during reauth.
+
+    # allow root ssh login for rebuilds
+    users.users.root = {
+      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+    };
+
+    environment.systemPackages = with pkgs; [
+      # Recommended utils per Linode
+      inetutils
+      mtr
+      sysstat
     ];
 
-  # Variable overrides
-  systemOpts = {
-    primaryUser = "ryan"; #primary user (not necessarily only user)
-    swapEnable = true;
-    swapSize = "2G";
-    diskDevice = "sda";
-    gcRetention = "7d";
-    impermanent = true;
-    gui = false;
+    # VPS docker directory lives in persistent volume
+    environment.persistence.${persistVol} = lib.mkIf impermanent {
+      directories = [
+        "${config.serviceOpts.dockerDir}"
+      ];
+    };
+
+    # VPS monitoring
+    sops.secrets."linode/longviewAPIKey".sopsFile = "${inputs.nix-secrets.outPath}/vps.yaml";
+    services.longview = {
+      enable = true;
+      apiKeyFile = config.sops.secrets."linode/longviewAPIKey".path;
+    };
+
+    system.stateVersion = "25.05";
   };
-  serviceOpts = {
-    dockerDir = "/opt/docker";
-    proxyDir = "/run/selfhosting/proxy-confs";
-  };
-
-  # Backup config
-  backupOpts = {
-    localRepo = "ssh://borg@borg:2222/backup";
-    #remoteRepo = "/mnt/B2/borg";
-    paths = [
-      "${persistVol}/etc"
-    ];
-    patterns = [
-      # Run `borg help patterns` for guidance on exclusion patterns
-      "- */var/**" #not needed for restore
-    ];
-  };
-
-  # Enable LISH console
-  boot.kernelParams = ["console=ttyS0,19200n8"];
-  boot.loader.grub.extraConfig = ''
-    serial --speed=19200 --unit=0 --word=8 --parity=no --stop=1;
-    terminal_input serial;
-    terminal_output serial
-  '';
-
-  # Allow time for LISH connection delay
-  boot.loader.grub.device = "nodev";
-  boot.loader.timeout = 10;
-
-  # networking
-  networking = {
-    hostName = "vps";
-    usePredictableInterfaceNames = false; # Linode doesn't use predictable network names
-    useDHCP = false; # IP is assigned by Linode statically
-    interfaces.eth0.useDHCP = true; # Required for SSH
-  };
-  services.tailscale.extraUpFlags = ["--accept-routes" "--advertise-exit-node"]; #accept tailscale routes to LAN during reauth.
-
-  # allow root ssh login for rebuilds
-  users.users.root = {
-    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
-  };
-
-  environment.systemPackages = with pkgs; [
-    # Recommended utils per Linode
-    inetutils
-    mtr
-    sysstat
-  ];
-
-  # VPS docker directory lives in persistent volume
-  environment.persistence.${persistVol} = lib.mkIf impermanent {
-    directories = [
-      "${config.serviceOpts.dockerDir}"
-    ];
-  };
-
-  # VPS monitoring
-  sops.secrets."linode/longviewAPIKey".sopsFile = "${inputs.nix-secrets.outPath}/vps.yaml";
-  services.longview = {
-    enable = true;
-    apiKeyFile = config.sops.secrets."linode/longviewAPIKey".path;
-  };
-
-  system.stateVersion = "25.05";
 }

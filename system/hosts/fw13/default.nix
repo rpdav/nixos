@@ -1,164 +1,164 @@
-{
-  lib,
-  pkgs,
-  configLib,
-  inputs,
-  self,
-  config,
-  ...
-}:
-## This file contains host-specific NixOS configuration for host fw13
-## CPU: AMD Ryzen 5 7640U 6-core
-## GPU: AMD Radeon 760M integrated graphics
-## RAM: 32 GB
-let
-  inherit (config.systemOpts) persistVol impermanent;
-in {
-  imports = [
-    # core config
-    self.nixosModules.core
+{...}: {
+  flake.nixosModules.fw13System = {
+    lib,
+    pkgs,
+    inputs,
+    self,
+    config,
+    ...
+  }:
+  ## This file contains host-specific NixOS configuration for host fw13
+  ## CPU: AMD Ryzen 5 7640U 6-core
+  ## GPU: AMD Radeon 760M integrated graphics
+  ## RAM: 32 GB
+  let
+    inherit (config.systemOpts) persistVol impermanent;
+  in {
+    imports = [
+      # core config
+      self.nixosModules.core
 
-    # optional config
-    self.nixosModules.vim
-    self.nixosModules.backupLocal
-    self.nixosModules.backupRemote
-    self.nixosModules.docker # container admin tools, not just for running containers
-    self.nixosModules.duplicati
-    self.nixosModules.plymouth
-    self.nixosModules.steam
-    self.nixosModules.virtualization
-    self.nixosModules.wifi
-    self.nixosModules.wine
-    self.nixosModules.hyprland
-    self.nixosModules.yubikeyConfig
+      # optional config
+      self.nixosModules.vim
+      self.nixosModules.backupLocal
+      self.nixosModules.backupRemote
+      self.nixosModules.docker # container admin tools, not just for running containers
+      self.nixosModules.duplicati
+      self.nixosModules.plymouth
+      self.nixosModules.steam
+      self.nixosModules.virtualization
+      self.nixosModules.wifi
+      self.nixosModules.wine
+      self.nixosModules.hyprland
+      self.nixosModules.yubikeyConfig
 
-    # users
-    self.nixosModules.userRyan
+      # users
+      self.nixosModules.userRyan
 
-    # disk config
-    self.diskoConfigurations.luks-lvm-imp
+      # disk config
+      self.diskoConfigurations.luks-lvm-imp
 
-    # host-specific
-    ./hardware-configuration.nix
-    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-    inputs.lanzaboote.nixosModules.lanzaboote
-  ];
-
-  # Variable overrides
-  systemOpts = {
-    primaryUser = "ryan"; #primary user (not necessarily only user)
-    screenDimTimeout = 600;
-    lockTimeout = 630;
-    screenOffTimeout = 800;
-    suspendTimeout = 900;
-    diskDevice = "nvme0n1";
-    swapEnable = true;
-    swapSize = "16G";
-    impermanent = true;
-    gui = true;
-  };
-
-  # Backup config
-  backupOpts = {
-    localRepo = "ssh://borg@borg:2222/backup";
-    remoteRepo = "/mnt/B2/borg";
-    paths = [
-      "${persistVol}/etc"
+      # host-specific
+      inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+      inputs.lanzaboote.nixosModules.lanzaboote
     ];
-    patterns = [
-      # Run `borg help patterns` for guidance on exclusion patterns
-      "- */var/**" #not needed for restore
-      "- **/.Trash*" #automatically made by gui deletions
-      "- **/libvirt" #vdisks made mostly for testing
-    ];
-  };
 
-  # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "24.05";
+    # Variable overrides
+    systemOpts = {
+      primaryUser = "ryan"; #primary user (not necessarily only user)
+      screenDimTimeout = 600;
+      lockTimeout = 630;
+      screenOffTimeout = 800;
+      suspendTimeout = 900;
+      diskDevice = "nvme0n1";
+      swapEnable = true;
+      swapSize = "16G";
+      impermanent = true;
+      gui = true;
+    };
 
-  # Boot config with luks
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = false;
-        # more readable boot menu on hidpi display
-        consoleMode = "5";
-        configurationLimit = 30;
+    # Backup config
+    backupOpts = {
+      localRepo = "ssh://borg@borg:2222/backup";
+      remoteRepo = "/mnt/B2/borg";
+      paths = [
+        "${persistVol}/etc"
+      ];
+      patterns = [
+        # Run `borg help patterns` for guidance on exclusion patterns
+        "- */var/**" #not needed for restore
+        "- **/.Trash*" #automatically made by gui deletions
+        "- **/libvirt" #vdisks made mostly for testing
+      ];
+    };
+
+    # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
+    system.stateVersion = "24.05";
+
+    # Boot config with luks
+    boot = {
+      loader = {
+        systemd-boot = {
+          enable = false;
+          # more readable boot menu on hidpi display
+          consoleMode = "5";
+          configurationLimit = 30;
+        };
+        efi.canTouchEfiVariables = true;
       };
-      efi.canTouchEfiVariables = true;
+      lanzaboote = {
+        enable = true;
+        pkiBundle = "${persistVol}/etc/secureboot";
+      };
     };
-    lanzaboote = {
+
+    # Networking
+    networking.hostName = "fw13";
+    networking.networkmanager = {
       enable = true;
-      pkiBundle = "${persistVol}/etc/secureboot";
+      #wifi.backend = "iwd";
     };
-  };
+    #networking.wireless.iwd.enable = true;
 
-  # Networking
-  networking.hostName = "fw13";
-  networking.networkmanager = {
-    enable = true;
-    #wifi.backend = "iwd";
-  };
-  #networking.wireless.iwd.enable = true;
+    # Host-specific hardware config
+    services.pipewire = {
+      audio.enable = true;
+      pulse.enable = true;
+    };
+    hardware.bluetooth.enable = true;
+    services.libinput.enable = true;
 
-  # Host-specific hardware config
-  services.pipewire = {
-    audio.enable = true;
-    pulse.enable = true;
-  };
-  hardware.bluetooth.enable = true;
-  services.libinput.enable = true;
+    # Printing
+    services.printing.enable = true;
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
 
-  # Printing
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
+    # Disable fingerprint for login (causes gnome-keyring unlock to fail)
+    security.pam.services.login.fprintAuth = false;
 
-  # Disable fingerprint for login (causes gnome-keyring unlock to fail)
-  security.pam.services.login.fprintAuth = false;
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    blueman
-    qdirstat
-    zoom-us
-  ];
-
-  # Create impermanent directories
-  environment.persistence.${persistVol} = lib.mkIf impermanent {
-    directories = [
-      "/var/lib/bluetooth"
-      "/var/lib/fprint"
-      "/etc/secureboot"
+    # System packages
+    environment.systemPackages = with pkgs; [
+      blueman
+      qdirstat
+      zoom-us
     ];
-    files = [
-      "/root/.ssh/known_hosts"
-    ];
-  };
 
-  # Allow building arm packages
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+    # Create impermanent directories
+    environment.persistence.${persistVol} = lib.mkIf impermanent {
+      directories = [
+        "/var/lib/bluetooth"
+        "/var/lib/fprint"
+        "/etc/secureboot"
+      ];
+      files = [
+        "/root/.ssh/known_hosts"
+      ];
+    };
 
-  # Firmware updates
-  services.fwupd.enable = true;
+    # Allow building arm packages
+    boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
-  # pmail bridge must be configured imperatively using the cli tool.
-  # State in ~/.config is persisted. Runs as a user service even though
-  # it's in system config.
-  services.protonmail-bridge = {
-    enable = true;
-    # make gnome keyring available to bridge in case I'm running KDE
-    path = with pkgs; [gnome-keyring];
-  };
+    # Firmware updates
+    services.fwupd.enable = true;
 
-  # Server for gnome calendar
-  services.gnome.evolution-data-server.enable = true;
+    # pmail bridge must be configured imperatively using the cli tool.
+    # State in ~/.config is persisted. Runs as a user service even though
+    # it's in system config.
+    services.protonmail-bridge = {
+      enable = true;
+      # make gnome keyring available to bridge in case I'm running KDE
+      path = with pkgs; [gnome-keyring];
+    };
 
-  # minimal root user config
-  users.users.root = {
-    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+    # Server for gnome calendar
+    services.gnome.evolution-data-server.enable = true;
+
+    # minimal root user config
+    users.users.root = {
+      hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+    };
   };
 }

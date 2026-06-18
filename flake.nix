@@ -115,6 +115,27 @@
         ./system/common/users/retro
         ./system/common/users/ryan
 
+        # hosts
+        ./system/hosts/fw13
+        ./system/hosts/fw13/hardware-configuration.nix
+        ./system/hosts/nas
+        ./system/hosts/nas/hardware-configuration.nix
+        ./system/hosts/nas/win-vm
+        ./system/hosts/nas/zfs
+        ./system/hosts/nas/ups.nix
+        ./system/hosts/nas/displaylink.nix
+        ./system/hosts/vps
+        ./system/hosts/vps/hardware-configuration.nix
+        ./system/hosts/install
+        ./system/hosts/install/hardware-configuration.nix
+        ./system/hosts/iso
+        ./system/hosts/vivobook
+        ./system/hosts/vivobook/hardware-configuration.nix
+        ./system/hosts/testvm
+        ./system/hosts/testvm/hardware-configuration.nix
+        ./system/hosts/retropi
+        ./system/hosts/retropi/hardware-configuration.nix
+
         # system modules
         ./system/common/core
         ./system/common/optional/vim.nix
@@ -151,7 +172,7 @@
             value = inputs.nixpkgs.lib.nixosSystem {
               inherit specialArgs;
               modules = [
-                ./system/hosts/${host}
+                inputs.self.nixosModules."${host}System"
               ];
             };
           })

@@ -1,27 +1,20 @@
-{
-  lib,
-  pkgs,
-  configLib,
-  self,
-  config,
-  ...
-}:
-#TODO add system stats here
-let
-  inherit (config.systemOpts) persistVol impermanent;
-  # Generates a list of the keys in primary user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
-in {
-  ## This file contains host-specific NixOS configuration
+{...}: {
+  flake.nixosModules.testvmSystem = {
+    lib,
+    pkgs,
+    self,
+    config,
+    ...
+  }:
+  #TODO add system stats here
+  let
+    inherit (config.systemOpts) persistVol impermanent;
+    # Generates a list of the keys in primary user's directory in this repo
+    pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
+  in {
+    ## This file contains host-specific NixOS configuration
 
-  imports =
-    lib.flatten #the list below is a nested list. imports doesn't accept this, so must use lib.flatten
-    
-    [
-      (map configLib.relativeToRoot [
-        # users
-        "system/common/users/ryan"
-      ])
+    imports = [
       # core config
       self.nixosModules.core
 
@@ -30,88 +23,89 @@ in {
       self.nixosModules.hyprland
       self.nixosModules.yubikeyConfig
 
+      # users
+      self.nixosModules.userRyan
+
       # disk config
       self.diskoConfigurations.luks-lvm-imp
-
-      # host-specific
-      ./hardware-configuration.nix
     ];
 
-  # Variable overrides
-  systemOpts = {
-    primaryUser = "ryan"; #primary user (not necessarily only user)
-    screenDimTimeout = 600;
-    lockTimeout = 630;
-    screenOffTimeout = 800;
-    suspendTimeout = 900;
-    diskDevice = "/dev/vda";
-    swapEnable = true;
-    swapSize = "16G";
-    impermanent = true;
-    gui = true;
-  };
-
-  # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.11";
-
-  # Boot config with luks
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        # more readable boot menu on hidpi display
-        consoleMode = "5";
-        configurationLimit = 30;
-      };
-      efi.canTouchEfiVariables = true;
+    # Variable overrides
+    systemOpts = {
+      primaryUser = "ryan"; #primary user (not necessarily only user)
+      screenDimTimeout = 600;
+      lockTimeout = 630;
+      screenOffTimeout = 800;
+      suspendTimeout = 900;
+      diskDevice = "/dev/vda";
+      swapEnable = true;
+      swapSize = "16G";
+      impermanent = true;
+      gui = true;
     };
-  };
 
-  # Networking
-  networking.hostName = "testvm";
-  networking.networkmanager = {
-    enable = true;
-  };
+    # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
+    system.stateVersion = "25.11";
 
-  # Host-specific hardware config
-  services.pipewire = {
-    audio.enable = true;
-    pulse.enable = true;
-  };
-  hardware.bluetooth.enable = true;
-  services.libinput.enable = true;
+    # Boot config with luks
+    boot = {
+      loader = {
+        systemd-boot = {
+          enable = true;
+          # more readable boot menu on hidpi display
+          consoleMode = "5";
+          configurationLimit = 30;
+        };
+        efi.canTouchEfiVariables = true;
+      };
+    };
 
-  # Printing
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
+    # Networking
+    networking.hostName = "testvm";
+    networking.networkmanager = {
+      enable = true;
+    };
 
-  # Disable fingerprint for login (causes gnome-keyring unlock to fail)
-  security.pam.services.login.fprintAuth = false;
+    # Host-specific hardware config
+    services.pipewire = {
+      audio.enable = true;
+      pulse.enable = true;
+    };
+    hardware.bluetooth.enable = true;
+    services.libinput.enable = true;
 
-  # System packages
-  environment.systemPackages = with pkgs; [
-    qdirstat
-  ];
+    # Printing
+    services.printing.enable = true;
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
 
-  # Create impermanent directories
-  environment.persistence.${persistVol} = lib.mkIf impermanent {
-    directories = [
-      "/var/lib/bluetooth"
-      "/var/lib/fprint"
-      "/etc/secureboot"
+    # Disable fingerprint for login (causes gnome-keyring unlock to fail)
+    security.pam.services.login.fprintAuth = false;
+
+    # System packages
+    environment.systemPackages = with pkgs; [
+      qdirstat
     ];
-    files = [
-      "/root/.ssh/known_hosts"
-    ];
-  };
 
-  # minimal root user config
-  users.users.root = {
-    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
-    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key); #allow root ssh for troubleshooting
+    # Create impermanent directories
+    environment.persistence.${persistVol} = lib.mkIf impermanent {
+      directories = [
+        "/var/lib/bluetooth"
+        "/var/lib/fprint"
+        "/etc/secureboot"
+      ];
+      files = [
+        "/root/.ssh/known_hosts"
+      ];
+    };
+
+    # minimal root user config
+    users.users.root = {
+      hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key); #allow root ssh for troubleshooting
+    };
   };
 }

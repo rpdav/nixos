@@ -1,132 +1,127 @@
-{
-  modulesPath,
-  lib,
-  pkgs,
-  config,
-  configLib,
-  self,
-  ...
-}:
-## This file contains host-specific NixOS configuration for host nas
-## CPU: AMD Ryzen 7 5700X3D 8-core
-## GPU: Intel B580 12 GB
-## RAM: 32 GB
-let
-  inherit (config.systemOpts) persistVol impermanent;
-  # Generates a list of the keys in primary user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
-in {
-  imports = lib.flatten [
-    (map configLib.relativeToRoot [
-      # services
-      "services/common"
-      "services/nas"
+{...}: {
+  flake.nixosModules.nasSystem = {
+    lib,
+    pkgs,
+    config,
+    configLib,
+    self,
+    ...
+  }:
+  ## This file contains host-specific NixOS configuration for host nas
+  ## CPU: AMD Ryzen 7 5700X3D 8-core
+  ## GPU: Intel B580 12 GB
+  ## RAM: 32 GB
+  let
+    inherit (config.systemOpts) persistVol impermanent;
+    # Generates a list of the keys in primary user's directory in this repo
+    pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
+  in {
+    imports = lib.flatten [
+      (map configLib.relativeToRoot [
+        # services
+        "services/common"
+        "services/nas"
+
+        # users
+      ])
+      # core config
+      self.nixosModules.core
+
+      # optional config
+      self.nixosModules.vim
+      self.nixosModules.backupLocal
+      self.nixosModules.backupRemote
+      self.nixosModules.docker
+      self.nixosModules.ssh-unlock
+      self.nixosModules.virtualization
+      self.nixosModules.yubikeyConfig
 
       # users
-    ])
-    # core config
-    self.nixosModules.core
+      self.nixosModules.userRyan
 
-    # optional config
-    self.nixosModules.vim
-    self.nixosModules.backupLocal
-    self.nixosModules.backupRemote
-    self.nixosModules.docker
-    self.nixosModules.ssh-unlock
-    self.nixosModules.virtualization
-    self.nixosModules.yubikeyConfig
+      # disk config
+      self.diskoConfigurations.luks-lvm-imp
 
-    # users
-    self.nixosModules.userRyan
-
-    # disk config
-    self.diskoConfigurations.luks-lvm-imp
-
-    # host-specific
-    ./win-vm
-    ./hardware-configuration.nix
-    ./displaylink.nix
-    ./zfs
-    ./ups
-    (modulesPath + "/installer/scan/not-detected.nix")
-    self.nixosModules.rgb
-  ];
-
-  # Variable overrides
-  systemOpts = {
-    primaryUser = "ryan"; # primary user (not necessarily only user)
-    swapEnable = true;
-    diskDevice = "nvme0n1";
-    swapSize = "16G";
-    gcRetention = "30d";
-    impermanent = true;
-    gui = false;
-  };
-  serviceOpts = {
-    dockerDir = "/mnt/docker/appdata";
-    proxyDir = "/run/selfhosting/proxy-confs";
-  };
-
-  # Packages
-  environment.systemPackages = with pkgs; [
-    openrgb-with-all-plugins
-  ];
-  # Backup config
-  backupOpts = {
-    localRepo = "ssh://borg@borg:2222/backup";
-    remoteRepo = "/mnt/B2/borg";
-    paths = [
-      "${persistVol}/etc"
+      # host-specific
+      self.nixosModules.rgb
     ];
-    patterns = [
-      # Run `borg help patterns` for guidance on exclusion patterns
-      "- */home/*/.git/**" # can be restored from repo
-      "- **/.local/share/libvirt" # root and user vm images
-      "- */var/**"
+
+    # Variable overrides
+    systemOpts = {
+      primaryUser = "ryan"; # primary user (not necessarily only user)
+      swapEnable = true;
+      diskDevice = "nvme0n1";
+      swapSize = "16G";
+      gcRetention = "30d";
+      impermanent = true;
+      gui = false;
+    };
+    serviceOpts = {
+      dockerDir = "/mnt/docker/appdata";
+      proxyDir = "/run/selfhosting/proxy-confs";
+    };
+
+    # Packages
+    environment.systemPackages = with pkgs; [
+      openrgb-with-all-plugins
     ];
-  };
+    # Backup config
+    backupOpts = {
+      localRepo = "ssh://borg@borg:2222/backup";
+      remoteRepo = "/mnt/B2/borg";
+      paths = [
+        "${persistVol}/etc"
+      ];
+      patterns = [
+        # Run `borg help patterns` for guidance on exclusion patterns
+        "- */home/*/.git/**" # can be restored from repo
+        "- **/.local/share/libvirt" # root and user vm images
+        "- */var/**"
+      ];
+    };
 
-  # Create impermanent directories
-  environment.persistence.${persistVol} = lib.mkIf impermanent {
-    directories = [
-    ];
-  };
+    # Create impermanent directories
+    environment.persistence.${persistVol} = lib.mkIf impermanent {
+      directories = [
+      ];
+    };
 
-  # disable emergency mode from preventing system boot if there are mounting issues
-  systemd.enableEmergencyMode = false;
+    # disable emergency mode from preventing system boot if there are mounting issues
+    systemd.enableEmergencyMode = false;
 
-  # Networking
-  networking = {
-    hostId = "7e3de5fa"; # needed for zfs
-    hostName = "nas";
-  };
+    # Networking
+    networking = {
+      hostId = "7e3de5fa"; # needed for zfs
+      hostName = "nas";
+    };
 
-  # Boot
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
+    # Boot
+    boot = {
+      loader = {
+        systemd-boot = {
+          enable = true;
+        };
+        efi.canTouchEfiVariables = true;
       };
-      efi.canTouchEfiVariables = true;
     };
-  };
 
-  # RGB control
-  services.hardware.openrgb = {
-    enable = true;
-    package = pkgs.openrgb-with-all-plugins;
-    motherboard = "amd";
-    server.port = 6742;
-    autostart = {
+    # RGB control
+    services.hardware.openrgb = {
       enable = true;
-      mode = "color shift";
+      package = pkgs.openrgb-with-all-plugins;
+      motherboard = "amd";
+      server.port = 6742;
+      autostart = {
+        enable = true;
+        mode = "color shift";
+      };
     };
-  };
 
-  # allow root ssh login for rebuilds
-  users.users.root = {
-    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
-  };
+    # allow root ssh login for rebuilds
+    users.users.root = {
+      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+    };
 
-  system.stateVersion = "25.05";
+    system.stateVersion = "25.05";
+  };
 }

@@ -1,131 +1,129 @@
-{
-  lib,
-  pkgs,
-  configLib,
-  self,
-  config,
-  ...
-}:
-## This file contains host-specific NixOS configuration for host vivobook
-## CPU: AMD Ryzen 5 3500U 4-core
-## GPU: AMD Radeon 760M Vega Mobile Graphics
-## RAM: 8 GB
-let
-  inherit (config.systemOpts) persistVol impermanent;
-  # Generates a list of the keys in admin user's directory in this repo
-  pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
-in {
-  imports = [
-    # core config
-    self.nixosModules.core
+{...}: {
+  flake.nixosModules.vivobookSystem = {
+    lib,
+    pkgs,
+    self,
+    config,
+    ...
+  }:
+  ## This file contains host-specific NixOS configuration for host vivobook
+  ## CPU: AMD Ryzen 5 3500U 4-core
+  ## GPU: AMD Radeon 760M Vega Mobile Graphics
+  ## RAM: 8 GB
+  let
+    inherit (config.systemOpts) persistVol impermanent;
+    # Generates a list of the keys in admin user's directory in this repo
+    pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
+  in {
+    imports = [
+      # core config
+      self.nixosModules.core
 
-    # optional config
-    self.nixosModules.backupLocal
-    self.nixosModules.backupRemote
-    self.nixosModules.duplicati
-    self.nixosModules.cinnamon
+      # optional config
+      self.nixosModules.backupLocal
+      self.nixosModules.backupRemote
+      self.nixosModules.duplicati
+      self.nixosModules.cinnamon
 
-    # disk config
-    self.diskoConfigurations.luks-lvm-imp
+      # disk config
+      self.diskoConfigurations.luks-lvm-imp
 
-    #users
-    self.nixosModules.userRyan
-    self.nixosModules.userRetro
-
-    # host-specific
-    ./hardware-configuration.nix
-  ];
-
-  # Variable overrides
-  systemOpts = {
-    primaryUser = "ariel"; #primary user (not necessarily only user)
-    diskDevice = "nvme0n1";
-    swapSize = "8G";
-    impermanent = true;
-    gui = true;
-  };
-
-  # Backup config
-  backupOpts = {
-    localRepo = "ssh://borg@borg:2222/backup";
-    #remoteRepo = "/mnt/B2/borg";
-    paths = [
-      "${persistVol}/etc"
+      #users
+      self.nixosModules.userRyan
+      self.nixosModules.userRetro
     ];
-    patterns = [
-      # Run `borg help patterns` for guidance on exclusion patterns
-      "- */var/**" #not needed for restore
-      "- **/.Trash*" #automatically made by gui deletions
+
+    # Variable overrides
+    systemOpts = {
+      primaryUser = "ariel"; #primary user (not necessarily only user)
+      diskDevice = "nvme0n1";
+      swapSize = "8G";
+      impermanent = true;
+      gui = true;
+    };
+
+    # Backup config
+    backupOpts = {
+      localRepo = "ssh://borg@borg:2222/backup";
+      #remoteRepo = "/mnt/B2/borg";
+      paths = [
+        "${persistVol}/etc"
+      ];
+      patterns = [
+        # Run `borg help patterns` for guidance on exclusion patterns
+        "- */var/**" #not needed for restore
+        "- **/.Trash*" #automatically made by gui deletions
+      ];
+    };
+
+    # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
+    system.stateVersion = "25.05";
+
+    # bootloader
+    boot.loader.grub = {
+      device = "nodev";
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+    };
+
+    # Networking
+    networking.hostName = "vivobook";
+    networking.networkmanager.enable = true;
+
+    # Host-specific hardware config
+    services.pipewire = {
+      audio.enable = true;
+      pulse.enable = true;
+    };
+    hardware.bluetooth.enable = true;
+    services.blueman.enable = true;
+    services.libinput.enable = true;
+
+    # Printing
+    services.printing.enable = true;
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+
+    # System packages
+    environment.systemPackages = with pkgs; [
+      qdirstat
     ];
-  };
 
-  # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.05";
+    # Create impermanent directories
+    environment.persistence.${persistVol} = lib.mkIf impermanent {
+      directories = [
+        "/var/lib/bluetooth"
+        # Entire user directories are persisted for this host
+        {
+          directory = "/home/ryan";
+          user = "ryan";
+          mode = "0700";
+        }
+        {
+          directory = "/home/ariel";
+          user = "ariel";
+          mode = "0700";
+        }
+      ];
+      files = [
+        "/root/.ssh/known_hosts"
+      ];
+    };
 
-  # bootloader
-  boot.loader.grub = {
-    device = "nodev";
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-  };
+    # Firmware updates
+    services.fwupd.enable = true;
 
-  # Networking
-  networking.hostName = "vivobook";
-  networking.networkmanager.enable = true;
+    # allow root ssh login for rebuilds
+    users.users.root = {
+      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+    };
 
-  # Host-specific hardware config
-  services.pipewire = {
-    audio.enable = true;
-    pulse.enable = true;
-  };
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-  services.libinput.enable = true;
-
-  # Printing
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    qdirstat
-  ];
-
-  # Create impermanent directories
-  environment.persistence.${persistVol} = lib.mkIf impermanent {
-    directories = [
-      "/var/lib/bluetooth"
-      # Entire user directories are persisted for this host
-      {
-        directory = "/home/ryan";
-        user = "ryan";
-        mode = "0700";
-      }
-      {
-        directory = "/home/ariel";
-        user = "ariel";
-        mode = "0700";
-      }
-    ];
-    files = [
-      "/root/.ssh/known_hosts"
-    ];
-  };
-
-  # Firmware updates
-  services.fwupd.enable = true;
-
-  # allow root ssh login for rebuilds
-  users.users.root = {
-    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
-  };
-
-  # minimal root user config
-  users.users.root = {
-    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+    # minimal root user config
+    users.users.root = {
+      hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+    };
   };
 }

@@ -1,20 +1,22 @@
-{
-  pkgs,
-  modulesPath,
-  ...
-}: {
-  imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-  ];
+{...}: {
+  flake.nixosModules.isoSystem = {
+    pkgs,
+    modulesPath,
+    ...
+  }: {
+    imports = [
+      "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+    ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+    nixpkgs.hostPlatform = "x86_64-linux";
 
-  environment.systemPackages = with pkgs; [
-    disko
-  ];
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-    "pipe-operators"
-  ];
+    environment.systemPackages = with pkgs; [
+      disko
+    ];
+    nix.settings.experimental-features = [
+      "nix-command"
+      "flakes"
+      "pipe-operators"
+    ];
+  };
 }
