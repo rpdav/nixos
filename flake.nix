@@ -110,6 +110,11 @@
         ./system/common/disks/luks-lvm-imp.nix
         ./system/common/disks/btrfs-imp.nix
 
+        # users
+        ./system/common/users/ariel
+        ./system/common/users/retro
+        ./system/common/users/ryan
+
         # system modules
         ./system/common/core
         ./system/common/optional/vim.nix

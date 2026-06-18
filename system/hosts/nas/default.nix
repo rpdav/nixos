@@ -23,7 +23,6 @@ in {
       "services/nas"
 
       # users
-      "system/common/users/ryan"
     ])
     # core config
     self.nixosModules.core
@@ -36,6 +35,9 @@ in {
     self.nixosModules.ssh-unlock
     self.nixosModules.virtualization
     self.nixosModules.yubikeyConfig
+
+    # users
+    self.nixosModules.userRyan
 
     # disk config
     self.diskoConfigurations.luks-lvm-imp

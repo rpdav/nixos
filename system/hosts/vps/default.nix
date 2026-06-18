@@ -26,9 +26,6 @@ in {
         # services
         "services/common"
         "services/vps"
-
-        # users
-        "system/common/users/ryan"
       ])
       # core config
       self.nixosModules.core
@@ -39,6 +36,9 @@ in {
       self.nixosModules.backupRemote
       self.nixosModules.docker
       self.nixosModules.yubikeyConfig
+
+      # users
+      self.nixosModules.userRyan
 
       # disk config
       self.diskoConfigurations.btrfs-imp

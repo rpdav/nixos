@@ -1,80 +1,82 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  self,
-  configLib,
-  ...
-}:
-## This file contains all NixOS config for user ryan
-let
-  # Generates a list of the keys in ./keys
-  pubKeys = lib.filesystem.listFilesRecursive ./keys;
-in {
-  imports = [
-    inputs.nixos-cli.nixosModules.nixos-cli
-    inputs.home-manager.nixosModules.home-manager
-  ];
+{...}: {
+  flake.nixosModules.userRyan = {
+    config,
+    lib,
+    pkgs,
+    inputs,
+    self,
+    configLib,
+    ...
+  }:
+  ## This file contains all NixOS config for user ryan
+  let
+    # Generates a list of the keys in ./keys
+    pubKeys = lib.filesystem.listFilesRecursive ./keys;
+  in {
+    imports = [
+      inputs.nixos-cli.nixosModules.nixos-cli
+      inputs.home-manager.nixosModules.home-manager
+    ];
 
-  # user--specific variable overrides
-  userOpts.theme = "rainbow-cat";
-  userOpts.cursor = "Bibata-Modern-Ice";
-  userOpts.cursorPkg = "bibata-cursors";
+    # user--specific variable overrides
+    userOpts.theme = "rainbow-cat";
+    userOpts.cursor = "Bibata-Modern-Ice";
+    userOpts.cursorPkg = "bibata-cursors";
 
-  # user definition
-  users.mutableUsers = false;
-  sops.secrets."passwordHashRyan" = {
-    neededForUsers = true;
-    sopsFile = "${inputs.nix-secrets.outPath}/ryan.yaml";
-  };
+    # user definition
+    users.mutableUsers = false;
+    sops.secrets."passwordHashRyan" = {
+      neededForUsers = true;
+      sopsFile = "${inputs.nix-secrets.outPath}/ryan.yaml";
+    };
 
-  users.users.ryan = {
-    hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
-    isNormalUser = true;
-    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    home = "/home/ryan";
+    users.users.ryan = {
+      hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
+      isNormalUser = true;
+      extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+      home = "/home/ryan";
 
-    # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
-    openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
-  };
+      # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
+      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+    };
 
-  # Options search and nixos CLI tooling
-  programs.nixos-cli = {
-    enable = true;
-    settings = {
-      config_location = "${config.users.users.ryan.home}/nixos";
-      differ.command = [
-        "nvd"
-        "diff"
-      ];
-      apply = {
-        use_git_commit_msg = true;
-        use_nom = true;
-        reexec_as_root = true;
+    # Options search and nixos CLI tooling
+    programs.nixos-cli = {
+      enable = true;
+      settings = {
+        config_location = "${config.users.users.ryan.home}/nixos";
+        differ.command = [
+          "nvd"
+          "diff"
+        ];
+        apply = {
+          use_git_commit_msg = true;
+          use_nom = true;
+          reexec_as_root = true;
+        };
+        ssh.known_hosts_files = [
+          (lib.mkIf config.systemOpts.impermanent "${config.systemOpts.persistVol}/home/ryan/.ssh/known_hosts")
+        ];
       };
-      ssh.known_hosts_files = [
-        (lib.mkIf config.systemOpts.impermanent "${config.systemOpts.persistVol}/home/ryan/.ssh/known_hosts")
-      ];
     };
-  };
-  environment.systemPackages = [
-    pkgs.nvd # diffing tool
-  ];
+    environment.systemPackages = [
+      pkgs.nvd # diffing tool
+    ];
 
-  # home-manager config
-  home-manager = {
-    users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
-    extraSpecialArgs = {
-      inherit inputs self configLib;
+    # home-manager config
+    home-manager = {
+      users.ryan = import (configLib.relativeToRoot "home/ryan/${config.networking.hostName}.nix");
+      extraSpecialArgs = {
+        inherit inputs self configLib;
+      };
     };
-  };
 
-  # Fix file permissions after backup restore
-  systemd.tmpfiles.rules = [
-    # make all files in home directory owned by user
-    "Z ${config.systemOpts.persistVol}/home/ryan - ryan users"
-    # make user's home directory not readable by others
-    "z ${config.systemOpts.persistVol}/home/ryan 0700 ryan users"
-  ];
+    # Fix file permissions after backup restore
+    systemd.tmpfiles.rules = [
+      # make all files in home directory owned by user
+      "Z ${config.systemOpts.persistVol}/home/ryan - ryan users"
+      # make user's home directory not readable by others
+      "z ${config.systemOpts.persistVol}/home/ryan 0700 ryan users"
+    ];
+  };
 }

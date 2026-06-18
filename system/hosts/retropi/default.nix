@@ -17,10 +17,6 @@ in {
     (map configLib.relativeToRoot [
       # optional config
       "services/common/beszel-agent"
-
-      # users
-      "system/common/users/ryan"
-      "system/common/users/retro"
     ])
     # core config
     self.nixosModules.core
@@ -32,6 +28,10 @@ in {
     self.nixosModules.backupRemote
     self.nixosModules.wifi
     self.nixosModules.yubikeyConfig
+
+    #users
+    self.nixosModules.userRyan
+    self.nixosModules.userRetro
 
     # host-specific
     ./hardware-configuration.nix

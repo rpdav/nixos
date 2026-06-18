@@ -14,41 +14,35 @@
 let
   inherit (config.systemOpts) persistVol impermanent;
 in {
-  imports =
-    lib.flatten #the list below is a nested list. imports doesn't accept this, so must use lib.flatten
-    
-    [
-      (map configLib.relativeToRoot [
-        # optional config
+  imports = [
+    # core config
+    self.nixosModules.core
 
-        # users
-        "system/common/users/ryan"
-      ])
-      # core config
-      self.nixosModules.core
+    # optional config
+    self.nixosModules.vim
+    self.nixosModules.backupLocal
+    self.nixosModules.backupRemote
+    self.nixosModules.docker # container admin tools, not just for running containers
+    self.nixosModules.duplicati
+    self.nixosModules.plymouth
+    self.nixosModules.steam
+    self.nixosModules.virtualization
+    self.nixosModules.wifi
+    self.nixosModules.wine
+    self.nixosModules.hyprland
+    self.nixosModules.yubikeyConfig
 
-      # optional config
-      self.nixosModules.vim
-      self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
-      self.nixosModules.docker # container admin tools, not just for running containers
-      self.nixosModules.duplicati
-      self.nixosModules.plymouth
-      self.nixosModules.steam
-      self.nixosModules.virtualization
-      self.nixosModules.wifi
-      self.nixosModules.wine
-      self.nixosModules.hyprland
-      self.nixosModules.yubikeyConfig
+    # users
+    self.nixosModules.userRyan
 
-      # disk config
-      self.diskoConfigurations.luks-lvm-imp
+    # disk config
+    self.diskoConfigurations.luks-lvm-imp
 
-      # host-specific
-      ./hardware-configuration.nix
-      inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-      inputs.lanzaboote.nixosModules.lanzaboote
-    ];
+    # host-specific
+    ./hardware-configuration.nix
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
 
   # Variable overrides
   systemOpts = {

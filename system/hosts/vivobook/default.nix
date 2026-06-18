@@ -15,29 +15,26 @@ let
   # Generates a list of the keys in admin user's directory in this repo
   pubKeys = lib.filesystem.listFilesRecursive ../common/users/ryan/keys;
 in {
-  imports =
-    lib.flatten
-    [
-      (map configLib.relativeToRoot [
-        # users
-        "system/common/users/ryan"
-        "system/common/users/ariel"
-      ])
-      # core config
-      self.nixosModules.core
+  imports = [
+    # core config
+    self.nixosModules.core
 
-      # disk config
-      self.diskoConfigurations.luks-lvm-imp
+    # optional config
+    self.nixosModules.backupLocal
+    self.nixosModules.backupRemote
+    self.nixosModules.duplicati
+    self.nixosModules.cinnamon
 
-      # optional config
-      self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
-      self.nixosModules.duplicati
-      self.nixosModules.cinnamon
+    # disk config
+    self.diskoConfigurations.luks-lvm-imp
 
-      # host-specific
-      ./hardware-configuration.nix
-    ];
+    #users
+    self.nixosModules.userRyan
+    self.nixosModules.userRetro
+
+    # host-specific
+    ./hardware-configuration.nix
+  ];
 
   # Variable overrides
   systemOpts = {
