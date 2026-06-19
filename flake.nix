@@ -105,6 +105,7 @@
         ./modules/nixos
         ./modules/home-manager
         ./vars
+        ./parts.nix
 
         # disk configs
         ./system/common/disks/luks-lvm-imp.nix
@@ -175,8 +176,6 @@
         ./home/common/optional/app/thunderbird.nix
         ./home/common/optional/app/browser
         ./home/common/optional/app/games
-        ./home/common/optional/app/games/games.nix
-        ./home/common/optional/app/games/proton.nix
         ./home/common/optional/app/web-apps
         ./home/common/optional/wm/cinnamon.nix
         ./home/common/optional/wm/cosmic.nix
@@ -186,8 +185,32 @@
         ./home/common/optional/wm/hyprland/hyprlock.nix
         ./home/common/optional/wm/hyprland/waybar
         ./home/common/optional/wm/hyprland/wlogout
+
+        # selfhosted services
+        ./services/common/swag
+        ./services/common/beszel-agent
+        ./services/nas/actual
+        ./services/nas/albyhub
+        ./services/nas/beszel-hub
+        ./services/nas/borg
+        ./services/nas/default.nix
+        ./services/nas/duplicati
+        ./services/nas/flatnotes
+        ./services/nas/gitea
+        ./services/nas/guacamole
+        ./services/nas/heimdall
+        ./services/nas/home-assistant
+        ./services/nas/immich
+        ./services/nas/jellyfin
+        ./services/nas/lubelogger
+        ./services/nas/nextcloud
+        ./services/nas/planka
+        ./services/nas/searxng
+        ./services/nas/speedtest
+        ./services/nas/sunshine
+        ./services/nas/unifi
+        ./services/nas/vaultwarden
       ];
-      systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let
         configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
 

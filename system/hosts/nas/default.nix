@@ -19,7 +19,7 @@
     imports = lib.flatten [
       (map configLib.relativeToRoot [
         # services
-        "services/common"
+        #"services/common"
         "services/nas"
 
         # users
@@ -44,6 +44,10 @@
 
       # host-specific
       self.nixosModules.rgb
+
+      # self-hosted services
+      self.serviceModules.swag
+      self.serviceModules.beszelAgent
     ];
 
     # Variable overrides

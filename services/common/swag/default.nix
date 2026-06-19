@@ -1,17 +1,17 @@
-{
-  inputs,
-  config,
-  ...
-}: {
-  imports = [./docker-compose.nix];
+{...}: {
+  flake.serviceModules.swag = {
+    inputs,
+    config,
+    ...
+  }: {
+    # Create/chmod appdata directories to mount
+    virtualisation.oci-containers.mounts."swag" = {};
 
-  # Create/chmod appdata directories to mount
-  virtualisation.oci-containers.mounts."swag" = {};
-
-  # Secrets
-  sops.secrets."selfhosting/swag/cloudflareToken" = {
-    owner = config.users.users.${config.serviceOpts.dockerUser}.name;
-    sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
-    restartUnits = ["docker-swag.service"];
+    # Secrets
+    sops.secrets."selfhosting/swag/cloudflareToken" = {
+      owner = config.users.users.${config.serviceOpts.dockerUser}.name;
+      sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+      restartUnits = ["docker-swag.service"];
+    };
   };
 }
