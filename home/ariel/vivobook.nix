@@ -2,17 +2,18 @@
   flake.homeModules."ariel@vivobook" = {self, ...}: {
     ## This file contains all home-manager config unique to user ariel on host fw13
 
-    imports = [
+    imports = with self.homeModules; [
       # core config
-      self.homeModules.core
+      core
 
       # optional config
-      #"home/common/optional/app/browser" # is A good with this config?
-      #"home/common/optional/app/defaultapps.nix"
-      #"home/common/optional/app/nextcloud.nix"
-      #"home/common/optional/app/kitty.nix"
-      #"home/common/optional/app/web-apps"
-      #"home/common/optional/wm/hyprland" # this should probably be cinnamon
+      firefox
+      chromium
+      nextcloud
+      defaultApps
+      kitty
+      webAppConfig
+      cinnamon
     ];
 
     home.username = "ariel";

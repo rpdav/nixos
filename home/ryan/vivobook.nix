@@ -6,17 +6,17 @@
   }: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # optional config
-        "home/common/optional/app/browser"
-        "home/common/optional/app/defaultapps.nix"
-        "home/common/optional/app/kitty.nix"
-        "home/common/optional/app/web-apps"
-        "home/common/optional/wm/cinnamon.nix"
-      ])
+    imports = with self.homeModules; [
       # core config
-      self.homeModules.core
+      core
+
+      # optional config
+      firefox
+      chromium
+      webAppConfig
+      kitty
+      defaultApps
+      cinnamon
     ];
 
     home.username = "ryan";

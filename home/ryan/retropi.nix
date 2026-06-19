@@ -6,11 +6,7 @@
   }: {
     ## This file contains all home-manager config unique to user ryan on host retropi
 
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # optional config
-      ])
-      # core config
+    imports = [
       self.homeModules.core
     ];
 

@@ -7,8 +7,8 @@
       # core config
       self.homeModules.core
 
-      # optional config
-      #"home/common/optional/wm/retroarch.nix"
+      # wm
+      self.homeModules.retroarch
     ];
 
     home.username = "retro";

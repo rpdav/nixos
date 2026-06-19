@@ -167,6 +167,25 @@
 
         # home core
         ./home/common/core
+        ./home/common/optional/accounts.nix
+        ./home/common/optional/yubikey.nix
+        ./home/common/optional/app/defaultapps.nix
+        ./home/common/optional/app/kitty.nix
+        ./home/common/optional/app/nextcloud.nix
+        ./home/common/optional/app/thunderbird.nix
+        ./home/common/optional/app/browser
+        ./home/common/optional/app/games
+        ./home/common/optional/app/games/games.nix
+        ./home/common/optional/app/games/proton.nix
+        ./home/common/optional/app/web-apps
+        ./home/common/optional/wm/cinnamon.nix
+        ./home/common/optional/wm/cosmic.nix
+        ./home/common/optional/wm/retroarch.nix
+        ./home/common/optional/wm/hyprland/default.nix
+        ./home/common/optional/wm/hyprland/hypridle.nix
+        ./home/common/optional/wm/hyprland/hyprlock.nix
+        ./home/common/optional/wm/hyprland/waybar
+        ./home/common/optional/wm/hyprland/wlogout
       ];
       systems = ["x86_64-linux" "aarch64-linux"]; #TODO move this to config?
       flake = {...}: let

@@ -1,15 +1,17 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
-  home.packages = with pkgs; [
-    protonup-ng
-    freetype
-  ];
+{...}: {
+  flake.homeModules.proton = {
+    pkgs,
+    config,
+    ...
+  }: {
+    home.packages = with pkgs; [
+      protonup-ng
+      freetype
+    ];
 
-  ## This must be imperatively set up by running "protonup". Further updates are handled by steam
-  home.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
+    ## This must be imperatively set up by running "protonup". Further updates are handled by steam
+    home.sessionVariables = {
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
+    };
   };
 }

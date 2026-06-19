@@ -9,21 +9,31 @@
   }: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # optional config
-        "home/common/optional/app/browser"
-        "home/common/optional/app/defaultapps.nix"
-        "home/common/optional/app/games"
-        "home/common/optional/app/nextcloud.nix"
-        "home/common/optional/app/kitty.nix"
-        "home/common/optional/app/thunderbird.nix"
-        "home/common/optional/app/web-apps"
-        "home/common/optional/wm/hyprland"
-        "home/common/optional/accounts.nix"
-        "home/common/optional/yubikey.nix"
-      ])
-      self.homeModules.core
+    imports = with self.homeModules; [
+      # core config
+      core
+
+      # optional config
+      webAppConfig
+      defaultApps
+      accounts
+      yubikeyConfig
+
+      # apps
+      firefox
+      chromium
+      games
+      proton
+      nextcloud
+      kitty
+      thunderbird
+
+      # wm
+      hyprland
+      hypridle
+      hyprlock
+      waybar
+      wlogout
     ];
 
     home.username = "ryan";

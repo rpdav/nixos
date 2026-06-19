@@ -7,15 +7,24 @@
   }: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # optional config
-        "home/common/optional/app/browser"
-        "home/common/optional/app/kitty.nix"
-        "home/common/optional/wm/hyprland"
-      ])
+    imports = with self.homeModules; [
       # core config
-      self.homeModules.core
+      core
+
+      # optional config
+      yubikeyConfig
+
+      # apps
+      firefox
+      chromium
+      kitty
+
+      # wm
+      hyprland
+      hypridle
+      hyprlock
+      waybar
+      wlogout
     ];
 
     home.username = "ryan";
