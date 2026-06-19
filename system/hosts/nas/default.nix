@@ -18,10 +18,6 @@
   in {
     imports = lib.flatten [
       (map configLib.relativeToRoot [
-        # services
-        #"services/common"
-        "services/nas"
-
         # users
       ])
       # core config
@@ -48,6 +44,26 @@
       # self-hosted services
       self.serviceModules.swag
       self.serviceModules.beszelAgent
+      self.serviceModules.actual
+      self.serviceModules.albyhub
+      self.serviceModules.beszel-hub
+      self.serviceModules.borg
+      self.serviceModules.duplicati
+      self.serviceModules.flatnotes
+      self.serviceModules.gitea
+      self.serviceModules.guacamole
+      self.serviceModules.heimdall
+      self.serviceModules.home-assistant
+      self.serviceModules.immich
+      self.serviceModules.jellyfin
+      self.serviceModules.lubelogger
+      self.serviceModules.nextcloud
+      self.serviceModules.planka
+      self.serviceModules.searxng
+      self.serviceModules.speedtest
+      self.serviceModules.sunshine
+      self.serviceModules.unifi
+      self.serviceModules.vaultwarden
     ];
 
     # Variable overrides

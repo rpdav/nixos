@@ -1,13 +1,14 @@
 {...}: {
-  imports = [./docker-compose.nix];
+  flake.serviceModules.albyhub = {...}: {
 
-  # Create/chmod appdata directories to mount
-  virtualisation.oci-containers.mounts."albyhub" = {};
+    # Create/chmod appdata directories to mount
+    virtualisation.oci-containers.mounts."albyhub" = {};
 
-  # Create swag proxy config
-  virtualisation.oci-containers.proxy-conf."albyhub" = {
-    subdomain = "btc";
-    port = 8080;
-    protocol = "http";
+    # Create swag proxy config
+    virtualisation.oci-containers.proxy-conf."albyhub" = {
+      subdomain = "btc";
+      port = 8080;
+      protocol = "http";
+    };
   };
 }

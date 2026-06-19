@@ -1,12 +1,13 @@
-{config, ...}: {
-  imports = [./docker-compose.nix];
+{...}: {
+  flake.serviceModules.lubelogger = {config, ...}: {
 
-  virtualisation.oci-containers.mounts."lubelogger" = {};
+    virtualisation.oci-containers.mounts."lubelogger" = {};
 
-  # Create swag proxy config
-  virtualisation.oci-containers.proxy-conf."lubelogger" = {
-    container = "lubelogger";
-    subdomain = "cars";
-    port = 8080;
+    # Create swag proxy config
+    virtualisation.oci-containers.proxy-conf."lubelogger" = {
+      container = "lubelogger";
+      subdomain = "cars";
+      port = 8080;
+    };
   };
 }

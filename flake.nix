@@ -193,7 +193,6 @@
         ./services/nas/albyhub
         ./services/nas/beszel-hub
         ./services/nas/borg
-        ./services/nas/default.nix
         ./services/nas/duplicati
         ./services/nas/flatnotes
         ./services/nas/gitea
@@ -210,6 +209,24 @@
         ./services/nas/sunshine
         ./services/nas/unifi
         ./services/nas/vaultwarden
+        ./services/common/swag/docker-compose.nix
+        ./services/nas/actual/docker-compose.nix
+        ./services/nas/albyhub/docker-compose.nix
+        ./services/nas/borg/docker-compose.nix
+        ./services/nas/duplicati/docker-compose.nix
+        ./services/nas/flatnotes/docker-compose.nix
+        ./services/nas/gitea/docker-compose.nix
+        ./services/nas/heimdall/docker-compose.nix
+        ./services/nas/home-assistant/docker-compose.nix
+        ./services/nas/immich/docker-compose.nix
+        ./services/nas/jellyfin/docker-compose.nix
+        ./services/nas/lubelogger/docker-compose.nix
+        ./services/nas/nextcloud/docker-compose.nix
+        ./services/nas/planka/docker-compose.nix
+        ./services/nas/searxng/docker-compose.nix
+        ./services/nas/speedtest/docker-compose.nix
+        ./services/nas/unifi/docker-compose.nix
+        ./services/nas/vaultwarden/docker-compose.nix
       ];
       flake = {...}: let
         configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
