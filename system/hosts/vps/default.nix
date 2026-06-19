@@ -17,32 +17,29 @@
     # Generates a list of the keys for primary user
     pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
   in {
-    imports =
-      lib.flatten
-      [
-        (map configLib.relativeToRoot [
-          # optional config
+    imports = [
+      # core config
+      self.nixosModules.core
 
-          # services
-          "services/common"
-          "services/vps"
-        ])
-        # core config
-        self.nixosModules.core
+      # optional
+      self.nixosModules.vim
+      self.nixosModules.backupLocal
+      self.nixosModules.backupRemote
+      self.nixosModules.docker
+      self.nixosModules.yubikeyConfig
 
-        # optional
-        self.nixosModules.vim
-        self.nixosModules.backupLocal
-        self.nixosModules.backupRemote
-        self.nixosModules.docker
-        self.nixosModules.yubikeyConfig
+      # users
+      self.nixosModules.userRyan
 
-        # users
-        self.nixosModules.userRyan
+      # disk config
+      self.diskoConfigurations.btrfs-imp
 
-        # disk config
-        self.diskoConfigurations.btrfs-imp
-      ];
+      # self-hosted services
+      self.serviceModules.swag
+      self.serviceModules.beszelAgent
+      self.serviceModules.dms
+      self.serviceModules.kuma
+    ];
 
     # Variable overrides
     systemOpts = {

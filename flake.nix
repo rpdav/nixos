@@ -209,6 +209,8 @@
         ./services/nas/sunshine
         ./services/nas/unifi
         ./services/nas/vaultwarden
+        ./services/vps/dms
+        ./services/vps/kuma
         ./services/common/swag/docker-compose.nix
         ./services/nas/actual/docker-compose.nix
         ./services/nas/albyhub/docker-compose.nix
@@ -227,6 +229,8 @@
         ./services/nas/speedtest/docker-compose.nix
         ./services/nas/unifi/docker-compose.nix
         ./services/nas/vaultwarden/docker-compose.nix
+        ./services/vps/dms/docker-compose.nix
+        ./services/vps/kuma/docker-compose.nix
       ];
       flake = {...}: let
         configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
