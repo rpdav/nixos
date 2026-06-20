@@ -21,13 +21,14 @@
     userOpts.cursor = "Bibata-Modern-Ice";
     userOpts.cursorPkg = "bibata-cursors";
 
-    # user definition
+    # Pull secrets from sops
     users.mutableUsers = false;
     sops.secrets."passwordHashRyan" = {
       neededForUsers = true;
       sopsFile = "${inputs.nix-secrets.outPath}/ryan.yaml";
     };
 
+    # user definition
     users.users.ryan = {
       hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
       isNormalUser = true;
@@ -55,6 +56,8 @@
         ];
       };
     };
+
+    #TODO move this to admin module
     environment.systemPackages = [
       pkgs.nvd # diffing tool
     ];
@@ -71,5 +74,8 @@
       # make user's home directory not readable by others
       "z ${config.systemOpts.persistVol}/home/ryan 0700 ryan users"
     ];
+  };
+  flake.homeModules.ryan = {...}: {
+    home.username = "ryan";
   };
 }

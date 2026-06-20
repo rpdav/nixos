@@ -1,14 +1,13 @@
 {self, ...}: {
-  flake.homeModules."ryan@fw13" = {
-    pkgs,
-    osConfig,
-    ...
-  }: {
+  flake.homeModules."ryan@fw13" = {...}: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
     imports = with self.homeModules; [
       # core config
       core
+
+      # base user config
+      ryan
 
       # optional config
       webAppConfig
@@ -32,11 +31,6 @@
       waybar
       wlogout
     ];
-
-    home.username = "ryan";
-    home.homeDirectory = "/home/ryan";
-
-    home.stateVersion = "24.05"; # don't change without reading release notes
 
     # Hyprland monitor config
     monitors = [
@@ -88,16 +82,9 @@
       localRepo = "ssh://borg@borg:2222/backup";
       #remoteRepo = "";
     };
-    gtk.iconTheme = {
-      name = osConfig.stylix.fonts.emoji.name;
-      package = osConfig.stylix.fonts.emoji.package;
-    };
-
-    home.packages = with pkgs; [
-      parsec-bin
-    ];
 
     # virt-manager settings
+    #TODO Move this to virtualization module
     dconf.settings = {
       "org/virt-manager/virt-manager" = {
         xmleditor-enabled = true;

@@ -2,6 +2,7 @@
   customOptions = {
     config,
     lib,
+    osConfig,
     ...
   }: let
     inherit (lib) mkOption types;
@@ -29,12 +30,12 @@
           type = types.bool;
           default = false;
           description = ''
-            Whether the system has a gui.
+            Whether the system has a gui and should enable gui-related apps.
           '';
         };
         swapEnable = mkOption {
           type = types.bool;
-          default = "true";
+          default = true;
           description = ''
             Whether swap is enabled for the system.
           '';
@@ -48,9 +49,9 @@
         };
         diskDevice = mkOption {
           type = types.str;
-          default = "/dev/nvme01n1";
+          default = "nvme01n1";
           description = ''
-            Primary disk device to be partitioned by disko.
+            Primary disk device (without `/dev/`) to be partitioned by disko.
 
             After partitioning, the device is mounted by label, so there is no concern of `/dev/sda` being swapped with another disk after reboot.
 
@@ -145,7 +146,7 @@
         };
         impermanent = mkOption {
           type = types.bool;
-          default = config.systemOpts.impermanent;
+          default = true;
           description = ''
             Boolean for whether to enable user impermanent directories
           '';

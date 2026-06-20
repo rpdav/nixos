@@ -7,12 +7,12 @@
       # core config
       self.homeModules.core
 
+      # base user config
+      self.homeModules.retro
+
       # wm
       self.homeModules.retroarch
     ];
-
-    home.username = "retro";
-    home.homeDirectory = "/home/retro";
 
     userOpts = {
       impermanent = false;
@@ -20,9 +20,6 @@
 
     backupOpts = {
       patterns = [
-        "- **/.Trash*" #automatically made by gui deletions
-        "- /persist/home/retro/Downloads/" #big files
-        "+ /persist/home/retro" #back up everything else
       ];
       localRepo = "ssh://borg@borg:2222/backup";
       #remoteRepo = "";

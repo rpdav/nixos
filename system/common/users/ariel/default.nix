@@ -7,7 +7,7 @@
   ## This file contains all NixOS config for user ariel
   {
     imports = [
-      inputs.home-manager.nixosModules.home-manager
+      inputs.home-manager.nixosModules.home-manager #TODO move this to home-manager config. It's getting double-imported on 2-user systems
     ];
 
     # user--specific variable overrides
@@ -15,13 +15,14 @@
     userOpts.cursor = "Bibata-Modern-Ice";
     userOpts.cursorPkg = "bibata-cursors";
 
-    # user definition
+    # Pull password from sops
     users.mutableUsers = false;
     sops.secrets."passwordHashAriel" = {
       neededForUsers = true;
       sopsFile = "${inputs.nix-secrets.outPath}/ariel.yaml";
     };
 
+    # user definition
     users.users.ariel = {
       hashedPasswordFile = config.sops.secrets."passwordHashAriel".path;
       isNormalUser = true;
@@ -31,7 +32,6 @@
 
     # home-manager config
     home-manager = {
-      useUserPackages = true;
       users.ariel = self.homeModules."ariel@${config.networking.hostName}";
     };
 
@@ -42,5 +42,8 @@
       # make user's home directory not readable by others
       "z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
     ];
+  };
+  flake.homeModules.ariel = {
+    home.username = "ariel";
   };
 }

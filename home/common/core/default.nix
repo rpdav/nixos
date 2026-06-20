@@ -20,6 +20,7 @@
       ];
 
       home.stateVersion = "24.05"; # HM version I built this config around
+      home.homeDirectory = osConfig.users.users.${config.home.username}.home; # This is already defined in system config
 
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;
@@ -109,6 +110,7 @@
 
       ### below was copied from ryan/core/default. consider refactoring this.
 
+      #TODO Move this to admin
       programs.lazydocker = {
         enable = true;
         settings = {
@@ -124,6 +126,13 @@
         ripgrep.enable = true;
       };
       services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
+
+      # Theming
+      # Most theming is in system config through stylix.
+      gtk.iconTheme = {
+        name = osConfig.stylix.fonts.emoji.name;
+        package = osConfig.stylix.fonts.emoji.package;
+      };
 
       # session variables
       home.sessionVariables = {

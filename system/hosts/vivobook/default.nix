@@ -93,7 +93,6 @@
 
     # System packages
     environment.systemPackages = with pkgs; [
-      qdirstat
     ];
 
     # Create impermanent directories

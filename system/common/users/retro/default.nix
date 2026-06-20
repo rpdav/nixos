@@ -42,4 +42,7 @@
       "z ${config.systemOpts.persistVol}/home/retro 0700 retro users"
     ];
   };
+  flake.homeModules.retro = {
+    home.username = "retro";
+  };
 }

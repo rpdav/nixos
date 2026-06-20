@@ -3,8 +3,8 @@
     ## This file contains all home-manager config unique to user ryan on host fw13
 
     imports = with self.homeModules; [
-      # core config
-      core
+      # base user config
+      ryan
 
       # optional config
       firefox
@@ -14,9 +14,6 @@
       defaultApps
       cinnamon
     ];
-
-    home.username = "ryan";
-    home.homeDirectory = "/home/ryan";
 
     userOpts = {
       impermanent = false;
