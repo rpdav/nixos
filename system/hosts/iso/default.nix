@@ -1,4 +1,8 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.isoSystem = {
     pkgs,
     modulesPath,

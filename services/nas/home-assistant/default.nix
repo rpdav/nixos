@@ -1,14 +1,12 @@
-{...}: {
+{inputs, ...}: {
   flake.serviceModules.home-assistant = {
     config,
     lib,
-    inputs,
     ...
   }: let
     inherit (config.serviceOpts) dockerDir dockerUser;
     inherit (config.systemOpts) persistVol impermanent;
   in {
-
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts = {
       "home-assistant-config" = {

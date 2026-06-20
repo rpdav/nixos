@@ -1,5 +1,7 @@
-# This is an example of what a system configuration file could look like
-# This would live in the main repo, not the secrets repo
+# This is an example of what a system configuration file could look like.
+# This would live in the main repo, not the secrets repo.
+# The filename is prepended with _ to keep import-tree from importing it
+# in my main config.
 {
   config,
   inputs,

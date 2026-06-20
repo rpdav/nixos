@@ -1,10 +1,5 @@
-{...}: {
-  flake.nixosModules.hyprland = {
-    inputs,
-    config,
-    pkgs,
-    ...
-  }: {
+{inputs, ...}: {
+  flake.nixosModules.hyprland = {pkgs, ...}: {
     services.displayManager = {
       autoLogin.user = "ryan";
       gdm = {

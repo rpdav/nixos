@@ -1,11 +1,10 @@
-{...}: {
+{inputs, ...}: {
   flake.serviceModules.dms =
     # Auto-generated using compose2nix v0.3.2-pre.
     {
       pkgs,
       lib,
       uptix,
-      inputs,
       config,
       ...
     }: {

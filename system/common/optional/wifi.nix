@@ -1,9 +1,5 @@
-{...}: {
-  flake.nixosModules.wifi = {
-    inputs,
-    config,
-    ...
-  }: {
+{inputs, ...}: {
+  flake.nixosModules.wifi = {config, ...}: {
     # Populates wifi network(s) declaratively.
     # Other wifi networks can be added imperatively to
     # /etc/NetworkManager/system-connections

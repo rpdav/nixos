@@ -1,21 +1,24 @@
-{pkgs, ...}: {
-
+{...}: {
   imports = [
+    #TODO delete these
     ./swag
     ./beszel-agent
   ];
-  # create proxynet network
-  systemd.services."docker-network-proxynet" = {
-    path = [pkgs.docker];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStop = "docker network rm -f proxynet";
+  #TODO merge this into docker module?
+  flake.serviceModules.proxynet = {pkgs, ...}: {
+    # create proxynet network
+    systemd.services."docker-network-proxynet" = {
+      path = [pkgs.docker];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStop = "docker network rm -f proxynet";
+      };
+      script = ''
+        docker network inspect proxynet || docker network create proxynet
+      '';
+      after = ["docker.service"];
+      wantedBy = ["multi-user.target"];
     };
-    script = ''
-      docker network inspect proxynet || docker network create proxynet
-    '';
-    after = ["docker.service"];
-    wantedBy = ["multi-user.target"];
   };
 }

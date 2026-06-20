@@ -1,10 +1,9 @@
-{...}: {
+{inputs, ...}: {
   flake.serviceModules.actual = {
     pkgs,
     lib,
     config,
     uptix,
-    inputs,
     ...
   }: {
     # Containers

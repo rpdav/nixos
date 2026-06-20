@@ -1,7 +1,6 @@
-{...}: {
+{inputs, ...}: {
   flake.homeModules.core = {
     pkgs,
-    inputs,
     lib,
     config,
     osConfig,

@@ -1,9 +1,5 @@
-{...}: {
-  flake.serviceModules.beszel-hub = {
-    config,
-    inputs,
-    ...
-  }: let
+{inputs, ...}: {
+  flake.serviceModules.beszel-hub = {config, ...}: let
     inherit (config.serviceOpts) dockerDir;
   in {
     networking.firewall = {

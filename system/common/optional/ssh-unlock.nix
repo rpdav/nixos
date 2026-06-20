@@ -1,7 +1,7 @@
 {...}: {
   flake.nixosModules.ssh-unlock = {lib, ...}: let
     # Generates a list of the keys in primary user's directory in this repo
-    pubKeys = lib.filesystem.listFilesRecursive ../users/ryan/keys;
+    pubKeys = lib.filesystem.listFilesRecursive ../users/ryan/keys; #TODO refactor this to not use relative imports
   in {
     boot.initrd = {
       availableKernelModules = ["r8169"];

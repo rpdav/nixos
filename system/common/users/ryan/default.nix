@@ -1,10 +1,12 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.userRyan = {
     config,
     lib,
     pkgs,
-    inputs,
-    self,
     ...
   }:
   ## This file contains all NixOS config for user ryan
@@ -60,9 +62,6 @@
     # home-manager config
     home-manager = {
       users.ryan = self.homeModules."ryan@${config.networking.hostName}";
-      extraSpecialArgs = {
-        inherit inputs self;
-      };
     };
 
     # Fix file permissions after backup restore

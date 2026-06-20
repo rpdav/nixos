@@ -3,7 +3,6 @@
 
   flake.diskoConfigurations.luks-lvm-imp = {
     config,
-    inputs,
     lib,
     ...
   }: let

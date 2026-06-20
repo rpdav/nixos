@@ -1,9 +1,8 @@
-{...}: {
+{self, ...}: {
   flake.homeModules.yubikeyConfig = {
     lib,
     config,
     osConfig,
-    self,
     ...
   }: let
     homeDir = config.home.homeDirectory;

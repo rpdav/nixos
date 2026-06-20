@@ -1,9 +1,12 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.nasSystem = {
     lib,
     pkgs,
     config,
-    self,
     ...
   }:
   ## This file contains host-specific NixOS configuration for host nas
@@ -38,6 +41,7 @@
       self.nixosModules.rgb
 
       # self-hosted services
+      self.serviceModules.proxynet
       self.serviceModules.swag
       self.serviceModules.beszelAgent
       self.serviceModules.actual

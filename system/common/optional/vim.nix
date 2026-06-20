@@ -1,9 +1,5 @@
-{...}: {
-  flake.nixosModules.vim = {
-    inputs,
-    pkgs,
-    ...
-  }: {
+{inputs, ...}: {
+  flake.nixosModules.vim = {pkgs, ...}: {
     imports = [inputs.nvf.nixosModules.default];
 
     environment.systemPackages = [pkgs.wl-clipboard];

@@ -1,8 +1,7 @@
-{...}: {
+{self, ...}: {
   flake.homeModules."ryan@nas" = {
     config,
     pkgs,
-    self,
     ...
   }: let
     inherit (config.systemOpts) persistVol;

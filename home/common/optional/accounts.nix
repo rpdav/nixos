@@ -1,8 +1,7 @@
-{...}: {
+{inputs, ...}: {
   flake.homeModules.accounts = {
     config,
     osConfig,
-    inputs,
     lib,
     ...
   }: let

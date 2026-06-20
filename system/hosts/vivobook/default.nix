@@ -1,8 +1,11 @@
-{...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.nixosModules.vivobookSystem = {
     lib,
     pkgs,
-    self,
     config,
     ...
   }:
@@ -30,7 +33,7 @@
 
       #users
       self.nixosModules.userRyan
-      self.nixosModules.userRetro
+      self.nixosModules.userAriel
     ];
 
     # Variable overrides

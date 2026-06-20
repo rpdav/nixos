@@ -1,11 +1,9 @@
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.nasSystem = {
-    inputs,
     lib,
     config,
     ...
   }: let
-    inherit (inputs) nixvirt;
     router = "10.10.1.1";
   in {
     imports = [inputs.nixvirt.nixosModules.default];
@@ -66,7 +64,7 @@
         networks = [
           # bridge network on same subnet as host
           {
-            definition = nixvirt.lib.network.writeXML {
+            definition = inputs.nixvirt.lib.network.writeXML {
               name = "default";
               uuid = "e59b4192-e88b-4b6a-a4c3-75c2ae20beac";
               forward.mode = "bridge";

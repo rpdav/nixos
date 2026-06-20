@@ -1,9 +1,5 @@
-{...}: {
-  flake.nixosModules.backupLocal = {
-    config,
-    inputs,
-    ...
-  }:
+{inputs, ...}: {
+  flake.nixosModules.backupLocal = {config, ...}:
   #TODO: get backup monitor working again
   #let
   #  ## Set up notifications in case of failure

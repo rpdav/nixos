@@ -1,4 +1,8 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   imports = [
     #TODO remove after import-tree
     ./persistence
@@ -11,9 +15,7 @@
   ];
   flake.nixosModules.core = {
     pkgs,
-    inputs,
     config,
-    self,
     ...
   }: let
     inherit (config) systemOpts;

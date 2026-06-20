@@ -1,7 +1,6 @@
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.backupRemote = {
     config,
-    inputs,
     pkgs,
     ...
   }: let

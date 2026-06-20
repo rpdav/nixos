@@ -1,5 +1,5 @@
-{...}: {
-  flake.homeModules."ariel@fw13" = {self, ...}: {
+{self, ...}: {
+  flake.homeModules."ariel@fw13" = {...}: {
     ## This file contains all home-manager config unique to user ariel on host fw13
 
     imports = with self.homeModules; [

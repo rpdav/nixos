@@ -1,8 +1,11 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.retropiSystem = {
     lib,
     pkgs,
-    self,
     ...
   }:
   ## This file contains host-specific NixOS configuration for host retropi

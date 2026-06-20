@@ -1,10 +1,9 @@
-{...}: {
-  flake.nixosModules.userAriel = {
-    config,
-    inputs,
-    self,
-    ...
-  }:
+{
+  inputs,
+  self,
+  ...
+}: {
+  flake.nixosModules.userAriel = {config, ...}:
   ## This file contains all NixOS config for user ariel
   {
     imports = [
@@ -34,9 +33,6 @@
     home-manager = {
       useUserPackages = true;
       users.ariel = self.homeModules."ariel@${config.networking.hostName}";
-      extraSpecialArgs = {
-        inherit inputs self;
-      };
     };
 
     # Fix file permissions after backup restore

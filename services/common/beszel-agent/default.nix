@@ -1,5 +1,5 @@
-{...}: {
-  flake.serviceModules.beszelAgent = {inputs, ...}: {
+{inputs, ...}: {
+  flake.serviceModules.beszelAgent = {...}: {
     services.beszel.agent = {
       enable = true;
       openFirewall = true;

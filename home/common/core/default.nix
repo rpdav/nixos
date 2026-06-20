@@ -1,4 +1,8 @@
-{...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   imports = [
     #TODO delete this after parts is imported
     ./backup.nix
@@ -16,9 +20,7 @@
       config,
       osConfig,
       lib,
-      self,
       pkgs,
-      inputs,
       ...
     }: let
       pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};

@@ -1,9 +1,8 @@
-{...}: {
+{inputs, ...}: {
   flake.homeModules.firefox = {
     pkgs,
     config,
     osConfig,
-    inputs,
     lib,
     ...
   }: let

@@ -1,10 +1,12 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.core = {
     pkgs,
     config,
     lib,
-    self,
-    inputs,
     ...
   }: let
     inherit (config) userOpts;

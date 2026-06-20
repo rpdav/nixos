@@ -1,4 +1,4 @@
-{...}: {
+{inputs, ...}: {
   flake.serviceModules.planka =
     # Auto-generated using compose2nix v0.3.2-pre.
     {
@@ -6,7 +6,6 @@
       lib,
       config,
       uptix,
-      inputs,
       ...
     }: let
       inherit (config) serviceOpts;

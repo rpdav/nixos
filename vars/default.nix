@@ -1,8 +1,7 @@
-{...}: let
+{inputs, ...}: let
   customOptions = {
     config,
     lib,
-    inputs,
     ...
   }: let
     inherit (lib) mkOption types;

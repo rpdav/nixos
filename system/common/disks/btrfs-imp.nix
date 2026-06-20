@@ -3,7 +3,6 @@
   flake.diskoConfigurations.btrfs-imp = {
     config,
     lib,
-    inputs,
     ...
   }: let
     inherit (config) systemOpts;

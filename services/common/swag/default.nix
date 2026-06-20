@@ -1,9 +1,5 @@
-{...}: {
-  flake.serviceModules.swag = {
-    inputs,
-    config,
-    ...
-  }: {
+{inputs, ...}: {
+  flake.serviceModules.swag = {config, ...}: {
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts."swag" = {};
 

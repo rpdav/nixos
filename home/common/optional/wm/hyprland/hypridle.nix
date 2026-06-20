@@ -1,6 +1,5 @@
-{...}: {
+{inputs, ...}: {
   flake.homeModules.hypridle = {
-    inputs,
     osConfig,
     pkgs,
     ...

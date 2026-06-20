@@ -1,10 +1,9 @@
-{...}: {
-  flake.nixosModules.userRetro = {
-    config,
-    inputs,
-    self,
-    ...
-  }:
+{
+  inputs,
+  self,
+  ...
+}: {
+  flake.nixosModules.userRetro = {config, ...}:
   ## This file contains all NixOS config for user retro
   {
     imports = [
@@ -33,9 +32,6 @@
     home-manager = {
       useUserPackages = true;
       users.retro = self.homeModules."retro@${config.networking.hostName}";
-      extraSpecialArgs = {
-        inherit inputs self;
-      };
     };
 
     # Fix file permissions after backup restore

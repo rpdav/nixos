@@ -1,10 +1,12 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.docker = {
-    inputs,
     pkgs,
     config,
     lib,
-    self,
     ...
   }: let
     inherit (config) systemOpts serviceOpts;

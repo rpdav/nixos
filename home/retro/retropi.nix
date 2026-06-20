@@ -1,5 +1,5 @@
-{...}: {
-  flake.homeModules."retro@retropi" = {self, ...}: {
+{self, ...}: {
+  flake.homeModules."retro@retropi" = {...}: {
     ## This file contains all home-manager config unique to user retro on host retropi
     ## This is a service account only for accessing the retroarch ui
 

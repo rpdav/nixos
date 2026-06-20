@@ -1,5 +1,7 @@
 # This is an example of a home-manager configuration using this sops repo.
 # This would live in the main repo, not the
+# The filename is prepended with _ to keep import-tree from importing it
+# in my main config.
 {
   inputs,
   config,

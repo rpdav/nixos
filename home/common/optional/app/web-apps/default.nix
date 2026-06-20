@@ -1,9 +1,11 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.homeModules.webAppConfig = {
-    inputs,
     config,
     pkgs,
-    self,
     ...
   }: {
     imports = [self.homeModules.web-app];

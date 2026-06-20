@@ -1,8 +1,7 @@
-{...}: {
+{self, ...}: {
   flake.homeModules."ryan@fw13" = {
     pkgs,
     osConfig,
-    self,
     ...
   }: {
     ## This file contains all home-manager config unique to user ryan on host fw13

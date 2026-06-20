@@ -1,6 +1,5 @@
 {...}: {
   flake.nixosModules.plymouth = {
-    inputs,
     lib,
     pkgs,
     ...

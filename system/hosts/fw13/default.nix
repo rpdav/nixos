@@ -1,9 +1,11 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.fw13System = {
     lib,
     pkgs,
-    inputs,
-    self,
     config,
     ...
   }:

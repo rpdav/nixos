@@ -1,9 +1,5 @@
-{...}: {
-  flake.nixosModules.yubikeyConfig = {
-    self,
-    lib,
-    ...
-  }: {
+{self, ...}: {
+  flake.nixosModules.yubikeyConfig = {lib, ...}: {
     imports = [self.nixosModules.yubikey];
     # enable keys and set identifiers
     yubikey = {

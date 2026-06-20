@@ -1,9 +1,8 @@
 # Auto-generated using compose2nix v0.3.2-pre.
-{...}: {
+{inputs, ...}: {
   flake.serviceModules.swag = {
     lib,
     config,
-    inputs,
     uptix,
     ...
   }: {

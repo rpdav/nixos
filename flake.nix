@@ -187,8 +187,7 @@
         ./home/common/optional/wm/hyprland/wlogout
 
         # selfhosted services
-        ./services/common/swag
-        ./services/common/beszel-agent
+        ./services/common
         ./services/nas/actual
         ./services/nas/albyhub
         ./services/nas/beszel-hub

@@ -1,9 +1,8 @@
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.core = {
     config,
     lib,
     pkgs,
-    inputs,
     ...
   }: let
     inherit (config) systemOpts;

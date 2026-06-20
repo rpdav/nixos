@@ -1,8 +1,11 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.testvmSystem = {
     lib,
     pkgs,
-    self,
     config,
     ...
   }:

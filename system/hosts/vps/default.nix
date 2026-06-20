@@ -1,8 +1,11 @@
-{...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.vpsSystem = {
     inputs,
     lib,
-    self,
     pkgs,
     config,
     ...
@@ -34,6 +37,7 @@
       self.diskoConfigurations.btrfs-imp
 
       # self-hosted services
+      self.serviceModules.proxynet
       self.serviceModules.swag
       self.serviceModules.beszelAgent
       self.serviceModules.dms
