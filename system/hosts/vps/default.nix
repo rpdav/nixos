@@ -18,8 +18,6 @@
   ## RAM: 1 GB
   let
     inherit (config.systemOpts) persistVol impermanent;
-    # Generates a list of the keys for primary user
-    pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
   in {
     imports = [
       # core config
@@ -97,7 +95,7 @@
 
     # allow root ssh login for rebuilds
     users.users.root = {
-      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+      openssh.authorizedKeys.keyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
     };
 
     environment.systemPackages = with pkgs; [

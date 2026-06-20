@@ -9,16 +9,14 @@
   flake.nixosModules.retropiSystem = {
     lib,
     pkgs,
+    config,
     ...
   }:
   ## This file contains host-specific NixOS configuration for host retropi
   ## CPU: Cortex-A72 4-core
   ## GPU: Broadcom VideoCore VI
   ## RAM: 2 GB
-  let
-    # Generates a list of the keys in primary user's directory in this repo
-    pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
-  in {
+  {
     imports = [
       # core config
       self.nixosModules.core
@@ -77,7 +75,7 @@
 
     # allow root ssh login for rebuilds
     users.users.root = {
-      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+      openssh.authorizedKeys.keyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
     };
 
     # RPi-specific Hardware config

@@ -15,8 +15,6 @@
   #TODO add system stats here
   let
     inherit (config.systemOpts) persistVol impermanent;
-    # Generates a list of the keys in primary user's directory in this repo
-    pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
   in {
     ## This file contains host-specific NixOS configuration
 
@@ -111,7 +109,7 @@
     # minimal root user config
     users.users.root = {
       hashedPasswordFile = config.sops.secrets."passwordHashRyan".path;
-      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key); #allow root ssh for troubleshooting
+      openssh.authorizedKeys.keyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
     };
   };
 }

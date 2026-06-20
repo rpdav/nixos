@@ -1,8 +1,5 @@
 {...}: {
-  flake.nixosModules.ssh-unlock = {lib, ...}: let
-    # Generates a list of the keys in primary user's directory in this repo
-    pubKeys = lib.filesystem.listFilesRecursive ../users/ryan/keys; #TODO refactor this to not use relative imports
-  in {
+  flake.nixosModules.ssh-unlock = {config, ...}: {
     boot.initrd = {
       availableKernelModules = ["r8169"];
       network = {
@@ -10,7 +7,7 @@
         ssh = {
           enable = true;
           port = 2222;
-          authorizedKeys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+          authorizedKeyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
           hostKeys = [/boot/initrd/ssh_host_ed25519_key]; # must manually generate this before building
         };
       };
