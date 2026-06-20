@@ -3,6 +3,9 @@
   self,
   ...
 }: {
+  flake.nixosConfigurations.nas = inputs.nixpkgs.lib.nixosSystem {
+    modules = [self.nixosModules.nasSystem];
+  };
   flake.nixosModules.nasSystem = {
     lib,
     pkgs,

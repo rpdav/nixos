@@ -231,44 +231,5 @@
         ./services/vps/dms/docker-compose.nix
         ./services/vps/kuma/docker-compose.nix
       ];
-      flake = {...}: let
-        specialArgs = {
-          inherit inputs;
-          inherit (inputs) self;
-        };
-
-        # Config generator function
-        mkConfigurations = hosts:
-          hosts
-          # Map each hostname to a name-value pair
-          |> map (host: {
-            name = host;
-            value = inputs.nixpkgs.lib.nixosSystem {
-              inherit specialArgs;
-              modules = [
-                inputs.self.nixosModules."${host}System"
-              ];
-            };
-          })
-          # Convert the list of pairs into a single attribute set
-          |> builtins.listToAttrs;
-      in {
-        ######################################################################
-        # Generate nixosConfigurations based on helper function and host list
-        ######################################################################
-        nixosConfigurations = mkConfigurations [
-          # Main hosts
-          "fw13"
-          "nas"
-          "vps"
-          "retropi"
-          # Installation configs
-          "install"
-          "iso"
-          # Testing hosts
-          "vivobook"
-          "testvm"
-        ];
-      };
     };
 }

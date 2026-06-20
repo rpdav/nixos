@@ -3,6 +3,9 @@
   inputs,
   ...
 }: {
+  flake.nixosConfigurations.vivobook = inputs.nixpkgs.lib.nixosSystem {
+    modules = [self.nixosModules.vivobookSystem];
+  };
   flake.nixosModules.vivobookSystem = {
     lib,
     pkgs,

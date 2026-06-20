@@ -3,8 +3,10 @@
   self,
   ...
 }: {
+  flake.nixosConfigurations.vps = inputs.nixpkgs.lib.nixosSystem {
+    modules = [self.nixosModules.vpsSystem];
+  };
   flake.nixosModules.vpsSystem = {
-    inputs,
     lib,
     pkgs,
     config,

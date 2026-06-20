@@ -3,6 +3,9 @@
   self,
   ...
 }: {
+  flake.nixosConfigurations.install = inputs.nixpkgs.lib.nixosSystem {
+    modules = [self.nixosModules.installSystem];
+  };
   flake.nixosModules.installSystem = {pkgs, ...}: {
     ## This file contains host-specific NixOS configuration for my minimal install host
     ## Will be rebuilt after install using a permanent host

@@ -3,6 +3,9 @@
   self,
   ...
 }: {
+  flake.nixosConfigurations.iso = inputs.nixpkgs.lib.nixosSystem {
+    modules = [self.nixosModules.isoSystem];
+  };
   flake.nixosModules.isoSystem = {
     pkgs,
     modulesPath,

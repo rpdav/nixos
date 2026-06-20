@@ -3,6 +3,9 @@
   self,
   ...
 }: {
+  flake.nixosConfigurations.retropi = inputs.nixpkgs.lib.nixosSystem {
+    modules = [self.nixosModules.retropiSystem];
+  };
   flake.nixosModules.retropiSystem = {
     lib,
     pkgs,

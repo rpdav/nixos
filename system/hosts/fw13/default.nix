@@ -3,6 +3,9 @@
   self,
   ...
 }: {
+  flake.nixosConfigurations.fw13 = inputs.nixpkgs.lib.nixosSystem {
+    modules = [self.nixosModules.fw13System];
+  };
   flake.nixosModules.fw13System = {
     lib,
     pkgs,
