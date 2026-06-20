@@ -3,12 +3,12 @@
     pkgs,
     config,
     lib,
-    configLib,
+    self,
     inputs,
     ...
   }: let
     inherit (config) userOpts;
-    themePath = configLib.relativeToRoot "themes/${userOpts.theme}";
+    themePath = "${self}/themes/${userOpts.theme}";
 
     # choose appropriate wallpaper file type
     image =

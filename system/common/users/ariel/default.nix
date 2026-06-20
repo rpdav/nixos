@@ -2,7 +2,6 @@
   flake.nixosModules.userAriel = {
     config,
     inputs,
-    configLib,
     self,
     ...
   }:
@@ -36,7 +35,7 @@
       useUserPackages = true;
       users.ariel = self.homeModules."ariel@${config.networking.hostName}";
       extraSpecialArgs = {
-        inherit inputs self configLib;
+        inherit inputs self;
       };
     };
 

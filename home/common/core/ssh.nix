@@ -1,36 +1,24 @@
 {...}: {
   flake.homeModules.core = {
-    lib,
     config,
     osConfig,
-    configLib,
     ...
   }: let
     inherit (config.home) homeDirectory username;
-    # Path to public keys stored in config
-    pathtokeys = configLib.relativeToRoot "system/common/users/${username}/keys";
-    # List of public keys in path
-    pubKeys =
-      lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))
-      # Remove the .pub suffix
-      (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
-    # Create set of keys to be symlinked by home.file
-    publicKeyEntries = lib.attrsets.mergeAttrsList (
-      lib.lists.map
-      # list of dicts
-      (key: {".ssh/${key}.pub".source = "${pathtokeys}/${key}.pub";})
-      pubKeys
-    );
-  in {
-    # Pull manual key from sops
-    # This gets overridden by the yubikey module if it's in use
-    sops.secrets = {
-      "sshKeys/id_ed25519".path = "${homeDirectory}/.ssh/id_manual";
+    # Function to symlink user's authorized pub keys from host config into ~/.ssh
+    pubKeys = osConfig.users.users.${username}.openssh.authorizedKeys.keyFiles;
+    keyToAttribute = path: let
+      pathString = toString path;
+      filename = baseNameOf pathString;
+    in {
+      name = filename;
+      value = {
+        source = path;
+        target = ".ssh/${filename}";
+      };
     };
-
-    # symlink public keys
-    home.file = {} // publicKeyEntries;
-
+    homeFileConfig = builtins.listToAttrs (map keyToAttribute pubKeys);
+  in {
     # General ssh config
     programs.ssh = {
       enable = true;
@@ -47,5 +35,14 @@
         controlPersist = "no";
       };
     };
+
+    # Pull manual key from sops
+    # This gets overridden by the yubikey module if it's in use
+    sops.secrets = {
+      "sshKeys/id_ed25519".path = "${homeDirectory}/.ssh/id_manual";
+    };
+
+    # symlink public keys from osConfig
+    home.file = homeFileConfig;
   };
 }

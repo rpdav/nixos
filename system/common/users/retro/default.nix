@@ -2,7 +2,6 @@
   flake.nixosModules.userRetro = {
     config,
     inputs,
-    configLib,
     self,
     ...
   }:
@@ -35,7 +34,7 @@
       useUserPackages = true;
       users.retro = self.homeModules."retro@${config.networking.hostName}";
       extraSpecialArgs = {
-        inherit inputs self configLib;
+        inherit inputs self;
       };
     };
 

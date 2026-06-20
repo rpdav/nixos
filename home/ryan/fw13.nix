@@ -1,8 +1,6 @@
 {...}: {
   flake.homeModules."ryan@fw13" = {
     pkgs,
-    lib,
-    configLib,
     osConfig,
     self,
     ...

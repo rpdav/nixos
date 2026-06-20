@@ -2,7 +2,6 @@
   flake.nixosModules.vpsSystem = {
     inputs,
     lib,
-    configLib,
     self,
     pkgs,
     config,

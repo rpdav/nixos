@@ -233,10 +233,8 @@
         ./services/vps/kuma/docker-compose.nix
       ];
       flake = {...}: let
-        configLib.relativeToRoot = inputs.nixpkgs.lib.path.append ./.;
-
         specialArgs = {
-          inherit configLib inputs;
+          inherit inputs;
           inherit (inputs) self;
         };
 

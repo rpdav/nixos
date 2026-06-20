@@ -5,14 +5,10 @@
     pkgs,
     inputs,
     self,
-    configLib,
     ...
   }:
   ## This file contains all NixOS config for user ryan
-  let
-    # Generates a list of the keys in ./keys
-    pubKeys = lib.filesystem.listFilesRecursive ./keys;
-  in {
+  {
     imports = [
       inputs.nixos-cli.nixosModules.nixos-cli
       inputs.home-manager.nixosModules.home-manager
@@ -35,12 +31,10 @@
       isNormalUser = true;
       extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
       home = "/home/ryan";
-
-      # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos hosts
-      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+      openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ./keys;
     };
 
-    # Options search and nixos CLI tooling
+    # Options search and nixos CLI tooling #TODO move this to admin module
     programs.nixos-cli = {
       enable = true;
       settings = {
@@ -67,7 +61,7 @@
     home-manager = {
       users.ryan = self.homeModules."ryan@${config.networking.hostName}";
       extraSpecialArgs = {
-        inherit inputs self configLib;
+        inherit inputs self;
       };
     };
 

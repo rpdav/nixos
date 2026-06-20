@@ -3,7 +3,6 @@
     lib,
     pkgs,
     self,
-    configLib,
     ...
   }:
   ## This file contains host-specific NixOS configuration for host retropi
@@ -14,11 +13,7 @@
     # Generates a list of the keys in primary user's directory in this repo
     pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
   in {
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # optional config
-        "services/common/beszel-agent"
-      ])
+    imports = [
       # core config
       self.nixosModules.core
 
@@ -33,6 +28,9 @@
       #users
       self.nixosModules.userRyan
       self.nixosModules.userRetro
+
+      # self-hosted services
+      self.serviceModules.beszelAgent
     ];
 
     # Variable overrides

@@ -3,7 +3,6 @@
     lib,
     pkgs,
     config,
-    configLib,
     self,
     ...
   }:
@@ -16,10 +15,7 @@
     # Generates a list of the keys in primary user's directory in this repo
     pubKeys = lib.filesystem.listFilesRecursive ../../common/users/ryan/keys;
   in {
-    imports = lib.flatten [
-      (map configLib.relativeToRoot [
-        # users
-      ])
+    imports = [
       # core config
       self.nixosModules.core
 

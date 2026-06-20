@@ -4,7 +4,6 @@
     pkgs,
     config,
     lib,
-    configLib,
     self,
     ...
   }: let
@@ -15,7 +14,7 @@
     imports = [
       proxy-conf
       container-mount
-      (inputs.uptix.nixosModules.uptix (configLib.relativeToRoot "./uptix.lock"))
+      (inputs.uptix.nixosModules.uptix "${self}/uptix.lock")
     ];
 
     # Create impermanent directory
