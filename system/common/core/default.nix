@@ -4,14 +4,8 @@
   ...
 }: {
   imports = [
-    #TODO remove after import-tree
-    ./persistence
-    ./packages.nix
-    ./regressions.nix
-    ./sops.nix
-    ./sshd.nix #needed for sops keys
-    ./stylix.nix
-    ./tailscale.nix
+    #TODO find a better place for this input
+    inputs.home-manager.flakeModules.home-manager
   ];
   flake.nixosModules.core = {
     pkgs,

@@ -13,7 +13,7 @@
     # Define a function that imports a file from .icons/${name}.nix,
     # adds stylix colors, and puts it in /nix/store as ${name}.svg
     importSVG = {name, ...}:
-      import ./icons/${name}.nix {inherit colors;}
+      import ./_icons/${name}.nix {inherit colors;}
       |> builtins.toFile "${name}.svg";
 
     # Apply the function to the icons wlogout needs

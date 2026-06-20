@@ -1,9 +1,4 @@
 {...}: {
-  imports = [
-    #TODO delete these
-    ./swag
-    ./beszel-agent
-  ];
   #TODO merge this into docker module?
   flake.serviceModules.proxynet = {pkgs, ...}: {
     # create proxynet network

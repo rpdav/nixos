@@ -3,17 +3,6 @@
   inputs,
   ...
 }: {
-  imports = [
-    #TODO delete this after parts is imported
-    ./backup.nix
-    ./bash.nix
-    ./persist.nix
-    ./sops.nix
-    ./starship.nix
-    ./git.nix
-    ./ssh.nix
-    ./scripts.nix
-  ];
   flake.homeModules.core = let
   in
     {

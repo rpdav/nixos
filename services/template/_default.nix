@@ -1,8 +1,6 @@
 {config, ...}: let
   inherit (config) serviceOpts;
 in {
-  imports = [./docker-compose.nix];
-
   # Create/chmod appdata directories to mount
   # Option 1: This will create a directory at ${dockerDir}/serviceName/config owned by ${serviceOpts.dockerUser}:users with mode 0700
   virtualisation.oci-containers.mounts."containerName" = {};
