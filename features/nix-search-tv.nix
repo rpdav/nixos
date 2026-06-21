@@ -1,36 +1,6 @@
 {...}: {
   perSystem = {pkgs, ...}: {
     packages = {
-      fs-diff = pkgs.writeShellScriptBin "fs-diff" ''
-        sudo ${pkgs.findutils}/bin/find $1 -mount ! -type l,d
-      '';
-      #lish = pkgs.writeShellScriptBin "lish" ''
-      #  alacritty -e ssh -t ${inputs.nix-secrets.vps.linodeUser}@lish-us-southeast.linode.com vps.${inputs.nix-secrets.selfhosting.domain}
-      #'';
-
-      # from/to nix conversion tools
-      json2nix = pkgs.writeShellScriptBin "json2nix" ''
-        nix eval --impure --expr "builtins.fromJSON (builtins.readFile $1)"
-      '';
-      toml2nix = pkgs.writeShellScriptBin "toml2nix" ''
-        nix eval --impure --expr "builtins.fromTOML (builtins.readFile $1)"
-      '';
-      yaml2nix = pkgs.writeShellScriptBin "yaml2nix" ''
-        cat $1 | ${pkgs.yj}/bin/yj -i > ./temp.json
-        json2nix ./temp.json
-        rm temp.json
-      '';
-      nix2json = pkgs.writeShellScriptBin "nix2json" ''
-        nix eval --impure --file $1 --json | ${pkgs.jq}/bin/jq
-      '';
-      nix2toml = pkgs.writeShellScriptBin "nix2toml" ''
-        nix eval --impure --file $1 --json | ${pkgs.yj}/bin/yj -jy
-      '';
-      nix2yaml = pkgs.writeShellScriptBin "nix2yaml" ''
-        nix eval --impure --file $1 --json | ${pkgs.yj}/bin/yj -jti
-      '';
-
-      # This may be better in its own module
       nix-search-tv = pkgs.writeShellScriptBin "ns" ''
         #!/usr/bin/env bash
 

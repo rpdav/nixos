@@ -24,10 +24,12 @@
       self.nixosModules.core
 
       # optional config
+      self.nixosModules.admin
+      self.nixosModules.home-manager
       self.nixosModules.vim
       self.nixosModules.backupLocal
       self.nixosModules.backupRemote
-      self.nixosModules.docker # container admin tools, not just for running containers
+      self.nixosModules.docker
       self.nixosModules.duplicati
       self.nixosModules.plymouth
       self.nixosModules.steam

@@ -6,10 +6,6 @@
   flake.nixosModules.userRetro = {config, ...}:
   ## This file contains all NixOS config for user retro
   {
-    imports = [
-      inputs.home-manager.nixosModules.home-manager
-    ];
-
     # user--specific variable overrides
     userOpts.theme = "retroarch";
     userOpts.cursor = "Bibata-Modern-Ice";

@@ -6,10 +6,6 @@
   flake.nixosModules.userAriel = {config, ...}:
   ## This file contains all NixOS config for user ariel
   {
-    imports = [
-      inputs.home-manager.nixosModules.home-manager #TODO move this to home-manager config. It's getting double-imported on 2-user systems
-    ];
-
     # user--specific variable overrides
     userOpts.theme = "mountain";
     userOpts.cursor = "Bibata-Modern-Ice";

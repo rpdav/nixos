@@ -13,7 +13,6 @@
       ...
     }: let
       pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-      selfpkgs = self.packages."${pkgs.stdenv.hostPlatform.system}";
     in {
       imports = [
         self.homeModules.opts
@@ -44,7 +43,7 @@
               tor-browser
               librewolf
 
-              # terminals
+              # extra terminals
               alacritty
 
               # media
@@ -71,25 +70,6 @@
               #bitwarden-desktop # electron 39.8.10 marked insecure even on stable
             ]
           )
-          ++ [
-            #TODO move these to admin module
-            # nix file conversion tools
-            selfpkgs.json2nix
-            selfpkgs.nix2json
-            selfpkgs.nix2toml
-            selfpkgs.nix2yaml
-            selfpkgs.toml2nix
-            selfpkgs.yaml2nix
-
-            # remote host management
-            #selfpkgs.lish # this may not work because I can't pass inputs to a package
-
-            # convenience script for nix-search-tv
-            selfpkgs.nix-search-tv
-
-            # misc
-            selfpkgs.fs-diff
-          ]
       );
 
       # Create persistent directories
@@ -106,16 +86,6 @@
           ".config/ghostwriterrc"
           ".config/bluedevelglobalrc" # bluetooth
         ];
-      };
-
-      ### below was copied from ryan/core/default. consider refactoring this.
-
-      #TODO Move this to admin
-      programs.lazydocker = {
-        enable = true;
-        settings = {
-          gui.returnImmediately = true;
-        };
       };
 
       # misc programs
