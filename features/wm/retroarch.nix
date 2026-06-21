@@ -28,7 +28,13 @@
         package = retroarchWithCores;
       };
     };
-
-    # Retroarch config - see home-manager
+  };
+  flake.homeModules.retroarch = {...}: {
+    programs.retroarch = {
+      enable = true;
+      settings = {
+        rgui_browser_directory = "~/Games";
+      };
+    };
   };
 }

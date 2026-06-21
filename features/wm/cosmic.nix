@@ -1,4 +1,10 @@
 {...}: {
+  flake.nixosModules.cosmic = {...}: {
+    services.displayManager.cosmic-greeter.enable = true;
+    services.desktopManager.cosmic.enable = true;
+    environment.cosmic.excludePackages = [];
+    services.system76-scheduler.enable = true;
+  };
   flake.homeModules.cosmic = {
     config,
     osConfig,
