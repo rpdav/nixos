@@ -159,7 +159,7 @@
     </controller>
     <interface type="network">
       <mac address="52:54:00:29:3c:fc"/>
-      <source network="default"/>
+      <source network="br0"/>
       <model type="virtio"/>
       <link state="up"/>
       <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>

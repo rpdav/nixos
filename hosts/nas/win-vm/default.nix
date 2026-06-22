@@ -6,9 +6,7 @@
   }: let
     router = "10.10.1.1";
   in {
-    imports = [inputs.nixvirt.nixosModules.default];
-
-    # define bridge network
+    # Define host bridge network
     networking = {
       defaultGateway = router;
       nameservers = [router];
@@ -19,7 +17,7 @@
           macAddress = "00:DB:61:CA:AD:BE";
           ipv4.addresses = [
             {
-              address = "10.10.1.17";
+              address = "10.10.1.17"; #TODO is there a better way to manage IP addresses in config?
               prefixLength = 24;
             }
           ];
@@ -29,11 +27,11 @@
     };
 
     specialisation.no-passthrough.configuration = {
-      # specialization to disable passthrough for host GPU use use and troubleshooting
-      # no config defined here, but some things are disabled below with conditionals:
+      # Specialization to disable passthrough for host GPU use and troubleshooting.
+      # No config defined here, but some things are disabled below with conditionals:
       # `lib.mkIf (config.specialisation != {})`
-      # Note this will disable it for ALL specialisations, not just no-passthrough
-      # Currently not using any other specialisations, so this is OK
+      # Note this will disable it for ALL specialisations, not just no-passthrough.
+      # Currently not using any other specialisations, so this is OK.
     };
 
     # kernel modules for passthrough
@@ -65,7 +63,7 @@
           # bridge network on same subnet as host
           {
             definition = inputs.nixvirt.lib.network.writeXML {
-              name = "default";
+              name = "br0";
               uuid = "e59b4192-e88b-4b6a-a4c3-75c2ae20beac";
               forward.mode = "bridge";
               bridge.name = "br0";
@@ -74,7 +72,7 @@
           }
         ];
         domains = [
-          # win10 vm definition
+          # win10 VM definition
           {
             definition = ./win10.xml;
             # do not auto-start win10 VM if running a specialisation

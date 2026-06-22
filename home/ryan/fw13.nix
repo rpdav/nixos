@@ -81,23 +81,5 @@
       localRepo = "ssh://borg@borg:2222/backup";
       #remoteRepo = "";
     };
-
-    # virt-manager settings
-    #TODO Move this to virtualization module
-    dconf.settings = {
-      "org/virt-manager/virt-manager" = {
-        xmleditor-enabled = true;
-      };
-      "org/virt-manager/virt-manager/connections" = {
-        autoconnect = [
-          "qemu+ssh://root@10.10.1.17/system"
-          "qemu:///system"
-        ];
-        uris = [
-          "qemu+ssh://root@10.10.1.17/system"
-          "qemu:///system"
-        ];
-      };
-    };
   };
 }
