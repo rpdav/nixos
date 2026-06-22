@@ -5,7 +5,7 @@
     virtualisation.oci-containers.mounts."flatnotes".target = "data"; # defaults to ${dockerDir}/flatnotes/config
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxy-conf."flatnotes" = {
+    virtualisation.oci-containers.proxyConf."flatnotes" = {
       container = "flatnotes";
       subdomain = "notes";
       port = 8080;

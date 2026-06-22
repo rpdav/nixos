@@ -25,7 +25,7 @@
       };
       volumes = [
         "${config.serviceOpts.dockerDir}/swag/config:/config"
-        "${config.serviceOpts.proxyDir}:/config/nginx/proxy-confs"
+        "${config.serviceOpts.proxyDir}:/config/nginx/proxyConfs"
         "${config.sops.secrets."selfhosting/swag/cloudflareToken".path}:/config/dns-conf/cloudflare.ini"
       ];
       ports = [

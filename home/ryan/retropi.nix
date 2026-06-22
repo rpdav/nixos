@@ -7,7 +7,7 @@
       self.homeModulse.core
 
       # base user config
-      self.homeModules.ryan
+      self.homeModules.user-ryan
     ];
 
     userOpts = {

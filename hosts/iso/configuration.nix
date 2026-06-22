@@ -4,9 +4,9 @@
   ...
 }: {
   flake.nixosConfigurations.iso = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.isoSystem];
+    modules = [self.nixosModules.system-iso];
   };
-  flake.nixosModules.isoSystem = {
+  flake.nixosModules.system-iso = {
     pkgs,
     modulesPath,
     ...

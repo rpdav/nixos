@@ -5,7 +5,7 @@
     virtualisation.oci-containers.mounts."heimdall" = {};
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxy-conf."heimdall" = {
+    virtualisation.oci-containers.proxyConf."heimdall" = {
       subdomain = "start";
       port = 443;
       protocol = "https";

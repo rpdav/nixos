@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.ssh-unlock = {config, ...}: {
+  flake.nixosModules.sshUnlock = {config, ...}: {
     boot.initrd = {
       availableKernelModules = ["r8169"];
       network = {

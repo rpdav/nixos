@@ -3,7 +3,7 @@
   self,
   ...
 }: {
-  flake.nixosModules.userRetro = {config, ...}:
+  flake.nixosModules.user-retro = {config, ...}:
   ## This file contains all NixOS config for user retro
   {
     # user--specific variable overrides
@@ -38,7 +38,7 @@
       "z ${config.systemOpts.persistVol}/home/retro 0700 retro users"
     ];
   };
-  flake.homeModules.retro = {
+  flake.homeModules.user-retro = {
     home.username = "retro";
   };
 }

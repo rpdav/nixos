@@ -5,13 +5,13 @@
     virtualisation.oci-containers.mounts."actualserver" = {};
 
     # Create swag proxy configs
-    virtualisation.oci-containers.proxy-conf."actual" = {
+    virtualisation.oci-containers.proxyConf."actual" = {
       container = "actualserver";
       subdomain = "budget";
       port = 5006;
       protocol = "http";
     };
-    virtualisation.oci-containers.proxy-conf."actual-api" = {
+    virtualisation.oci-containers.proxyConf."actual-api" = {
       container = "actual-api";
       subdomain = "budget-api";
       port = 5007;

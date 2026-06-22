@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.nasSystem = {...}: {
+  flake.nixosModules.system-nas = {...}: {
     # Unlock secondary drives
     boot.initrd.luks.devices = {
       storage1.device = "/dev/disk/by-uuid/d364a03e-44cc-4b76-b088-a1ac234672f2"; # 4TB WD Red HDD

@@ -7,7 +7,7 @@
       self.homeModules.core
 
       # base user config
-      self.homeModules.ryan
+      self.homeModules.user-ryan
     ];
   };
 }

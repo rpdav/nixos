@@ -4,9 +4,9 @@
   ...
 }: {
   flake.nixosConfigurations.nas = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.nasSystem];
+    modules = [self.nixosModules.system-nas];
   };
-  flake.nixosModules.nasSystem = {
+  flake.nixosModules.system-nas = {
     lib,
     pkgs,
     config,
@@ -28,12 +28,12 @@
       self.nixosModules.backupLocal
       self.nixosModules.backupRemote
       self.nixosModules.docker
-      self.nixosModules.ssh-unlock
+      self.nixosModules.sshUnlock
       self.nixosModules.virtualization
       self.nixosModules.yubikeyConfig
 
       # users
-      self.nixosModules.userRyan
+      self.nixosModules.user-ryan
 
       # disk config
       self.diskoConfigurations.luks-lvm-imp
@@ -79,7 +79,7 @@
     };
     serviceOpts = {
       dockerDir = "/mnt/docker/appdata";
-      proxyDir = "/run/selfhosting/proxy-confs";
+      proxyDir = "/run/selfhosting/proxyConfs";
     };
 
     # Packages

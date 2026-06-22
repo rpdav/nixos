@@ -3,7 +3,7 @@
   self,
   ...
 }: {
-  flake.nixosModules.userRyan = {
+  flake.nixosModules.user-ryan = {
     config,
     lib,
     ...
@@ -44,7 +44,7 @@
       "z ${config.systemOpts.persistVol}/home/ryan 0700 ryan users"
     ];
   };
-  flake.homeModules.ryan = {...}: {
+  flake.homeModules.user-ryan = {...}: {
     home.username = "ryan";
   };
 }

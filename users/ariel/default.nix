@@ -3,7 +3,7 @@
   self,
   ...
 }: {
-  flake.nixosModules.userAriel = {config, ...}:
+  flake.nixosModules.user-ariel = {config, ...}:
   ## This file contains all NixOS config for user ariel
   {
     # user--specific variable overrides
@@ -39,7 +39,7 @@
       "z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
     ];
   };
-  flake.homeModules.ariel = {
+  flake.homeModules.user-ariel = {
     home.username = "ariel";
   };
 }

@@ -36,7 +36,7 @@
     };
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxy-conf."beszel" = {
+    virtualisation.oci-containers.proxyConf."beszel" = {
       container = "10.10.1.17";
       subdomain = "status";
       port = 8090;

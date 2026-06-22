@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  flake.nixosModules.nasSystem = {
+  flake.nixosModules.system-nas = {
     lib,
     config,
     ...

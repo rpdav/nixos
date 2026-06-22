@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.nasSystem = {pkgs, ...}: {
+  flake.nixosModules.system-nas = {pkgs, ...}: {
     # NAS uses GPU passthrough and its CPU does not have integrated graphics.
     # This means that if anything goes wrong after stage 1 boot,
     # there is no display output to troubleshoot. Displaylink acts as an

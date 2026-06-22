@@ -4,9 +4,9 @@
   ...
 }: {
   flake.nixosConfigurations.retropi = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.retropiSystem];
+    modules = [self.nixosModules.system-retropi];
   };
-  flake.nixosModules.retropiSystem = {
+  flake.nixosModules.system-retropi = {
     lib,
     pkgs,
     config,
@@ -30,8 +30,8 @@
       self.nixosModules.yubikeyConfig
 
       #users
-      self.nixosModules.userRyan
-      self.nixosModules.userRetro
+      self.nixosModules.user-ryan
+      self.nixosModules.user-retro
 
       # self-hosted services
       self.serviceModules.beszelAgent

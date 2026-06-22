@@ -4,7 +4,7 @@
     virtualisation.oci-containers.mounts."lubelogger" = {};
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxy-conf."lubelogger" = {
+    virtualisation.oci-containers.proxyConf."lubelogger" = {
       container = "lubelogger";
       subdomain = "cars";
       port = 8080;

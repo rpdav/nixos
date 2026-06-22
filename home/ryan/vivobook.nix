@@ -4,7 +4,7 @@
 
     imports = with self.homeModules; [
       # base user config
-      ryan
+      user-ryan
 
       # optional config
       firefox

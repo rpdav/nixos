@@ -20,7 +20,7 @@
     };
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxy-conf."immich" = {
+    virtualisation.oci-containers.proxyConf."immich" = {
       container = "immich_server";
       subdomain = "photos";
       port = 2283;

@@ -1,6 +1,6 @@
 # Adapted from TLATER's config at https://github.com/TLATER/dotfiles/blob/master/home-modules/firefox-webapp.nix
 {...}: {
-  flake.homeModules.web-app = {
+  flake.homeModules.webApp = {
     config,
     lib,
     ...

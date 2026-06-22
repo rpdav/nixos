@@ -4,9 +4,9 @@
   ...
 }: {
   flake.nixosConfigurations.testvm = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.testvmSystem];
+    modules = [self.nixosModules.system-testvm];
   };
-  flake.nixosModules.testvmSystem = {
+  flake.nixosModules.system-testvm = {
     lib,
     pkgs,
     config,
@@ -28,7 +28,7 @@
       self.nixosModules.yubikeyConfig
 
       # users
-      self.nixosModules.userRyan
+      self.nixosModules.user-ryan
 
       # disk config
       self.diskoConfigurations.luks-lvm-imp

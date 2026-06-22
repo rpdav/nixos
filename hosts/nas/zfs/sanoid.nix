@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.nasSystem = {...}: {
+  flake.nixosModules.system-nas = {...}: {
     services.sanoid = {
       enable = true;
       templates.data = {

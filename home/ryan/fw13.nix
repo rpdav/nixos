@@ -7,7 +7,7 @@
       core
 
       # base user config
-      ryan
+      user-ryan
 
       # optional config
       webAppConfig

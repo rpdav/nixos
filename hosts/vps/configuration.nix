@@ -4,9 +4,9 @@
   ...
 }: {
   flake.nixosConfigurations.vps = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.vpsSystem];
+    modules = [self.nixosModules.system-vps];
   };
-  flake.nixosModules.vpsSystem = {
+  flake.nixosModules.system-vps = {
     lib,
     pkgs,
     config,
@@ -31,7 +31,7 @@
       self.nixosModules.yubikeyConfig
 
       # users
-      self.nixosModules.userRyan
+      self.nixosModules.user-ryan
 
       # disk config
       self.diskoConfigurations.btrfs-imp
@@ -56,7 +56,7 @@
     };
     serviceOpts = {
       dockerDir = "/opt/docker";
-      proxyDir = "/run/selfhosting/proxy-confs";
+      proxyDir = "/run/selfhosting/proxyConfs";
     };
 
     # Backup config

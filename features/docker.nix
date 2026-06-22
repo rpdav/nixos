@@ -5,10 +5,10 @@
     ...
   }: let
     inherit (config) systemOpts serviceOpts;
-    inherit (self.nixosModules) proxy-conf containerMount;
+    inherit (self.nixosModules) proxyConf containerMount;
   in {
     imports = [
-      proxy-conf
+      proxyConf
       containerMount
     ];
 

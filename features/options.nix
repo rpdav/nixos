@@ -207,7 +207,7 @@
         };
         proxyDir = mkOption {
           type = types.str;
-          default = "${config.serviceOpts.dockerDir}/swag/proxy-confs";
+          default = "${config.serviceOpts.dockerDir}/swag/proxyConfs";
           description = ''
             Where to store swag proxy configs
           '';

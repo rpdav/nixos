@@ -8,7 +8,7 @@
       self.homeModules.core
 
       # base user config
-      self.homeModules.retro
+      self.homeModules.user-retro
 
       # wm
       self.homeModules.retroarch

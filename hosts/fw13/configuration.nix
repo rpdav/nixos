@@ -4,9 +4,9 @@
   ...
 }: {
   flake.nixosConfigurations.fw13 = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.fw13System];
+    modules = [self.nixosModules.system-fw13];
   };
-  flake.nixosModules.fw13System = {
+  flake.nixosModules.system-fw13 = {
     lib,
     pkgs,
     config,
@@ -25,7 +25,6 @@
 
       # optional config
       self.nixosModules.admin
-      self.nixosModules.home-manager
       self.nixosModules.vim
       self.nixosModules.backupLocal
       self.nixosModules.backupRemote
@@ -41,7 +40,7 @@
       self.nixosModules.hyprland
 
       # users
-      self.nixosModules.userRyan
+      self.nixosModules.user-ryan
 
       # disk config
       self.diskoConfigurations.luks-lvm-imp

@@ -17,7 +17,7 @@
     };
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxy-conf."jellyfin" = {
+    virtualisation.oci-containers.proxyConf."jellyfin" = {
       subdomain = "movies";
       port = 8096;
       protocol = "http";

@@ -8,7 +8,7 @@
     pkgs,
     ...
   }: {
-    imports = [self.homeModules.web-app];
+    imports = [self.homeModules.webApp];
 
     programs.firefox.webapps = let
       inherit (inputs.nix-secrets.selfhosting) domain;

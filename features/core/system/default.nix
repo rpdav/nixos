@@ -8,7 +8,7 @@
 
     imports = [
       self.nixosModules.opts
-      self.nixosModules.home-manager
+      self.nixosModules.homeManager
       inputs.disko.nixosModules.disko
       self.nixosModules.nix
     ];

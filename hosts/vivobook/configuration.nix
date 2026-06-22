@@ -4,9 +4,9 @@
   ...
 }: {
   flake.nixosConfigurations.vivobook = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.vivobookSystem];
+    modules = [self.nixosModules.system-vivobook];
   };
-  flake.nixosModules.vivobookSystem = {
+  flake.nixosModules.system-vivobook = {
     lib,
     pkgs,
     config,
@@ -33,8 +33,8 @@
       self.diskoConfigurations.luks-lvm-imp
 
       #users
-      self.nixosModules.userRyan
-      self.nixosModules.userAriel
+      self.nixosModules.user-ryan
+      self.nixosModules.user-ariel
     ];
 
     # Variable overrides
