@@ -5,11 +5,11 @@
     ...
   }: let
     inherit (config) systemOpts serviceOpts;
-    inherit (self.nixosModules) proxy-conf container-mount;
+    inherit (self.nixosModules) proxy-conf containerMount;
   in {
     imports = [
       proxy-conf
-      container-mount
+      containerMount
     ];
 
     # Create impermanent directory
