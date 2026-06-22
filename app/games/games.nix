@@ -1,4 +1,21 @@
 {...}: {
+  flake.nixosModules.games = {pkgs, ...}: {
+    programs.steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+      ];
+      protontricks.enable = true;
+    };
+
+    environment.systemPackages = with pkgs; [
+      lutris
+      mangohud
+    ];
+
+    programs.gamemode.enable = true;
+  };
   flake.homeModules.games = {
     pkgs,
     config,
@@ -29,10 +46,13 @@
       retroarchWithCores
       pkgs.moonlight-qt
       pkgs.beyond-all-reason
+      pkgs.protonup-ng
+      pkgs.freetype
     ];
 
-    nixpkgs.config.permittedInsecurePackages = [
-      "mbedtls-2.28.10" # insecure dependency for retroarch
-    ];
+    ## This must be imperatively set up by running "protonup". Further updates are handled by steam
+    home.sessionVariables = {
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
+    };
   };
 }

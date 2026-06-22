@@ -97,7 +97,5 @@
     networking.networkmanager = {
       wifi.scanRandMacAddress = false; # Disables randomization during background scans
     };
-
-    system.stateVersion = "26.05"; # Did you read the comment?
   };
 }

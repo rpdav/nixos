@@ -142,7 +142,5 @@
     users.users.root = {
       openssh.authorizedKeys.keyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
     };
-
-    system.stateVersion = "25.05";
   };
 }

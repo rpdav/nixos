@@ -32,12 +32,13 @@
       self.nixosModules.docker
       self.nixosModules.duplicati
       self.nixosModules.plymouth
-      self.nixosModules.steam
+      self.nixosModules.games
       self.nixosModules.virtualization
       self.nixosModules.wifi
-      self.nixosModules.wine
-      self.nixosModules.hyprland
       self.nixosModules.yubikeyConfig
+
+      # wm
+      self.nixosModules.hyprland
 
       # users
       self.nixosModules.userRyan
@@ -79,9 +80,6 @@
       ];
     };
 
-    # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
-    system.stateVersion = "24.05";
-
     # Boot config with luks
     boot = {
       loader = {
@@ -105,7 +103,6 @@
       enable = true;
       #wifi.backend = "iwd";
     };
-    #networking.wireless.iwd.enable = true;
 
     # Host-specific hardware config
     services.pipewire = {
@@ -123,7 +120,8 @@
       openFirewall = true;
     };
 
-    # Disable fingerprint for login (causes gnome-keyring unlock to fail)
+    # Disable fingerprint for login (causes gnome-keyring unlock to fail).
+    # Can still unlock with fingerprint.
     security.pam.services.login.fprintAuth = false;
 
     # System packages
@@ -144,9 +142,6 @@
         "/root/.ssh/known_hosts"
       ];
     };
-
-    # Allow building arm packages
-    boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
     # Firmware updates
     services.fwupd.enable = true;

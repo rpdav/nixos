@@ -19,7 +19,6 @@
       firefox
       chromium
       games
-      proton
       nextcloud
       kitty
       thunderbird

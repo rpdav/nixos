@@ -118,7 +118,5 @@
       enable = true;
       apiKeyFile = config.sops.secrets."linode/longviewAPIKey".path;
     };
-
-    system.stateVersion = "25.05";
   };
 }

@@ -36,6 +36,9 @@
       };
     };
 
+    # Allow building arm packages
+    boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
     environment.systemPackages =
       [
         # diffing tool

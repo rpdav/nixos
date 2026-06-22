@@ -3,13 +3,7 @@
   self,
   ...
 }: {
-  flake.nixosModules.core = {
-    pkgs,
-    config,
-    ...
-  }: let
-    inherit (config) systemOpts;
-  in {
+  flake.nixosModules.core = {pkgs, ...}: {
     ## This file contains NixOS configuration common to all hosts
 
     imports = [
@@ -22,6 +16,8 @@
     environment.variables = {
       EDITOR = "nvim";
     };
+
+    system.stateVersion = "24.05";
 
     # Base fonts
     fonts = {
