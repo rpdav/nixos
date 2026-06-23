@@ -17,7 +17,7 @@
     };
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxyConf."searxng" = {
+    virtualisation.oci-containers.proxyConfs."searxng" = {
       container = "searxng-app";
       subdomain = "search";
       port = 8080;

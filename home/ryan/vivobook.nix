@@ -12,7 +12,7 @@
       # optional config
       firefox
       chromium
-      webAppConfig
+      webApps
       kitty
       defaultApps
       cinnamon

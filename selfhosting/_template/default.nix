@@ -26,7 +26,7 @@ in {
   };
 
   # Create swag proxy config
-  virtualisation.oci-containers.proxyConf."serviceName" = {
+  virtualisation.oci-containers.proxyConfs."serviceName" = {
     container = "containerName"; # defaults to serviceName if blank
     subdomain = "www"; # defaults to serviceName if blank
     port = 8080; # this must be the internal port the container listens on, not one mapped to the host

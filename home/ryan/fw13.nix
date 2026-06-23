@@ -11,10 +11,10 @@
 
       # optional config
       backup
-      webAppConfig
+      webApps
       defaultApps
       accounts
-      yubikeyConfig
+      yubikey
 
       # apps
       firefox

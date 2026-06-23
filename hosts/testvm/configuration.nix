@@ -25,7 +25,7 @@
       # optional
       self.nixosModules.vim
       self.nixosModules.hyprland
-      self.nixosModules.yubikeyConfig
+      self.nixosModules.yubikey
 
       # users
       self.nixosModules.user-ryan

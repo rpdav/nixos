@@ -3,7 +3,7 @@
   self,
   ...
 }: {
-  flake.nixosModules.rgb = {
+  flake.modules.nixos.rgb = {
     pkgs,
     lib,
     config,
@@ -57,7 +57,7 @@
 
     config = let
       color-flag =
-        if builtins.isNull cfg.color
+        if isNull cfg.color
         then ""
         else "--color ${cfg.color}";
       rgb-autostart = pkgs.writeScriptBin "rgb-autostart" ''
@@ -65,7 +65,7 @@
         NUM_DEVICES=$(${pkgs.openrgb}/bin/openrgb --list-devices | grep -E '^[0-9]+: ' | wc -l)
 
         for i in $(seq 0 $(($NUM_DEVICES - 1))); do
-          ${pkgs.openrgb}/bin/openrgb --device $i --mode '${cfg.mode}' ${color-flag} --brightness ${builtins.toString cfg.brightness}
+          ${pkgs.openrgb}/bin/openrgb --device $i --mode '${cfg.mode}' ${color-flag} --brightness ${toString cfg.brightness}
         done
       '';
     in

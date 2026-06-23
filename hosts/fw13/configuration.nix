@@ -35,7 +35,7 @@
         games
         virtualization
         wifi
-        yubikeyConfig
+        yubikey
 
         # wm
         hyprland

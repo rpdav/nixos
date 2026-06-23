@@ -1,6 +1,6 @@
 {self, ...}: {
-  flake.nixosModules.yubikeyConfig = {lib, ...}: {
-    imports = [self.nixosModules.yubikey];
+  flake.nixosModules.yubikey = {lib, ...}: {
+    imports = [self.modules.nixos.yubikey];
     # enable keys and set identifiers
     yubikey = {
       enable = true;
@@ -12,7 +12,7 @@
 
     security.pam.services.login.u2fAuth = lib.mkForce false; # Enabled in yubikey module by default; I prefer password login since I leave my key in at all times
   };
-  flake.homeModules.yubikeyConfig = {
+  flake.homeModules.yubikey = {
     lib,
     config,
     osConfig,
@@ -20,7 +20,7 @@
   }: let
     homeDir = config.home.homeDirectory;
   in {
-    imports = [self.homeModules.yubikeyTouchDetector];
+    imports = [self.modules.homeManager.yubikeyTouchDetector];
     # Pull private keys from sops
     sops.secrets = {
       # override default manual key path if yubikey is enabled. If normal key is present in .ssh, sudo will use it over the yubikey.

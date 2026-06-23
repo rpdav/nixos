@@ -1,5 +1,5 @@
 {...}: {
-  flake.homeModules.monitors = {lib, ...}: let
+  flake.modules.generic.monitors = {lib, ...}: let
     inherit (lib) mkOption types;
   in {
     options.monitors = mkOption {

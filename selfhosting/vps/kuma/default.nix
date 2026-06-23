@@ -5,7 +5,7 @@
     virtualisation.oci-containers.mounts."uptime-kuma" = {};
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxyConf."kuma" = {
+    virtualisation.oci-containers.proxyConfs."kuma" = {
       container = "uptime-kuma";
       subdomain = "up";
       port = 3001;

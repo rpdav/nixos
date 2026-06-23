@@ -72,7 +72,7 @@
     networking.firewall.allowedTCPPorts = [8085 8443];
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxyConf."guacamole" = {
+    virtualisation.oci-containers.proxyConfs."guacamole" = {
       container = "10.10.1.17";
       subdomain = "rdp";
       port = 8085;

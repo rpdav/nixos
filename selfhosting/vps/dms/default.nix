@@ -2,7 +2,7 @@
   flake.serviceModules.dms = {config, ...}: let
     inherit (config) serviceOpts;
   in {
-    #TODO switch these below to containerMount module
+    #TODO switch these below to containerMounts module
     # Create directories for appdata
     # d to create the directory, Z to recursively correct ownership (only needed when restoring from backup)
     systemd.tmpfiles.rules = [

@@ -15,7 +15,7 @@
       nextcloud
       defaultApps
       kitty
-      webAppConfig
+      webApps
       cinnamon
     ];
 

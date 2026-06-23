@@ -5,7 +5,7 @@
     virtualisation.oci-containers.mounts."albyhub" = {};
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxyConf."albyhub" = {
+    virtualisation.oci-containers.proxyConfs."albyhub" = {
       subdomain = "btc";
       port = 8080;
       protocol = "http";

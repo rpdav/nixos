@@ -25,7 +25,7 @@
     };
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxyConf."planka" = {
+    virtualisation.oci-containers.proxyConfs."planka" = {
       container = "planka-app";
       subdomain = "projects";
       port = 1337;

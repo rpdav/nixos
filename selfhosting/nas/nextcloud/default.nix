@@ -15,7 +15,7 @@
     };
 
     # Create swag proxy config
-    virtualisation.oci-containers.proxyConf."nextcloud" = {
+    virtualisation.oci-containers.proxyConfs."nextcloud" = {
       subdomain = "cloud";
       port = 443;
       protocol = "https";

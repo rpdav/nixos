@@ -3,12 +3,12 @@
   self,
   ...
 }: {
-  flake.homeModules.webAppConfig = {
+  flake.homeModules.webApps = {
     config,
     pkgs,
     ...
   }: {
-    imports = [self.homeModules.webApp];
+    imports = [self.modules.homeManager.webApp];
 
     programs.firefox.webapps = let
       inherit (inputs.nix-secrets.selfhosting) domain;

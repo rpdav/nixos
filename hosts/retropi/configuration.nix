@@ -27,7 +27,7 @@
       self.nixosModules.backupLocal
       self.nixosModules.backupRemote
       self.nixosModules.wifi
-      self.nixosModules.yubikeyConfig
+      self.nixosModules.yubikey
 
       #users
       self.nixosModules.user-ryan

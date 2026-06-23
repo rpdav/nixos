@@ -1,5 +1,5 @@
 {...}: {
-  flake.homeModules.yubikeyTouchDetector = {
+  flake.modules.homeManager.yubikeyTouchDetector = {
     config,
     lib,
     pkgs,

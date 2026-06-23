@@ -1,18 +1,14 @@
-{
-  inputs,
-  self,
-  ...
-}: {
-  flake.nixosModules.proxyConf = {
+{...}: {
+  flake.modules.nixos.proxyConfs = {
     lib,
     config,
     ...
   }: let
     inherit (lib) mkOption types;
-    cfg = config.virtualisation.oci-containers.proxyConf;
+    cfg = config.virtualisation.oci-containers.proxyConfs;
   in {
     # Define submodule options
-    options.virtualisation.oci-containers.proxyConf = mkOption {
+    options.virtualisation.oci-containers.proxyConfs = mkOption {
       default = {};
       type = types.attrsOf (
         types.submodule ({name, ...}: {

@@ -7,6 +7,9 @@
 }: let
   inherit (lib) mkOption types mapAttrs;
 in {
+  imports = [
+    inputs.flake-parts.flakeModules.modules # expose `flake.modules.X` for reusable modules
+  ];
   options = {
     flake = inputs.flake-parts.lib.mkSubmoduleOptions {
       serviceModules = mkOption {
@@ -30,7 +33,10 @@ in {
   };
   config = {
     # Systems to build packages for with perSystem
-    systems = ["x86_64-linux" "aarch64-linux"];
+    systems = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
     flake.nixosModules.nix = {config, ...}: {
       # Enable flakes
       nix = {

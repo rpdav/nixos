@@ -30,7 +30,7 @@
       self.nixosModules.docker
       self.nixosModules.sshUnlock
       self.nixosModules.virtualization
-      self.nixosModules.yubikeyConfig
+      self.nixosModules.yubikey
 
       # users
       self.nixosModules.user-ryan
@@ -39,10 +39,9 @@
       self.diskoConfigurations.luks-lvm-imp
 
       # host-specific
-      self.nixosModules.rgb
+      self.modules.rgb
 
       # self-hosted services
-      self.serviceModules.proxynet
       self.serviceModules.swag
       self.serviceModules.beszelAgent
       self.serviceModules.actual

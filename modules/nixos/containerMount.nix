@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.containerMount = {
+  flake.modules.nixos.containerMounts = {
     lib,
     config,
     ...

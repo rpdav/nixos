@@ -45,7 +45,7 @@
     ...
   }: {
     imports = [
-      self.homeModules.monitors
+      self.modules.generic.monitors
     ];
 
     # packages

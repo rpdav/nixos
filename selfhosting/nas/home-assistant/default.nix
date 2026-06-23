@@ -26,19 +26,19 @@
     ];
 
     # Create swag proxy configs
-    virtualisation.oci-containers.proxyConf."home-assistant" = {
+    virtualisation.oci-containers.proxyConfs."home-assistant" = {
       container = "10.10.1.17"; # use host IP since using host networking
       subdomain = "home";
       port = 8123;
       protocol = "http";
     };
-    virtualisation.oci-containers.proxyConf."zwave" = {
+    virtualisation.oci-containers.proxyConfs."zwave" = {
       container = "home-assistant-zwave";
       subdomain = "zwave";
       port = 8091;
       protocol = "http";
     };
-    virtualisation.oci-containers.proxyConf."esphome" = {
+    virtualisation.oci-containers.proxyConfs."esphome" = {
       container = "nas.${inputs.nix-secrets.selfhosting.domain}";
       subdomain = "esp";
       port = 6052;
