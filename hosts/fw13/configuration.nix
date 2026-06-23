@@ -19,36 +19,37 @@
   let
     inherit (config.systemOpts) persistVol impermanent;
   in {
-    imports = [
-      # core config
-      self.nixosModules.core
+    imports = with self.nixosModules;
+      [
+        # core config
+        core
 
-      # optional config
-      self.nixosModules.admin
-      self.nixosModules.vim
-      self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
-      self.nixosModules.docker
-      self.nixosModules.duplicati
-      self.nixosModules.plymouth
-      self.nixosModules.games
-      self.nixosModules.virtualization
-      self.nixosModules.wifi
-      self.nixosModules.yubikeyConfig
+        # optional config
+        admin
+        vim
+        backupLocal
+        backupRemote
+        docker
+        duplicati
+        plymouth
+        games
+        virtualization
+        wifi
+        yubikeyConfig
 
-      # wm
-      self.nixosModules.hyprland
+        # wm
+        hyprland
 
-      # users
-      self.nixosModules.user-ryan
+        # users
+        user-ryan
+      ]
+      ++ [
+        # disk config
+        self.diskoConfigurations.luks-lvm-imp
 
-      # disk config
-      self.diskoConfigurations.luks-lvm-imp
-
-      # host-specific
-      inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-      inputs.lanzaboote.nixosModules.lanzaboote
-    ];
+        # host-specific
+        inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+      ];
 
     # Variable overrides
     systemOpts = {
@@ -89,10 +90,6 @@
           configurationLimit = 30;
         };
         efi.canTouchEfiVariables = true;
-      };
-      lanzaboote = {
-        enable = true;
-        pkiBundle = "${persistVol}/etc/secureboot";
       };
     };
 
