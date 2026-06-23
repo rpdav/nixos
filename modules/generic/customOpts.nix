@@ -1,8 +1,7 @@
-{inputs, ...}: let
-  customOptions = {
+{inputs, ...}: {
+  flake.modules.generic.customOptions = {
     config,
     lib,
-    osConfig,
     ...
   }: let
     inherit (lib) mkOption types;
@@ -220,9 +219,4 @@
       ];
     };
   };
-in {
-  # The same set of options must be imported in to separate modules since HM can't import nixosModules.
-  # Nixos and HM both use backupOpts so they cannot be cleanly split out between the two module types.
-  flake.nixosModules.opts = customOptions;
-  flake.homeModules.opts = customOptions;
 }

@@ -12,7 +12,7 @@
 
     imports = [
       # import custom options
-      self.nixosModules.opts
+      self.modules.generic.customOptions
 
       # disk config
       self.diskoConfigurations.luks-lvm-imp

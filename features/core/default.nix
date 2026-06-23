@@ -7,7 +7,7 @@
     ## This file contains NixOS configuration common to all hosts
 
     imports = [
-      self.nixosModules.opts
+      self.modules.generic.customOptions
       self.nixosModules.homeManager
       inputs.disko.nixosModules.disko
       self.nixosModules.nix
@@ -56,7 +56,7 @@
     pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   in {
     imports = [
-      self.homeModules.opts
+      self.modules.generic.customOptions
     ];
 
     home.stateVersion = "24.05"; # HM version I built this config around
