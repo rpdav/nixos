@@ -2,12 +2,12 @@
   flake.homeModules."ryan@retropi" = {...}: {
     ## This file contains all home-manager config unique to user ryan on host retropi
 
-    imports = [
+    imports = with self.homeModules; [
       # core config
-      self.homeModulse.core
+      core
 
       # base user config
-      self.homeModules.user-ryan
+      user-ryan
     ];
 
     userOpts = {

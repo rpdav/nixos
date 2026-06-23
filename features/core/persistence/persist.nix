@@ -1,4 +1,40 @@
-{...}: {
+{inputs, ...}: {
+  flake.nixosModules.core = {
+    config,
+    lib,
+    ...
+  }: {
+    imports = [
+      inputs.impermanence.nixosModules.impermanence
+    ];
+    programs.fuse.userAllowOther = true;
+
+    environment.persistence.${config.systemOpts.persistVol} = lib.mkIf config.systemOpts.impermanent {
+      hideMounts = true;
+      directories = [
+        "/var/log"
+        "/var/lib/nixos"
+        "/var/lib/systemd/coredump"
+        "/etc/NetworkManager/system-connections"
+        "/var/lib/NetworkManager"
+        {
+          directory = "/var/lib/colord";
+          user = "colord";
+          group = "colord";
+          mode = "u=rwx,g=rx,o=";
+        }
+      ];
+      files = [
+        "/etc/adjtime"
+        "/etc/machine-id"
+      ];
+    };
+
+    security.sudo.extraConfig = ''
+      # rollback results in sudo lectures after reboot
+      Defaults lecture = never
+    '';
+  };
   flake.homeModules.core = {
     lib,
     config,

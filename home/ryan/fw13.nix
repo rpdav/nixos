@@ -10,6 +10,7 @@
       user-ryan
 
       # optional config
+      backup
       webAppConfig
       defaultApps
       accounts

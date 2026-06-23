@@ -2,12 +2,12 @@
   flake.homeModules."ryan@nas" = {...}: {
     ## This file contains all home-manager config unique to user ryan on host nas
 
-    imports = [
+    imports = with self.homeModules; [
       # core config
-      self.homeModules.core
+      core
 
       # base user config
-      self.homeModules.user-ryan
+      user-ryan
     ];
   };
 }

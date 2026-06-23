@@ -3,15 +3,18 @@
     ## This file contains all home-manager config unique to user retro on host retropi
     ## This is a service account only for accessing the retroarch ui
 
-    imports = [
+    imports = with self.homeModules; [
       # core config
-      self.homeModules.core
+      core
 
       # base user config
-      self.homeModules.user-retro
+      user-retro
+
+      # optional config
+      backup
 
       # wm
-      self.homeModules.retroarch
+      retroarch
     ];
 
     userOpts = {

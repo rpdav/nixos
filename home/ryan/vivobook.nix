@@ -3,6 +3,9 @@
     ## This file contains all home-manager config unique to user ryan on host fw13
 
     imports = with self.homeModules; [
+      # core config
+      core
+
       # base user config
       user-ryan
 
