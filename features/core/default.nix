@@ -82,7 +82,6 @@
             # browsers
             brave
             tor-browser
-            librewolf
 
             # extra terminals
             alacritty
