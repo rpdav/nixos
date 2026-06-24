@@ -1,6 +1,6 @@
 # Selfhosted Services
 
-The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server. Bootstrapping a container-based service takes a bit more work than simple compose files. I've found a few tools (and have written a couple simple modules) that help speed that process up. An example service is in the `services` directory.
+The `services` directory contains (mostly) container-based selfhosted services. Most of these are running on my nas but a few run on vps such as a mail server. Bootstrapping a container-based service takes a bit more work than simple compose files. I've found a few tools (and have written a couple simple modules) that help speed that process up. An template service is in the `services` directory.
 
 Some services could be run as native nix modules like nginx and nextcloud, but I'm sticking mostly with containers right now for a couple reasons:
 
@@ -15,11 +15,11 @@ In case I ever switch to rootless, I currently have a designated docker user (us
 
 Note that if you switch between docker and podman, they handle some things differently. For instance, when switching from podman to docker, `swag` lost dns resolution because it wrote the podman default (`10.89.0.1`) to `/config/nginx/resolver.conf` whereas docker uses `127.0.0.11`. If switching, it is worth considering just rebuilding all appdata in case there are other differences in there somewhere.
 
-## services/`host`/`name`/default.nix
+## ./selfhosting/`host`/`name`/default.nix
 
 This file contains any service-related config that isn't in `docker-compose.nix`.
 
-The `mounts` and `proxy-conf` modules in `default.nix` make use of `systemd.tmpfiles.rules`. The nix method declaratively handling files by writing to `/nix/store` and symlinking doesn't work with containers since they can't follow the symlinks (unless you also mount the entire store, I guess). Instead, regular files or directories have to be created. `tmpfiles` works well for this. Contrary to the name, `tmpfiles` works great for making non-temporary files and folders anywhere in the filesystem. See [here](https://www.freedesktop.org/software/systemd/man/latest/tmpfiles.d.html) for rule formatting.
+The `containerMounts` and `proxyConfs` modules in `default.nix` make use of `systemd.tmpfiles.rules`. The nix method declaratively handling files by writing to `/nix/store` and symlinking doesn't work with containers since they can't follow the symlinks (unless you also mount the entire store, I guess). Instead, regular files or directories have to be created. `tmpfiles` works well for this. Contrary to the name, `tmpfiles` works great for making non-temporary files and folders anywhere in the filesystem. See [here](https://www.freedesktop.org/software/systemd/man/latest/tmpfiles.d.html) for rule formatting.
 
 ### Volume creation and ownership
 
@@ -33,11 +33,11 @@ When `tmpfiles` creates a directory owned by a user, if parent directories also 
 
 ### Proxy configuration
 
-Many of the webapps that I run are accessed through my reverse proxy (`swag`), which uses nginx. Services are configured through individual nginx configuration files. I defined a custom module `virtualisation.oci-containers.proxy-conf` where the relevant options for each service can be defined (container name, port, and protocol, as well as the subdomain nginx should listen for). The module then builds a config file using `systemd.tmpfiles.rules` and places it at location defined in `config.serviceOpts.proxyDir`. 
+Many of the webapps that I run are accessed through my reverse proxy (`swag`), which uses nginx. Services are configured through individual nginx configuration files. I defined a custom module `virtualisation.oci-containers.proxyConf` where the relevant options for each service can be defined (container name, port, and protocol, as well as the subdomain nginx should listen for). The module then builds a config file using `systemd.tmpfiles.rules` and places it at location defined in `config.serviceOpts.proxyDir`. 
 
 I set my `proxyDir` to be in `/run` so that it gets rebuilt during each boot. This keeps old configs from unused services from staying around indefinitely.
 
-## services/\<host\>\<name\>/docker-compose.nix
+## services/`host`/`name`/docker-compose.nix
 
 ### compose2nix
 `docker-compose.nix` is created using [`compose2nix`](https://github.com/aksiksi/compose2nix). It takes a standard `docker-compose.yml` file and converts it to a nix `virtualisation.oci-containers` configuration. It also creates systemd services for bringing up the container(s) and any needed networks.
@@ -48,7 +48,7 @@ I keep `docker-compose.yml` around in case any upstream edits are made by the im
 
 ## uptix
 
-I use [uptix](https://github.com/luizribeiro/uptix) to manage container updates. It creates a version-pinned `uptix.lock` file in the root of the repo much like flake.lock. This lock file determines the version of the image that is assigned to the container.
+I use [uptix](https://github.com/luizribeiro/uptix) to manage container updates. It creates a version-pinned `uptix.lock` file in the root of the repo much like `flake.lock`. This lock file determines the version of the image that is assigned to the container.
 
 The lock file is created by running the `uptix` binary, but by default the binary will create the lock file in the current working directory. Be sure to only run it in the root directory or use a `justfile` to do this automatically.
 

@@ -1,0 +1,4 @@
+{inputs, ...}: {
+  flake.nixosModules.core = {...}: {
+  };
+}

@@ -1,0 +1,27 @@
+{...}: {
+  flake.homeModules.thunderbird = {
+    config,
+    osConfig,
+    lib,
+    ...
+  }: let
+    inherit (osConfig) systemOpts;
+  in {
+    # Create persistent directories
+    home.persistence."${systemOpts.persistVol}" = lib.mkIf config.userOpts.impermanent {
+      directories = [
+        ".thunderbird"
+      ];
+    };
+    programs.thunderbird = {
+      enable = true;
+      settings = {
+        "privacy.donottrackheader.enabled" = true;
+        "extensions.activeThemeID" = "default-theme@mozilla.org";
+      };
+      profiles.${config.home.username} = {
+        isDefault = true;
+      };
+    };
+  };
+}

@@ -1,32 +1,13 @@
-{
-  lib,
-  configLib,
-  ...
-}: {
-  ## This file contains all home-manager config unique to user ryan on host vps
+{self, ...}: {
+  flake.homeModules."ryan@vps" = {...}: {
+    ## This file contains all home-manager config unique to user ryan on host vps
 
-  imports = lib.flatten [
-    (map configLib.relativeToRoot [
+    imports = with self.homeModules; [
       # core config
-      "home/common/core"
+      core
 
-      # optional config
-    ])
-    # multi-system config for current user
-    ./common/core
-
-    ./common/optional/yubikey.nix
-  ];
-
-  home.username = "ryan";
-  home.homeDirectory = "/home/ryan";
-
-  backupOpts = {
-    patterns = [
-      "- **/.git" #can be restored from repos
-      "+ /persist/home/ryan" #back up everything else
+      # base user config
+      user-ryan
     ];
-    localRepo = "ssh://borg@borg:2222/backup";
-    #remoteRepo = "";
   };
 }

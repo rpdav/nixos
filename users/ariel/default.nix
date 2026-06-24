@@ -1,0 +1,45 @@
+{
+  inputs,
+  self,
+  ...
+}: {
+  flake.nixosModules.user-ariel = {config, ...}:
+  ## This file contains all NixOS config for user ariel
+  {
+    # user--specific variable overrides
+    userOpts.theme = "mountain";
+    userOpts.cursor = "Bibata-Modern-Ice";
+    userOpts.cursorPkg = "bibata-cursors";
+
+    # Pull password from sops
+    users.mutableUsers = false;
+    sops.secrets."passwordHashAriel" = {
+      neededForUsers = true;
+      sopsFile = "${inputs.nix-secrets.outPath}/ariel.yaml";
+    };
+
+    # user definition
+    users.users.ariel = {
+      hashedPasswordFile = config.sops.secrets."passwordHashAriel".path;
+      isNormalUser = true;
+      extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+      home = "/home/ariel";
+    };
+
+    # home-manager config
+    home-manager = {
+      users.ariel = self.homeModules."ariel@${config.networking.hostName}";
+    };
+
+    # Fix file permissions after backup restore
+    systemd.tmpfiles.rules = [
+      # make all files in home directory owned by user
+      "Z ${config.systemOpts.persistVol}/home/ariel - ariel users"
+      # make user's home directory not readable by others
+      "z ${config.systemOpts.persistVol}/home/ariel 0700 ariel users"
+    ];
+  };
+  flake.homeModules.user-ariel = {
+    home.username = "ariel";
+  };
+}

@@ -1,29 +1,31 @@
-{configLib, ...}: {
-  ## This file contains all home-manager config unique to user retro on host retropi
-  ## This is a service account only for accessing the retroarch ui
+{self, ...}: {
+  flake.homeModules."retro@retropi" = {...}: {
+    ## This file contains all home-manager config unique to user retro on host retropi
+    ## This is a service account only for accessing the retroarch ui
 
-  imports = map configLib.relativeToRoot [
-    # core config
-    "home/common/core"
+    imports = with self.homeModules; [
+      # core config
+      core
 
-    # optional config
-    "home/common/optional/wm/retroarch.nix"
-  ];
+      # base user config
+      user-retro
 
-  home.username = "retro";
-  home.homeDirectory = "/home/retro";
+      # optional config
+      backup
 
-  userOpts = {
-    impermanent = false;
-  };
-
-  backupOpts = {
-    patterns = [
-      "- **/.Trash*" #automatically made by gui deletions
-      "- /persist/home/retro/Downloads/" #big files
-      "+ /persist/home/retro" #back up everything else
+      # wm
+      retroarch
     ];
-    localRepo = "ssh://borg@borg:2222/backup";
-    #remoteRepo = "";
+
+    userOpts = {
+      impermanent = false;
+    };
+
+    backupOpts = {
+      patterns = [
+      ];
+      localRepo = "ssh://borg@borg:2222/backup";
+      #remoteRepo = "";
+    };
   };
 }

@@ -1,41 +1,37 @@
-{
-  pkgs,
-  lib,
-  configLib,
-  config,
-  osConfig,
-  ...
-}: {
-  ## This file contains all home-manager config unique to user ariel on host fw13
+{self, ...}: {
+  flake.homeModules."ariel@vivobook" = {...}: {
+    ## This file contains all home-manager config unique to user ariel on host fw13
+    imports = with self.homeModules; [
+      # core config
+      core
 
-  imports = map configLib.relativeToRoot [
-    # core config
-    "home/common/core"
+      # base user config
+      user-ariel
 
-    # optional config
-    "home/common/optional/app/browser" # is A good with this config?
-    "home/common/optional/app/defaultapps.nix"
-    "home/common/optional/app/nextcloud.nix"
-    "home/common/optional/app/kitty.nix"
-    "home/common/optional/app/web-apps"
-    "home/common/optional/wm/hyprland"
-  ];
-
-  home.username = "ariel";
-  home.homeDirectory = "/home/ariel";
-
-  userOpts = {
-    impermanent = false;
-  };
-
-  backupOpts = {
-    patterns = [
-      "- **/.Trash*" #automatically made by gui deletions
-      "- /persist/home/ariel/Downloads/" #big files
-      "- /persist/home/ariel/Nextcloud" #already on server
-      "+ /persist/home/ariel" #back up everything else
+      # optional config
+      backup
+      firefox
+      chromium
+      nextcloud
+      defaultApps
+      kitty
+      webApps
+      cinnamon
     ];
-    localRepo = "ssh://borg@borg:2222/backup";
-    #remoteRepo = "";
+
+    userOpts = {
+      impermanent = false;
+    };
+
+    backupOpts = {
+      patterns = [
+        "- **/.Trash*" #automatically made by gui deletions
+        "- /persist/home/ariel/Downloads/" #big files
+        "- /persist/home/ariel/Nextcloud" #already on server
+        "+ /persist/home/ariel" #back up everything else
+      ];
+      localRepo = "ssh://borg@borg:2222/backup";
+      #remoteRepo = "";
+    };
   };
 }

@@ -1,9 +1,6 @@
 {
   description = "Ryan's NixOS configs";
 
-  ##########################################################################
-  # INPUTS
-  ##########################################################################
   inputs = {
     # ── Core Nixpkgs ────────────────────────────────────────
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -13,6 +10,16 @@
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # ── Flake-Parts tools ───────────────────────────────────
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      # flake-parts does not use nixpkgs as an input; no override
+    };
+    import-tree = {
+      url = "github:vic/import-tree";
+      # import-tree does not use nixpkgs as an input; no override
     };
 
     # ── Utility flakes ──────────────────────────────────────
@@ -81,59 +88,9 @@
     };
   };
 
-  ##########################################################################
-  # OUTPUTS
-  ##########################################################################
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-stable,
-    ...
-  } @ inputs: let
-    # Secrets & library helpers
-    secrets = import ./vars/secrets {inherit inputs;};
-    configLib = import ./lib {inherit (nixpkgs) lib;};
-
-    specialArgs = {
-      inherit nixpkgs-stable secrets inputs configLib;
-      inherit (self) outputs;
-    };
-
-    # Config generator function
-    mkConfigurations = hosts:
-      hosts
-      # Map each hostname to a name-value pair
-      |> map (host: {
-        name = host;
-        value = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [./system/hosts/${host}];
-        };
-      })
-      # Convert the list of pairs into a single attribute set
-      |> builtins.listToAttrs;
-  in {
-    ######################################################################
-    # Exported modules
-    ######################################################################
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
-
-    ######################################################################
-    # Generate nixosConfigurations based on helper function and host list
-    ######################################################################
-    nixosConfigurations = mkConfigurations [
-      # Main hosts
-      "fw13"
-      "nas"
-      "vps"
-      "retropi"
-      # Installation configs
-      "install"
-      "iso"
-      # Testing hosts
-      "vivobook"
-      "testvm"
-    ];
-  };
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake
+    {inherit inputs;}
+    # Import all .nix files, omitting files/dirs starting with "_" and flake.nix.
+    (inputs.import-tree.filterNot (inputs.nixpkgs.lib.hasInfix "flake.nix") ./.);
 }
