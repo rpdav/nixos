@@ -152,9 +152,10 @@
         # Mostly using services instead of execonce
         exec-once = [
           "${lib.getExe pkgs.steam} -silent %U"
-          "${lib.getExe pkgs.networkmanagerapplet}"
+          (lib.getExe pkgs.networkmanagerapplet)
           "${pkgs.blueman}/bin/blueman-applet"
           "$bar"
+          "${pkgs.hypridle}/bin/hypridle"
         ];
 
         #############################

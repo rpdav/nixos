@@ -2,8 +2,14 @@
   flake.homeModules.hypridle = {
     osConfig,
     pkgs,
+    lib,
     ...
   }: {
+    # Mask the hypridle systemd unit.
+    # hypridle will be started within hyprland with execstart
+    systemd.user.services.hypridle = lib.mkForce {};
+
+    # Still use services.hypridle to generate the config file
     services.hypridle = {
       enable = true;
       settings = let
