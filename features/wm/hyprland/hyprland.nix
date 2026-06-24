@@ -136,14 +136,14 @@
         ### PROGRAMS ###
         ################
 
-        "$browser" = "${pkgs.firefox}/bin/firefox";
-        "$fileManager" = "${pkgs.nautilus}/bin/nautilus";
-        "$menu" = "${pkgs.fuzzel}/bin/fuzzel";
-        "$terminal" = "${pkgs.kitty}/bin/kitty";
-        "$bar" = "${pkgs.waybar}/bin/waybar";
-        "$lock" = "${pkgs.hyprlock}/bin/hyprlock";
-        "$hyprshot" = "${pkgs.hyprshot}/bin/hyprshot";
-        "$osdclient" = "${pkgs.swayosd}/bin/swayosd-client";
+        "$browser" = lib.getExe pkgs.firefox;
+        "$fileManager" = lib.getExe pkgs.nautilus;
+        "$menu" = lib.getExe pkgs.fuzzel;
+        "$terminal" = lib.getExe pkgs.kitty;
+        "$bar" = lib.getExe pkgs.waybar;
+        "$lock" = lib.getExe pkgs.hyprlock;
+        "$hyprshot" = lib.getExe pkgs.hyprshot;
+        "$osdclient" = lib.getExe pkgs.swayosd;
 
         #################
         ### AUTOSTART ###
@@ -151,9 +151,10 @@
 
         # Mostly using services instead of execonce
         exec-once = [
-          "${pkgs.steam}/bin/steam -silent %U"
-          "${pkgs.networkmanagerapplet}/bin/nm-applet"
+          "${lib.getExe pkgs.steam} -silent %U"
+          "${lib.getExe pkgs.networkmanagerapplet}"
           "${pkgs.blueman}/bin/blueman-applet"
+          "$bar"
         ];
 
         #############################
