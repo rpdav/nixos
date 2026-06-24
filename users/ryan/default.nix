@@ -7,9 +7,10 @@
     config,
     lib,
     ...
-  }:
-  ## This file contains all NixOS config for user ryan
-  {
+  }: {
+    ## This file contains all NixOS config for user ryan
+    imports = [self.nixosModules.admin];
+
     # user--specific variable overrides
     userOpts.theme = "rainbow-cat";
     userOpts.cursor = "Bibata-Modern-Ice";

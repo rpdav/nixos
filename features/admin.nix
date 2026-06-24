@@ -13,7 +13,6 @@
   in {
     imports = [
       inputs.nixos-cli.nixosModules.nixos-cli
-      (inputs.uptix.nixosModules.uptix "${self}/uptix.lock") # point uptix to root of repo for lock file
     ];
 
     # Options search and nixos CLI tooling

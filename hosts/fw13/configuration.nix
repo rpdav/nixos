@@ -25,7 +25,6 @@
         core
 
         # optional config
-        admin
         vim
         backupLocal
         backupRemote
@@ -36,6 +35,7 @@
         virtualization
         wifi
         yubikey
+        lanzaboote
 
         # wm
         hyprland
@@ -84,7 +84,7 @@
     boot = {
       loader = {
         systemd-boot = {
-          enable = false;
+          enable = false; # replaced by lanzaboote
           # more readable boot menu on hidpi display
           consoleMode = "5";
           configurationLimit = 30;

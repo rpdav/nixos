@@ -39,7 +39,7 @@
       self.diskoConfigurations.luks-lvm-imp
 
       # host-specific
-      self.modules.rgb
+      self.modules.nixos.rgb
 
       # self-hosted services
       self.serviceModules.swag

@@ -26,7 +26,6 @@
 
     # home-manager config
     home-manager = {
-      useUserPackages = true;
       users.retro = self.homeModules."retro@${config.networking.hostName}";
     };
 

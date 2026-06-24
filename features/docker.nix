@@ -1,4 +1,8 @@
-{self, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.nixosModules.docker = {
     config,
     lib,
@@ -8,6 +12,7 @@
     inherit (self.modules.nixos) proxyConfs containerMounts;
   in {
     imports = [
+      (inputs.uptix.nixosModules.uptix "${self}/uptix.lock") # point uptix to root of repo for lock file
       proxyConfs
       containerMounts
     ];
