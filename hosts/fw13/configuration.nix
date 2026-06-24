@@ -39,6 +39,7 @@
 
         # wm
         hyprland
+        niri
 
         # users
         user-ryan
