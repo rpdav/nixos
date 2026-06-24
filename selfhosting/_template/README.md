@@ -4,6 +4,7 @@ Use these templates to bring a proxied, selfhosted service online using systemd 
 1. Update this docker-compose.yml with container, volume, port, network, etc details
 1. Run `nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project=<CONTAINER>`
 1. Update the generated docker-compose.nix (see cheat sheet section) to:
+    1. Wrap the function in a flake-parts `flake.serviceModules.serviceName` function
     1. Add serviceOpts and uptix as module arguments
     1. Properly use serviceOpts custom opts
     1. Add uptix.dockerImage function to image name
@@ -13,7 +14,7 @@ Use these templates to bring a proxied, selfhosted service online using systemd 
 
 ## Command cheat sheet
 Use these vim commands after running compose2nix to replace custom option placeholders from the yml file.
-```code
+```vim
 # assign host-specific docker appdata storage directory
 :%s-/config\.serviceOpts\.dockerDir-${config.serviceOpts.dockerDir}-g
 # add uptix function to manage container updates
@@ -24,7 +25,7 @@ Use these vim commands after running compose2nix to replace custom option placeh
 1. Put the contents of the secrets env file into sops; push and update the `nix-secrets` input
 1. Add the secrets binding to `default.nix` to ensure it is decrypted
 1. After running `compose2nix` add a reference to the secret env file in the config for the container that requires it:
-```code
+```nix
     environmentFiles = [
      config.sops.secrets."someService/env".path 
     ];
