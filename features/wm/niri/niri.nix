@@ -20,4 +20,12 @@
       swayidle
     ];
   };
+  flake.homeModules.niri = {pkgs, ...}: {
+    programs.swaylock.enable = true;
+    services.swayidle.enable = true;
+    services.polkit-gnome.enable = true;
+    home.packages = with pkgs; [
+      swaybg # wallpaper
+    ];
+  };
 }

@@ -100,6 +100,11 @@
       splash = false;
     };
 
+    # Mask the hypridle and hyprpaper systemd units.
+    # these will be started within hyprland with execstart
+    systemd.user.services.hypridle = lib.mkForce {};
+    systemd.user.services.hyprpaper = lib.mkForce {};
+
     wayland.windowManager.hyprland = {
       enable = true;
       configType = "hyprlang";
