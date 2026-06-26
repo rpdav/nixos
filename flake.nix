@@ -73,6 +73,10 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      # separate cache server - no follow nixpkgs
+    };
     hyprland = {
       url = "github:hyprwm/Hyprland";
       # separate cache server - no follow nixpkgs

@@ -24,12 +24,15 @@
       kitty
       thunderbird
 
-      # wm
+      # hyprland
       hyprland
       hypridle
       hyprlock
       waybar
       wlogout
+
+      # niri
+      niri
     ];
 
     # Hyprland monitor config

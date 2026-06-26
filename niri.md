@@ -6,8 +6,10 @@
 * replace hard coded colors with stylix ones
 * do I want to go with wrappers like vj or write a simple programs.niri HM module? Would be nice to convert from nix to kdl but that might not be feasible.
 
+## config options
+will try niri-flake for HM options - do I want to stick with regular nixpkgs for niri or use this flake?
 
-lots of overlapping tools:
+## overlapping tools
 * hyprpaper vs swaybg (no stylix integration)
 * hyprpolkit vs polkit-gnome
 * hyprlock vs swaylock
