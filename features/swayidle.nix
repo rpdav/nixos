@@ -6,7 +6,7 @@
   }: {
     services.swayidle = let
       # Lock command
-      lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
+      lock = "${pkgs.procps}/bin/pidof ${pkgs.hyprlock}/bin/hyprlock || TZ=${osConfig.time.timeZone} ${pkgs.hyprlock}/bin/hyprlock";
       display = status: "${pkgs.niri}/bin/niri msg action power-${status}-monitors";
       inherit (osConfig.systemOpts) screenDimTimeout lockTimeout screenOffTimeout suspendTimeout;
     in {
@@ -23,8 +23,7 @@
         }
         {
           timeout = lockTimeout;
-          #command = lock;
-          command = "${pkgs.libnotify}/bin/notify-send 'Locking now' -t 5000";
+          command = lock;
         }
         {
           timeout = screenOffTimeout;

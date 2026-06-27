@@ -9,25 +9,8 @@
 
     programs.niri.enable = true; #TODO do I want to switch to the niri-flake package?
     # System level config for swaylock
-    security.pam.services.swaylock = {
-      # Set to false to prevent standard NixOS templates from injecting the
-      # default fprint behavior or yubikey (pam_u2f/pam_yubico) hooks into swaylock.
-      fprintAuth = false;
 
-      # Custom PAM text to allow password OR fingerprint independently
-      text = ''
-        # Check password first. If correct, unlock immediately.
-        auth [success=1 default=ignore] pam_unix.so try_first_pass nullok
-
-        # Check fingerprint next. If valid, unlock immediately.
-        auth sufficient pam_fprintd.so
-
-        # Fallback system inclusion
-        auth include login
-      '';
-    };
-
-    # temporary simple packages while testing out imperative niri.kdl
+    # Temporary simple packages while testing out imperative niri.kdl
     environment.systemPackages = with pkgs; [
       brightnessctl
       playerctl
@@ -47,7 +30,6 @@
       inputs.niri-flake.homeModules.config
       inputs.niri-flake.homeModules.stylix
     ];
-    services.hyprpolkitagent.enable = lib.mkForce false;
     services.polkit-gnome.enable = true;
     home.packages = with pkgs; [
       swaybg # wallpaper; replace with noctalia?
@@ -143,6 +125,7 @@
         ];
         binds = let
           swayosdBin = "${pkgs.swayosd}/bin/swayosd-client";
+          lockCmd = "TZ=${osConfig.time.timeZone} ${pkgs.hyprlock}/bin/hyprlock";
         in {
           # Misc
           "Mod+Shift+Slash".action.show-hotkey-overlay = [];
@@ -306,8 +289,8 @@
 
           # Escaping and closing
           "Super+Alt+L" = {
-            action.spawn = ["${pkgs.swaylock}/bin/swaylock"];
-            hotkey-overlay.title = "Lock the Screen: swaylock";
+            action.spawn-sh = ["${lockCmd}"];
+            hotkey-overlay.title = "Lock the Screen: hyprlock";
           };
           "XF86AudioMedia".action.spawn = ["${pkgs.wlogout}/bin/wlogout"];
           "XF86PowerOff".action.spawn = ["${pkgs.wlogout}/bin/wlogout"]; # This doesn't seem to work - still puts computer to sleep
