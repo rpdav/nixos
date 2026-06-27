@@ -26,14 +26,14 @@
 
       # hyprland
       hyprland
-      hypridle
-      hyprlock
-      waybar
-      wlogout
+      #hypridle
+      #hyprlock
+      #waybar
+      #wlogout
 
       # niri
       niri
-      swayidle
+      #swayidle
     ];
 
     # Hyprland monitor config

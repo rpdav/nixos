@@ -5,6 +5,7 @@
 * palm rejection seems worse
 * replace hard coded colors with stylix ones
 * do I want to go with wrappers like vj or write a simple programs.niri HM module? Would be nice to convert from nix to kdl but that might not be feasible.
+* gnome is allowing fprintd login when I think it shouldn't
 
 ## config options
 will try niri-flake for HM options - do I want to stick with regular nixpkgs for niri or use this flake?
@@ -18,3 +19,25 @@ will try niri-flake for HM options - do I want to stick with regular nixpkgs for
 
 Am I going to switch between them? If so, how to make sure the right one is in use?
 Am I going to stick with one? If so, where should they live? In a generic wayland tools module?
+
+## noctalia-shell
+### Things noctalia can replace:
+* bar
+* osd
+* lock
+* idle
+* launcher
+* notifications
+* logout
+* wifi
+* bluetooth
+
+### questions
+what is a "toast" in notifications?
+
+### Things to fix:
+some systray icons are broken
+battery widget not working
+need a widget for tailscale accept-routes
+icons in starship seem broken for new files but not old ones
+lock screen isn't working with fprintd

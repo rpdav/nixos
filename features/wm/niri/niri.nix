@@ -21,7 +21,6 @@
   };
   flake.homeModules.niri = {
     pkgs,
-    lib,
     osConfig,
     ...
   }: let
@@ -74,12 +73,13 @@
           };
         };
         spawn-at-startup = [
-          {argv = ["${pkgs.waybar}/bin/waybar"];}
+          {argv = ["${pkgs.noctalia-shell}/bin/noctalia-shell"];}
+          #{argv = ["${pkgs.waybar}/bin/waybar"];}
           {argv = ["${pkgs.steam}/bin/steam" "-silent" "%U"];}
-          {argv = ["${pkgs.blueman}/bin/blueman-applet"];}
-          {argv = ["${pkgs.networkmanagerapplet}/bin/nm-applet"];}
+          #{argv = ["${pkgs.blueman}/bin/blueman-applet"];}
+          #{argv = ["${pkgs.networkmanagerapplet}/bin/nm-applet"];}
           # Need to make this rerun whenever wallpaper changes
-          {argv = ["${pkgs.swaybg}/bin/swaybg" "${osConfig.stylix.image}"];}
+          #{argv = ["${pkgs.swaybg}/bin/swaybg" "${osConfig.stylix.image}"];}
         ];
         prefer-no-csd = true;
         window-rules = [
@@ -153,20 +153,23 @@
           };
 
           # Media binds with swayosd
-          "Caps_Lock" = {
-            action.spawn-sh = ["sleep 0.1 && ${swayosdBin} --caps-lock"];
-            allow-when-locked = true;
-          };
+          #"Caps_Lock" = {
+          #  action.spawn-sh = ["sleep 0.1 && ${swayosdBin} --caps-lock"];
+          #  allow-when-locked = true;
+          #};
           "XF86AudioRaiseVolume" = {
-            action.spawn-sh = ["${swayosdBin} --output-volume raise"];
+            action.spawn-sh = ["wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"];
+            #action.spawn-sh = ["${swayosdBin} --output-volume raise"];
             allow-when-locked = true;
           };
           "XF86AudioLowerVolume" = {
-            action.spawn-sh = ["${swayosdBin} --output-volume lower"];
+            action.spawn-sh = ["wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"];
+            #action.spawn-sh = ["${swayosdBin} --output-volume lower"];
             allow-when-locked = true;
           };
           "XF86AudioMute" = {
-            action.spawn-sh = ["${swayosdBin} --output-volume mute-toggle"];
+            action.spawn-sh = ["wpctl set-volume @DEFAULT_AUDIO_SINK@ toggle"];
+            #action.spawn-sh = ["${swayosdBin} --output-volume mute-toggle"];
             allow-when-locked = true;
           };
           "Mod+XF86AudioRaiseVolume" = {
@@ -178,25 +181,30 @@
             allow-when-locked = true;
           };
           "XF86AudioPlay" = {
-            action.spawn-sh = ["${swayosdBin} --playerctl play-pause"];
+            action.spawn-sh = ["playerctl play-pause"];
+            #action.spawn-sh = ["${swayosdBin} --playerctl play-pause"];
             allow-when-locked = true;
           };
           "XF86AudioPrev" = {
-            action.spawn-sh = ["${swayosdBin} --playerctl previous"];
+            action.spawn-sh = ["playerctl previous"];
+            #action.spawn-sh = ["${swayosdBin} --playerctl previous"];
             allow-when-locked = true;
           };
           "XF86AudioNext" = {
-            action.spawn-sh = ["${swayosdBin} --playerctl next"];
+            action.spawn-sh = ["playerctl next"];
+            #action.spawn-sh = ["${swayosdBin} --playerctl next"];
             allow-when-locked = true;
           };
 
           # Brightnesss
           "XF86MonBrightnessUp" = {
-            action.spawn-sh = ["${swayosdBin} --brightness raise"];
+            action.spawn-sh = ["brightnessctl --class=backlight set +10%"];
+            #action.spawn-sh = ["${swayosdBin} --brightness raise"];
             allow-when-locked = true;
           };
           "XF86MonBrightnessDown" = {
-            action.spawn-sh = ["${swayosdBin} --brightness lower"];
+            action.spawn-sh = ["brightnessctl --class=backlight set +10%-"];
+            #action.spawn-sh = ["${swayosdBin} --brightness lower"];
             allow-when-locked = true;
           };
 
