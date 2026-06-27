@@ -7,7 +7,6 @@
     inherit (lib) mkOption types;
     cfg = config.virtualisation.oci-containers.proxyConfs;
   in {
-    # Define submodule options
     options.virtualisation.oci-containers.proxyConfs = mkOption {
       default = {};
       type = types.attrsOf (

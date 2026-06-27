@@ -8,6 +8,24 @@
     services.displayManager.autoLogin.enable = lib.mkForce false;
 
     programs.niri.enable = true; #TODO do I want to switch to the niri-flake package?
+    # System level config for swaylock
+    security.pam.services.swaylock = {
+      # Set to false to prevent standard NixOS templates from injecting the
+      # default fprint behavior or yubikey (pam_u2f/pam_yubico) hooks into swaylock.
+      fprintAuth = false;
+
+      # Custom PAM text to allow password OR fingerprint independently
+      text = ''
+        # Check password first. If correct, unlock immediately.
+        auth [success=1 default=ignore] pam_unix.so try_first_pass nullok
+
+        # Check fingerprint next. If valid, unlock immediately.
+        auth sufficient pam_fprintd.so
+
+        # Fallback system inclusion
+        auth include login
+      '';
+    };
 
     # temporary simple packages while testing out imperative niri.kdl
     environment.systemPackages = with pkgs; [
@@ -20,6 +38,7 @@
   };
   flake.homeModules.niri = {
     pkgs,
+    lib,
     osConfig,
     ...
   }: let
@@ -28,11 +47,10 @@
       inputs.niri-flake.homeModules.config
       inputs.niri-flake.homeModules.stylix
     ];
-    programs.swaylock.enable = true;
-    services.swayidle.enable = true;
+    services.hyprpolkitagent.enable = lib.mkForce false;
     services.polkit-gnome.enable = true;
     home.packages = with pkgs; [
-      swaybg # wallpaper
+      swaybg # wallpaper; replace with noctalia?
     ];
 
     programs.niri = {
@@ -105,8 +123,20 @@
             default-column-width.proportion = 1. / 3.;
             default-window-height.proportion = 0.5;
             default-floating-position = {
-              x = 32;
-              y = 32;
+              x = 10;
+              y = 10;
+              relative-to = "top-right";
+            };
+          }
+          {
+            # Float volume control
+            matches = [{app-id = "org.pulseaudio.pavucontrol";}];
+            open-floating = true;
+            default-column-width.proportion = 1. / 3.;
+            default-window-height.proportion = 0.5;
+            default-floating-position = {
+              x = 200;
+              y = 10;
               relative-to = "top-right";
             };
           }

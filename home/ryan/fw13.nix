@@ -33,6 +33,8 @@
 
       # niri
       niri
+      swayidle
+      swaylock
     ];
 
     # Hyprland monitor config
