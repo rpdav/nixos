@@ -33,6 +33,7 @@
 
       # niri
       niri
+      noctalia-shell
       #swayidle
     ];
 

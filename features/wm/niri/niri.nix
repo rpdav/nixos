@@ -16,12 +16,13 @@
       playerctl
       swayosd
       networkmanagerapplet
-      noctalia-shell
+      upower # needed for noctalia-shell
     ];
   };
   flake.homeModules.niri = {
     pkgs,
     osConfig,
+    config,
     ...
   }: let
   in {
@@ -73,9 +74,9 @@
           };
         };
         spawn-at-startup = [
-          {argv = ["${pkgs.noctalia-shell}/bin/noctalia-shell"];}
+          {argv = ["${config.programs.noctalia.package}/bin/noctalia"];}
           #{argv = ["${pkgs.waybar}/bin/waybar"];}
-          {argv = ["${pkgs.steam}/bin/steam" "-silent" "%U"];}
+          {argv = ["${pkgs.steam}/bin/steam" "-silent" "%U"];} # seems to have trouble finding xwayland?
           #{argv = ["${pkgs.blueman}/bin/blueman-applet"];}
           #{argv = ["${pkgs.networkmanagerapplet}/bin/nm-applet"];}
           # Need to make this rerun whenever wallpaper changes
