@@ -74,7 +74,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     niri-flake = {
-      url = "github:sodiboo/niri-flake";
+      # forked from sodiboo/niri-flake which is not actively maintained.
+      url = "github:epireyn/niri-flake";
+      # separate cache server - no follow nixpkgs
+    };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia/cachix";
       # separate cache server - no follow nixpkgs
     };
     hyprland = {

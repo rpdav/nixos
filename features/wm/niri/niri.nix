@@ -82,6 +82,13 @@
           #{argv = ["${pkgs.swaybg}/bin/swaybg" "${osConfig.stylix.image}"];}
         ];
         prefer-no-csd = true;
+        layer-rules = [
+          {
+            matches = [{namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$";}];
+            # disable blur so noctalia elements can be transparent
+            background-effect.blur = false;
+          }
+        ];
         window-rules = [
           {
             # Round all corners
