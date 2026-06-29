@@ -29,8 +29,10 @@ Am I going to stick with one? If so, where should they live? In a generic waylan
 * launcher
 * notifications
 * logout
-* wifi
-* bluetooth
+* wifi applet
+* bluetooth applet
+* calendar? can at least view, but maybe not add events
+* polkit
 
 ### questions
 what is a "toast" in notifications?

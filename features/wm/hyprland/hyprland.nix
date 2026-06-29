@@ -3,13 +3,17 @@
   self,
   ...
 }: {
-  flake.nixosModules.hyprland = {pkgs, ...}: {
+  flake.nixosModules.hyprland = {
+    pkgs,
+    lib,
+    ...
+  }: {
     services.displayManager = {
       autoLogin.user = "ryan";
       gdm = {
         enable = true;
       };
-      defaultSession = "hyprland";
+      defaultSession = lib.mkDefault "hyprland";
     };
 
     boot.loader.timeout = 0;

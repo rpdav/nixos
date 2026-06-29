@@ -1,0 +1,191 @@
+[bar]
+order = [ "default", "workspaces" ]
+
+    [bar.default]
+    background_opacity = 0.74999998323619366
+    capsule = true
+    center = [ "date", "spacer_3", "clock" ]
+    end = [
+        "bluetooth",
+        "network",
+        "spacer_1",
+        "caffeine",
+        "power_profile",
+        "clipboard",
+        "Tailscale",
+        "spacer_2",
+        "notifications",
+        "tray"
+    ]
+    margin_edge = 5
+    margin_ends = 5
+    padding = 6
+    radius = 25
+    shadow = false
+    start = [ "control-center", "battery", "sysmon", "volume", "brightness", "weather" ]
+
+    [bar.workspaces]
+    background_opacity = 0.0
+    center = [ "workspaces" ]
+    end = []
+    font_weight = 700
+    margin_edge = 0
+    padding = 0
+    position = "left"
+    reserve_space = false
+    scale = 0.5
+    shadow = false
+    start = []
+    thickness = 10
+
+[calendar]
+enabled = true
+
+    [calendar.account.nextcloud]
+    name = "Nextcloud"
+    provider = "custom"
+    server_url = "https://cloud.dfrp.xyz/remote.php/dav"
+    type = "caldav"
+    username = "ryan"
+
+[control_center]
+sidebar_section = "full"
+
+[desktop_widgets]
+enabled = false
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[location]
+auto_locate = true
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 720.0
+    cy = 841.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_login_button = true
+
+[osd]
+offset_y = 20
+position = "bottom_center"
+
+[plugins]
+enabled = [ "noctalia/bongocat" ]
+
+[shell]
+niri_overview_type_to_launch_enabled = true
+polkit_agent = true
+settings_show_advanced = true
+telemetry_enabled = true
+
+    [shell.panel]
+    open_near_click_control_center = true
+    session_placement = "floating"
+    session_position = "center"
+    transparency_mode = "soft"
+
+    [shell.screenshot]
+    directory = "/home/ryan/Pictures/Screenshots"
+
+[theme]
+builtin = "Tokyo-Night"
+community_palette = "Oxocarbon"
+mode = "dark"
+wallpaper_scheme = "m3-content"
+
+[wallpaper]
+directory = "/home/ryan/nixos/themes"
+
+    [wallpaper.default]
+    path = "/home/ryan/nixos/themes/astronaut/wallpaper.jpg"
+
+    [wallpaper.last]
+    path = "/home/ryan/nixos/themes/astronaut/wallpaper.jpg"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/ryan/nixos/themes/astronaut/wallpaper.jpg"
+
+    [[wallpaper.favorite]]
+    builtin_palette = "Ayu"
+    palette_source = "builtin"
+    path = "/home/ryan/nixos/themes/gruvbox/wallpaper.jpg"
+    theme_mode = "dark"
+
+[weather]
+unit = "imperial"
+
+[widget.Tailscale]
+color = "error"
+command = "sudo tailscale up --reset"
+glyph = "shield-half-filled"
+right_command = "sudo tailscale up --accept-routes"
+tooltip = "L: home R: away"
+type = "custom_button"
+
+[widget.battery]
+color = "tertiary"
+
+[widget.bluetooth]
+color = "primary"
+
+[widget.cat]
+type = "noctalia/bongocat:cat"
+
+[widget.network]
+color = "tertiary"
+
+[widget.power_profile]
+color = "secondary"
+
+[widget.spacer_1]
+type = "spacer"
+
+[widget.spacer_2]
+type = "spacer"
+
+[widget.spacer_3]
+anchor = true
+type = "spacer"
+
+[widget.sysmon]
+color = "secondary"
+display = "text"
+icon_color = "secondary"
+
+[widget.tray]
+drawer = true
+
+[widget.volume]
+color = "primary"
+
+[widget.workspaces]
+display = "none"
+pill_scale = 0.75

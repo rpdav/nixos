@@ -34,7 +34,6 @@
       # niri
       niri
       noctalia-shell
-      #swayidle
     ];
 
     # Hyprland monitor config

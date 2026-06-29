@@ -1,27 +1,21 @@
 {inputs, ...}: {
-  flake.nixosModules.niri = {
-    lib,
-    pkgs,
-    ...
-  }: {
-    # Override hyprland auto-login while testing niri
-    services.displayManager.autoLogin.enable = lib.mkForce false;
+  flake.nixosModules.niri = {lib, ...}: {
+    #TODO split this apart from hyperland config
+    services.displayManager = {
+      autoLogin.user = "ryan";
+      gdm = {
+        enable = true;
+      };
+      # if running both hyprland and niri, auto-login to niri
+      defaultSession = lib.mkForce "niri";
+    };
+    programs.niri.enable = true;
 
-    programs.niri.enable = true; #TODO do I want to switch to the niri-flake package?
-    # System level config for swaylock
-
-    # Temporary simple packages while testing out imperative niri.kdl
-    environment.systemPackages = with pkgs; [
-      brightnessctl
-      playerctl
-      swayosd
-      networkmanagerapplet
-      upower # needed for noctalia-shell
-    ];
+    # needed for noctalia battery widget
+    services.upower.enable = true;
   };
   flake.homeModules.niri = {
     pkgs,
-    osConfig,
     config,
     ...
   }: let
@@ -30,15 +24,12 @@
       inputs.niri-flake.homeModules.config
       inputs.niri-flake.homeModules.stylix
     ];
-    services.polkit-gnome.enable = true;
-    home.packages = with pkgs; [
-      swaybg # wallpaper; replace with noctalia?
-    ];
 
     programs.niri = {
       package = pkgs.niri; # Don't use package from niri-flake
       settings = {
         input = {
+          power-key-handling.enable = false; # power key triggers session menu
           keyboard.xkb.layout = "us";
           touchpad = {
             tap = true;
@@ -59,6 +50,10 @@
             {proportion = 1. / 2.;}
             {proportion = 2. / 3.;}
           ];
+          struts = {
+            left = 5;
+            right = 5;
+          };
           border = {
             enable = true;
             width = 2;
@@ -72,18 +67,18 @@
             offset.y = 5;
             # verify colors from stylix
           };
+          background-color = "transparent";
         };
         spawn-at-startup = [
           {argv = ["${config.programs.noctalia.package}/bin/noctalia"];}
-          #{argv = ["${pkgs.waybar}/bin/waybar"];}
-          {argv = ["${pkgs.steam}/bin/steam" "-silent" "%U"];} # seems to have trouble finding xwayland?
-          #{argv = ["${pkgs.blueman}/bin/blueman-applet"];}
-          #{argv = ["${pkgs.networkmanagerapplet}/bin/nm-applet"];}
-          # Need to make this rerun whenever wallpaper changes
-          #{argv = ["${pkgs.swaybg}/bin/swaybg" "${osConfig.stylix.image}"];}
+          {argv = ["${pkgs.steam}/bin/steam" "-silent" "%U"];} # seems to have trouble finding xwayland
         ];
         prefer-no-csd = true;
         layer-rules = [
+          {
+            # wallpaper in background
+            place-within-backdrop = true;
+          }
           {
             matches = [{namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$";}];
             # disable blur so noctalia elements can be transparent
@@ -105,6 +100,18 @@
             # Open firefox maximized
             matches = [{app-id = "firefox";}];
             open-maximized = true;
+          }
+          {
+            # Float Noctalia Settings
+            matches = [{app-id = "dev.noctalia.Noctalia.Settings";}];
+            open-floating = true;
+            default-column-width.proportion = 2. / 3.;
+            default-window-height.proportion = 0.75;
+            default-floating-position = {
+              x = 0;
+              y = 100;
+              relative-to = "top";
+            };
           }
           {
             # Float blueman applet
@@ -132,8 +139,10 @@
           }
         ];
         binds = let
-          swayosdBin = "${pkgs.swayosd}/bin/swayosd-client";
-          lockCmd = "TZ=${osConfig.time.timeZone} ${pkgs.hyprlock}/bin/hyprlock";
+          wpctl = "${pkgs.wireplumber}/bin/wpctl";
+          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+          playerctl = "${pkgs.playerctl}/bin/playerctl";
+          noctalia = "${inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/noctalia";
         in {
           # Misc
           "Mod+Shift+Slash".action.show-hotkey-overlay = [];
@@ -152,7 +161,7 @@
             hotkey-overlay.title = "Open a Terminal: kitty";
           };
           "Mod+Space" = {
-            action.spawn = ["${pkgs.fuzzel}/bin/fuzzel"];
+            action.spawn-sh = ["${noctalia} msg panel-open launcher"];
             hotkey-overlay.title = "Open Launcher";
           };
           "Mod+B" = {
@@ -160,58 +169,50 @@
             hotkey-overlay.title = "Open a Browser: firefox";
           };
 
-          # Media binds with swayosd
-          #"Caps_Lock" = {
-          #  action.spawn-sh = ["sleep 0.1 && ${swayosdBin} --caps-lock"];
-          #  allow-when-locked = true;
-          #};
           "XF86AudioRaiseVolume" = {
-            action.spawn-sh = ["wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"];
+            action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"];
             #action.spawn-sh = ["${swayosdBin} --output-volume raise"];
             allow-when-locked = true;
           };
           "XF86AudioLowerVolume" = {
-            action.spawn-sh = ["wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"];
+            action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.05-"];
             #action.spawn-sh = ["${swayosdBin} --output-volume lower"];
             allow-when-locked = true;
           };
           "XF86AudioMute" = {
-            action.spawn-sh = ["wpctl set-volume @DEFAULT_AUDIO_SINK@ toggle"];
+            action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ toggle"];
             #action.spawn-sh = ["${swayosdBin} --output-volume mute-toggle"];
             allow-when-locked = true;
           };
           "Mod+XF86AudioRaiseVolume" = {
-            action.spawn-sh = ["${swayosdBin} --output-volume 100"];
+            action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 1.0"];
             allow-when-locked = true;
           };
           "Mod+XF86AudioLowerVolume" = {
-            action.spawn-sh = ["${swayosdBin} --output-volume 0&& ${swayosdBin} --output-volume 25"];
+            action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.25"];
             allow-when-locked = true;
           };
           "XF86AudioPlay" = {
-            action.spawn-sh = ["playerctl play-pause"];
-            #action.spawn-sh = ["${swayosdBin} --playerctl play-pause"];
+            action.spawn-sh = ["${playerctl} play-pause"];
             allow-when-locked = true;
           };
           "XF86AudioPrev" = {
-            action.spawn-sh = ["playerctl previous"];
-            #action.spawn-sh = ["${swayosdBin} --playerctl previous"];
+            action.spawn-sh = ["${playerctl} previous"];
             allow-when-locked = true;
           };
           "XF86AudioNext" = {
-            action.spawn-sh = ["playerctl next"];
-            #action.spawn-sh = ["${swayosdBin} --playerctl next"];
+            action.spawn-sh = ["${playerctl} next"];
             allow-when-locked = true;
           };
 
           # Brightnesss
           "XF86MonBrightnessUp" = {
-            action.spawn-sh = ["brightnessctl --class=backlight set +10%"];
+            action.spawn-sh = ["${brightnessctl} --class=backlight set +10%"];
             #action.spawn-sh = ["${swayosdBin} --brightness raise"];
             allow-when-locked = true;
           };
           "XF86MonBrightnessDown" = {
-            action.spawn-sh = ["brightnessctl --class=backlight set +10%-"];
+            action.spawn-sh = ["${brightnessctl} --class=backlight set +10%-"];
             #action.spawn-sh = ["${swayosdBin} --brightness lower"];
             allow-when-locked = true;
           };
@@ -305,11 +306,11 @@
 
           # Escaping and closing
           "Super+Alt+L" = {
-            action.spawn-sh = ["${lockCmd}"];
-            hotkey-overlay.title = "Lock the Screen: hyprlock";
+            action.spawn-sh = ["${noctalia} msg session lock"];
+            hotkey-overlay.title = "Lock the Screen";
           };
-          "XF86AudioMedia".action.spawn = ["${pkgs.wlogout}/bin/wlogout"];
-          "XF86PowerOff".action.spawn = ["${pkgs.wlogout}/bin/wlogout"]; # This doesn't seem to work - still puts computer to sleep
+          "XF86AudioMedia".action.spawn-sh = ["${noctalia} msg settings-toggle"];
+          "XF86PowerOff".action.spawn-sh = ["${noctalia} msg panel-toggle session"];
           "Mod+Shift+P".action.power-off-monitors = [];
           "Mod+Shift+E".action.quit = [];
           "Ctrl+Alt+Delete".action.quit = [];
