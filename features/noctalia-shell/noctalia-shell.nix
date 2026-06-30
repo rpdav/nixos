@@ -8,7 +8,10 @@
     osConfig,
     ...
   }: {
-    imports = [inputs.noctalia.homeModules.default];
+    imports = [
+      inputs.noctalia.homeModules.default
+      self.modules.homeManager.stylixNoctaliav5
+    ];
     programs.noctalia = {
       enable = true;
       settings = {
@@ -131,17 +134,6 @@
           screenshot = {directory = "${config.home.homeDirectory}/Pictures/Screenshots";};
           settings_show_advanced = true;
           telemetry_enabled = true;
-        };
-        #TODO integrate stylix themes
-        theme = {
-          builtin = "Tokyo-Night";
-          community_palette = "Oxocarbon";
-          mode = "dark";
-          wallpaper_scheme = "m3-content";
-        };
-        wallpaper = {
-          default = {path = config.stylix.image;};
-          directory = "${self}/themes";
         };
         weather = {unit = "imperial";};
         widget = {

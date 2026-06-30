@@ -52,15 +52,6 @@
         else true;
     };
 
-    # Favorite schemes:
-    # catppuccin-mocha
-    # gruvbox-material-dark-hard
-    # atelier-dune
-    # 3024
-    # colors
-    # isotope
-    # tokyo-night-terminal-dark
-
     stylix.fonts.sizes = {
       applications = 10;
       terminal = 10;
