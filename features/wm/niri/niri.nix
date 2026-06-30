@@ -1,19 +1,23 @@
 {inputs, ...}: {
-  flake.nixosModules.niri = {lib, ...}: {
-    #TODO split this apart from hyperland config
+  flake.nixosModules.niri = {pkgs, ...}: {
     services.displayManager = {
+      #TODO switch to noctalia greeter? (separate flake)
       autoLogin.user = "ryan";
       gdm = {
         enable = true;
       };
-      # if running both hyprland and niri, auto-login to niri
-      defaultSession = lib.mkForce "niri";
+      defaultSession = "niri";
     };
     programs.niri.enable = true;
 
     # needed for noctalia battery widget
     services.upower.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      xwayland-satellite # for steam, but still not working
+    ];
   };
+
   flake.homeModules.niri = {
     pkgs,
     config,
@@ -27,7 +31,12 @@
 
     programs.niri = {
       package = pkgs.niri; # Don't use package from niri-flake
-      settings = {
+      settings = let
+        wpctl = "${pkgs.wireplumber}/bin/wpctl";
+        brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+        playerctl = "${pkgs.playerctl}/bin/playerctl";
+        noctalia = "${inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/noctalia";
+      in {
         input = {
           power-key-handling.enable = false; # power key triggers session menu
           keyboard.xkb.layout = "us";
@@ -65,7 +74,6 @@
             spread = 5;
             offset.x = 0;
             offset.y = 5;
-            # verify colors from stylix
           };
           background-color = "transparent";
         };
@@ -74,14 +82,15 @@
           {argv = ["${pkgs.steam}/bin/steam" "-silent" "%U"];} # seems to have trouble finding xwayland
         ];
         prefer-no-csd = true;
+        switch-events.lid-close.action.spawn = ["${noctalia}" "msg" "session" "lock-and-suspend"];
         layer-rules = [
           {
             # wallpaper in background
             place-within-backdrop = true;
           }
           {
-            matches = [{namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$";}];
             # disable blur so noctalia elements can be transparent
+            matches = [{namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$";}];
             background-effect.blur = false;
           }
         ];
@@ -138,12 +147,7 @@
             };
           }
         ];
-        binds = let
-          wpctl = "${pkgs.wireplumber}/bin/wpctl";
-          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-          playerctl = "${pkgs.playerctl}/bin/playerctl";
-          noctalia = "${inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/noctalia";
-        in {
+        binds = {
           # Misc
           "Mod+Shift+Slash".action.show-hotkey-overlay = [];
           "Mod+O" = {
