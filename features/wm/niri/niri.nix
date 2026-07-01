@@ -3,10 +3,14 @@
   self,
   ...
 }: {
-  flake.nixosModules.niri = {pkgs, ...}: {
+  flake.nixosModules.niri = {
+    pkgs,
+    config,
+    ...
+  }: {
     # Auto-login with display manager
     services.displayManager = {
-      autoLogin.user = "ryan";
+      autoLogin.user = config.systemOpts.primaryUser;
       gdm = {
         enable = true;
       };
@@ -20,7 +24,11 @@
     services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = with pkgs; [
-      xwayland-satellite # for steam, but still not working
+      xwayland-satellite
+      nautilus
+      file-roller
+      gnome-calculator
+      cheese
     ];
 
     fonts.packages = with pkgs; [
@@ -185,6 +193,10 @@
           "Mod+B" = {
             action.spawn = ["${pkgs.firefox}/bin/firefox"];
             hotkey-overlay.title = "Open a Browser: firefox";
+          };
+          "Mod+E" = {
+            action.spawn = ["${pkgs.nautilus}/bin/nautilus"];
+            hotkey-overlay.title = "Open a File Explorer: nautilus";
           };
 
           "XF86AudioRaiseVolume" = {

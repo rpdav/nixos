@@ -55,7 +55,7 @@
               provider = "custom";
               server_url = "https://cloud.${inputs.nix-secrets.selfhosting.domain}/remote.php/dav";
               type = "caldav";
-              username = "ryan";
+              username = config.home.username;
             };
           };
           enabled = true;
@@ -127,6 +127,55 @@
           position = "bottom_center";
         };
         shell = {
+          session = {
+            actions = [
+              {
+                action = "lock";
+                countdown_seconds = 0;
+                enabled = true;
+                shortcut = "1";
+                variant = "default";
+              }
+              {
+                action = "lock_and_suspend";
+                countdown_seconds = 0;
+                enabled = true;
+                shortcut = "2";
+                variant = "default";
+              }
+              {
+                action = "logout";
+                countdown_seconds = 0;
+                enabled = true;
+                shortcut = "3";
+                variant = "default";
+              }
+              {
+                action = "reboot";
+                countdown_seconds = 0;
+                enabled = true;
+                shortcut = "4";
+                variant = "default";
+              }
+              {
+                action = "command";
+                command = "systemctl reboot --firmware-setup";
+                countdown_seconds = 0;
+                enabled = true;
+                glyph = "cpu";
+                label = "Reboot into firmware";
+                shortcut = "5";
+                variant = "default";
+              }
+              {
+                action = "shutdown";
+                countdown_seconds = 0;
+                enabled = true;
+                shortcut = "6";
+                variant = "destructive";
+              }
+            ];
+          };
           niri_overview_type_to_launch_enabled = true;
           panel = {
             open_near_click_control_center = true;
@@ -175,8 +224,11 @@
           lightmode = {
             color = colors.yellow;
             glyph = "brightness-half";
-            command = "nixos apply -y";
-            right_command = "nixos apply --specialisation lightmode -y";
+            # Using ${self} to reference currently-active flake in /nix/store to rebuild
+            # into the specialisation instead of the working directory (/home/ryan/nixos).
+            # If there is any WIP in working directory, this would fail silently.
+            command = "sudo nixos-rebuild switch --flake ${self}";
+            right_command = "sudo nixos-rebuild switch --flake ${self} --specialisation lightmode";
             tooltip = "L: dark R: light";
             type = "custom_button";
           };
