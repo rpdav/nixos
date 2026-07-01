@@ -86,10 +86,6 @@
       url = "github:hyprwm/Hyprland";
       # separate cache server - no follow nixpkgs
     };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
 
     # ── Personal / secret repos ─────────────────────────────────
     nix-secrets = {

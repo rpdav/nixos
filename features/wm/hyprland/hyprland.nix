@@ -3,17 +3,13 @@
   self,
   ...
 }: {
-  flake.nixosModules.hyprland = {
-    pkgs,
-    lib,
-    ...
-  }: {
+  flake.nixosModules.hyprland = {pkgs, ...}: {
     services.displayManager = {
       autoLogin.user = "ryan";
       gdm = {
         enable = true;
       };
-      defaultSession = lib.mkDefault "hyprland";
+      defaultSession = "hyprland";
     };
 
     boot.loader.timeout = 0;
@@ -112,11 +108,6 @@
     wayland.windowManager.hyprland = {
       enable = true;
       configType = "hyprlang";
-      # plugins break often due to version mismatches even with version pinning :(
-      plugins = let
-        hyprPlugins = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
-      in [
-      ];
       settings = {
         ################
         ### MONITORS ###
