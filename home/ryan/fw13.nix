@@ -25,7 +25,7 @@
       thunderbird
 
       # hyprland
-      hyprland
+      #hyprland
       #hypridle
       #hyprlock
       #waybar

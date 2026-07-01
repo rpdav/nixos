@@ -38,7 +38,7 @@
         lanzaboote
 
         # wm
-        hyprland
+        #hyprland
         niri
 
         # users

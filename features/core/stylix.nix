@@ -72,8 +72,6 @@
       size = 24;
     };
 
-    #TODO should this go in userOpts? 6 vars seems a bit excessive.
-    # would be nice if a single package covered multiple fonts.
     stylix.fonts = {
       monospace = {
         name = "Intel One Mono";

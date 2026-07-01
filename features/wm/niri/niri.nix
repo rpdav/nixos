@@ -1,21 +1,33 @@
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.niri = {pkgs, ...}: {
+    # Auto-login with display manager
     services.displayManager = {
-      #TODO switch to noctalia greeter? (separate flake)
       autoLogin.user = "ryan";
       gdm = {
         enable = true;
       };
       defaultSession = "niri";
     };
-    programs.niri.enable = true;
 
-    # needed for noctalia battery widget
-    services.upower.enable = true;
+    # Misc tweaks
+    boot.loader.timeout = 0;
+    services.logind.settings.Login.HandlePowerKey = "ignore"; # Override power button behavior to use wlogout
+    services.upower.enable = true; # needed for noctalia battery widget
+    services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = with pkgs; [
       xwayland-satellite # for steam, but still not working
     ];
+
+    fonts.packages = with pkgs; [
+      font-awesome
+    ];
+
+    programs.niri.enable = true;
   };
 
   flake.homeModules.niri = {
@@ -27,6 +39,7 @@
     imports = [
       inputs.niri-flake.homeModules.config
       inputs.niri-flake.homeModules.stylix
+      self.modules.generic.monitors
     ];
 
     programs.niri = {
@@ -81,6 +94,7 @@
           {argv = ["${config.programs.noctalia.package}/bin/noctalia"];}
           {argv = ["${pkgs.steam}/bin/steam" "-silent" "%U"];} # seems to have trouble finding xwayland
         ];
+        hotkey-overlay.skip-at-startup = true;
         prefer-no-csd = true;
         switch-events.lid-close.action.spawn = ["${noctalia}" "msg" "session" "lock-and-suspend"];
         layer-rules = [
