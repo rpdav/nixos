@@ -22,7 +22,7 @@
             background_opacity = 0.75;
             capsule = true;
             center = ["date" "spacer_3" "clock"];
-            end = ["bluetooth" "network" "spacer_1" "caffeine" "power_profile" "clipboard" "tailscale" "spacer_2" "notifications" "tray"];
+            end = ["bluetooth" "network" "spacer_1" "caffeine" "power_profile" "clipboard" "tailscale" "lightmode" "spacer_2" "notifications" "tray"];
             margin_edge = 5;
             margin_ends = 5;
             padding = 6;
@@ -170,6 +170,14 @@
             glyph = "shield-half-filled";
             right_command = "sudo tailscale up --accept-routes";
             tooltip = "L: home R: away";
+            type = "custom_button";
+          };
+          lightmode = {
+            color = colors.yellow;
+            glyph = "brightness-half";
+            command = "nixos apply -y";
+            right_command = "nixos apply --specialisation lightmode -y";
+            tooltip = "L: dark R: light";
             type = "custom_button";
           };
           spacer_2 = {type = "spacer";};

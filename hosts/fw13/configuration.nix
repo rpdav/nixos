@@ -66,6 +66,11 @@
       gui = true;
     };
 
+    # light mode specialization
+    specialisation.lightmode.configuration = {
+      userOpts.theme = lib.mkForce "mountain";
+    };
+
     # Backup config
     backupOpts = {
       localRepo = "ssh://borg@borg:2222/backup";
