@@ -12,7 +12,7 @@
     imports = [self.nixosModules.admin];
 
     # user--specific variable overrides
-    userOpts.theme = "rainbow-cat";
+    userOpts.theme = "astronaut";
     userOpts.cursor = "Bibata-Modern-Ice";
     userOpts.cursorPkg = "bibata-cursors";
 

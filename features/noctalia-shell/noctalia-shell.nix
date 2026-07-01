@@ -7,7 +7,9 @@
     config,
     osConfig,
     ...
-  }: {
+  }: let
+    colors = config.lib.stylix.colors.withHashtag;
+  in {
     imports = [
       inputs.noctalia.homeModules.default
       self.modules.homeManager.stylixNoctaliav5
@@ -20,7 +22,7 @@
             background_opacity = 0.75;
             capsule = true;
             center = ["date" "spacer_3" "clock"];
-            end = ["bluetooth" "network" "spacer_1" "caffeine" "power_profile" "clipboard" "Tailscale" "spacer_2" "notifications" "tray"];
+            end = ["bluetooth" "network" "spacer_1" "caffeine" "power_profile" "clipboard" "tailscale" "spacer_2" "notifications" "tray"];
             margin_edge = 5;
             margin_ends = 5;
             padding = 6;
@@ -30,6 +32,8 @@
           };
           order = ["default" "workspaces"];
           workspaces = {
+            capsule = true;
+            capsule_padding = 10.0;
             background_opacity = 0;
             center = ["workspaces"];
             end = [];
@@ -137,31 +141,41 @@
         };
         weather = {unit = "imperial";};
         widget = {
-          Tailscale = {
-            color = "error";
+          # left
+          control-center = {};
+          battery = {color = colors.green;};
+          sysmon = {
+            color = colors.brown;
+            display = "text";
+          };
+          volume = {color = colors.magenta;};
+          brightness = {color = colors.yellow;};
+          weather = {color = colors.cyan;};
+          # center
+          date = {};
+          spacer_3 = {
+            anchor = true;
+            type = "spacer";
+          };
+          clock = {};
+          # right
+          bluetooth = {color = colors.blue;};
+          network = {color = colors.brown;};
+          spacer_1 = {type = "spacer";};
+          caffeine = {};
+          power_profile = {color = colors.green;};
+          clipboard = {color = colors.blue;};
+          tailscale = {
             command = "sudo tailscale up --reset";
             glyph = "shield-half-filled";
             right_command = "sudo tailscale up --accept-routes";
             tooltip = "L: home R: away";
             type = "custom_button";
           };
-          battery = {color = "tertiary";};
-          bluetooth = {color = "primary";};
-          network = {color = "tertiary";};
-          power_profile = {color = "secondary";};
-          spacer_1 = {type = "spacer";};
           spacer_2 = {type = "spacer";};
-          spacer_3 = {
-            anchor = true;
-            type = "spacer";
-          };
-          sysmon = {
-            color = "secondary";
-            display = "text";
-            icon_color = "secondary";
-          };
+          notifications = {};
           tray = {drawer = true;};
-          volume = {color = "primary";};
+          # side bar
           workspaces = {
             display = "none";
             pill_scale = 0.75;
