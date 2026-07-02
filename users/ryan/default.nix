@@ -34,7 +34,10 @@
 
     # home-manager config
     home-manager = {
-      users.ryan = self.homeModules."ryan@${config.networking.hostName}";
+      users.ryan = {
+        home.username = "ryan";
+        imports = [self.homeModules."ryan@${config.networking.hostName}"];
+      };
     };
 
     # Fix file permissions after backup restore
@@ -44,8 +47,5 @@
       # make user's home directory not readable by others
       "z ${config.systemOpts.persistVol}/home/ryan 0700 ryan users"
     ];
-  };
-  flake.homeModules.user-ryan = {...}: {
-    home.username = "ryan";
   };
 }

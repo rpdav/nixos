@@ -5,9 +5,6 @@
       # core config
       core
 
-      # base user config
-      user-ariel
-
       # optional config
       backup
       firefox

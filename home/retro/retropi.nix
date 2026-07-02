@@ -7,9 +7,6 @@
       # core config
       core
 
-      # base user config
-      user-retro
-
       # optional config
       backup
 

@@ -5,9 +5,6 @@
     imports = with self.homeModules; [
       # core config
       core
-
-      # base user config
-      user-ryan
     ];
   };
 }

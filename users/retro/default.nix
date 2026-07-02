@@ -25,8 +25,9 @@
     };
 
     # home-manager config
-    home-manager = {
-      users.retro = self.homeModules."retro@${config.networking.hostName}";
+    home-managerusers.retro = {
+      home.username = "retro";
+      imports = [self.homeModules."retro@${config.networking.hostName}"];
     };
 
     # Fix file permissions after backup restore
@@ -36,8 +37,5 @@
       # make user's home directory not readable by others
       "z ${config.systemOpts.persistVol}/home/retro 0700 retro users"
     ];
-  };
-  flake.homeModules.user-retro = {
-    home.username = "retro";
   };
 }

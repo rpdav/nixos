@@ -6,9 +6,6 @@
       # core config
       core
 
-      # base user config
-      user-ryan
-
       # optional config
       backup
       webApps
