@@ -29,6 +29,7 @@
       file-roller
       gnome-calculator
       cheese
+      evince
     ];
 
     fonts.packages = with pkgs; [
