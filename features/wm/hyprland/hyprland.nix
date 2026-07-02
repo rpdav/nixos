@@ -46,6 +46,10 @@
   }: {
     imports = [
       self.modules.generic.monitors
+      self.homeModules.hypridle
+      self.homeModules.hyprlock
+      self.homeModules.waybar
+      self.homeModules.wlogout
     ];
 
     # packages

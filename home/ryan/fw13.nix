@@ -21,16 +21,9 @@
       kitty
       thunderbird
 
+      # wm
       # hyprland
-      #hyprland
-      #hypridle
-      #hyprlock
-      #waybar
-      #wlogout
-
-      # niri
       niri
-      noctalia-shell
     ];
 
     # Hyprland monitor config

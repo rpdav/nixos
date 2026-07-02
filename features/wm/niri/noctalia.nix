@@ -3,7 +3,7 @@
   self,
   ...
 }: {
-  flake.homeModules.noctalia-shell = {
+  flake.homeModules.noctalia = {
     config,
     osConfig,
     ...

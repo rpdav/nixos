@@ -49,6 +49,7 @@
       inputs.niri-flake.homeModules.config
       inputs.niri-flake.homeModules.stylix
       self.modules.generic.monitors
+      self.homeModules.noctalia
     ];
 
     programs.niri = {

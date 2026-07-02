@@ -81,7 +81,7 @@
       ## image
       programs.noctalia.settings.wallpaper = {
         default = {path = config.stylix.image;};
-        directory = "${self}/themes";
+        directory = "${self}/themes"; # for browsing other themes to switch imperatively
       };
     };
   };
