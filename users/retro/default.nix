@@ -3,9 +3,21 @@
   self,
   ...
 }: {
-  flake.nixosModules.user-retro = {config, ...}:
-  ## This file contains all NixOS config for user retro
-  {
+  # This is a generic user-definition module which creates a user,
+  # declares a password, and creates a home-manager environment.
+  # Update the module name `flake.nixosModules.user-foo` and
+  # let binding `user = "foo";` to make changes throughout.
+  flake.nixosModules.user-retro = {
+    config,
+    lib,
+    ...
+  }: let
+    user = "retro";
+    # Derive capitalized user "Foo" (for camel case usage) from user "foo"
+    User = (lib.toUpper (builtins.substring 0 1 user)) + (builtins.substring 1 (builtins.stringLength user) user);
+  in {
+    ## This file contains all NixOS config for user retro
+
     # user--specific variable overrides
     userOpts.theme = "retroarch";
     userOpts.cursor = "Bibata-Modern-Ice";
@@ -14,28 +26,28 @@
     # user definition
     # this is an unprivileged kiosk account
     users.mutableUsers = false;
-    sops.secrets."passwordHashRetro" = {
+    sops.secrets."passwordHash${User}" = {
       neededForUsers = true;
-      sopsFile = "${inputs.nix-secrets.outPath}/retro.yaml";
+      sopsFile = "${inputs.nix-secrets.outPath}/${user}.yaml";
     };
-    users.users.retro = {
-      hashedPasswordFile = config.sops.secrets."passwordHashRetro".path;
+    users.users.${user} = {
+      hashedPasswordFile = config.sops.secrets."passwordHash${User}".path;
       isNormalUser = true;
-      home = "/home/retro";
+      home = "/home/${user}";
     };
 
     # home-manager config
-    home-managerusers.retro = {
-      home.username = "retro";
-      imports = [self.homeModules."retro@${config.networking.hostName}"];
+    home-managerusers.${user} = {
+      home.username = user;
+      imports = [self.homeModules."${user}@${config.networking.hostName}"];
     };
 
     # Fix file permissions after backup restore
     systemd.tmpfiles.rules = [
       # make all files in home directory owned by user
-      "Z ${config.systemOpts.persistVol}/home/retro - retro users"
+      "Z ${config.systemOpts.persistVol}/home/${user} - ${user} users"
       # make user's home directory not readable by others
-      "z ${config.systemOpts.persistVol}/home/retro 0700 retro users"
+      "z ${config.systemOpts.persistVol}/home/${user} 0700 ${user} users"
     ];
   };
 }
