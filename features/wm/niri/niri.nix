@@ -239,12 +239,18 @@
           # Brightnesss
           "XF86MonBrightnessUp" = {
             action.spawn-sh = ["${brightnessctl} --class=backlight set +10%"];
-            #action.spawn-sh = ["${swayosdBin} --brightness raise"];
             allow-when-locked = true;
           };
           "XF86MonBrightnessDown" = {
             action.spawn-sh = ["${brightnessctl} --class=backlight set +10%-"];
-            #action.spawn-sh = ["${swayosdBin} --brightness lower"];
+            allow-when-locked = true;
+          };
+          "Mod+XF86MonBrightnessUp" = {
+            action.spawn-sh = ["${brightnessctl} --class=backlight set 100%"];
+            allow-when-locked = true;
+          };
+          "Mod+XF86MonBrightnessDown" = {
+            action.spawn-sh = ["${brightnessctl} --class=backlight set 0%"];
             allow-when-locked = true;
           };
 
@@ -330,8 +336,8 @@
 
           # Maximize or float windows
           "Mod+F".action.maximize-column = [];
-          "Mod+Shift+F".action.fullscreen-window = [];
           "Mod+M".action.maximize-window-to-edges = [];
+          "Mod+Shift+M".action.fullscreen-window = [];
           "Mod+V".action.toggle-window-floating = [];
           "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [];
 

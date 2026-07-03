@@ -21,17 +21,6 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 └── uptix.lock		like flake.lock but for docker image hashes. See readme in the services directory
 ```
 
-## MISC NOTES AFTER REFACTOR
-nixos and home modules are interspersed within directories
-
-all modules are exported as nixos or home module flake outputs
-
-separate flake-parts readme
-
-some modules are split across multiple files (e.g. core, system-`host`).
-
-explain system-`host` and user-`user` module naming.
-
 ## Features
 * Flakes: better control of depencies and reproducibility
 * Flake-parts: distribute flake outputs into config files and improve refactorability
@@ -42,7 +31,7 @@ explain system-`host` and user-`user` module naming.
 * Disko: declarative disk partitioning
 * Lanzaboote: secure boot
 * Stylix: system-wide theming
-* Hyprland: build a desktop environment with legos
+* Niri and Hyprland: beautiful tiling or scrolling wayland window managers
 * Nixvirt: declarative VM management
 
 ## Structure
@@ -58,10 +47,9 @@ Below gives some examples of what configuration would go where using this struct
 | Module Name                                       | Location(s) in repo                                                                                      | Purpose                                                                                                                                                        |
 |---------------------------------------------------|----------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | nixosConfigurations.`host`                        | ./hosts/`host`/configuration.nix                                                                         | Instantiates a nixos configuration. It only calls 1 module - nixosModules.system-`host`.                                                                       |
-| nixosModules.system-`host`                        | ./hosts/`host`/configuration.nix ./hosts/`host`/hardware-configuration.nix other files in ./hosts/`host` | 1. Host-specific configuration. All files in this directory belong to nixosModules.system-`host`. 2. This is also where all other shared modules are imported. |
-| nixosModules.user-`user`                          | ./users/`user`/default.nix                                                                               | 1. User definition, permissions, password, ssh keys, etc. 2. Enables home-manager for the user, calling 1 module - homeModules."`user`@`host`"                 |
-| homeModules.user-`user`                           | ./users/`user`/default.nix                                                                               | User-specific home configuration; anything the user wants to be configured on all systems.                                                                     |
-| homeModules."`user`@`host`"                       | ./home                                                                                                   | User-specific home configuration, but only for that specific host (aka "homes")                                                                                |
+| nixosModules.system-`host`                        | ./hosts/`host`/configuration.nix ./hosts/`host`/hardware-configuration.nix other files in ./hosts/`host` | Host-specific configuration. All files in this directory belong to nixosModules.system-`host`. This is also where all other shared modules are imported.       |
+| nixosModules.user-`user`                          | ./users/`user`/default.nix                                                                               | User definition, permissions, password, ssh keys, etc. 2. Enables home-manager for the user, calling 1 module - homeModules."`user`@`host`"                    |
+| homeModules."`user`@`host`"                       | ./home                                                                                                   | User-specific home configuration for that specific host (aka "homes")                                                                                          |
 | nixosModules.*                                    | ./app, ./features                                                                                        | Nixos modules that are shared between hosts.                                                                                                                   |
 | homeModules.*                                     | ./app, ./features                                                                                        | Home modules that are shared between homes.                                                                                                                    |
 | serviceModules.*                                  | ./selfhosting                                                                                            | Selfhosted service modules. Mostly using docker, but some are native nixos services.                                                                           |
@@ -80,6 +68,7 @@ Bringing up a new host or user is as simple as:
 * [Secrets](./_nix-secrets/README.md)
 * [Selfhosted Services](./docs/services.md)
 * [Themes](./docs/theming.md)
+* [Niri and Hyprland](./docs/wayland.md)
 * [Virtualization](./docs/virtualization.md)
 
 ## Secrets
