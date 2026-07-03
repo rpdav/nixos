@@ -38,14 +38,12 @@
     };
   };
   flake.homeModules.hyprland = {
-    config,
     osConfig,
     pkgs,
     lib,
     ...
   }: {
     imports = [
-      self.modules.generic.monitors
       self.homeModules.hypridle
       self.homeModules.hyprlock
       self.homeModules.waybar
@@ -116,24 +114,9 @@
         ################
         ### MONITORS ###
         ################
-
-        monitor = lib.flatten [
+        monitor = [
           ", preferred, auto, 1" # Default for non-defined monitors (e.g. projectors)
-
-          # Dynamic monitor config from monitors.nix module
-          (map
-            (
-              m: let
-                resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-                position = "${toString m.x}x${toString m.y}";
-                scaling = lib.strings.floatToString m.scaling;
-              in "${m.name},${
-                if m.enabled
-                then "${resolution}, ${position}, ${scaling}"
-                else "disable"
-              }"
-            )
-            (config.monitors))
+          # Will be appended with monitors from monitor module
         ];
 
         ################

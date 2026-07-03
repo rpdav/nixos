@@ -48,7 +48,6 @@
     imports = [
       inputs.niri-flake.homeModules.config
       inputs.niri-flake.homeModules.stylix
-      self.modules.generic.monitors
       self.homeModules.noctalia
     ];
 
@@ -72,7 +71,7 @@
             max-scroll-amount = "0%";
           };
         };
-        # outputs = {}; # replace this with monitors function
+        # outputs = {}; # added by monitor module
         layout = {
           gaps = 5;
           focus-ring.enable = false;
