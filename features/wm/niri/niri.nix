@@ -134,6 +134,23 @@
             open-maximized = true;
           }
           {
+            # Float Steam popups
+            matches = [{app-id = "steam";}];
+            excludes = [
+              {
+                app-id = "steam";
+                title = "^Steam$";
+              }
+            ];
+            open-floating = true;
+            default-window-height.proportion = 0.75;
+            default-floating-position = {
+              x = 0;
+              y = 100;
+              relative-to = "top";
+            };
+          }
+          {
             # Float Noctalia Settings
             matches = [{app-id = "dev.noctalia.Noctalia.Settings";}];
             open-floating = true;
@@ -202,17 +219,14 @@
 
           "XF86AudioRaiseVolume" = {
             action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"];
-            #action.spawn-sh = ["${swayosdBin} --output-volume raise"];
             allow-when-locked = true;
           };
           "XF86AudioLowerVolume" = {
             action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.05-"];
-            #action.spawn-sh = ["${swayosdBin} --output-volume lower"];
             allow-when-locked = true;
           };
           "XF86AudioMute" = {
-            action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ toggle"];
-            #action.spawn-sh = ["${swayosdBin} --output-volume mute-toggle"];
+            action.spawn-sh = ["${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"];
             allow-when-locked = true;
           };
           "Mod+XF86AudioRaiseVolume" = {
