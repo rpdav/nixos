@@ -137,8 +137,9 @@
     };
     services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
 
-    # Theming
+    # Theming and fonts
     # Most theming is in system config through stylix.
+    fonts.fontconfig.enable = true;
     gtk.iconTheme = {
       name = osConfig.stylix.fonts.emoji.name;
       package = osConfig.stylix.fonts.emoji.package;

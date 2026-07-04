@@ -73,13 +73,18 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri-flake = {
+      # forked from sodiboo/niri-flake which is not actively maintained.
+      url = "github:epireyn/niri-flake";
+      # separate cache server - no follow nixpkgs
+    };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia/cachix";
+      # separate cache server - no follow nixpkgs
+    };
     hyprland = {
       url = "github:hyprwm/Hyprland";
       # separate cache server - no follow nixpkgs
-    };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
     };
 
     # ── Personal / secret repos ─────────────────────────────────

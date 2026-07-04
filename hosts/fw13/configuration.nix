@@ -38,7 +38,8 @@
         lanzaboote
 
         # wm
-        hyprland
+        #hyprland
+        niri
 
         # users
         user-ryan
@@ -63,6 +64,11 @@
       swapSize = "16G";
       impermanent = true;
       gui = true;
+    };
+
+    # light mode specialization
+    specialisation.lightmode.configuration = {
+      userOpts.theme = lib.mkForce "mountain";
     };
 
     # Backup config
@@ -109,7 +115,26 @@
     services.libinput.enable = true;
 
     # Printing
-    services.printing.enable = true;
+    services.printing = {
+      enable = true;
+      #drivers = [pkgs.cnijfilter2];
+      drivers = with pkgs; [
+        cups-filters
+        cups-browsed
+      ];
+    };
+    services.ipp-usb.enable = true;
+    #hardware.printers = {
+    #  ensureDefaultPrinter = "Canon_TR8620";
+    #  ensurePrinters = [
+    #    {
+    #      deviceUri = "ipp://10.10.40.10/ipp";
+    #      location = "home";
+    #      name = "Canon_TR8620";
+    #      model = "everywhere";
+    #    }
+    #  ];
+    #};
     services.avahi = {
       enable = true;
       nssmdns4 = true;

@@ -38,14 +38,16 @@
     };
   };
   flake.homeModules.hyprland = {
-    config,
     osConfig,
     pkgs,
     lib,
     ...
   }: {
     imports = [
-      self.modules.generic.monitors
+      self.homeModules.hypridle
+      self.homeModules.hyprlock
+      self.homeModules.waybar
+      self.homeModules.wlogout
     ];
 
     # packages
@@ -100,36 +102,21 @@
       splash = false;
     };
 
+    # Mask the hypridle and hyprpaper systemd units.
+    # these will be started within hyprland with execstart
+    systemd.user.services.hypridle = lib.mkForce {};
+    systemd.user.services.hyprpaper = lib.mkForce {};
+
     wayland.windowManager.hyprland = {
       enable = true;
       configType = "hyprlang";
-      # plugins break often due to version mismatches even with version pinning :(
-      plugins = let
-        hyprPlugins = inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system};
-      in [
-      ];
       settings = {
         ################
         ### MONITORS ###
         ################
-
-        monitor = lib.flatten [
+        monitor = [
           ", preferred, auto, 1" # Default for non-defined monitors (e.g. projectors)
-
-          # Dynamic monitor config from monitors.nix module
-          (map
-            (
-              m: let
-                resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-                position = "${toString m.x}x${toString m.y}";
-                scaling = lib.strings.floatToString m.scaling;
-              in "${m.name},${
-                if m.enabled
-                then "${resolution}, ${position}, ${scaling}"
-                else "disable"
-              }"
-            )
-            (config.monitors))
+          # Will be appended with monitors from monitor module
         ];
 
         ################
@@ -154,6 +141,8 @@
           "${pkgs.steam}/bin/steam -silent %U"
           "${pkgs.networkmanagerapplet}/bin/nm-applet"
           "${pkgs.blueman}/bin/blueman-applet"
+          "$bar"
+          "${pkgs.hypridle}/bin/hypridle"
         ];
 
         #############################

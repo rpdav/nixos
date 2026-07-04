@@ -2,69 +2,78 @@
   flake.homeModules."ryan@fw13" = {...}: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
-    imports = with self.homeModules; [
-      # core config
-      core
+    imports = with self.homeModules;
+      [
+        # core config
+        core
 
-      # base user config
-      user-ryan
+        # optional config
+        backup
+        webApps
+        defaultApps
+        accounts
+        yubikey
 
-      # optional config
-      backup
-      webApps
-      defaultApps
-      accounts
-      yubikey
+        # apps
+        firefox
+        chromium
+        games
+        nextcloud
+        kitty
+        thunderbird
 
-      # apps
-      firefox
-      chromium
-      games
-      nextcloud
-      kitty
-      thunderbird
+        # wm
+        #hyprland
+        niri
+      ]
+      ++ [
+        self.modules.homeManager.monitors
+      ];
 
-      # wm
-      hyprland
-      hypridle
-      hyprlock
-      waybar
-      wlogout
-    ];
-
-    # Hyprland monitor config
-    monitors = [
-      {
-        name = "DP-12";
-        width = 1920;
-        height = 1080;
-        refreshRate = 60;
-        x = 0;
-        y = 0;
-        scaling = 1.0;
-        enabled = true;
-      }
-      {
-        name = "DP-10";
-        width = 1920;
-        height = 1080;
-        refreshRate = 144;
-        x = 1920;
-        y = 0;
-        scaling = 1.0;
-        enabled = true;
-      }
-      {
-        name = "eDP-1";
-        width = 2880;
-        height = 1920;
-        refreshRate = 120;
-        x = 3840;
-        y = 0;
-        scaling = 2.0;
-        enabled = true;
-      }
-    ];
+    # Monitor config
+    monitors = {
+      DP-12 = {
+        mode = {
+          width = 1920;
+          height = 1080;
+          refresh = 60.0;
+        };
+        position = {
+          x = 0;
+          y = 0;
+        };
+        scale = 1.0;
+        enable = true;
+      };
+      DP-10 = {
+        mode = {
+          width = 1920;
+          height = 1080;
+          refresh = 144.0;
+        };
+        position = {
+          x = 1920;
+          y = 0;
+        };
+        scale = 1.0;
+        variable-refresh-rate = true;
+        enable = true;
+      };
+      eDP-1 = {
+        mode = {
+          width = 2880;
+          height = 1920;
+          refresh = 120.0;
+        };
+        position = {
+          x = 3840;
+          y = 0;
+        };
+        scale = 2.0;
+        variable-refresh-rate = true;
+        enable = true;
+      };
+    };
 
     backupOpts = {
       patterns = [
