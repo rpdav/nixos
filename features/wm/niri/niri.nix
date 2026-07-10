@@ -156,6 +156,18 @@
             };
           }
           {
+            # Float Calculator
+            matches = [{app-id = "org.gnome.Calculator";}];
+            open-floating = true;
+            default-column-width.proportion = 1. / 3.;
+            default-window-height.proportion = 0.5;
+            default-floating-position = {
+              x = 0;
+              y = 100;
+              relative-to = "top";
+            };
+          }
+          {
             # Float Noctalia Settings
             matches = [{app-id = "dev.noctalia.Noctalia.Settings";}];
             open-floating = true;
