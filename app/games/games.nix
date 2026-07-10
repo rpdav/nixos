@@ -55,4 +55,15 @@
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
     };
   };
+
+  # Individual steam games
+  xdg.desktopEntries = {
+    "Stardew Valley" = {
+      name = "Stardew Valley";
+      exec = "steam steam://rungameid/413150";
+      icon = "steam_icon_413150";
+      categories = ["Game"];
+      type = "Application";
+    };
+  };
 }

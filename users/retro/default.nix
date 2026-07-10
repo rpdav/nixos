@@ -37,7 +37,7 @@
     };
 
     # home-manager config
-    home-managerusers.${user} = {
+    home-manager.users.${user} = {
       home.username = user;
       imports = [self.homeModules."${user}@${config.networking.hostName}"];
     };

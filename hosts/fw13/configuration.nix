@@ -141,6 +141,9 @@
       openFirewall = true;
     };
 
+    # Allow building arm packages
+    boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
     # Disable fingerprint for login (causes gnome-keyring unlock to fail).
     # Can still unlock with fingerprint.
     security.pam.services.login.fprintAuth = false;

@@ -62,13 +62,8 @@
       url = "github:nix-community/nixos-cli";
       # separate cache server - no follow nixpkgs
     };
-    nixos-raspberrypi = {
-      url = "github:nvmd/nixos-raspberrypi/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # separate cache server - no follow nixpkgs
-    };
 
-    # ── GUI‑related flakes ───────────────────────────────────────
+    # ── GUI and WM-related flakes ───────────────────────────────
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";

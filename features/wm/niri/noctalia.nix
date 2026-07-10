@@ -12,11 +12,11 @@
   in {
     imports = [
       inputs.noctalia.homeModules.default
-      self.modules.homeManager.stylixNoctaliav5
     ];
     programs.noctalia = {
       enable = true;
       settings = {
+        wallpaper.directory = "${self}/themes"; # for browsing other wallpapers to switch imperatively
         bar = {
           default = {
             background_opacity = 0.75;
