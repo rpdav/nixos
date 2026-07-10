@@ -12,6 +12,7 @@
     environment.systemPackages = with pkgs; [
       lutris
       mangohud
+      steam-devices-udev-rules
     ];
 
     programs.gamemode.enable = true;
@@ -40,6 +41,7 @@
         ".config/unity3d"
         ".config/retroarch"
         ".config/Beyond-All-Reason"
+        ".config/StardewValley"
       ];
     };
     home.packages = [
@@ -54,16 +56,15 @@
     home.sessionVariables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
     };
-  };
-
-  # Individual steam games
-  xdg.desktopEntries = {
-    "Stardew Valley" = {
-      name = "Stardew Valley";
-      exec = "steam steam://rungameid/413150";
-      icon = "steam_icon_413150";
-      categories = ["Game"];
-      type = "Application";
+    # Individual steam games
+    xdg.desktopEntries = {
+      "Stardew Valley" = {
+        name = "Stardew Valley";
+        exec = "steam steam://rungameid/413150";
+        icon = ./icons/stardew-valley.png;
+        categories = ["Game"];
+        type = "Application";
+      };
     };
   };
 }
