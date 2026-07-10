@@ -128,6 +128,11 @@
             };
             clip-to-geometry = true;
           }
+          # Add blur to terminal transparency
+          {
+            matches = [{app-id = "kitty";}];
+            background-effect.blur = true;
+          }
           {
             # Open firefox maximized
             matches = [{app-id = "firefox";}];

@@ -110,7 +110,7 @@ If you want to create custom flake outputs and you intend to only use them withi
 }
 ```
 
-## Gotchas
+## Gotchas and common errors
 
 ### error: infinite recursion encountered
 
@@ -125,10 +125,11 @@ This will work:
   };
 }
 ```
+
 This will **not** work:
 ```nix
 {...}:{ 
-  flake.nixosModules.myModule = {config, self, ...}: { # nixosModules does not know what `self` is
+  flake.nixosModules.myModule = {config, self, ...}: { # nixosModules does not know what `self` is without it being passed in specialArgs
     imports = [self.nixosModules.anotherModule];
     foo = config.bar;
   };
@@ -138,6 +139,7 @@ This will **not** work:
 ### error: The option `flake' does not exist
 
 This probably comes from importing a file which contains a `flake-parts` module instead of the child modules contained within it.
+
 This is correct:
 ```nix
 {self, ...}:{ 
@@ -147,6 +149,7 @@ This is correct:
   };
 }
 ```
+
 This is incorrect:
 ```nix
 {self, ...}:{ 
@@ -157,3 +160,32 @@ This is incorrect:
 }
 ```
 
+### error: The option `bar` does not exist...did you mean `debug`, `flake` or `systems`?
+
+This comes from putting nixos or home-manager options in a `flake-parts` module instead of the child module:
+
+This is correct:
+```nix
+{
+  flake.nixosModules.games = {
+    programs.steam.enable = true;
+  };
+  flake.homeModules.games = {
+    home.packages = [ pkgs.beyond-all-reason];
+    xdg.desktopEntries."Stardew Valley" = { ... };
+  };
+}
+```
+
+This is incorrect:
+```nix
+{
+  flake.nixosModules.games = {
+    programs.steam.enable = true;
+  };
+  flake.homeModules.games = {
+    home.packages = [ pkgs.beyond-all-reason];
+  };
+  xdg.desktopEntries."Stardew Valley" = { ... }; # flake-parts doesn't know what to do with this, since it's a home-manager option
+}
+```
