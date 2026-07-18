@@ -88,7 +88,6 @@
           border = {
             enable = true;
             width = 2;
-            # verify colors from stylix
           };
           shadow = {
             enable = true;
@@ -180,6 +179,23 @@
             };
           }
           {
+            # Float Yazi
+            matches = [
+              {
+                app-id = "kitty";
+                title = "yazi";
+              }
+            ];
+            open-floating = true;
+            default-window-height.proportion = 0.75;
+            default-column-width.proportion = 2. / 3.;
+            default-floating-position = {
+              x = 0;
+              y = 100;
+              relative-to = "top";
+            };
+          }
+          {
             # Float blueman applet
             matches = [{app-id = ".blueman-manager-wrapped";}];
             open-floating = true;
@@ -233,6 +249,14 @@
             action.spawn = ["${pkgs.nautilus}/bin/nautilus"];
             hotkey-overlay.title = "Open a File Explorer: nautilus";
           };
+          "Mod+Y" = {
+            action.spawn-sh = ["${pkgs.kitty}/bin/kitty -o \"confirm_os_window_close=0\" -T \"yazi\" ${pkgs.yazi}/bin/yazi"];
+            hotkey-overlay.title = "Open a File Explorer: yazi";
+          };
+
+          # Screenshotting
+          "PRINT".action.spawn-sh = ["${noctalia} msg screenshot-region"];
+          "Mod+PRINT".action.spawn-sh = ["${noctalia} msg screenshot-fullscreen pick"];
 
           "XF86AudioRaiseVolume" = {
             action.spawn-sh = ["${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"];

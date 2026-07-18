@@ -32,7 +32,7 @@
 
     # Monitor config
     monitors = {
-      DP-12 = {
+      "Dell Inc. DELL SE2422H 5GBXZN3" = {
         mode = {
           width = 1920;
           height = 1080;
@@ -45,7 +45,7 @@
         scale = 1.0;
         enable = true;
       };
-      DP-10 = {
+      "Acer Technologies VG240Y P 0x93923D02" = {
         mode = {
           width = 1920;
           height = 1080;
