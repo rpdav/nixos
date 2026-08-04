@@ -127,16 +127,28 @@
             };
             clip-to-geometry = true;
           }
-          # Add blur to terminal transparency
           {
+            # Add blur to terminal transparency
             matches = [{app-id = "kitty";}];
             background-effect.blur = true;
           }
           {
+            # Open screen mirroring maximized on primary display
+            matches = [{app-id = "at.yrlf.wl_mirror";}];
+            open-maximized-to-edges = true;
+            open-on-output = "eDP-1";
+          }
+          {
             # Open firefox maximized
             matches = [{app-id = "firefox";}];
-            open-maximized = true;
+            open-maximized-to-edges = true;
           }
+          {
+            # Open Stardew Valley fullscreen maximized
+            matches = [{app-id = "StardewModdingAPI";}];
+            open-fullscreen = true;
+          }
+
           {
             # Float Steam popups
             matches = [{app-id = "steam";}];
@@ -231,7 +243,11 @@
             action.close-window = [];
             repeat = false;
           };
-
+          "Mod+P" = {
+            repeat = false;
+            action.spawn-sh = ["${pkgs.wl-mirror}/bin/wl-mirror $(niri msg --json focused-output | ${pkgs.jq}/bin/jq -r .name)"];
+            hotkey-overlay.title = "Mirror focused output";
+          };
           # Launch programs
           "Mod+Return" = {
             action.spawn = ["${pkgs.kitty}/bin/kitty"];
