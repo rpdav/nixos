@@ -176,7 +176,7 @@
     services.protonmail-bridge = {
       enable = true;
       # make gnome keyring available to bridge in case I'm running KDE
-      path = with pkgs; [gnome-keyring];
+      path = [pkgs.gnome-keyring];
     };
 
     # Server for gnome calendar

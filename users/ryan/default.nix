@@ -35,7 +35,7 @@
     users.users.${user} = {
       hashedPasswordFile = config.sops.secrets."passwordHash${User}".path;
       isNormalUser = true;
-      extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+      extraGroups = ["wheel" "fuse"]; # Enable ‘sudo’ for the user.
       home = "/home/${user}";
       openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ./keys;
     };
@@ -51,7 +51,7 @@
     # Fix file permissions after backup restore
     systemd.tmpfiles.rules = [
       # make all files in home directory owned by user
-      "Z ${config.systemOpts.persistVol}/home/${user}- ${user} users"
+      "Z ${config.systemOpts.persistVol}/home/${user} - ${user} users"
       # make user's home directory not readable by others
       "z ${config.systemOpts.persistVol}/home/${user} 0700 ${user} users"
     ];
