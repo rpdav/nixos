@@ -54,6 +54,7 @@
         # misc
         selfpkgs.fs-diff
         pkgs.jq
+        pkgs.yq
 
         # docker scripts
         selfpkgs.dup

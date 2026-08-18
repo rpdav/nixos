@@ -85,7 +85,7 @@
     services.borgbackup.jobs."local" = {
       inherit paths patterns;
       user = "root";
-      repo = "${localRepo}/${config.networking.hostName}/root";
+      repo = "${localRepo}/${config.networking.hostName}-root";
       doInit = true;
       startAt = ["daily"];
       #    preHook = placeholder for snapshotting/mounting command
@@ -133,20 +133,25 @@
       '';
     };
 
-    #Ensure repo is initialized
-    systemd.user.services.borgmatic.Service.ExecStartPre = lib.mkForce [
-      "${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --make-parent-dirs"
-    ];
+    systemd.user.services.borgmatic = {
+      #Ensure repo is initialized
+      Service.ExecStartPre = lib.mkForce ["${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --make-parent-dirs"];
 
-    services.borgmatic.enable = true;
+      Unit.ConditionACPower = lib.mkForce "";
+    };
+
+    services.borgmatic = {
+      enable = true;
+      frequency = "daily";
+    };
     programs.borgmatic = {
       enable = true;
-      backups."${username}" = {
+      backups."${username}-local" = {
         location = {
           inherit patterns;
           repositories = [
             {
-              "path" = "${localRepo}/${osConfig.networking.hostName}/${username}";
+              "path" = "${localRepo}/${osConfig.networking.hostName}-${username}";
               "label" = "local";
             }
           ];

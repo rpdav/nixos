@@ -7,12 +7,6 @@
   # This module uses sshd keys to generate host age keys - sshd must be enabled for system-level sops to work
   let
     inherit (config) systemOpts;
-    # Define appropriate key path depending on whether system is impermanent
-    defaultPath = "/etc/ssh/ssh_host_ed25519_key";
-    sshKeyPaths =
-      if systemOpts.impermanent
-      then ["${systemOpts.persistVol}/${defaultPath}"]
-      else [defaultPath];
   in {
     imports = [inputs.sops-nix.nixosModules.sops];
 
@@ -23,7 +17,7 @@
       defaultSopsFormat = "yaml";
       age = {
         # Automatically import ssh keys as age keys
-        inherit sshKeyPaths;
+        sshKeyPaths = ["${systemOpts.persistVol}/etc/ssh/ssh_host_ed25519_key"];
         # generate age key from ssh key if not already present
         generateKey = true;
       };
@@ -35,15 +29,7 @@
     lib,
     ...
   }: let
-    homeDir = config.home.homeDirectory;
     persistVol = osConfig.systemOpts.persistVol;
-    impermanent = osConfig.systemOpts.impermanent;
-    # Define appropriate key path depending on whether system is impermanent
-    keyLocation = "${homeDir}/.config/sops/age/keys.txt";
-    keyFile =
-      if impermanent
-      then "${persistVol}${keyLocation}"
-      else "${keyLocation}";
   in {
     imports = [inputs.sops-nix.homeManagerModules.sops];
 
@@ -57,9 +43,7 @@
     sops = {
       defaultSopsFile = "${inputs.nix-secrets.outPath}/${config.home.username}.yaml";
       defaultSopsFormat = "yaml";
-      age = {
-        inherit keyFile;
-      };
+      age.keyFile = "${persistVol}${config.home.homeDirectory}/.config/sops/age/keys.txt";
     };
   };
 }

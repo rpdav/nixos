@@ -124,7 +124,6 @@
       ];
       files = [
         ".config/ghostwriterrc"
-        ".config/bluedevelglobalrc" # bluetooth
       ];
     };
 

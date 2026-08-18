@@ -77,16 +77,17 @@
 
     backupOpts = {
       patterns = [
+        "R /persist/home/ryan"
         "- **/.git" # can be restored from repos
         "- **/.Trash*" # automatically made by gui deletions
         "- **/.local/share/libvirt" # vdisks made mostly for testing
         "- /persist/home/ryan/Downloads/" # big files
         "- /persist/home/ryan/Nextcloud" # already on server
+        "- /persist/home/ryan/.config/mozilla/firefox" # lots of small files and churn
         "- /persist/home/ryan/.thunderbird/*/ImapMail" # email
         "- /persist/home/ryan/.local/share/Steam" # lots of small files and big games
         "- /persist/home/ryan/.local/share/lutris" # lots of small files and big games
         "- /persist/home/ryan/.local/share/protonmail" # email
-        "+ /persist/home/ryan" # back up everything else
       ];
       localRepo = "ssh://borg@borg:2222/backup";
       #remoteRepo = "";
