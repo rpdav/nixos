@@ -6,17 +6,17 @@
   }: let
     inherit (config.backupOpts) patterns remoteRepo paths;
     inherit (config.networking) hostName;
-    sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
     restartUnits = ["borgbackup-job-remote"];
   in {
     sops.secrets = {
       # Pull B2 config file from secrets
       "rclone/config" = {
-        inherit sopsFile restartUnits;
+        sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+        inherit restartUnits;
       };
       # Pull borg passphrase and repo config
       "borg/passphrase" = {
-        inherit sopsFile restartUnits;
+        inherit restartUnits;
       };
     };
 

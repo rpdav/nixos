@@ -54,13 +54,21 @@ Want to prevent vps host from having access to backups from other systems. By de
 
 Actually, I don't think ssh keys can be shared between users - ssh will fail if the key is world-readable. Maybe better to have a key in common.yaml but separate system passphrases?
 
+I think I'll just segregate everything. Sure, vps can read ryan's ssh key but it won't be able to get into the repo.
+
+Confirmed through testing that vps can't access any other repos
+
+## nas and vps local backup
+
+This seems to be working, but had to manually ssh into it to get the key added. need to get the key and pubkey into config to prevent this
+
 ## TODO
 - [x] fix permissions
 - [x] add bootstrap key
 - [x] get local user backup working again
 - [x] get local root backup working again
-- [ ] check other system local backup
-- [ ] create per-system keys and credentials
+- [x] check other system local backup
+- [x] create per-system keys and credentials
 - [ ] get remote user backup working
 - [ ] get remote root backup working
 - [ ] make it easier to mount/restore backup

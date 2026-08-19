@@ -66,7 +66,6 @@
         "${persistVol}/etc"
       ];
       patterns = [
-        # Run `borg help patterns` for guidance on exclusion patterns
         "- */var/**" #not needed for restore
       ];
     };

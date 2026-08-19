@@ -48,24 +48,23 @@
   #in
   let
     inherit (config.backupOpts) patterns localRepo paths;
-    sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
     restartUnits = ["borgbackup-job-local"];
   in {
     #  imports = [
     #    borgbackupMonitor
     #  ];
 
-    # This config assumes this machine's root user public key is copied to the borg server as /sshkeys/clients/$hostname. The server will create a backup directory under /backup/$hostname
+    # This config assumes this machine's root user public key is copied to the borg server as /sshkeys/clients/$hostname. The server will create a backup directory under /backup/$hostname-root
 
     ## Local backup definition
 
     # Pull passphrase and key for ssh access (not needed for NAS)
     sops.secrets = {
       "borg/passphrase" = {
-        inherit sopsFile restartUnits;
+        inherit restartUnits;
       };
       "root/sshKeys/id_borg" = {
-        inherit sopsFile restartUnits;
+        inherit restartUnits;
       };
     };
 
@@ -115,9 +114,7 @@
   in {
     sops.secrets = {
       "sshKeys/id_borg" = {};
-      "borg/passphrase" = {
-        sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
-      };
+      "borg/passphrase" = {};
     };
 
     # ssh config for borg
