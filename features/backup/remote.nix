@@ -9,9 +9,11 @@
     restartUnits = ["borgbackup-job-remote"];
   in {
     sops.secrets = {
-      # Pull B2 config file from secrets
-      "rclone/config" = {
-        sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+      # Pull B2 credentials from secrets
+      "rclone/b2/account" = {
+        inherit restartUnits;
+      };
+      "rclone/b2/key" = {
         inherit restartUnits;
       };
       # Pull borg passphrase and repo config
@@ -19,7 +21,16 @@
         inherit restartUnits;
       };
     };
+    # Create rclone config from secrets
+    sops.templates."rclone-b2".content = ''
+      [B2]
+      type = b2
+      account = ${config.sops.placeholder."rclone/b2/account"}
+      key = ${config.sops.placeholder."rclone/b2/key"}
+      hard_delete = true
+    '';
 
+    # This needs retooled - it's doing a new backup locally and then pushing it to the cloud.
     services.borgbackup.jobs."remote" = {
       inherit paths patterns;
       user = "root";
@@ -30,9 +41,7 @@
         # create mount directory if not exists
         mkdir -p ${remoteRepo}
       '';
-      postHook = "${pkgs.rclone}/bin/rclone sync ${remoteRepo} B2-crypt:${hostName}/root --config ${
-        config.sops.secrets."rclone/config".path
-      }"; #TODO convert the config file to a sops template so more of it can live in main repo
+      postHook = "${pkgs.rclone}/bin/rclone sync ${remoteRepo} B2:rclone428/backups/${hostName}/root --config ${config.sops.templates."rclone-b2".path}";
       encryption = {
         mode = "repokey-blake2";
         passCommand = "cat ${config.sops.secrets."borg/passphrase".path}"; # This is also in password manager under entry "Borg backup"

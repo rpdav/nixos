@@ -62,6 +62,49 @@ Confirmed through testing that vps can't access any other repos
 
 This seems to be working, but had to manually ssh into it to get the key added. need to get the key and pubkey into config to prevent this
 
+## remote backup
+
+borg doesn't like not having fast filesystem access (e.g. not cloud remotes). It would be better to sync existing repos on the nas to the cloud with rclone rather than mount rclone and backup to it.
+
+The remote backup module will be retooled to only rclone sync up to B2 on nas. 2 buckets will be used:
+
+1. regular bucket for encrypted borg repos
+2. encrypted bucket for all else (media, photos, appdata, nextcloud)
+
+media and photos are already compressed, but appdata (11G) and nextcloud (7G) are not. Some stuff can be cleaned up.
+
+This means there will be no remote version history for nas data - only the most recent snapshot plus B2's retention policy. Will use zfs snapshots for local history.
+
+Syncoid snapshots are best to use for nas data since they're static, but they're not mounted (see duplicati errors). Could run a pre-start script to mount them?
+
+## backup strategy
+### local
+1. fw13
+  1. user: borg backup all user data (including age keys) to nas HDDs.
+  2. root: borg backup ssh and secure boot keys to nas HDDs. no data to speak of
+2. vps
+  1. user: none
+  2. root: borg backup ssh keys to nas HDDs. won't bother with DMS data
+3. nas
+  1. user: none
+  2. root: borg backup /persist/etc to nas HDDs.
+  3. docker zpool: syncoid filesystems (appdata, nextcloud, photos) to nas HDDs
+  4. storage zpool: no backup beyond zpool mirror. This includes media and isos.
+4. vm: none? It's mostly just steam data, which is restorable
+
+### remote
+nas will rclone sync borg backups to B2. Just the usual bucket since they're already encrypted.
+
+nas will also rclone sync nas data sets (appdata, nextcloud, photos, and media) to B2-crypt. Need to figure out how to mount the syncoid filesystems before transferring.
+
+## documentation
+
+need docs for:
+1. backup strategy and design
+2. routine checks
+3. restore
+4. disaster recovery
+
 ## TODO
 - [x] fix permissions
 - [x] add bootstrap key
@@ -69,6 +112,7 @@ This seems to be working, but had to manually ssh into it to get the key added. 
 - [x] get local root backup working again
 - [x] check other system local backup
 - [x] create per-system keys and credentials
-- [ ] get remote user backup working
-- [ ] get remote root backup working
+- [ ] increase borg passphrases to 6 words
+- [ ] get remote backup working
 - [ ] make it easier to mount/restore backup
+- [ ] encrypt win10 vm
