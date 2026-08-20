@@ -27,7 +27,6 @@
         # optional config
         vim
         backupLocal
-        #backupRemote
         docker
         duplicati
         plymouth
@@ -45,6 +44,8 @@
         user-ryan
       ]
       ++ [
+        # testing
+        self.modules.nixos.backupRemote
         # disk config
         self.diskoConfigurations.luks-lvm-imp
 

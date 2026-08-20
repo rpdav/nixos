@@ -80,7 +80,7 @@ Syncoid snapshots are best to use for nas data since they're static, but they're
 I think this would work well as a standalone module. There are going to be lots of systemd service and timer submodules. Would be much cleaner with custom options. Something like:
 ```nix
 config = {
-  rclone = {
+  services.rcloneSync = {
     configFilePath = config.sops.templates."rclone.conf".path;
     backups = {
       borg = {

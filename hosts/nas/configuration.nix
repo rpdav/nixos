@@ -26,7 +26,8 @@
       # optional config
       self.nixosModules.vim
       self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
+      self.modules.nixos.backupRemote
+      self.nixosModules.rclone
       self.nixosModules.docker
       self.nixosModules.sshUnlock
       self.nixosModules.virtualization

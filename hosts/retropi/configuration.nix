@@ -25,7 +25,6 @@
       self.nixosModules.vim
       self.nixosModules.retroarch
       self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
       self.nixosModules.wifi
       self.nixosModules.yubikey
 
