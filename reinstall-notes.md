@@ -77,6 +77,24 @@ This means there will be no remote version history for nas data - only the most 
 
 Syncoid snapshots are best to use for nas data since they're static, but they're not mounted (see duplicati errors). Could run a pre-start script to mount them?
 
+I think this would work well as a standalone module. There are going to be lots of systemd service and timer submodules. Would be much cleaner with custom options. Something like:
+```nix
+config = {
+  rclone = {
+    configFilePath = config.sops.templates."rclone.conf".path;
+    backups = {
+      borg = {
+        sourceDir = /mnt/storage/backups/borg;
+        remote = "B2:rpdav-rclone";
+        targetDir = "borg"; # default to final dir in sourceDir
+        frequency = "weekly";
+      };
+      media = {...};
+    };
+  };
+};
+```
+
 ## backup strategy
 ### local
 1. fw13
@@ -112,7 +130,7 @@ need docs for:
 - [x] get local root backup working again
 - [x] check other system local backup
 - [x] create per-system keys and credentials
-- [ ] increase borg passphrases to 6 words
+- [x] increase borg passphrases to 6 words
 - [ ] get remote backup working
 - [ ] make it easier to mount/restore backup
 - [ ] encrypt win10 vm

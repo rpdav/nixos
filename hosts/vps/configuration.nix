@@ -26,7 +26,6 @@
       # optional
       self.nixosModules.vim
       self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
       self.nixosModules.docker
       self.nixosModules.yubikey
 

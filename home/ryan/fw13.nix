@@ -81,6 +81,7 @@
         "- **/.git" # can be restored from repos
         "- **/.Trash*" # automatically made by gui deletions
         "- **/.local/share/libvirt" # vdisks made mostly for testing
+        "- /persist/home/ryan/.cache/" # big files
         "- /persist/home/ryan/Downloads/" # big files
         "- /persist/home/ryan/Nextcloud" # already on server
         "- /persist/home/ryan/.config/mozilla/firefox" # lots of small files and churn

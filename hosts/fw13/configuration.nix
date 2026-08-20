@@ -27,7 +27,7 @@
         # optional config
         vim
         backupLocal
-        backupRemote
+        #backupRemote
         docker
         duplicati
         plymouth

@@ -48,7 +48,7 @@
   #in
   let
     inherit (config.backupOpts) patterns localRepo paths;
-    restartUnits = ["borgbackup-job-local"];
+    restartUnits = ["borgbackup-job-local"]; # this causes activation errors - name might be wrong?
   in {
     #  imports = [
     #    borgbackupMonitor
@@ -56,15 +56,14 @@
 
     # This config assumes this machine's root user public key is copied to the borg server as /sshkeys/clients/$hostname. The server will create a backup directory under /backup/$hostname-root
 
-    ## Local backup definition
-
-    # Pull passphrase and key for ssh access (not needed for NAS)
+    # Pull passphrase and key for ssh access
     sops.secrets = {
       "borg/passphrase" = {
-        inherit restartUnits;
+        #inherit restartUnits;
+        mode = "0444"; # users will use system passphrase in order to keep vps host from accessing user backups
       };
       "root/sshKeys/id_borg" = {
-        inherit restartUnits;
+        #inherit restartUnits;
       };
     };
 
@@ -114,7 +113,6 @@
   in {
     sops.secrets = {
       "sshKeys/id_borg" = {};
-      "borg/passphrase" = {};
     };
 
     # ssh config for borg
@@ -133,7 +131,6 @@
     systemd.user.services.borgmatic = {
       #Ensure repo is initialized
       Service.ExecStartPre = lib.mkForce ["${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --make-parent-dirs"];
-
       Unit.ConditionACPower = lib.mkForce "";
     };
 
@@ -154,7 +151,7 @@
           ];
           excludeHomeManagerSymlinks = true;
         };
-        storage.encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
+        storage.encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${osConfig.sops.secrets."borg/passphrase".path}";
         retention = {
           keepDaily = 7;
           keepWeekly = 4;

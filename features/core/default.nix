@@ -99,6 +99,7 @@
             typora
             kdePackages.ghostwriter
             onlyoffice-desktopeditors
+            libreoffice-fresh
 
             # utilities
             gnome-calendar
