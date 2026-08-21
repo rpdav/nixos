@@ -101,6 +101,27 @@
       ];
     };
 
+    # Remote backup
+    services.rcloneSync = {
+      configFilePath = config.sops.templates."rclone.conf".path;
+      backups = {
+        borg-test = {
+          enable = true;
+          sourceDir = /mnt/storage/backups/borg-test;
+          remote = "B2:rpdav-rclone";
+          targetDir = "borg-test2";
+          frequency = "*-*-* *:0/5";
+        };
+        media-test = {
+          enable = true;
+          sourceDir = /mnt/storage/backups/media-test;
+          remote = "B2-crypt:";
+          targetDir = "media-test2";
+          frequency = "*-*-* *:0/5";
+        };
+      };
+    };
+
     # Create impermanent directories
     environment.persistence.${persistVol} = lib.mkIf impermanent {
       directories = [

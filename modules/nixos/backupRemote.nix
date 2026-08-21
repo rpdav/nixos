@@ -1,15 +1,18 @@
 {...}: {
   flake.modules.nixos.backupRemote = {
     lib,
+    pkgs,
     config,
     ...
   }: let
     inherit (lib) mkOption types;
     cfg = config.services.rcloneSync;
+    # Filtered list of backup submodules
+    enabledBackups = lib.filterAttrs (name: val: val.enable) cfg.backups;
   in {
     options.services.rcloneSync = {
       configFilePath = mkOption {
-        type = types.path;
+        type = with types; either str path;
         description = "Path to rclone.conf";
       };
       backups = mkOption {
@@ -25,10 +28,10 @@
                 example = "B2:myBucket";
               };
               sourceDir = mkOption {
-                type = types.path;
+                type = with types; nullOr path;
                 default = null;
                 description = "Path to backup";
-                example = /mnt/myData;
+                example = "/mnt/myData";
               };
               targetDir = mkOption {
                 type = types.str;
@@ -42,150 +45,52 @@
                 description = "Backup frequency. See systemd.time(7) section 'Calendar Events' for accepted formats";
                 example = "daily";
               };
-              #preCommand = mkOption {
-              #  type = types.str;
-              #  default = "";
-              #  description = "Command to run prior to running `rclone sync`";
-              #  example = "mount /dev/sda /mnt/myData";
-              #};
-              #postCommand = mkOption {
-              #  type = types.str;
-              #  default = "";
-              #  description = "Command to run after running `rclone sync`";
-              #  example = "umount /mnt/myData";
-              #};
+              preExec = mkOption {
+                type = types.lines;
+                default = "";
+                description = "Shell commands run right before the rclone script. Useful for mounting filesystems.";
+                example = "mount /dev/sdb1 /mnt/storage";
+              };
+              postExec = mkOption {
+                type = types.lines;
+                default = "";
+                description = "Shell commands run right after the rclone script finishes or fails. Useful for unmounting.";
+                example = "umount /mnt/storage";
+              };
             };
           })
         );
       };
     };
-    config = {
+    config = lib.mkIf (enabledBackups != {}) {
+      # create service named `rclone-${name}.service`
+      systemd.services = lib.mapAttrs' (name: val:
+        lib.nameValuePair "rclone-${name}" {
+          description = "Rclone sync service for ${name}";
+          script = ''
+            ${pkgs.rclone}/bin/rclone --config ${cfg.configFilePath} \
+            sync ${toString val.sourceDir} ${val.remote}/${val.targetDir}
+          '';
+          serviceConfig = {
+            Type = "oneshot";
+            User = "root";
+            ExecStartPre = lib.mkIf (val.preExec != "") (pkgs.writeShellScript "rclone-${name}-pre" val.preExec);
+            ExecStartPost = lib.mkIf (val.postExec != "") (pkgs.writeShellScript "rclone-${name}-post" val.postExec);
+          };
+        })
+      enabledBackups;
+      systemd.timers =
+        lib.mapAttrs (name: val: {
+          description = "Timer for rclone sync service ${name}";
+          wantedBy = ["timers.target"];
+
+          timerConfig = {
+            OnCalendar = val.frequency;
+            Persistent = true; # Runs missed jobs if the system was powered off
+            Unit = "rclone-${name}.service";
+          };
+        })
+        enabledBackups;
     };
-    ### OCI containers template
-    #options.virtualisation.oci-containers.proxyConfs = mkOption {
-    #  default = {};
-    #  type = types.attrsOf (
-    #    types.submodule ({name, ...}: {
-    #      options = {
-    #        enable = lib.mkEnableOption "Enable proxy config module";
-    #        name = mkOption {
-    #          type = types.str;
-    #          default = name;
-    #        };
-    #        container = mkOption {
-    #          type = types.str;
-    #          description = "Name of the container hostname or IP. Must be reachable by swag";
-    #          example = "nextcloud";
-    #          default = name;
-    #        };
-    #        subdomain = mkOption {
-    #          type = types.str;
-    #          description = "Subdomain as in <subdomain>.mydomain.com";
-    #          default = name;
-    #          example = "cloud";
-    #        };
-    #        port = mkOption {
-    #          type = types.port;
-    #          example = 8080;
-    #          description = "Container port (not host-mapped port)";
-    #          default = 80;
-    #        };
-    #        protocol = mkOption {
-    #          type = types.enum ["http" "https"];
-    #          example = "https";
-    #          description = "Protocol (either http or https)";
-    #          default = "http";
-    #        };
-    #        extraConfig = mkOption {
-    #          type = types.str;
-    #          example = ''
-    #            location ~ ^(/vaultwarden)?/admin {
-    #                # block non-local access to /admin
-    #                allow 10.0.0.0/8;
-    #                allow 172.16.0.0/12;
-    #                allow 192.168.0.0/16;
-    #                deny all;
-    #                }
-    #          '';
-    #          description = "Extra config to insert after primary location block";
-    #          default = "";
-    #        };
-    #      };
-    #    })
-    #  );
-    #};
-
-    #config = {
-    #  systemd.tmpfiles.rules = lib.flatten (lib.mapAttrsToList (
-    #      key: val: let
-    #        textPort = toString val.port;
-    #        # Define the proxy config as a multi-line string and convert to single-line with newlines
-    #        proxyArg = builtins.replaceStrings ["\n"] ["\\n"] ''
-    #          server {
-    #              listen 443 ssl;
-    #              listen [::]:443 ssl;
-    #              server_name ${val.subdomain}.*;
-    #              include /config/nginx/ssl.conf;
-    #              client_max_body_size 0;
-    #              location / {
-    #                  include /config/nginx/proxy.conf;
-    #                  include /config/nginx/resolver.conf;
-    #                  set $upstream_app ${val.container};
-    #                  set $upstream_port ${textPort};
-    #                  set $upstream_proto ${val.protocol};
-    #                  proxy_pass $upstream_proto://$upstream_app:$upstream_port;
-    #              }
-    #          ${val.extraConfig}
-    #          }
-    #        '';
-    #        # Define tmpfile rule to delete the config when tmpfiles runs (otherwise changes don't get written)
-    #        deleteRule = "r ${config.serviceOpts.proxyDir}/${val.name}.subdomain.conf";
-    #        # Define tmpfile rule to write the config based on proxyArg and serviceOpts options
-    #        createRule = "f+ ${config.serviceOpts.proxyDir}/${val.name}.subdomain.conf 0600 ${config.serviceOpts.dockerUser} users - ${proxyArg}";
-    #      in [
-    #        # Make sure file is deleted first, then recreated
-    #        (lib.mkBefore deleteRule)
-    #        createRule
-    #      ]
-    #    )
-    #    cfg);
-    #};
-
-    ### config from old backup module
-    #systemd.services."rclone-borg" = {
-    #  script = ''
-    #    ${pkgs.rclone}/bin/rclone --config ${config.sops.templates."rclone.conf".path} sync /mnt/storage/backups/borg-test B2:rpdav-rclone/borg-test
-    #  '';
-    #  serviceConfig = {
-    #    Type = "oneshot";
-    #    User = "root";
-    #  };
-    #};
-    #systemd.timers."rclone-borg" = {
-    #  wantedBy = ["timers.target"];
-    #  timerConfig = {
-    #    OnBootSec = "5m";
-    #    OnUnitActiveSec = "5m";
-    #    Unit = "rclone-borg.service";
-    #  };
-    #};
-    #
-    #systemd.services."rclone-media" = {
-    #  script = ''
-    #    ${pkgs.rclone}/bin/rclone --config ${config.sops.templates."rclone.conf".path} sync /mnt/storage/backups/media-test B2-crypt:media-test
-    #  '';
-    #  serviceConfig = {
-    #    Type = "oneshot";
-    #    User = "root";
-    #  };
-    #};
-    #systemd.timers."rclone-media" = {
-    #  wantedBy = ["timers.target"];
-    #  timerConfig = {
-    #    OnBootSec = "5m";
-    #    OnUnitActiveSec = "5m";
-    #    Unit = "rclone-media.service";
-    #  };
-    #};
   };
 }
