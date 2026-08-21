@@ -112,12 +112,14 @@
           targetDir = "borg-test2";
           frequency = "*-*-* *:0/5";
         };
-        media-test = {
+        nextcloud = {
           enable = true;
-          sourceDir = /mnt/storage/backups/media-test;
+          sourceDir = /mnt/storage/syncoid/docker/nextcloud;
           remote = "B2-crypt:";
-          targetDir = "media-test2";
-          frequency = "*-*-* *:0/5";
+          targetDir = "nextcloud";
+          frequency = "weekly";
+          preExec = "${pkgs.zfs}/bin/zfs mount storage/syncoid/docker/nextcloud";
+          postExec = "${pkgs.zfs}/bin/zfs umount storage/syncoid/docker/nextcloud";
         };
       };
     };

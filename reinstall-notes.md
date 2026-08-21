@@ -115,6 +115,8 @@ nas will rclone sync borg backups to B2. Just the usual bucket since they're alr
 
 nas will also rclone sync nas data sets (appdata, nextcloud, photos, and media) to B2-crypt. Need to figure out how to mount the syncoid filesystems before transferring.
 
+remote is looking good - now adding zfs mount/unmount pre/post commands. `zfs mount -R storage/syncoid/whatever` seems to do it. I had to change mountpoint away from legacy, so it might get auto-mounted on boot. having `canmount=noauto` prevents a dataset from being recursively mounted; it has to be one dataset at a time. So if it's critical to keep syncoid unmounted most of the time, I might need another way to keep it that way.
+
 ## documentation
 
 need docs for:
@@ -134,3 +136,4 @@ need docs for:
 - [ ] get remote backup working
 - [ ] make it easier to mount/restore backup
 - [ ] encrypt win10 vm
+- [ ] change nas boot ssh port away from 2222
