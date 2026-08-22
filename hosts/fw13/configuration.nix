@@ -44,8 +44,6 @@
         user-ryan
       ]
       ++ [
-        # testing
-        self.modules.nixos.backupRemote
         # disk config
         self.diskoConfigurations.luks-lvm-imp
 

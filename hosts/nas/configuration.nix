@@ -26,7 +26,7 @@
       # optional config
       self.nixosModules.vim
       self.nixosModules.backupLocal
-      self.modules.nixos.backupRemote
+      self.modules.nixos.rcloneSync
       self.nixosModules.rclone
       self.nixosModules.docker
       self.nixosModules.sshUnlock
@@ -105,21 +105,42 @@
     services.rcloneSync = {
       configFilePath = config.sops.templates."rclone.conf".path;
       backups = {
-        borg-test = {
+        borg = {
           enable = true;
-          sourceDir = /mnt/storage/backups/borg-test;
+          sourceDir = /mnt/storage/backups/borg;
           remote = "B2:rpdav-rclone";
-          targetDir = "borg-test2";
-          frequency = "*-*-* *:0/5";
+          extraArgs = ["--log-level" "INFO" "--fast-list"];
+        };
+        appdata = {
+          enable = true;
+          sourceDir = /mnt/storage/syncoid/docker/appdata;
+          remote = "B2-crypt:";
+          # List all child datasets and pass to `zfs mount` explicitly. zfs mount -R won't work here because canmount is set to noauto for syncoid
+          preExec = "${pkgs.zfs}/bin/zfs list -rH -o name storage/syncoid/docker/appdata | ${pkgs.findutils}/bin/xargs -L 1 ${pkgs.zfs}/bin/zfs mount";
+          postExec = "${pkgs.zfs}/bin/zfs umount storage/syncoid/docker/appdata";
+          extraArgs = ["--log-level" "INFO" "--fast-list"];
         };
         nextcloud = {
           enable = true;
           sourceDir = /mnt/storage/syncoid/docker/nextcloud;
           remote = "B2-crypt:";
-          targetDir = "nextcloud";
-          frequency = "weekly";
           preExec = "${pkgs.zfs}/bin/zfs mount storage/syncoid/docker/nextcloud";
           postExec = "${pkgs.zfs}/bin/zfs umount storage/syncoid/docker/nextcloud";
+          extraArgs = ["--log-level" "INFO" "--fast-list"];
+        };
+        photos = {
+          enable = true;
+          sourceDir = /mnt/storage/syncoid/docker/photos;
+          remote = "B2-crypt:";
+          preExec = "${pkgs.zfs}/bin/zfs mount storage/syncoid/docker/photos";
+          postExec = "${pkgs.zfs}/bin/zfs umount storage/syncoid/docker/photos";
+          extraArgs = ["--log-level" "INFO" "--fast-list"];
+        };
+        media = {
+          enable = true;
+          sourceDir = /mnt/storage/media;
+          remote = "B2-crypt:";
+          extraArgs = ["--log-level" "INFO" "--fast-list"];
         };
       };
     };

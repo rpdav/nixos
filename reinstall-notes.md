@@ -117,6 +117,8 @@ nas will also rclone sync nas data sets (appdata, nextcloud, photos, and media) 
 
 remote is looking good - now adding zfs mount/unmount pre/post commands. `zfs mount -R storage/syncoid/whatever` seems to do it. I had to change mountpoint away from legacy, so it might get auto-mounted on boot. having `canmount=noauto` prevents a dataset from being recursively mounted; it has to be one dataset at a time. So if it's critical to keep syncoid unmounted most of the time, I might need another way to keep it that way.
 
+by default, rclone won't copy links. need to test link-related flags. I think --links will work. It turns links into text files with the target as the contents. Restoring should convert the link back.
+
 ## documentation
 
 need docs for:
