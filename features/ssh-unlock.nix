@@ -6,7 +6,7 @@
         enable = true;
         ssh = {
           enable = true;
-          port = 2222;
+          port = 2224;
           authorizedKeyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
           hostKeys = [/boot/initrd/ssh_host_ed25519_key]; # must manually generate this before building
         };
