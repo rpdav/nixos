@@ -2,7 +2,6 @@
   flake.serviceModules.immich = {config, ...}: let
     inherit (config.serviceOpts) dockerDir dockerUser;
   in {
-
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts = {
       "immich-db" = {
@@ -10,7 +9,7 @@
         user = "999";
       };
       "immich-model-cache" = {
-        target = "${dockerDir}/immmich/model-cache";
+        target = "${dockerDir}/immich/model-cache";
         mode = "0755";
       };
       "immich-photos" = {

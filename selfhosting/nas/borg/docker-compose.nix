@@ -17,7 +17,8 @@
         };
         volumes = [
           "/mnt/storage/backups/borg:/backup:rw"
-          "${config.serviceOpts.dockerDir}/borg/sshkeys/:/sshkeys:rw"
+          "${./clientkeys}:/sshkeys/clients"
+          "${config.sops.secrets."selfhosting/borg/ssh_server_key".path}:/sshkeys/host/ssh_host_ed25519_key"
         ];
         ports = [
           "2222:22/tcp"

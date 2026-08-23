@@ -119,6 +119,19 @@ remote is looking good - now adding zfs mount/unmount pre/post commands. `zfs mo
 
 by default, rclone won't copy links. need to test link-related flags. I think --links will work. It turns links into text files with the target as the contents. Restoring should convert the link back.
 
+## refactor of borg container module
+
+Want to put keys into config. There are 3 things to do:
+
+1. Get borg container's pubkey into knownHosts for the systems that need it (pretty easy)
+Just put the pubkey into the local backup module. Don't even need to point to a keyfile
+2. Put borg container's private key into sops (easy)
+Just mount it directly into sshkeys/host. Pubkey won't exist and it'll automatically regenerate the RSA key, but that's fine
+3. Put client pubkeys into files to mount into borg (harder)
+Link directly to clientkeys dir alongside the borg docker config. It won't be rw, but that should be fine.
+
+all working - can delete the borg appdata folder
+
 ## documentation
 
 need docs for:
@@ -135,7 +148,7 @@ need docs for:
 - [x] check other system local backup
 - [x] create per-system keys and credentials
 - [x] increase borg passphrases to 6 words
-- [ ] get remote backup working
+- [x] get remote backup working
 - [ ] make it easier to mount/restore backup
 - [ ] encrypt win10 vm
 - [ ] change nas boot ssh port away from 2222
