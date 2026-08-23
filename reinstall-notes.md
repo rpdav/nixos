@@ -132,6 +132,12 @@ Link directly to clientkeys dir alongside the borg docker config. It won't be rw
 
 all working - can delete the borg appdata folder
 
+## recovery tools
+
+Want these tools to be present on all systems (including install and maybe iso hosts).
+
+
+
 ## documentation
 
 need docs for:
@@ -149,6 +155,7 @@ need docs for:
 - [x] create per-system keys and credentials
 - [x] increase borg passphrases to 6 words
 - [x] get remote backup working
+- [ ] revisit module names
 - [ ] make it easier to mount/restore backup
 - [ ] encrypt win10 vm
-- [ ] change nas boot ssh port away from 2222
+- [x] change nas boot ssh port away from 2222

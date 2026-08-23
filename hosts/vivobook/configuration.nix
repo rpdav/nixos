@@ -24,8 +24,7 @@
       self.nixosModules.core
 
       # optional config
-      self.nixosModules.backupLocal
-      self.nixosModules.backupRemote
+      self.nixosModules.backup
       self.nixosModules.duplicati
       self.nixosModules.cinnamon
 
@@ -48,8 +47,7 @@
 
     # Backup config
     backupOpts = {
-      localRepo = "ssh://borg@borg:2222/backup";
-      #remoteRepo = "/mnt/B2/borg";
+      repo = "ssh://borg@borg:2222/backup";
       paths = [
         "${persistVol}/etc"
       ];

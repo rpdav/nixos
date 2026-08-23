@@ -27,8 +27,7 @@
         "- /persist/home/ariel/Nextcloud" #already on server
         "+ /persist/home/ariel" #back up everything else
       ];
-      localRepo = "ssh://borg@borg:2222/backup";
-      #remoteRepo = "";
+      repo = "ssh://borg@borg:2222/backup";
     };
   };
 }

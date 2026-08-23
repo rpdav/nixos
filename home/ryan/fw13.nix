@@ -90,8 +90,7 @@
         "- /persist/home/ryan/.local/share/lutris" # lots of small files and big games
         "- /persist/home/ryan/.local/share/protonmail" # email
       ];
-      localRepo = "ssh://borg@borg:2222/backup";
-      #remoteRepo = "";
+      repo = "ssh://borg@borg:2222/backup";
     };
   };
 }

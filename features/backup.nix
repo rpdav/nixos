@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  flake.nixosModules.backupLocal = {config, ...}:
+  flake.nixosModules.backup = {config, ...}:
   #TODO: get backup monitor working again
   #let
   #  ## Set up notifications in case of failure
@@ -47,7 +47,7 @@
   #    };
   #in
   let
-    inherit (config.backupOpts) patterns localRepo paths;
+    inherit (config.backupOpts) patterns repo paths;
     restartUnits = ["borgbackup-job-local"]; # this causes activation errors - name might be wrong?
   in {
     #  imports = [
@@ -87,7 +87,7 @@
     services.borgbackup.jobs."local" = {
       inherit paths patterns;
       user = "root";
-      repo = "${localRepo}/${config.networking.hostName}-root";
+      repo = "${repo}/${config.networking.hostName}-root";
       doInit = true;
       startAt = ["daily"];
       #    preHook = placeholder for snapshotting/mounting command
@@ -112,7 +112,7 @@
     osConfig,
     ...
   }: let
-    inherit (config.backupOpts) patterns localRepo;
+    inherit (config.backupOpts) patterns repo;
     inherit (config.home) username;
   in {
     sops.secrets = {
@@ -149,7 +149,7 @@
           inherit patterns;
           repositories = [
             {
-              "path" = "${localRepo}/${osConfig.networking.hostName}-${username}";
+              "path" = "${repo}/${osConfig.networking.hostName}-${username}";
               "label" = "local";
             }
           ];

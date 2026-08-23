@@ -24,7 +24,7 @@
       # optional
       self.nixosModules.vim
       self.nixosModules.retroarch
-      self.nixosModules.backupLocal
+      self.nixosModules.backup
       self.nixosModules.wifi
       self.nixosModules.yubikey
 
@@ -48,8 +48,7 @@
 
     # Backup config
     backupOpts = {
-      localRepo = "ssh://borg@borg:2222/backup";
-      remoteRepo = "/mnt/B2/borg";
+      repo = "ssh://borg@borg:2222/backup";
       paths = [
         "/etc"
         "/home"

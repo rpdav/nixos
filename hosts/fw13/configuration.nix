@@ -26,7 +26,7 @@
 
         # optional config
         vim
-        backupLocal
+        backup
         docker
         duplicati
         plymouth
@@ -72,8 +72,7 @@
 
     # Backup config
     backupOpts = {
-      localRepo = "ssh://borg@borg:2222/backup";
-      remoteRepo = "/mnt/B2/borg";
+      repo = "ssh://borg@borg:2222/backup";
       paths = [
         "${persistVol}/etc"
       ];

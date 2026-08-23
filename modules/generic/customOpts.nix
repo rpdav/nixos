@@ -154,18 +154,11 @@
 
       # ---- BACKUP SETTINGS ---- #
       backupOpts = {
-        localRepo = mkOption {
+        repo = mkOption {
           type = types.str;
           default = "ssh://borg@10.10.1.17:2222/backup";
           description = ''
             Local backup target
-          '';
-        };
-        remoteRepo = mkOption {
-          type = types.str;
-          default = "/mnt/B2/borg or something";
-          description = ''
-            B2 backup target after mounting
           '';
         };
         paths = mkOption {
