@@ -7,6 +7,7 @@
     imports = [
       inputs.impermanence.nixosModules.impermanence
     ];
+
     programs.fuse.userAllowOther = true;
 
     environment.persistence.${config.systemOpts.persistVol} = lib.mkIf config.systemOpts.impermanent {

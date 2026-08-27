@@ -49,6 +49,7 @@ deploy host:
 
 boot host:
   nixos-rebuild --flake /home/ryan/nixos/.#{{host}} --target-host root@{{host}} boot
+
 ############################################################################
 #
 #  nixos-anywhere commands
@@ -72,19 +73,6 @@ anywhere host ip:
 [no-cd]
 compose output='docker-compose.nix':
   nix run github:aksiksi/compose2nix -- -write_nix_setup=false -runtime docker -project=$(echo ${PWD##*/}) -output={{output}}
-
-############################################################################
-#
-#  Backup
-#
-############################################################################
-
-backup:
-  sudo systemctl restart borgbackup-job-local.service
-
-restore:
-  -sudo mkdir /tmp/borg 
-  sudo borg mount ssh://borg@borg:2222/backup/fw13 /tmp/borg
 
 ############################################################################
 #

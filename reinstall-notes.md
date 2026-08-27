@@ -199,7 +199,7 @@ need docs for:
 - [x] increase borg passphrases to 6 words
 - [x] get remote backup working
 - [x] revisit module names
-- [ ] make it easier to mount/restore backup
+- [x] make it easier to mount/restore backup
 - [x] figure out disaster recovery plan
 - [ ] add -l flag to rclone
 - [ ] update docs

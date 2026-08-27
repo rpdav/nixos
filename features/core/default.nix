@@ -39,6 +39,12 @@
       '';
     };
 
+    # allow local users to mount (if in fuse group)
+    programs.fuse = {
+      enable = true;
+      userAllowOther = true;
+    };
+
     # CLI config
     programs.bash.completion.enable = true;
     environment.enableAllTerminfo = true;

@@ -74,11 +74,6 @@
         target = "storage/syncoid/docker";
         recursive = true;
       };
-      commands.vms = {
-        source = "vms";
-        target = "storage/syncoid/vms";
-        recursive = true;
-      };
     };
   };
 }

@@ -10,6 +10,7 @@
   flake.nixosModules.user-ryan = {
     config,
     lib,
+    pkgs,
     ...
   }: let
     user = "ryan";
@@ -35,7 +36,7 @@
     users.users.${user} = {
       hashedPasswordFile = config.sops.secrets."passwordHash${User}".path;
       isNormalUser = true;
-      extraGroups = ["wheel" "fuse"]; # Enable ‘sudo’ for the user.
+      extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
       home = "/home/${user}";
       openssh.authorizedKeys.keyFiles = lib.filesystem.listFilesRecursive ./keys;
     };

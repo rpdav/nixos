@@ -1,5 +1,9 @@
-{inputs, ...}: {
-  flake.nixosModules.backup = {config, ...}:
+{
+  flake.nixosModules.backup = {
+    config,
+    pkgs,
+    ...
+  }:
   #TODO: get backup monitor working again
   #let
   #  ## Set up notifications in case of failure
@@ -48,22 +52,97 @@
   #in
   let
     inherit (config.backupOpts) patterns repo paths;
-    restartUnits = ["borgbackup-job-local"]; # this causes activation errors - name might be wrong?
+    root-restore = pkgs.writeShellScriptBin "root-restore" ''
+      if [ "$EUID" -ne 0 ]; then
+        echo "This script requires root privileges. Elevating..."
+        exec sudo "$0" "$@"
+      fi
+      rm -rf /tmp/borg
+      mkdir /tmp/borg
+      BORG_PASSCOMMAND="cat ${config.sops.secrets."borg/passphrase".path}" \
+      borg --rsh="ssh -i ${config.sops.secrets."root/sshKeys/id_borg".path}" \
+      mount ${config.services.borgbackup.jobs."local".repo} \
+      /tmp/borg
+    '';
+    backup-mount = pkgs.writeShellScriptBin "backup-mount" ''
+      echo "Please choose which backup to mount:"
+      select opt in system user rclone quit
+      do
+          case $opt in
+              "system")
+                  root-restore
+                  break
+                  ;;
+              "user")
+                  user-restore
+                  break
+                  ;;
+              "rclone")
+                  rclone-restore
+                  break
+                  ;;
+              "quit")
+                  echo "Exiting..."
+                  break
+                  ;;
+              *)
+                  echo "Invalid option $REPLY. Please try again."
+                  ;;
+          esac
+      done
+    '';
+    backup-umount = pkgs.writeShellScriptBin "backup-umount" ''
+      echo "Please choose which backup to unmount:"
+      select opt in system user rclone quit
+      do
+          case $opt in
+              "system")
+                  if [ "$EUID" -ne 0 ]; then
+                    echo "This script requires root privileges. Elevating..."
+                    exec sudo "$0" "$@"
+                  fi
+                  borg umount /tmp/borg
+                  rm -rf /tmp/borg
+                  break
+                  ;;
+              "user")
+                  borg umount /tmp/borg
+                  rm -rf /tmp/borg
+                  break
+                  ;;
+              "rclone")
+                  if [ "$EUID" -ne 0 ]; then
+                    echo "This script requires root privileges. Elevating..."
+                    exec sudo "$0" "$@"
+                  fi
+                  fusermount -u /tmp/rclone/B2
+                  fusermount -u /tmp/rclone/crypt
+                  rm -rf /tmp/rclone
+                  break
+                  ;;
+              "quit")
+                  echo "Exiting..."
+                  break
+                  ;;
+              *)
+                  echo "Invalid option $REPLY. Please try again."
+                  ;;
+          esac
+      done
+    '';
   in {
     #  imports = [
     #    borgbackupMonitor
     #  ];
 
-    # This config assumes this machine's root user public key is copied to the borg server as /sshkeys/clients/$hostname. The server will create a backup directory under /backup/$hostname-root
+    environment.systemPackages = [root-restore backup-mount backup-umount];
 
     # Pull passphrase and key for ssh access
     sops.secrets = {
       "borg/passphrase" = {
-        #inherit restartUnits;
         mode = "0444"; # users will use system passphrase in order to keep vps host from accessing user backups
       };
       "root/sshKeys/id_borg" = {
-        #inherit restartUnits;
       };
     };
 
@@ -114,10 +193,21 @@
   }: let
     inherit (config.backupOpts) patterns repo;
     inherit (config.home) username;
+    user-restore = pkgs.writeShellScriptBin "user-restore" ''
+      rm -rf /tmp/borg
+      mkdir /tmp/borg
+      BORG_PASSCOMMAND="cat ${osConfig.sops.secrets."borg/passphrase".path}" \
+      borg --rsh="ssh -i ${config.sops.secrets."sshKeys/id_borg".path}" \
+      mount ssh://borg@borg:2222/backup/${osConfig.networking.hostName}-${username} \
+      /tmp/borg
+      echo "repository ${osConfig.networking.hostName}-${username} mounted at /tmp/borg"
+    '';
   in {
     sops.secrets = {
       "sshKeys/id_borg" = {};
     };
+
+    home.packages = [user-restore];
 
     # ssh config for borg
     programs.ssh = {
@@ -155,7 +245,7 @@
           ];
           excludeHomeManagerSymlinks = true;
         };
-        storage.encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${osConfig.sops.secrets."borg/passphrase".path}";
+        storage.encryptionPasscommand = "cat ${osConfig.sops.secrets."borg/passphrase".path}";
         retention = {
           keepDaily = 7;
           keepWeekly = 4;
