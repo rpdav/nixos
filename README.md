@@ -66,13 +66,11 @@ Bringing up a new host or user is as simple as:
 * [How to Install](./docs/install.md)
 * [Custom Options](./docs/options.md)
 * [Secrets](./_nix-secrets/README.md)
+* [Backup](./docs/backup.md)
 * [Selfhosted Services](./docs/services.md)
 * [Themes](./docs/theming.md)
 * [Niri and Hyprland](./docs/wayland.md)
 * [Virtualization](./docs/virtualization.md)
-
-## Secrets
-See readme in nix-secrets directory.
 
 ## Acknowledgements
 * [LibrePhoenix](https://github.com/librephoenix/nixos-config) - Phoenix's videos were a big help in setting up my initial system.

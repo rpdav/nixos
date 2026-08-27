@@ -132,11 +132,54 @@ Link directly to clientkeys dir alongside the borg docker config. It won't be rw
 
 all working - can delete the borg appdata folder
 
+## disaster recovery 
+
+### non-laptop host died
+1. Provision like normal from laptop.
+  1. `nix build .#nixosConfigurations.iso.config.system.build.isoImage`
+2. Restore /persist
+  1. Get borg repo from cloud
+    1. Need to either put B2 keys in bitwarden or recreate rclone config on fw13
+    2. Pull down borg repo with rclone
+  2. Restore from borg repo
+    1. Need borg passphrase - could read manually from sops
+3. Restore data (nas only)
+  1. nas should have full secrets access now
+  2. rclone sync from B2-crypt using normal rclone config
+
+or:
+
+1. pull system's /persist from nas or cloud backup
+2. provision new host
+3. restore data
+
+### laptop died
+
+1. create iso and boot
+2. install with install host
+  1. `disko-install` command from readme
+3. restore from borg with bootstrap key
+  1. **need offline access to fw13 passphrase** (done)
+
+  2. restore root backup: `ssh-keygen -K` and `mkdir /tmp/borg && sudo borg --rsh="ssh -i /home/ryan/.ssh/id_ed25519_sk_rk" mount ssh://borg@10.10.1.17:2222/backup/fw13-root /tmp/borg`
+  3. restore user backup: `mkdir /tmp/borg && sudo borg --rsh="ssh -i /home/ryan/.ssh/id_ed25519_sk_rk" mount ssh://borg@10.10.1.17:2222/backup/fw13-ryan /tmp/borg`
+4. rebuild to fw13 host
+
+### everything died
+
+1. boot with a gui iso
+2. log into bitwarden and backblaze using work yubikey
+3. pull down borg repo and put on a flash drive
+4. boot nixos iso and install with install host
+5. restore data using downloaded borg repo and passphrase from bitwarden. this should give access to all secrets
+6. do full install
+7. restore everything else as above
+
 ## recovery tools
 
 Want these tools to be present on all systems (including install and maybe iso hosts).
 
-
+put rlcone config path into an RCLONE_CONFIG env variable. this works for user and for root, but sudo strips all env vars. works better if running as root
 
 ## documentation
 
@@ -155,7 +198,10 @@ need docs for:
 - [x] create per-system keys and credentials
 - [x] increase borg passphrases to 6 words
 - [x] get remote backup working
-- [ ] revisit module names
+- [x] revisit module names
 - [ ] make it easier to mount/restore backup
+- [x] figure out disaster recovery plan
+- [ ] add -l flag to rclone
+- [ ] update docs
 - [ ] encrypt win10 vm
 - [x] change nas boot ssh port away from 2222
