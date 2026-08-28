@@ -6,6 +6,7 @@
   flake.nixosModules.docker = {
     config,
     lib,
+    pkgs,
     ...
   }: let
     inherit (config) systemOpts serviceOpts;
@@ -23,6 +24,10 @@
         "/var/lib/docker"
       ];
     };
+
+    environment.systemPackages = [
+      inputs.uptix.packages.${pkgs.stdenv.hostPlatform.system}.uptix
+    ];
 
     # Enable docker
     virtualisation.docker = {

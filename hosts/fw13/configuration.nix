@@ -28,7 +28,6 @@
         vim
         backup
         docker
-        duplicati
         plymouth
         games
         virtualization
@@ -49,6 +48,9 @@
 
         # host-specific
         inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+
+        # monitoring
+        self.serviceModules.beszelAgent
       ];
 
     # Variable overrides

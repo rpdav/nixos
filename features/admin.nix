@@ -69,7 +69,6 @@
       ]
       ++ (with pkgs; [
         # docker container management tools
-        inputs.uptix.packages.${stdenv.hostPlatform.system}.uptix
         oxker
         lazydocker
       ]);

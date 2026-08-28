@@ -7,9 +7,6 @@
       # core config
       core
 
-      # optional config
-      backup
-
       # wm
       retroarch
     ];

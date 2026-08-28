@@ -25,7 +25,6 @@
 
       # optional config
       self.nixosModules.backup
-      self.nixosModules.duplicati
       self.nixosModules.cinnamon
 
       # disk config
