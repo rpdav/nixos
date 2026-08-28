@@ -32,6 +32,8 @@ The cleanest and most secure way to handle passphrases would be to have an indep
 
 Instead, passphrases are stored in the system-level `sops` files. All users on a host (including root) use a common passphrase to decrypt their repositories, so the passphrase decrypted with world-readable permissions on the host. Users still cannot access other users' backups since they do not have their ssh keys. And hosts still cannot access other hosts' backups because they do not have those hosts' ssh keys or passphrases.
 
+Passphrases are also stored in the password manager.
+
 ## Offsite backup
 
 `modules.nixos.rcloneSync` allows users to define source and target directories to synchronize to an `rclone` endpoint such as Backblaze or Proton. This module assumes an `rclone.conf` file is available and can be pointed to its path. I have one defined using `sops-nix` templates in `nixosModules.rclone`. I use backblaze B2 as the remote and encrypt locally (using an rclone `crypt` remote) for any data that isn't already encrypted.
@@ -66,9 +68,9 @@ sudo rsync /tmp/borg/_latest_backup_/persist /
 sudo nixos-rebuild boot --flake github:rpdav/nixos#fw13
 ```
 
-### Backup target nas dead
+### vps dead
 
-1. Pull down `nas` borg repo from rclone
+1. Pull down `vps` borg repo from rclone
 2. Stage secrets for deployment:
 ```bash
 # make temporary mount directory
@@ -79,29 +81,30 @@ borg mount /path/to/repo/nas-root /tmp/borg
 rsync /tmp/borg/_latest_backup_ /tmp/nixos-anywhere
 borg umount /tmp/borg
 ```
-2. Boot `nas` into live iso
-3. Deploy `nas` with secrets using `nixos-anywhere`
-4. Restore data
+3. Boot `vps` into live iso
+4. Reinstall using `nixos-anywhere`
+
+### Backup target nas dead
+
+1. Follow instructions for vps
+2. Restore data
 ```bash
 sudo rclone sync B2:rpdav-rclone/borg /mnt/storage/backups/borg
 sudo rclone sync B2-crypt:appdata /mnt/docker/appdata
 # repeat for remaining targets
 ```
 
-### Other host (not fw13 or nas) dead
-
 ### Disaster recovery - fw13, nas, and bootstrapping yubikey are lost
 
+1. Access bitwarden/backblaze on a separate device and download the `fw13` and `nas` borg repos
+2. Reinstall `fw13` as above, using the downloaded borg repo 
+3. Reinstall `nas` as above
+4. Restore `nas` data from rclone
 
+## Backup testing
 
+`nixosModules.backup` and `modules.nixos.rclone` provide helper scripts for mounting and testing backups:
 
-Things to cover:
-* what's backed up for each system
-* zfs backups with syncoid
-* ssh keys for borg and permissions
-* host-specific differences
-* user vs system backup
-* shared system passphrases
-* backup testing commands - put in justfile?
+`backup-mount`: Provides options to mount system, user, or rclone backups to `/tmp`
 
-
+`backup-umount`: Provides options to unmount the same repos
