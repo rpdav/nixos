@@ -37,7 +37,7 @@
 
     # Create swag proxy config
     virtualisation.oci-containers.proxyConfs."beszel" = {
-      container = "10.10.1.17";
+      container = "10.10.1.17"; # using IP since docker dns won't work on native services
       subdomain = "status";
       port = 8090;
       protocol = "http";

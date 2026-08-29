@@ -150,17 +150,13 @@
     programs.ssh = {
       extraConfig = ''
         Host borg
-          Hostname 10.10.1.17
           Port 2222
           User borg
           IdentityFile ${config.sops.secrets."root/sshKeys/id_borg".path}
           IdentitiesOnly yes
           IdentityAgent none
       '';
-      knownHosts."[borg]:2222" = {
-        extraHostNames = ["[10.10.1.17]:2222"];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4g3UjhXc1bngjSuUhDJm1aioym5kjbggI/UoAbE7kv root@7d4566122ec5";
-      };
+      knownHosts."[borg]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4g3UjhXc1bngjSuUhDJm1aioym5kjbggI/UoAbE7kv root@7d4566122ec5";
     };
 
     services.borgbackup.jobs."local" = {
@@ -213,7 +209,6 @@
     programs.ssh = {
       extraConfig = ''
         Host borg
-          Hostname 10.10.1.17
           Port 2222
           User borg
           IdentityFile ${config.sops.secrets."sshKeys/id_borg".path}

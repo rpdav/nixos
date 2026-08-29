@@ -75,6 +75,7 @@
           wantedBy = ["multi-user.target"];
           after = ["openrgb.service"];
         };
+        environment.systemPackages = [pkgs.openrgb-with-all-plugins];
       };
   };
 }

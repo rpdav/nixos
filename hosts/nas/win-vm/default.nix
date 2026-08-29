@@ -17,7 +17,7 @@
           macAddress = "00:DB:61:CA:AD:BE";
           ipv4.addresses = [
             {
-              address = "10.10.1.17"; #TODO is there a better way to manage IP addresses in config?
+              address = "10.10.1.17";
               prefixLength = 24;
             }
           ];

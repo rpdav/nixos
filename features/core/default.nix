@@ -19,6 +19,21 @@
 
     system.stateVersion = "24.05";
 
+    # config-wide hosts file
+    networking.hosts = {
+      # hosts
+      "10.10.1.17" = ["nas" "borg"];
+      "10.10.1.10" = ["retropi"];
+      "${inputs.nix-secrets.vps.ip}" = ["vps"];
+
+      # networking infrastructure
+      "10.10.1.1" = ["opnsense"];
+      "10.10.1.188" = ["switch"];
+      "10.10.1.169" = ["office-ap"];
+      "10.10.1.136" = ["ap1"];
+      "10.10.1.135" = ["ap2"];
+    };
+
     # Base fonts
     fonts = {
       packages = with pkgs; [
@@ -39,7 +54,7 @@
       '';
     };
 
-    # allow local users to mount (if in fuse group)
+    # allow local users to mount
     programs.fuse = {
       enable = true;
       userAllowOther = true;
@@ -85,7 +100,7 @@
             just
           ]
           ++ lib.lists.optionals osConfig.systemOpts.gui [
-            # browsers
+            # extra browsers
             brave
             tor-browser
 
@@ -93,7 +108,6 @@
             alacritty
 
             # media
-            #audacity
             vlc
             bibletime
 

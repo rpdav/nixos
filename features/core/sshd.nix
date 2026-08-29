@@ -32,7 +32,6 @@
 
     programs.ssh.extraConfig = ''
       Host nas
-        HostName 10.10.1.17
         User ryan
         Port 22
 
@@ -41,24 +40,7 @@
         User pi
         Port 22
 
-      Host vivobook
-        Hostname 10.10.1.21
-        User ryan
-
-      Host vps
-        Hostname ${inputs.nix-secrets.vps.ip}
-        User ryan
-
-      Host testbox
-        Hostname 10.10.1.18
-        User ryan
-
-      Host testvm
-        Hostname 192.168.122.207
-        User root
-
       Host retropi
-        Hostname 10.10.1.10
         User ryan
 
       Host gitea.dfrp.xyz

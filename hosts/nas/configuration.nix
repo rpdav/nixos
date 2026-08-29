@@ -52,7 +52,6 @@
       self.serviceModules.duplicati
       self.serviceModules.flatnotes
       self.serviceModules.gitea
-      self.serviceModules.guacamole
       self.serviceModules.heimdall
       self.serviceModules.home-assistant
       self.serviceModules.immich
@@ -82,10 +81,6 @@
       proxyDir = "/run/selfhosting/proxyConfs";
     };
 
-    # Packages
-    environment.systemPackages = with pkgs; [
-      openrgb-with-all-plugins
-    ];
     # Backup config
     backupOpts = {
       repo = "ssh://borg@borg:2222/backup";

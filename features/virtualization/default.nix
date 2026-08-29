@@ -72,11 +72,11 @@
       };
       "org/virt-manager/virt-manager/connections" = {
         uris = [
-          "qemu+ssh://root@10.10.1.17/system"
+          "qemu+ssh://root@nas/system"
           "qemu:///system"
         ];
         autoconnect = [
-          "qemu+ssh://root@10.10.1.17/system"
+          "qemu+ssh://root@nas/system"
           "qemu:///system"
         ];
       };
