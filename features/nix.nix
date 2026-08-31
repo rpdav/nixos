@@ -37,7 +37,73 @@ in {
       "x86_64-linux"
       "aarch64-linux"
     ];
-    flake.nixosModules.nix = {config, ...}: {
+    flake.nixosModules.nix = {
+      config,
+      pkgs,
+      ...
+    }: let
+      config_location = config.programs.nixos-cli.settings.config_location;
+      buildScript = pkgs.writeShellScriptBin "nixos-deploy" ''
+        set -e
+
+        # Assign arguments to variables
+        hostname="''${1}"
+        mode="''${2:-switch}" # Default to "switch" if not provided
+
+        # Check if the hostname argument was provided
+        if [ -z "$hostname" ]; then
+            echo "Error: Hostname argument is required."
+            echo "Usage: $0 <hostname|all> [mode]"
+            exit 1
+        fi
+
+        # Function to build and deploy a single host
+        run_nixos_commands() {
+            local host="$1"
+            local run_mode="$2"
+
+            echo "========================================"
+            echo "Building host: ''${host}"
+            echo "========================================"
+
+            nixos apply ${config_location}#"''${host}" --no-boot --no-activate -o ~/hosts/"''${host}"/build
+
+            echo "========================================"
+            echo "Deploying host: ''${host} (Mode: ''${run_mode})"
+            echo "========================================"
+
+            nixos-rebuild --flake ${config_location}#"''${host}" --target-host root@"''${host}" "''${run_mode}"
+        }
+
+        # Loop through hostnames if provided hostname is "all"
+        if [ "$hostname" = "all" ]; then
+            hosts_dir="$HOME/hosts"
+
+            if [ ! -d "$hosts_dir" ]; then
+                echo "Error: Directory ''${hosts_dir} does not exist."
+                exit 1
+            fi
+
+            for dir in "$hosts_dir"/*; do
+                if [ -d "$dir" ]; then
+                    base_dir=$(basename "$dir")
+
+                    # Ignore _directories which are used for testing
+                    if [[ "$base_dir" =~ ^_ ]]; then
+                        continue
+                    fi
+
+                    run_nixos_commands "$base_dir" "$mode"
+                fi
+            done
+        else
+            run_nixos_commands "$hostname" "$mode"
+        fi
+
+        echo "Deployment complete"
+
+      '';
+    in {
       # Enable flakes
       nix = {
         extraOptions = ''
@@ -47,6 +113,12 @@ in {
           warn-dirty = false
         '';
       };
+
+      environment.systemPackages = [
+        buildScript # Remote build helper
+      ];
+
+      environment.shellAliases."nd" = "nixos-deploy";
 
       # Cache substituters
       # Putting all config-wide substituters here so that hosts

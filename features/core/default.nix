@@ -154,7 +154,10 @@
       autojump.enable = true;
       btop.enable = true;
       ripgrep.enable = true;
-      yazi.enable = true;
+      yazi = {
+        enable = true;
+        shellWrapperName = "y";
+      };
     };
     services.remmina.enable = lib.mkIf osConfig.systemOpts.gui true;
 
