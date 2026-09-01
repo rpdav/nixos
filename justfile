@@ -44,7 +44,7 @@ anywhere-test host:
 
 [no-cd]
 anywhere host ip:
-  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --extra-files ~/Documents/anywhere/{{host}} --generate-hardware-config nixos-generate-config ./system/hosts/{{host}}/hardware-configuration.nix root@{{ip}}
+  nix run github:nix-community/nixos-anywhere -- --flake .#{{host}} --extra-files ~/hosts/{{host}}/files --generate-hardware-config nixos-generate-config ./system/hosts/{{host}}/hardware-configuration.nix root@{{ip}}
 
 ############################################################################
 #
