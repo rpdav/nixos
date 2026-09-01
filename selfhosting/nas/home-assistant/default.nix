@@ -65,13 +65,6 @@
       ];
     };
 
-    # Define esphome service user and group; service fails without correct ownership state directory
-    users.users.esphome = {
-      isSystemUser = true;
-      group = "esphome";
-    };
-    users.groups.esphome = {};
-
     # Secret env file
     sops.secrets."selfhosting/home-assistant/env".owner = config.users.users.${dockerUser}.name;
   };

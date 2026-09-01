@@ -119,7 +119,7 @@
             typora
             kdePackages.ghostwriter
             onlyoffice-desktopeditors
-            libreoffice-fresh
+            libreoffice-stable
 
             # utilities
             gnome-calendar

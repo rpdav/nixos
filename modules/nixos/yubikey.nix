@@ -8,7 +8,7 @@
   }: let
     inherit (config) systemOpts;
     homeDirectory =
-      if pkgs.stdenv.isLinux
+      if pkgs.stdenv.hostPlatform.isLinux
       then "/home/${systemOpts.primaryUser}"
       else "/Users/${systemOpts.primaryUser}";
     yubikey-up = let
@@ -144,7 +144,7 @@
       services.yubikey-agent.enable = true;
 
       # yubikey login / sudo
-      security.pam = lib.optionalAttrs pkgs.stdenv.isLinux {
+      security.pam = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         sshAgentAuth.enable = true;
         u2f = {
           enable = true;
