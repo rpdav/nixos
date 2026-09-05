@@ -3,54 +3,7 @@
     config,
     pkgs,
     ...
-  }:
-  #TODO: get backup monitor working again
-  #let
-  #  ## Set up notifications in case of failure
-  #  borgbackupMonitor = {
-  #    config,
-  #    pkgs,
-  #    lib,
-  #    ...
-  #  }:
-  #    with lib; {
-  #      key = "borgbackupMonitor";
-  #      _file = "borgbackupMonitor";
-  #      config.systemd.services =
-  #        {
-  #          "notify-problems@" = {
-  #            enable = true;
-  #            serviceConfig.User = "danbst";
-  #            environment.SERVICE = "%i";
-  #            script = ''
-  #              export $(cat /proc/$(${pkgs.procps}/bin/pgrep "gnome-session" -u "$USER")/environ |grep -z '^DBUS_SESSION_BUS_ADDRESS=')
-  #              ${pkgs.libnotify}/bin/notify-send -u critical "$SERVICE FAILED!" "Run journalctl -u $SERVICE for details"
-  #            '';
-  #          };
-  #        }
-  #        // flip mapAttrs' config.services.borgbackup.jobs (
-  #          name: value:
-  #            nameValuePair "borgbackup-job-${name}" {
-  #              unitConfig.OnFailure = "notify-problems@%i.service";
-  #              ## Wait for network access
-  #              preStart = lib.mkBefore ''
-  #                # waiting for internet after resume-from-suspend
-  #                until /run/wrappers/bin/ping google.com -c1 -q >/dev/null; do :; done
-  #              '';
-  #            }
-  #        );
-  #
-  #      # optional, but this actually forces backup after boot in case laptop was powered off during scheduled event
-  #      # for example, if you scheduled backups daily, your laptop should be powered on at 00:00
-  #      config.systemd.timers = flip mapAttrs' config.services.borgbackup.jobs (
-  #        name: value:
-  #          nameValuePair "borgbackup-job-${name}" {
-  #            timerConfig.Persistent = lib.mkForce true;
-  #          }
-  #      );
-  #    };
-  #in
-  let
+  }: let
     inherit (config.backupOpts) patterns repo paths;
     root-restore = pkgs.writeShellScriptBin "root-restore" ''
       if [ "$EUID" -ne 0 ]; then
@@ -131,10 +84,6 @@
       done
     '';
   in {
-    #  imports = [
-    #    borgbackupMonitor
-    #  ];
-
     environment.systemPackages = [root-restore backup-mount backup-umount];
 
     # Pull passphrase and key for ssh access
@@ -179,6 +128,17 @@
         yearly = 1;
       };
     };
+    systemd.services."borgbackup-job-local" = {
+      serviceConfig = {
+        ExecStartPre = [
+          # Wait until ping succeeds before trying to back up
+          "${pkgs.coreutils}/bin/echo \"Checking network connectivity...\""
+          "/bin/sh -c 'until ${pkgs.iputils}/bin/ping -c1 -W1 1.1.1.1; do sleep 5; done'"
+        ];
+        # Kill service if no pong after 5 min
+        TimeoutStartSec = "5m";
+      };
+    };
   };
   flake.homeModules.backup = {
     pkgs,
@@ -218,9 +178,18 @@
     };
 
     systemd.user.services.borgmatic = {
-      #Ensure repo is initialized
-      Service.ExecStartPre = lib.mkForce ["${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --make-parent-dirs"];
       Unit.ConditionACPower = lib.mkForce "";
+      Service = {
+        ExecStartPre = lib.mkForce (pkgs.writeShellScript "borgmatic-pre" ''
+          # Wait until ping succeeds before backing up
+          echo "Checking network connectivity..."
+          /bin/sh -c 'until ${pkgs.iputils}/bin/ping -c1 -W1 1.1.1.1; do sleep 5; done'
+          # Ensure repo is initialized
+          ${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --make-parent-dirs
+        '');
+        # Kill service if no pong after 5 min
+        TimeoutStartSec = "5m";
+      };
     };
 
     services.borgmatic = {
