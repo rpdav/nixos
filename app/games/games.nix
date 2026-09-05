@@ -1,5 +1,9 @@
-{...}: {
-  flake.nixosModules.games = {pkgs, ...}: {
+{
+  flake.nixosModules.games = {
+    pkgs,
+    config,
+    ...
+  }: {
     programs.steam = {
       enable = true;
       gamescopeSession.enable = true;
@@ -14,6 +18,8 @@
       mangohud
       steam-devices-udev-rules
     ];
+
+    users.users.${config.systemOpts.primaryUser}.extraGroups = ["gamemode"];
 
     programs.gamemode.enable = true;
   };
