@@ -13,10 +13,8 @@
   in {
     sops.secrets = {
       # Pull B2 credentials from secrets
-      "rclone/b2/account" = {
-      };
-      "rclone/b2/key" = {
-      };
+      "rclone/b2/account" = {};
+      "rclone/b2/key" = {};
       "rclone/crypt/password" = {};
     };
     # Create rclone config from secrets
