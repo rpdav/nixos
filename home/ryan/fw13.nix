@@ -1,5 +1,10 @@
 {self, ...}: {
-  flake.homeModules."ryan@fw13" = {...}: {
+  flake.homeModules."ryan@fw13" = {
+    osConfig,
+    config,
+    pkgs,
+    ...
+  }: {
     ## This file contains all home-manager config unique to user ryan on host fw13
 
     imports = with self.homeModules;
@@ -91,6 +96,16 @@
         "- /persist/home/ryan/.local/share/protonmail" # email
       ];
       repo = "ssh://borg@borg:2222/backup";
+    };
+
+    # fw13-specific programs
+    programs.joplin-desktop = {
+      enable = true;
+      general.editor = "${pkgs.kitty} ${config.home.sessionVariables.EDITOR}";
+    };
+
+    home.persistence.${osConfig.systemOpts.persistVol} = {
+      directories = [".config/joplin-desktop"];
     };
   };
 }

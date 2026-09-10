@@ -140,6 +140,11 @@
           }
           {
             # Open firefox maximized
+            matches = [{app-id = "joplin-app-desktop";}];
+            open-maximized = true;
+          }
+          {
+            # Open joplin fullscreen
             matches = [{app-id = "firefox";}];
             open-maximized-to-edges = true;
           }
@@ -406,9 +411,9 @@
           "Mod+Shift+Equal".action.set-window-height = ["+10%"];
 
           # Maximize or float windows
-          "Mod+F".action.maximize-column = [];
-          "Mod+M".action.maximize-window-to-edges = [];
-          "Mod+Shift+M".action.fullscreen-window = [];
+          "Mod+M".action.maximize-column = [];
+          "Mod+F".action.maximize-window-to-edges = [];
+          "Mod+Shift+F".action.fullscreen-window = [];
           "Mod+V".action.toggle-window-floating = [];
           "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [];
 
