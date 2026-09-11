@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.nixosModules.backup = {
     config,
     pkgs,
@@ -17,74 +17,13 @@
       mount ${config.services.borgbackup.jobs."local".repo} \
       /tmp/borg
     '';
-    backup-mount = pkgs.writeShellScriptBin "backup-mount" ''
-      echo "Please choose which backup to mount:"
-      select opt in system user rclone quit
-      do
-          case $opt in
-              "system")
-                  root-restore
-                  break
-                  ;;
-              "user")
-                  user-restore
-                  break
-                  ;;
-              "rclone")
-                  rclone-restore
-                  break
-                  ;;
-              "quit")
-                  echo "Exiting..."
-                  break
-                  ;;
-              *)
-                  echo "Invalid option $REPLY. Please try again."
-                  ;;
-          esac
-      done
-    '';
-    backup-umount = pkgs.writeShellScriptBin "backup-umount" ''
-      echo "Please choose which backup to unmount:"
-      select opt in system user rclone quit
-      do
-          case $opt in
-              "system")
-                  if [ "$EUID" -ne 0 ]; then
-                    echo "This script requires root privileges. Elevating..."
-                    exec sudo "$0" "$@"
-                  fi
-                  borg umount /tmp/borg
-                  rm -rf /tmp/borg
-                  break
-                  ;;
-              "user")
-                  borg umount /tmp/borg
-                  rm -rf /tmp/borg
-                  break
-                  ;;
-              "rclone")
-                  if [ "$EUID" -ne 0 ]; then
-                    echo "This script requires root privileges. Elevating..."
-                    exec sudo "$0" "$@"
-                  fi
-                  fusermount -u /tmp/rclone/B2
-                  fusermount -u /tmp/rclone/crypt
-                  rm -rf /tmp/rclone
-                  break
-                  ;;
-              "quit")
-                  echo "Exiting..."
-                  break
-                  ;;
-              *)
-                  echo "Invalid option $REPLY. Please try again."
-                  ;;
-          esac
-      done
-    '';
+    selfpkgs = self.packages."${pkgs.stdenv.hostPlatform.system}";
   in {
-    environment.systemPackages = [root-restore backup-mount backup-umount];
+    environment.systemPackages = [
+      root-restore
+      selfpkgs.backup-mount
+      selfpkgs.backup-umount
+    ];
 
     # Pull passphrase and key for ssh access
     sops.secrets = {
