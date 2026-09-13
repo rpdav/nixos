@@ -1,5 +1,5 @@
 # Miscellaneous small scripts exported as packages
-{...}: {
+{
   perSystem = {pkgs, ...}: let
     inherit (pkgs) writeShellScriptBin;
     compose-targets = "$(systemctl list-units --all --type=target | grep docker-compose | awk '{print $1}')";

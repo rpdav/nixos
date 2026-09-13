@@ -1,4 +1,8 @@
-{self, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.homeModules."ryan@fw13" = {
     osConfig,
     config,
@@ -33,6 +37,7 @@
       ]
       ++ [
         self.modules.homeManager.monitors
+        self.modules.homeManager.failureNotify
       ];
 
     # Monitor config
@@ -96,6 +101,16 @@
         "- /persist/home/ryan/.local/share/protonmail" # email
       ];
       repo = "ssh://borg@borg:2222/backup";
+    };
+
+    services.failureNotify = {
+      enable = true;
+      mailFrom = "${osConfig.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
+      mailTo = inputs.nix-secrets.${osConfig.systemOpts.primaryUser}.email.personal-mail.address;
+      sendmailPath = "/run/wrappers/bin/sendmail";
+      units = [
+        "borgmatic"
+      ];
     };
 
     # fw13-specific programs

@@ -43,6 +43,7 @@
         user-ryan
       ]
       ++ [
+        self.modules.nixos.failureNotify
         # disk config
         self.diskoConfigurations.luks-lvm-imp
 
@@ -65,6 +66,16 @@
       swapSize = "16G";
       impermanent = true;
       gui = true;
+    };
+
+    services.failureNotify = {
+      enable = true;
+      mailFrom = "${config.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
+      mailTo = inputs.nix-secrets.${config.systemOpts.primaryUser}.email.personal-mail.address;
+      sendmailPath = "/run/wrappers/bin/sendmail";
+      units = [
+        "borgbackup-job-local"
+      ];
     };
 
     # light mode specialization
