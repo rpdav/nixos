@@ -37,7 +37,7 @@
       ]
       ++ [
         self.modules.homeManager.monitors
-        self.modules.homeManager.failureNotify
+        self.modules.generic.failureNotify
       ];
 
     # Monitor config

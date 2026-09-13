@@ -43,7 +43,7 @@
         user-ryan
       ]
       ++ [
-        self.modules.nixos.failureNotify
+        self.modules.generic.failureNotify
         # disk config
         self.diskoConfigurations.luks-lvm-imp
 
