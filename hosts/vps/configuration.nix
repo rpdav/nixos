@@ -108,6 +108,11 @@
       ];
     };
 
+    # Services to monitor for failures
+    services.failureNotify.units = [
+      "borgbackup-job-local"
+    ];
+
     # VPS monitoring
     sops.secrets."linode/longviewAPIKey".sopsFile = "${inputs.nix-secrets.outPath}/vps.yaml";
     services.longview = {

@@ -145,6 +145,16 @@
       ];
     };
 
+    # Services to monitor for failures
+    services.failureNotify.units = [
+      "borgbackup-job-local"
+      "rclone-appdata"
+      "rclone-borg"
+      "rclone-media"
+      "rclone-nextcloud"
+      "rclone-photos"
+    ];
+
     # disable emergency mode from preventing system boot if there are mounting issues
     systemd.enableEmergencyMode = false;
 

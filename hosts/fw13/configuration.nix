@@ -43,7 +43,6 @@
         user-ryan
       ]
       ++ [
-        self.modules.generic.failureNotify
         # disk config
         self.diskoConfigurations.luks-lvm-imp
 
@@ -68,15 +67,10 @@
       gui = true;
     };
 
-    services.failureNotify = {
-      enable = true;
-      mailFrom = "${config.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
-      mailTo = inputs.nix-secrets.${config.systemOpts.primaryUser}.email.personal-mail.address;
-      sendmailPath = "/run/wrappers/bin/sendmail";
-      units = [
-        "borgbackup-job-local"
-      ];
-    };
+    # Services to monitor for failures
+    services.failureNotify.units = [
+      "borgbackup-job-local"
+    ];
 
     # light mode specialization
     specialisation.lightmode.configuration = {

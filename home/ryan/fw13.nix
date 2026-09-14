@@ -37,7 +37,6 @@
       ]
       ++ [
         self.modules.homeManager.monitors
-        self.modules.generic.failureNotify
       ];
 
     # Monitor config
@@ -104,10 +103,6 @@
     };
 
     services.failureNotify = {
-      enable = true;
-      mailFrom = "${osConfig.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
-      mailTo = inputs.nix-secrets.${osConfig.systemOpts.primaryUser}.email.personal-mail.address;
-      sendmailPath = "/run/wrappers/bin/sendmail";
       units = [
         "borgmatic"
       ];

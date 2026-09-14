@@ -3,10 +3,15 @@
   self,
   ...
 }: {
-  flake.nixosModules.core = {pkgs, ...}: {
+  flake.nixosModules.core = {
+    pkgs,
+    config,
+    ...
+  }: {
     ## This file contains NixOS configuration common to all hosts
 
     imports = [
+      self.modules.generic.failureNotify
       self.modules.generic.customOptions
       self.nixosModules.homeManager
       inputs.disko.nixosModules.disko
@@ -54,6 +59,13 @@
       '';
     };
 
+    # Enable systemd failure notifications
+    services.failureNotify = {
+      enable = true;
+      mailFrom = "${config.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
+      mailTo = inputs.nix-secrets.${config.systemOpts.primaryUser}.email.personal-mail.address;
+    };
+
     # allow local users to mount
     programs.fuse = {
       enable = true;
@@ -78,6 +90,7 @@
   in {
     imports = [
       self.modules.generic.customOptions
+      self.modules.generic.failureNotify
     ];
 
     home.stateVersion = "24.05"; # HM version I built this config around
@@ -146,6 +159,13 @@
       files = [
         ".config/ghostwriterrc"
       ];
+    };
+
+    # Enable systemd failure notifications
+    services.failureNotify = {
+      enable = true;
+      mailFrom = "${osConfig.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
+      mailTo = inputs.nix-secrets.${osConfig.systemOpts.primaryUser}.email.personal-mail.address;
     };
 
     # misc programs

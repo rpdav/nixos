@@ -56,6 +56,11 @@
       ];
     };
 
+    # Services to monitor for failures
+    services.failureNotify.units = [
+      "borgbackup-job-local"
+    ];
+
     # Networking
     networking = {
       hostName = "retropi"; # Define your hostname.
