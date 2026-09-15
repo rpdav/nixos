@@ -195,7 +195,6 @@
           battery = {color = colors.green;};
           sysmon = {
             color = colors.brown;
-            display = "text";
           };
           volume = {color = colors.magenta;};
           brightness = {color = colors.yellow;};
@@ -215,9 +214,9 @@
           power_profile = {color = colors.green;};
           clipboard = {color = colors.blue;};
           tailscale = {
-            command = "sudo tailscale up --reset";
+            actions.left = "sudo tailscale up --reset";
+            actions.right = "sudo tailscale up --accept-routes";
             glyph = "shield-half-filled";
-            right_command = "sudo tailscale up --accept-routes";
             tooltip = "L: home R: away";
             type = "custom_button";
           };
@@ -227,8 +226,8 @@
             # Using ${self} to reference currently-active flake in /nix/store to rebuild
             # into the specialisation instead of the working directory (/home/ryan/nixos).
             # If there is any WIP in working directory, this would fail silently.
-            command = "sudo nixos-rebuild switch --flake ${self}";
-            right_command = "sudo nixos-rebuild switch --flake ${self} --specialisation lightmode";
+            actions.left = "sudo nixos-rebuild switch --flake ${self}";
+            actions.right = "sudo nixos-rebuild switch --flake ${self} --specialisation lightmode";
             tooltip = "L: dark R: light";
             type = "custom_button";
           };
@@ -237,7 +236,7 @@
           tray = {drawer = true;};
           # side bar
           workspaces = {
-            display = "none";
+            show_labels = false;
             pill_scale = 0.75;
           };
         };
