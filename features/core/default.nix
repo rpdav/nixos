@@ -63,7 +63,7 @@
     services.failureNotify = {
       enable = true;
       mailFrom = "${config.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
-      mailTo = inputs.nix-secrets.${config.systemOpts.primaryUser}.email.personal-mail.address;
+      mailTo = inputs.nix-secrets.${config.systemOpts.primaryUser}.email.address;
     };
 
     # allow local users to mount
@@ -165,7 +165,7 @@
     services.failureNotify = {
       enable = true;
       mailFrom = "${osConfig.networking.hostName}@${inputs.nix-secrets.selfhosting.domain}";
-      mailTo = inputs.nix-secrets.${osConfig.systemOpts.primaryUser}.email.personal-mail.address;
+      mailTo = inputs.nix-secrets.${osConfig.systemOpts.primaryUser}.email.address;
     };
 
     # misc programs

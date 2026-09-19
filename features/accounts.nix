@@ -25,9 +25,9 @@
     # Email
     accounts.email.accounts = {
       personal = {
-        address = email.personal-mail.address;
-        userName = email.personal-mail.address;
-        realName = email.personal-mail.realName;
+        address = email.address;
+        userName = email.address;
+        realName = email.realName;
         # protonmail-bridge password is likely to reset on reinstall - pull it fresh from cli tool
         # thunderbird password declaration isn't working - this is must be entered imperatively.
         passwordCommand = "cat ${config.sops.secrets."email/personal-mail/password".path}";
@@ -50,18 +50,18 @@
         };
       };
       admin = {
-        address = email.admin-mail.address;
-        userName = email.admin-mail.address;
-        realName = email.admin-mail.realName;
+        address = inputs.nix-secrets.admin.email.address;
+        userName = inputs.nix-secrets.admin.email.address;
+        realName = inputs.nix-secrets.admin.email.realName;
         # thunderbird password declaration isn't working - this is must be entered imperatively.
         passwordCommand = "cat ${config.sops.secrets."email/admin-mail/password".path}";
         imap = {
-          host = email.admin-mail.host;
+          host = inputs.nix-secrets.admin.email.host;
           tls.enable = true;
           port = 993;
         };
         smtp = {
-          host = email.admin-mail.host;
+          host = inputs.nix-secrets.admin.email.host;
           tls.enable = true;
           port = 465;
         };

@@ -5,7 +5,7 @@ services:
     networks:
       - proxynet
     environment:
-      - SERVER_ADMIN_EMAIL=secrets.personal-mail.address
+      - SERVER_ADMIN_EMAIL=secrets.email.address
       - SIGNUPS_ALLOWED=false
       - INVITATIONS_ALLOWED=true
       - WEBSOCKET_ENABLED=true

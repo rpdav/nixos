@@ -144,7 +144,7 @@
           "--health-cmd=ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
           "--health-retries=0"
           "--health-timeout=3s"
-          "--hostname=${inputs.nix-secrets.ryan.email.admin-mail.host}"
+          "--hostname=${inputs.nix-secrets.admin.email.host}"
           "--network-alias=dms"
           "--network=dms_default"
         ];

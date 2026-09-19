@@ -19,9 +19,9 @@
     ## This file contains all NixOS config for user ariel
 
     # user--specific variable overrides
-    userOpts.theme = "mountain";
-    userOpts.cursor = "Bibata-Modern-Ice";
-    userOpts.cursorPkg = "bibata-cursors";
+    userOpts.theme = lib.mkForce "mountain";
+    userOpts.cursor = lib.mkForce "Bibata-Modern-Ice";
+    userOpts.cursorPkg = lib.mkForce "bibata-cursors";
 
     # Pull password from sops
     users.mutableUsers = false;

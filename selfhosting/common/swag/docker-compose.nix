@@ -11,7 +11,7 @@
       image = uptix.dockerImage "lscr.io/linuxserver/swag:latest";
       environment = {
         "DNSPLUGIN" = "cloudflare";
-        "EMAIL" = "${inputs.nix-secrets.ryan.email.admin-mail.address}";
+        "EMAIL" = "${inputs.nix-secrets.admin.email.address}";
         "DOCKER_MODS" = "linuxserver/mods:swag-auto-reload|linuxserver/mods:swag-dashboard";
         "ONLY_SUBDOMAINS" = "true";
         "PGID" = "1000";
