@@ -9,7 +9,6 @@
           email = "105075689+rpdav@users.noreply.github.com";
         };
         init.defaultBranch = "main";
-        merge.ff = false; # I prefer to see explicit merges
       };
     };
 

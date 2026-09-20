@@ -844,17 +844,17 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1789827525,
-        "narHash": "sha256-BFjhZN10OihT66Q/+w5QhIfiDFJo271MDfUoKYFS2iY=",
-        "ref": "refs/heads/main",
-        "rev": "c8c575d212450d7f41d0edf33ed646a9ba5aba13",
-        "revCount": 135,
-        "type": "git",
-        "url": "https://git.dfrp.xyz/ryan/nix-secrets"
+        "lastModified": 1789871437,
+        "narHash": "sha256-jJPCftBPvEKXQ0ZNb37PMHj0QrFXl/iGW+zUhuauuMs=",
+        "owner": "rpdav",
+        "repo": "nix-secrets",
+        "rev": "7a5e1df03d39804d3bd05e9c1246e38954fad882",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://git.dfrp.xyz/ryan/nix-secrets"
+        "owner": "rpdav",
+        "repo": "nix-secrets",
+        "type": "github"
       }
     },
     "nixos-cli": {

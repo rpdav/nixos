@@ -43,6 +43,7 @@ in {
       ...
     }: let
       config_location = config.programs.nixos-cli.settings.config_location;
+      # Not putting buildScript into flake.perSystem because it depends on config
       buildScript = pkgs.writeShellScriptBin "nixos-deploy" ''
         set -e
 
@@ -104,13 +105,22 @@ in {
 
       '';
     in {
-      # Enable flakes
+      # Decrypt and set up github PAT for use by nix
+      sops.secrets."github/PAT".sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+      sops.templates.githubPAT = {
+        content = ''
+          access-tokens = github.com=${config.sops.placeholder."github/PAT"}
+        '';
+        mode = "0444"; # needed for non-sudo nix operations like remote deploy and nix flake check
+      };
+
       nix = {
         extraOptions = ''
           experimental-features = nix-command flakes pipe-operators
           keep-outputs = true
           keep-derivations = true
           warn-dirty = false
+          !include ${config.sops.templates."githubPAT".path}
         '';
       };
 
