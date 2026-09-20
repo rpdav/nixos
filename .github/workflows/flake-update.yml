@@ -26,6 +26,10 @@ concurrency:
 
 env:
   UPDATE_BRANCH: auto/flake-update
+  # Your config uses `|>`, which is gated behind an experimental feature. Nix reads NIX_CONFIG in
+  # every job/step; the `extra-` prefix appends to (rather than replaces) the features the
+  # install action already enables. Requires Nix >= 2.24.
+  NIX_CONFIG: extra-experimental-features = pipe-operators
 
 jobs:
   # ---------------------------------------------------------------------------
