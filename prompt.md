@@ -20,3 +20,10 @@ This will involve setting up a binary cache on my `vps` host (already in my nix 
 3. The binary cache will be private, so I will need access tokens to allow the github runner to access it.
 4. Configure the runner to push any newly built derivations up to the atticd binary cache
 5. Configure my main repo to use the extra binary cache to take advantage of those builds. This should greatly reduce the number of builds I do locally.
+
+Response:
+OK a couple notes and questions:
+1. Good point about `nix flake check` not building - adding the explicit build was appropriate
+2. You are right about the uptix repo typo. But I confirmed that the `update` subcommand is required.
+3. My secrets input is `github:rpdav/nix-secrets` so I will be using a PAT. Please update the appropriate sections accordingly.
+4. Most of my hosts are x86_64, but I do have one aarch64 host `retropi`. It is important that this host be built. Can this single runner handle both architectures? And would you recommend doing emulation or doing a separate job for the other architectures?
