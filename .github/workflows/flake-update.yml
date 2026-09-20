@@ -1,0 +1,167 @@
+# Save as: .github/workflows/flake-update.yml in rpdav/nixos
+#
+# Required repo secret:  NIX_SECRETS_PAT
+#   Fine-grained PAT, resource owner rpdav, repository access limited to rpdav/nix-secrets,
+#   permission "Contents: Read-only". Fine-grained PATs expire (max 1 year) - set a reminder.
+# Required repo setting: Settings -> Actions -> General -> Workflow permissions ->
+#                        "Allow GitHub Actions to create and approve pull requests"
+#
+# Pipeline:  update (flake.lock + uptix.lock)
+#            -> check + build every host in parallel, each on a runner matching its architecture
+#            -> open PR
+
+name: Weekly flake update
+
+on:
+  schedule:
+    - cron: "0 7 * * 1" # Mondays 07:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: flake-update
+  cancel-in-progress: false
+
+env:
+  UPDATE_BRANCH: auto/flake-update
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. Update lock files, work out which hosts exist (and their architectures)
+  # ---------------------------------------------------------------------------
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.diff.outputs.changed }}
+      matrix: ${{ steps.hosts.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          # Sets `access-tokens = github.com=<PAT>` in nix.conf, which lets Nix fetch the
+          # private github:rpdav/nix-secrets input. Don't ALSO pass access-tokens via
+          # extra_nix_config; a second line can override this one.
+          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+
+      - name: Update flake inputs
+        shell: bash # explicit shell => pipefail, so a failed update isn't hidden by tee
+        run: nix flake update 2>&1 | tee update.log
+
+      - name: Update uptix.lock
+        run: nix run github:luizribeiro/uptix -- update
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet -- flake.lock uptix.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build host/runner matrix
+        id: hosts
+        run: |
+          # {"host": "system", ...} - evaluating (not building) other-arch configs is fine on x86
+          systems=$(nix eval --json .#nixosConfigurations \
+            --apply 'c: builtins.mapAttrs (_: v: v.pkgs.stdenv.hostPlatform.system) c')
+          matrix=$(jq -c '[to_entries[] | {
+              host: .key,
+              runner: (if .value == "aarch64-linux" then "ubuntu-24.04-arm" else "ubuntu-latest" end)
+            }]' <<< "$systems")
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "$matrix"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lockfiles
+          path: |
+            flake.lock
+            uptix.lock
+            update.log
+
+  # ---------------------------------------------------------------------------
+  # 2a. nix flake check (evaluates every host, runs x86_64 `checks.*` outputs)
+  # ---------------------------------------------------------------------------
+  check:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: lockfiles
+      - uses: jlumbroso/free-disk-space@main
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+      - run: nix flake check --print-build-logs
+
+  # ---------------------------------------------------------------------------
+  # 2b. Build each host's system closure on a native runner for its architecture
+  # ---------------------------------------------------------------------------
+  build:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.update.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: lockfiles
+      - uses: jlumbroso/free-disk-space@main
+        if: runner.arch == 'X64' # tuned for x86 images; skip on arm
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+      - name: Build ${{ matrix.host }}
+        env:
+          HOST: ${{ matrix.host }}
+        run: |
+          nix build --no-link --print-build-logs \
+            ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
+
+  # ---------------------------------------------------------------------------
+  # 3. Everything passed -> open/refresh the PR
+  # ---------------------------------------------------------------------------
+  pull-request:
+    needs: [update, check, build]
+    if: needs.update.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: lockfiles
+
+      - name: Compose PR body
+        run: |
+          {
+            echo "Automated weekly update. \`nix flake check\` and a full build of every host passed."
+            echo
+            echo '```'
+            cat update.log
+            echo '```'
+          } > pr-body.md
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: ${{ env.UPDATE_BRANCH }}
+          delete-branch: true
+          add-paths: |
+            flake.lock
+            uptix.lock
+          commit-message: "chore: weekly flake + uptix update"
+          title: "chore: weekly flake + uptix update"
+          body-path: pr-body.md
