@@ -3,9 +3,9 @@
   self,
   ...
 }: {
-  flake.nixosConfigurations.testvm = inputs.nixpkgs.lib.nixosSystem {
-    modules = [self.nixosModules.system-testvm];
-  };
+  #flake.nixosConfigurations.testvm = inputs.nixpkgs.lib.nixosSystem {
+  #  modules = [self.nixosModules.system-testvm];
+  #};
   flake.nixosModules.system-testvm = {
     lib,
     pkgs,

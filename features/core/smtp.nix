@@ -1,10 +1,9 @@
 {inputs, ...}: {
   flake.nixosModules.core = {config, ...}: let
     inherit (inputs.nix-secrets.selfhosting) domain;
-    inherit (config.systemOpts) primaryUser;
   in {
-    sops.secrets."email/admin-mail/password" = {
-      sopsFile = "${inputs.nix-secrets.outPath}/${primaryUser}.yaml";
+    sops.secrets."admin/email/password" = {
+      sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
       mode = "0444"; # allow users to send mail with this account
     };
 
@@ -20,7 +19,7 @@
         host = "mail.${domain}";
         from = "${config.networking.hostName}@${domain}";
         user = "admin@${domain}";
-        passwordeval = "cat ${config.sops.secrets."email/admin-mail/password".path}";
+        passwordeval = "cat ${config.sops.secrets."admin/email/password".path}";
       };
     };
   };

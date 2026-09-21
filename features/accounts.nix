@@ -8,8 +8,11 @@
     inherit (inputs.nix-secrets.ryan) email dav;
   in {
     sops.secrets = {
-      "email/admin-mail/password" = {};
-      "email/personal-mail/password" = {};
+      "admin/email/password" = {
+        sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+        mode = "0444";
+      };
+      "email/password" = {};
       "dav/password" = {};
     };
 
@@ -30,7 +33,7 @@
         realName = email.realName;
         # protonmail-bridge password is likely to reset on reinstall - pull it fresh from cli tool
         # thunderbird password declaration isn't working - this is must be entered imperatively.
-        passwordCommand = "cat ${config.sops.secrets."email/personal-mail/password".path}";
+        passwordCommand = "cat ${config.sops.secrets."email/password".path}";
         primary = true;
         imap = {
           host = "127.0.0.1";
@@ -54,7 +57,7 @@
         userName = inputs.nix-secrets.admin.email.address;
         realName = inputs.nix-secrets.admin.email.realName;
         # thunderbird password declaration isn't working - this is must be entered imperatively.
-        passwordCommand = "cat ${config.sops.secrets."email/admin-mail/password".path}";
+        passwordCommand = "cat ${config.sops.secrets."admin/email/password".path}";
         imap = {
           host = inputs.nix-secrets.admin.email.host;
           tls.enable = true;
