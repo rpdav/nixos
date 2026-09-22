@@ -18,22 +18,24 @@
       AWS_SECRET_ACCESS_KEY=${config.sops.placeholder."attic/b2-application-key"}
     '';
 
-    # Create service user
+    # Create service user and disable dynamicUser
+    # dynamicUser doesn't play nice with impermanence
     users.users.atticd = {
       isSystemUser = true;
       group = "atticd";
     };
     users.groups.atticd = {};
+    systemd.services.atticd.serviceConfig = {
+      DynamicUser = lib.mkForce false;
+    };
 
     services.atticd = {
       enable = true;
-      user = "atticd";
+      #user = "atticd";
       environmentFile = config.sops.templates."atticd-env".path;
       settings = {
         listen = "0.0.0.0:8080"; # firewall below restricts this to the docker bridge only
         api-endpoint = "https://nix.${inputs.nix-secrets.selfhosting.domain}/";
-
-        database.url = "sqlite:///var/lib/atticd/server.db";
 
         storage = {
           type = "s3";

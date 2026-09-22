@@ -114,6 +114,13 @@ systemd.services."docker-network-proxynet" = {
 
 ---
 
+I'm deploying now - while that's in progress, are there any concerns about having this webui exposed to the internet? I previously had no ports open on vps and just accessed it via tailscale, but I had to open 443 in order for the runner to be able to reach it.
+
+---
+
+OK we can revisit that in a bit. But for now, `atticd.service` is failing to start:
+
+```
 2026-09-22 07:47 systemd[1]: atticd.service: Failed with result 'exit-code'.
 2026-09-22 07:47 systemd[1]: atticd.service: Main process exited, code=exited, status=1/FAILURE
 2026-09-22 07:47 atticd[3696220]: Error: Database error: Connection Error: error returned from database: (code: 14) unable to open database file:
@@ -121,3 +128,21 @@ error returned from database: (code: 14) unable to open database file
 2026-09-22 07:47 atticd[3696220]: Running migrations...
 2026-09-22 07:47 atticd[3696220]: Attic Server 0.1.0 (release)
 2026-09-22 07:47 systemd[1]: Started atticd.service.
+```
+
+---
+
+I'm now seeing this error:
+
+```
+Sep 22 08:27:52 vps systemd[1]: Started atticd.service.
+Sep 22 08:27:52 vps (atticd)[4673]: atticd.service: Found pre-existing public StateDirectory= directory /var/lib/atticd, migrating to /var/lib/private/atticd.
+Sep 22 08:27:52 vps (atticd)[4673]: atticd.service: Apparently, service previously had DynamicUser= turned off, and has now turned it on.
+Sep 22 08:27:52 vps (atticd)[4673]: atticd.service: Failed to set up special execution directory in /var/lib: Device or resource busy
+Sep 22 08:27:52 vps (atticd)[4673]: atticd.service: Failed at step STATE_DIRECTORY spawning /nix/store/2hh32lz0k71c74swnqxhwvd90hy9a0gf-attic-0-unstable-2026-07-06/bin/atticd: >
+Sep 22 08:27:52 vps systemd[1]: atticd.service: Main process exited, code=exited, status=238/STATE_DIRECTORY
+Sep 22 08:27:52 vps systemd[1]: atticd.service: Failed with result 'exit-code'.
+Sep 22 08:27:52 vps systemd[1]: atticd.service: Consumed 8ms CPU time over 10.147s wall clock time, 2.9M memory peak, 2.5M read from disk.
+```
+
+I've verified that `/var/lib/atticd` exists and is owned by `atticd`. It is also properly bind mounted to `/persist` in `/etc/mtab`.
