@@ -40,6 +40,7 @@
       self.serviceModules.beszelAgent
       self.serviceModules.dms
       self.serviceModules.kuma
+      self.serviceModules.attic
     ];
 
     # Variable overrides

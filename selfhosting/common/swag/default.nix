@@ -22,7 +22,8 @@
         ExecStop = "docker network rm -f proxynet";
       };
       script = ''
-        docker network inspect proxynet || docker network create proxynet
+        docker network inspect proxynet || \
+        docker network create --subnet=172.26.0.0/24 --gateway=172.26.0.1 proxynet
       '';
       after = ["docker.service"];
       wantedBy = ["multi-user.target"];
