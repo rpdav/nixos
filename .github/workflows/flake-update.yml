@@ -42,13 +42,18 @@ jobs:
       matrix: ${{ steps.hosts.outputs.matrix }}
     steps:
       - uses: actions/checkout@v5
-
       - uses: cachix/install-nix-action@v31
         with:
           # Sets `access-tokens = github.com=<PAT>` in nix.conf, which lets Nix fetch the
           # private github:rpdav/nix-secrets input. Don't ALSO pass access-tokens via
           # extra_nix_config; a second line can override this one.
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          extra_nix_config: |
+            trusted-users = root runner
+      - name: Configure attic cache
+        run: |
+          nix run github:zhaofengli/attic#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run github:zhaofengli/attic#attic-client -- use nixos-cache
 
       - name: Update flake inputs
         shell: bash # explicit shell => pipefail, so a failed update isn't hidden by tee
@@ -103,6 +108,12 @@ jobs:
       - uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          extra_nix_config: |
+            trusted-users = root runner
+      - name: Configure attic cache
+        run: |
+          nix run github:zhaofengli/attic#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run github:zhaofengli/attic#attic-client -- use nixos-cache
       - run: nix flake check --print-build-logs
 
   # ---------------------------------------------------------------------------
@@ -126,12 +137,24 @@ jobs:
       - uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          extra_nix_config: |
+            trusted-users = root runner
+      - name: Configure attic cache
+        run: |
+          nix run github:zhaofengli/attic#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run github:zhaofengli/attic#attic-client -- use nixos-cache
       - name: Build ${{ matrix.host }}
         env:
           HOST: ${{ matrix.host }}
         run: |
           nix build --no-link --print-build-logs \
             ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
+      - name: Push ${{ matrix.host }} to cache
+        env:
+          HOST: ${{ matrix.host }}
+        run: |
+          nix run github:zhaofengli/attic#attic-client -- push nixos-cache \
+            "$(nix path-info ".#nixosConfigurations.${HOST}.config.system.build.toplevel")"
 
   # ---------------------------------------------------------------------------
   # 3. Everything passed -> open/refresh the PR

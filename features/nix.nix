@@ -124,8 +124,20 @@ in {
         '';
       };
 
+      # Binary cache
+      sops.secrets."attic/token".sopsFile = "${inputs.nix-secrets.outPath}/common.yaml";
+      sops.templates."attic-netrc" = {
+        # owner defaults to root, which matches what the nix daemon needs
+        content = ''
+          machine nix.dfrp.xyz
+          password ${config.sops.placeholder."attic/token"}
+        '';
+      };
+      nix.settings.netrc-file = config.sops.templates."attic-netrc".path;
+
       environment.systemPackages = [
         buildScript # Remote build helper
+        pkgs.attic-client
       ];
 
       environment.shellAliases."nd" = "nixos-deploy";
@@ -135,12 +147,14 @@ in {
       # can use them for building even if they aren't needed for all hosts.
       nix.settings = {
         substituters = [
+          "https://nix.${inputs.nix-secrets.selfhosting.domain}/nixos-cache"
           "https://nvf.cachix.org"
           "https://hyprland.cachix.org"
           "https://watersucks.cachix.org"
           "https://noctalia.cachix.org"
         ];
         trusted-public-keys = [
+          "nixos-cache:tURmQMVstXX1SRGXf0D6XWmTUnHLH0+7rHTQDE8ag/o="
           "nvf.cachix.org-1:GMQWiUhZ6ux9D5CvFFMwnc2nFrUHTeGaXRlVBXo+naI="
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
           "watersucks.cachix.org-1:6gadPC5R8iLWQ3EUtfu3GFrVY7X6I4Fwz/ihW25Jbv8="

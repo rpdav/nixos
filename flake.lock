@@ -844,11 +844,11 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1790041628,
-        "narHash": "sha256-uM10g6iqtgF05LqfDuqXCIDQW0TpUII5I0aAlQodPDc=",
+        "lastModified": 1790129704,
+        "narHash": "sha256-kgUX3mzJCpl2L62JD6z6Ah75XEiHAJ7msET/rFXDJlc=",
         "owner": "rpdav",
         "repo": "nix-secrets",
-        "rev": "b066b034554379a2adc773cfbb20a654871b4930",
+        "rev": "8d38cf849ac6c350fb3e74a9678aec13aca8adf7",
         "type": "github"
       },
       "original": {
