@@ -18,8 +18,8 @@
       AWS_SECRET_ACCESS_KEY=${config.sops.placeholder."attic/b2-application-key"}
     '';
 
-    # Create service user and disable dynamicUser
-    # dynamicUser doesn't play nice with impermanence
+    # Create service user and disable DynamicUser
+    # dynamicUser doesn't play nicely with impermanence
     users.users.atticd = {
       isSystemUser = true;
       group = "atticd";
@@ -31,7 +31,6 @@
 
     services.atticd = {
       enable = true;
-      #user = "atticd";
       environmentFile = config.sops.templates."atticd-env".path;
       settings = {
         listen = "0.0.0.0:8080"; # firewall below restricts this to the docker bridge only
@@ -44,13 +43,12 @@
           endpoint = "https://s3.us-west-001.backblazeb2.com";
         };
 
-        # Same chunking caveat Attic's own docs give: changing these later hurts
-        # dedup for existing chunks, so treat this block as fixed once you deploy it.
+        # bigger chunks to improve bandwidth
         chunking = {
-          nar-size-threshold = 64 * 1024;
-          min-size = 16 * 1024;
-          avg-size = 64 * 1024;
-          max-size = 256 * 1024;
+          nar-size-threshold = 8 * 1024 * 1024;
+          min-size = 1 * 1024 * 1024;
+          avg-size = 4 * 1024 * 1024;
+          max-size = 16 * 1024 * 1024;
         };
 
         garbage-collection = {

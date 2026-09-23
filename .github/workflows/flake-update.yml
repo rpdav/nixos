@@ -141,8 +141,8 @@ jobs:
             trusted-users = root runner
       - name: Configure attic cache
         run: |
-          nix run github:zhaofengli/attic#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
-          nix run github:zhaofengli/attic#attic-client -- use nixos-cache
+          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run nixpkgs#attic-client -- use nixos-cache
       - name: Build ${{ matrix.host }}
         env:
           HOST: ${{ matrix.host }}
@@ -153,7 +153,7 @@ jobs:
         env:
           HOST: ${{ matrix.host }}
         run: |
-          nix run github:zhaofengli/attic#attic-client -- push nixos-cache \
+          nix run nixpkgs#attic-client -- push nixos-cache \
             "$(nix path-info ".#nixosConfigurations.${HOST}.config.system.build.toplevel")"
 
   # ---------------------------------------------------------------------------

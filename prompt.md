@@ -146,3 +146,14 @@ Sep 22 08:27:52 vps systemd[1]: atticd.service: Consumed 8ms CPU time over 10.14
 ```
 
 I've verified that `/var/lib/atticd` exists and is owned by `atticd`. It is also properly bind mounted to `/persist` in `/etc/mtab`.
+
+---
+OK atticd is up and running with impermanence. I've also created tokens for for admin (create/delete/configure nixos-cache) and for github (push/pull only). I've verified I can manually push objects up to my cache. I have added the cache endpoint and public key to cache substituters in my nixos config. Now:
+1. How do I set the github workflow to pull from and push to the cache?
+2. How do I set my nixos configuration to pull from the cache?
+
+I assume the substituter alone is not enough for pulling since it is a private cache and needs a token to authenticate.
+
+---
+
+To clarify, the total size of the 2 files transferred over ~3 min was 864 MB, so that should be 30 Mbps total, or about 15 Mbps per file. Several other files were transferred but they were smaller so it was harder to get a read on transfer speed for those. I tested a 1 GB transfer from `vps` to home using `scp` and got 22 MBps, or 176 Mbps; much faster. Transferring from B2 directly to home ran at 480 Mbps (this is the nominal speed of my home connection, so there is a bottleneck at vps down to 176 Mbps, but not so low as 30 Mbps). Transferring a 1 GB file from B2 to vps was around 800 Mbps. So it sounds like the chunking is causing the lower bandwidth. B2 storage is cheap, so I am fine with tuning the chunking parameters fairly aggressively to at least max out `vps`'s transfer capacity.
