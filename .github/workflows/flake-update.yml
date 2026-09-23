@@ -52,8 +52,8 @@ jobs:
             trusted-users = root runner
       - name: Configure attic cache
         run: |
-          nix run github:zhaofengli/attic#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
-          nix run github:zhaofengli/attic#attic-client -- use nixos-cache
+          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run nixpkgs#attic-client -- use nixos-cache
 
       - name: Update flake inputs
         shell: bash # explicit shell => pipefail, so a failed update isn't hidden by tee
@@ -104,7 +104,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: lockfiles
-      - uses: jlumbroso/free-disk-space@main
       - uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
@@ -112,8 +111,8 @@ jobs:
             trusted-users = root runner
       - name: Configure attic cache
         run: |
-          nix run github:zhaofengli/attic#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
-          nix run github:zhaofengli/attic#attic-client -- use nixos-cache
+          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run nixpkgs#attic-client -- use nixos-cache
       - run: nix flake check --print-build-logs
 
   # ---------------------------------------------------------------------------
