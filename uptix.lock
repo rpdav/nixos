@@ -163,11 +163,11 @@
     "metadata": {
       "name": "linuxserver/nextcloud",
       "selected_version": "latest",
-      "resolved_version": "sha256:bb4a6f8165ae2ca09c51c6363d34828b35e679f9083b56072b218b85dd1499e7",
+      "resolved_version": "sha256:887f065c8eca9bd6b1311c3cedaffbba5a9156750840a6b834a2cf014d2be5ba",
       "dep_type": "docker",
       "description": "Docker image linuxserver/nextcloud:latest from lscr.io"
     },
-    "lock": "sha256:bb4a6f8165ae2ca09c51c6363d34828b35e679f9083b56072b218b85dd1499e7"
+    "lock": "sha256:887f065c8eca9bd6b1311c3cedaffbba5a9156750840a6b834a2cf014d2be5ba"
   },
   "lscr.io/linuxserver/speedtest-tracker": {
     "metadata": {
