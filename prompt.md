@@ -157,3 +157,9 @@ I assume the substituter alone is not enough for pulling since it is a private c
 ---
 
 To clarify, the total size of the 2 files transferred over ~3 min was 864 MB, so that should be 30 Mbps total, or about 15 Mbps per file. Several other files were transferred but they were smaller so it was harder to get a read on transfer speed for those. I tested a 1 GB transfer from `vps` to home using `scp` and got 22 MBps, or 176 Mbps; much faster. Transferring from B2 directly to home ran at 480 Mbps (this is the nominal speed of my home connection, so there is a bottleneck at vps down to 176 Mbps, but not so low as 30 Mbps). Transferring a 1 GB file from B2 to vps was around 800 Mbps. So it sounds like the chunking is causing the lower bandwidth. B2 storage is cheap, so I am fine with tuning the chunking parameters fairly aggressively to at least max out `vps`'s transfer capacity.
+
+---
+
+OK let's go ahead and add the `attic push` to the `update` job. `uptix` doesn't seem to change much (last commit was 10 months ago), so I expect the version built in the `build` sections from the prior week would probably still be current. But it would be best to have the push there explicitly. I'm not sure what to do for `path-info` - running `nix path-info github:luizribeiro/uptix` shows a derivation but it says `error: path '/nix/store/ml14n5hr48n02bx084hcb5azfcd573d9-uptix-0.1.0' is not valid`. Ultimately, the `update` section needs access to the `uptix` binary, and the `build` section needs access to `nixosModules.uptix`.
+
+For the tailnet, yes let's plan on writing some basic ACLs for my tailnet. And for the runner auth, we can go with your recommendation of OIDC.

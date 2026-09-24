@@ -4,6 +4,8 @@
     lib,
     ...
   }: {
+    # Built with Claude
+
     # Decrypt secrets
     sops.secrets = {
       "attic/rs256-secret" = {};
@@ -58,7 +60,7 @@
       };
     };
 
-    # Restrict access to the proxynet bridge network
+    # Allow proxynet to access this service
     networking.firewall.interfaces."br-742ba84d6610".allowedTCPPorts = [8080];
 
     environment.persistence.${config.systemOpts.persistVol} = lib.mkIf config.systemOpts.impermanent {

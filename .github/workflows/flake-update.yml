@@ -1,14 +1,4 @@
-# Save as: .github/workflows/flake-update.yml in rpdav/nixos
-#
-# Required repo secret:  NIX_SECRETS_PAT
-#   Fine-grained PAT, resource owner rpdav, repository access limited to rpdav/nix-secrets,
-#   permission "Contents: Read-only". Fine-grained PATs expire (max 1 year) - set a reminder.
-# Required repo setting: Settings -> Actions -> General -> Workflow permissions ->
-#                        "Allow GitHub Actions to create and approve pull requests"
-#
-# Pipeline:  update (flake.lock + uptix.lock)
-#            -> check + build every host in parallel, each on a runner matching its architecture
-#            -> open PR
+# Built with Claude
 
 name: Weekly flake update
 
@@ -40,6 +30,9 @@ jobs:
     outputs:
       changed: ${{ steps.diff.outputs.changed }}
       matrix: ${{ steps.hosts.outputs.matrix }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
@@ -50,6 +43,12 @@ jobs:
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
           extra_nix_config: |
             trusted-users = root runner
+      - name: Connect to tailnet
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
       - name: Configure attic cache
         run: |
           nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
@@ -61,6 +60,11 @@ jobs:
 
       - name: Update uptix.lock
         run: nix run github:luizribeiro/uptix -- update
+
+      - name: Push uptix to cache
+        run: |
+          nix run nixpkgs#attic-client -- push nixos-cache \
+            "$(nix path-info github:luizribeiro/uptix)"
 
       - name: Detect changes
         id: diff
@@ -99,6 +103,9 @@ jobs:
     needs: update
     if: needs.update.outputs.changed == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v5
       - uses: actions/download-artifact@v4
@@ -109,6 +116,12 @@ jobs:
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
           extra_nix_config: |
             trusted-users = root runner
+      - name: Connect to tailnet
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
       - name: Configure attic cache
         run: |
           nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
@@ -122,6 +135,9 @@ jobs:
     needs: update
     if: needs.update.outputs.changed == 'true'
     runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      id-token: write
     strategy:
       fail-fast: false
       matrix:
@@ -138,6 +154,12 @@ jobs:
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
           extra_nix_config: |
             trusted-users = root runner
+      - name: Connect to tailnet
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
       - name: Configure attic cache
         run: |
           nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
