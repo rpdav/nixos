@@ -21,7 +21,7 @@
     '';
 
     # Create service user and disable DynamicUser
-    # dynamicUser doesn't play nicely with impermanence
+    # DynamicUser doesn't play nicely with impermanence
     users.users.atticd = {
       isSystemUser = true;
       group = "atticd";
@@ -35,7 +35,7 @@
       enable = true;
       environmentFile = config.sops.templates."atticd-env".path;
       settings = {
-        listen = "0.0.0.0:8080"; # firewall below restricts this to the docker bridge only
+        listen = "0.0.0.0:8080";
         api-endpoint = "https://nix.${inputs.nix-secrets.selfhosting.domain}/";
 
         storage = {
@@ -45,7 +45,7 @@
           endpoint = "https://s3.us-west-001.backblazeb2.com";
         };
 
-        # bigger chunks to improve bandwidth
+        # Bigger chunks to improve bandwidth
         chunking = {
           nar-size-threshold = 8 * 1024 * 1024;
           min-size = 1 * 1024 * 1024;

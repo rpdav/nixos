@@ -33,6 +33,7 @@ This is my NixOS configuration. I'm a newbie to Nix and this is my first public 
 * Stylix: system-wide theming
 * Niri and Hyprland: beautiful tiling or scrolling wayland window managers
 * Nixvirt: declarative VM management
+* CI and binary cache: Build flake updates on CI and push builds to selfhosted cache
 
 ## Structure
 
