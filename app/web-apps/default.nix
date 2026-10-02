@@ -74,18 +74,6 @@
             "Utility"
           ];
         };
-      ticktick =
-        commonConfig
-        // {
-          id = 5;
-          url = "https://ticktick.com";
-          name = "TickTick";
-          genericName = "Task Manager";
-          icon = ./icons/ticktick.png;
-          categories = [
-            "Utility"
-          ];
-        };
       sketchup =
         commonConfig
         // {

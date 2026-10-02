@@ -111,11 +111,16 @@
     # fw13-specific programs
     programs.joplin-desktop = {
       enable = true;
-      general.editor = "${pkgs.kitty} ${config.home.sessionVariables.EDITOR}";
+      settings.editor = "${pkgs.kitty} ${config.home.sessionVariables.EDITOR}";
     };
 
+    home.packages = [pkgs.ticktick];
+
     home.persistence.${osConfig.systemOpts.persistVol} = {
-      directories = [".config/joplin-desktop"];
+      directories = [
+        ".config/joplin-desktop"
+        ".config/ticktick"
+      ];
     };
   };
 }

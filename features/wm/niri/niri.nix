@@ -144,7 +144,12 @@
             open-maximized = true;
           }
           {
-            # Open joplin fullscreen
+            # Open ticktick maximized
+            matches = [{app-id = "ticktick";}];
+            open-maximized = true;
+          }
+          {
+            # Open firefox fullscreen
             matches = [{app-id = "firefox";}];
             open-maximized-to-edges = true;
           }
