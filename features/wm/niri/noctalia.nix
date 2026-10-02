@@ -214,8 +214,8 @@
           power_profile = {color = colors.green;};
           clipboard = {color = colors.blue;};
           tailscale = {
-            actions.left = "sudo tailscale up --reset";
-            actions.right = "sudo tailscale up --accept-routes";
+            actions.left = "exec sudo tailscale up --reset";
+            actions.right = "exec sudo tailscale up --accept-routes";
             glyph = "shield-half-filled";
             tooltip = "L: home R: away";
             type = "custom_button";
