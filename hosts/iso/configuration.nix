@@ -10,15 +10,24 @@
     pkgs,
     modulesPath,
     ...
-  }: {
+  }: let
+    install = pkgs.writeShellScriptBin "install" ''
+      sudo disko-install \
+      --option extra-experimental-features pipe-operators \
+      --write-efi-boot-entries \
+      --flake "github:rpdav/nixos#install" \
+      --disk $1
+    '';
+  in {
     imports = [
       "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     ];
 
     nixpkgs.hostPlatform = "x86_64-linux";
 
-    environment.systemPackages = with pkgs; [
-      disko
+    environment.systemPackages = [
+      pkgs.disko
+      install
     ];
     nix.settings.experimental-features = [
       "nix-command"
