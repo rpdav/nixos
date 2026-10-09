@@ -122,6 +122,9 @@ in {
           warn-dirty = false
           !include ${config.sops.templates."githubPAT".path}
         '';
+        # Set nixpkgs to drop unused channel path
+        # which causes eval warnings
+        settings.nix-path = ["nixpkgs=flake:nixpkgs"];
       };
 
       # Binary cache

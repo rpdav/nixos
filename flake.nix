@@ -62,6 +62,10 @@
       url = "github:nix-community/nixos-cli";
       # separate cache server - no follow nixpkgs
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # ── GUI and WM-related flakes ───────────────────────────────
     firefox-addons = {
