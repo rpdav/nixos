@@ -31,8 +31,10 @@
       ]
       ++ lib.lists.optionals config.systemOpts.gui [
         # Core packages for gui systems
-        btrfs-assistant # must run as root
+        btrfs-assistant
+        gnome-disk-utility
         qdirstat
+        gnome-clocks
       ];
   };
 }
