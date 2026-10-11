@@ -93,8 +93,7 @@
         "- /persist/home/ryan/.cache/" # big files
         "- /persist/home/ryan/Downloads/" # big files
         "- /persist/home/ryan/Nextcloud" # already on server
-        "- /persist/home/ryan/.config/mozilla/firefox" # lots of small files and churn
-        "- /persist/home/ryan/.thunderbird/*/ImapMail" # email
+        "- /persist/home/ryan/.thunderbird/*/ImapMail" # email; already on server
         "- /persist/home/ryan/.local/share/Steam" # lots of small files and big games
         "- /persist/home/ryan/.local/share/lutris" # lots of small files and big games
         "- /persist/home/ryan/.local/share/protonmail" # email

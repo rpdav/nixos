@@ -16,7 +16,7 @@
       --option extra-experimental-features pipe-operators \
       --write-efi-boot-entries \
       --flake "github:rpdav/nixos#install" \
-      --disk $1
+      --disk main $1
     '';
   in {
     imports = [

@@ -82,10 +82,11 @@
       repo = "ssh://borg@borg:2222/backup";
       paths = [
         "${persistVol}/etc"
+        "${persistVol}/var/lib"
       ];
+
       patterns = [
         # Run `borg help patterns` for guidance on exclusion patterns
-        "- */var/**" #not needed for restore
         "- **/.Trash*" #automatically made by gui deletions
         "- **/libvirt" #vdisks made mostly for testing
       ];

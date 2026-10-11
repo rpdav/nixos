@@ -8,28 +8,26 @@
   };
   flake.nixosModules.system-install = {pkgs, ...}: let
     # hard-coded restore helpers for fw13 host
-    root-restore = pkgs.writeShellScriptBin "root-restore" ''
+    restore = pkgs.writeShellScriptBin "root-restore" ''
       if [ "$EUID" -ne 0 ]; then
         echo "This script requires root privileges. Elevating..."
         exec sudo "$0" "$@"
       fi
-      rm -rf /tmp/borg
-      mkdir /tmp/borg
-      borg --rsh="ssh -i ~/id_ed25519_sk_rk" \
-      mount ${self.nixosConfigurations.fw13.config.services.borgbackup.jobs."local".repo} \
+      mkdir /tmp/borg/{fw13-root,fw13-ryan}
+      # mount root repo
+      echo "*** mounting root backup ***"
+      echo "*** touch yubikey after entering pin ***"
+      borg mount ssh://borg@borg:2222/backup/fw13-root \
       /tmp/borg/fw13-root
-    '';
-    user-restore = pkgs.writeShellScriptBin "user-restore" ''
-      rm -rf /tmp/borg
-      mkdir /tmp/borg
-      borg --rsh="ssh -i ~/id_ed25519_sk_rk" \
-      mount ssh://borg@borg:2222/backup/fw13-ryan \
+      # mount user repo
+      echo "*** mounting user backup ***"
+      echo "*** touch yubikey after entering pin ***"
+      borg mount ssh://borg@borg:2222/backup/fw13-ryan \
       /tmp/borg/fw13-ryan
-      echo "repository fw13-ryan mounted at /tmp/borg/fw13-ryan"
     '';
   in {
     ## This file contains host-specific NixOS configuration for my minimal install host
-    ## Will be rebuilt after install using a permanent host
+    ## Will be rebuilt after install using a permanent host config
 
     imports = [
       # import custom options
@@ -39,7 +37,7 @@
       self.diskoConfigurations.luks-lvm-imp
     ];
 
-    # Enable flakes
+    # Enable flakes and other features
     nix = {
       extraOptions = ''
         experimental-features = nix-command flakes pipe-operators
@@ -65,7 +63,7 @@
     };
 
     # Networking
-    networking.hostName = "testvm";
+    networking.hostName = "fw13";
     networking.networkmanager = {
       enable = true;
     };
@@ -73,39 +71,43 @@
     # Timezone
     time.timeZone = "America/Indiana/Indianapolis";
 
-    # System packages
+    # Tools for reinstall
     environment.systemPackages = [
-      pkgs.firefox
       pkgs.git
       pkgs.vim
       pkgs.borgbackup
       pkgs.tree
       pkgs.sops
       pkgs.ssh-to-age
-      root-restore
-      user-restore
+      pkgs.nix-output-monitor
+      restore
     ];
 
-    # Create ssh host keys to import into sops if they don't already exist in backup
-    services.openssh = {
-      enable = true;
-      ports = [22];
-      settings.PasswordAuthentication = true;
-      hostKeys = [
-        {
-          comment = "server key";
-          path = "/etc/ssh/ssh_host_ed25519_key";
-          rounds = 100;
-          type = "ed25519";
-        }
-      ];
-    };
+    # Define ssh keys for secrets repo and backup access
+    # Not a real private key; only a stub file for a resident key
+    systemd.tmpfiles.rules = [
+      "d /home/install/.ssh 0700 install install -"
+      "C /home/install/.ssh/id_ed25519_sk_rk 0600 install install - ${./id_ed25519_sk_rk}"
+      "C /home/install/.ssh/id_ed25519_sk_rk.pub 0644 install install - ${./id_ed25519_sk_rk.pub}"
+    ];
+
+    programs.ssh.extraConfig = ''
+      Host github.com
+        IdentityFile /home/install/.ssh/id_ed25519_sk_rk
+        IdentitiesOnly yes
+      Host borg
+        HostName ${self.deploy.nodes.nas.hostname}
+        IdentityFile /home/install/.ssh/id_ed25519_sk_rk
+        IdentitiesOnly yes
+    '';
+
+    programs.ssh.knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
 
     # minimal root and primary user configs
     users.users.root = {
       password = "changeme";
     };
-    users.users.ryan = {
+    users.users.install = {
       password = "changeme";
       isNormalUser = true;
       extraGroups = ["wheel"];
