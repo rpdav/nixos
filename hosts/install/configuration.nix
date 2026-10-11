@@ -8,12 +8,12 @@
   };
   flake.nixosModules.system-install = {pkgs, ...}: let
     # hard-coded restore helpers for fw13 host
-    restore = pkgs.writeShellScriptBin "root-restore" ''
+    restore = pkgs.writeShellScriptBin "-restore" ''
       if [ "$EUID" -ne 0 ]; then
         echo "This script requires root privileges. Elevating..."
         exec sudo "$0" "$@"
       fi
-      mkdir /tmp/borg/{fw13-root,fw13-ryan}
+      mkdir -p /tmp/borg/{fw13-root,fw13-ryan}
       # mount root repo
       echo "*** mounting root backup ***"
       echo "*** touch yubikey after entering pin ***"
@@ -79,7 +79,6 @@
       pkgs.tree
       pkgs.sops
       pkgs.ssh-to-age
-      pkgs.nix-output-monitor
       restore
     ];
 
@@ -87,10 +86,11 @@
     # Not a real private key; only a stub file for a resident key
     systemd.tmpfiles.rules = [
       "d /home/install/.ssh 0700 install install -"
-      "C /home/install/.ssh/id_ed25519_sk_rk 0600 install install - ${./id_ed25519_sk_rk}"
-      "C /home/install/.ssh/id_ed25519_sk_rk.pub 0644 install install - ${./id_ed25519_sk_rk.pub}"
+      "C /home/install/.ssh/id_ed25519_sk_rk 0600 install users - ${./id_ed25519_sk_rk}"
+      "C /home/install/.ssh/id_ed25519_sk_rk.pub 0644 install users - ${./id_ed25519_sk_rk.pub}"
     ];
 
+    # ssh config for github and borg
     programs.ssh.extraConfig = ''
       Host github.com
         IdentityFile /home/install/.ssh/id_ed25519_sk_rk
@@ -100,7 +100,6 @@
         IdentityFile /home/install/.ssh/id_ed25519_sk_rk
         IdentitiesOnly yes
     '';
-
     programs.ssh.knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
 
     # minimal root and primary user configs

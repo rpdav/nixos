@@ -53,13 +53,9 @@ run "github:nix-community/disko/latest#disko-install" \                      # r
 --disk main /dev/sda                                                         # replace /dev/sda with your target disk. Don't worry about /dev/sda not being consistent across boots;
                                                                              # Future boots will be done using partition labels
 ```
-3. If running on my custom iso, it's a bit simpler:
+3. If running on my custom iso, it includes an installation helper script:
 ```
-sudo disko-install \
---option extra-experimental-features pipe-operators \
---write-efi-boot-entries \
---flake "github:rpdav/nixos#install" \
---disk main /dev/sda
+install /dev/YOUR-DISK-HERE
 ```
 4. Enter the disk encryption passphrase when prompted.
 5. Once install is complete, reboot

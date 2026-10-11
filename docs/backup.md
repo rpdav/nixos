@@ -47,21 +47,14 @@ These are more notes for myself on how to go about various restore scenarios. Th
 ### Main host fw13 dead
 
 1. Install the `install` host
-2. Restore secrets:
+2. Restore secrets using the `restore` helper script:
 ```bash
-# download the bootstrap ssh resident key
-ssh-keygen -K
-
-# make temporary mount directory
-mkdir /tmp/borg
-
 # mount and restore system secrets
-borg --rsh="ssh -i ./id_ed25519_sk_rk" mount ssh://borg@10.10.1.17:2222/backup/fw13-root /tmp/borg
-sudo rsync /tmp/borg/_latest_backup_/persist /
+restore
+sudo rsync -rP /tmp/borg/fw13-root/_latest_backup_/persist /
 
-# mount and restore user secrets
-borg umount /tmp/borg && borg --rsh="ssh -i ./id_ed25519_sk_rk" mount ssh://borg@10.10.1.17:2222/backup/fw13-ryan /tmp/borg
-sudo rsync /tmp/borg/_latest_backup_/persist /
+# restore user secrets
+sudo rsync -rP /tmp/borg/fw13-ryan/_latest_backup_/persist /
 ```
 3. Rebuild
 ```bash
