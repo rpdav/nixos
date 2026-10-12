@@ -35,11 +35,13 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v5
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS_DEPLOY_KEY }}
       - uses: cachix/install-nix-action@v31
         with:
-          # Sets `access-tokens = github.com=<PAT>` in nix.conf, which lets Nix fetch the
-          # private github:rpdav/nix-secrets input. Don't ALSO pass access-tokens via
-          # extra_nix_config; a second line can override this one.
+          # This PAT is no longer used for secrets access. But keeping
+          # it around to reduce rate limiting for other repos
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
           extra_nix_config: |
             trusted-users = root runner
