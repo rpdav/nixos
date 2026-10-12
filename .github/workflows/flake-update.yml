@@ -91,7 +91,7 @@ jobs:
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
           echo "$matrix"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v8
         with:
           name: lockfiles
           path: |
@@ -111,7 +111,7 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: lockfiles
       - uses: cachix/install-nix-action@v31
@@ -148,7 +148,7 @@ jobs:
         include: ${{ fromJSON(needs.update.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: lockfiles
       - uses: jlumbroso/free-disk-space@main
@@ -194,7 +194,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: lockfiles
 
