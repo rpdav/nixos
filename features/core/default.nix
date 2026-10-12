@@ -74,7 +74,11 @@
 
     # CLI config
     programs.bash.completion.enable = true;
-    environment.enableAllTerminfo = true;
+
+    environment.systemPackages = with pkgs; [
+      kitty.terminfo
+      alacritty.terminfo
+    ];
 
     # Time
     time.timeZone = "America/Indiana/Indianapolis";
