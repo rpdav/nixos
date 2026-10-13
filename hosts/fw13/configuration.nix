@@ -69,7 +69,7 @@
 
     # Services to monitor for failures
     services.failureNotify.units = [
-      "borgbackup-job-local"
+      # "borgbackup-job-local" # comment out while transitioning to borg
     ];
 
     # light mode specialization

@@ -2,6 +2,7 @@
   flake.nixosModules.backup = {
     config,
     pkgs,
+    lib,
     ...
   }: let
     inherit (config.backupOpts) patterns repo paths;
@@ -20,7 +21,7 @@
     selfpkgs = self.packages."${pkgs.stdenv.hostPlatform.system}";
   in {
     environment.systemPackages = [
-      root-restore
+      # root-restore # comment out while transitioning to borgmatic
       selfpkgs.backup-mount
       selfpkgs.backup-umount
     ];
@@ -47,36 +48,49 @@
       knownHosts."[borg]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4g3UjhXc1bngjSuUhDJm1aioym5kjbggI/UoAbE7kv root@7d4566122ec5";
     };
 
-    services.borgbackup.jobs."local" = {
-      inherit paths patterns;
-      user = "root";
-      repo = "${repo}/${config.networking.hostName}-root";
-      doInit = true;
-      startAt = ["daily"];
-      #    preHook = placeholder for snapshotting/mounting command
-      #    postHook = placeholder for snapshot deletion/unmount
-      encryption = {
-        mode = "repokey-blake2";
-        passCommand = "cat ${config.sops.secrets."borg/passphrase".path}";
-      };
-      compression = "auto,lzma";
-      prune.keep = {
-        daily = 7;
-        weekly = 4;
-        monthly = 12;
-        yearly = 1;
+    #systemd.services."borgbackup-job-local" = {
+    #  serviceConfig = {
+    #    ExecStartPre = [
+    #      # Wait until ping succeeds before trying to back up
+    #      "${pkgs.coreutils}/bin/echo \"Checking network connectivity...\""
+    #      "/bin/sh -c 'until ${pkgs.iputils}/bin/ping -c1 -W1 1.1.1.1; do sleep 5; done'"
+    #    ];
+    #    # Kill service if no pong after 5 min
+    #    TimeoutStartSec = "5m";
+    #  };
+    #};
+
+    services.borgmatic = {
+      enable = true;
+      settings = {
+        source_directories = paths;
+        inherit patterns;
+        repositories = [
+          {
+            "path" = "${repo}/${config.networking.hostName}-root";
+            "label" = "local";
+          }
+        ];
+        encryption_passcommand = "cat ${config.sops.secrets."borg/passphrase".path}";
+        keep_daily = 7;
+        keep_weekly = 4;
+        keep_monthly = 12;
+        keep_yearly = 1;
       };
     };
-    systemd.services."borgbackup-job-local" = {
-      serviceConfig = {
-        ExecStartPre = [
-          # Wait until ping succeeds before trying to back up
-          "${pkgs.coreutils}/bin/echo \"Checking network connectivity...\""
-          "/bin/sh -c 'until ${pkgs.iputils}/bin/ping -c1 -W1 1.1.1.1; do sleep 5; done'"
-        ];
-        # Kill service if no pong after 5 min
-        TimeoutStartSec = "5m";
-      };
+    systemd.services.borgmatic = {
+      unitConfig.ConditionACPower = "";
+      serviceConfig.ExecStartPre = [
+        ""
+        (pkgs.writeShellScript "borgmatic-pre" ''
+          # Wait until ping succeeds before backing up
+          echo "Checking network connectivity..."
+          /bin/sh -c 'until ${pkgs.iputils}/bin/ping -c1 -W1 1.1.1.1; do sleep 5; done'
+          # Ensure repo is initialized
+          #${pkgs.borgmatic}/bin/borgmatic \
+          #repo-create --encryption repokey-blake2 --make-parent-dirs
+        '')
+      ];
     };
   };
   flake.homeModules.backup = {
@@ -87,7 +101,7 @@
     ...
   }: let
     inherit (config.backupOpts) patterns repo;
-    inherit (config.home) username;
+    inherit (config.home) username homeDirectory;
     user-restore = pkgs.writeShellScriptBin "user-restore" ''
       rm -rf /tmp/borg
       mkdir /tmp/borg
@@ -124,9 +138,23 @@
           echo "Checking network connectivity..."
           /bin/sh -c 'until ${pkgs.iputils}/bin/ping -c1 -W1 1.1.1.1; do sleep 5; done'
           # Ensure repo is initialized
-          ${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --make-parent-dirs
+          ${config.programs.borgmatic.package}/bin/borgmatic \
+          -c ${homeDirectory}/.config/borgmatic.d/${username}-local.yaml \
+          repo-create --encryption repokey-blake2 --make-parent-dirs
         '');
-        # Kill service if no pong after 5 min
+        # Manually specify config location to prevent conflicts with system module
+        ExecStart = lib.mkForce ''
+          ${pkgs.systemd}/bin/systemd-inhibit \
+            --who="borgmatic" \
+            --what="sleep:shutdown" \
+            --why="Prevent interrupting scheduled backup" \
+            ${config.programs.borgmatic.package}/bin/borgmatic \
+              -c ${homeDirectory}/.config/borgmatic.d/${username}-local.yaml \
+              --stats \
+              --verbosity -1 \
+              --list \
+              --syslog-verbosity 1
+        ''; # Kill service if no pong after 5 min
         TimeoutStartSec = "5m";
       };
     };
@@ -138,7 +166,8 @@
     programs.borgmatic = {
       enable = true;
       backups."${username}-local" = {
-        location = {
+        location.excludeHomeManagerSymlinks = true;
+        settings = {
           inherit patterns;
           repositories = [
             {
@@ -146,14 +175,11 @@
               "label" = "local";
             }
           ];
-          excludeHomeManagerSymlinks = true;
-        };
-        storage.encryptionPasscommand = "cat ${osConfig.sops.secrets."borg/passphrase".path}";
-        retention = {
-          keepDaily = 7;
-          keepWeekly = 4;
-          keepMonthly = 12;
-          keepYearly = 1;
+          encryption_passcommand = "cat ${osConfig.sops.secrets."borg/passphrase".path}";
+          keep_daily = 7;
+          keep_weekly = 4;
+          keep_monthly = 12;
+          keep_yearly = 1;
         };
       };
     };
