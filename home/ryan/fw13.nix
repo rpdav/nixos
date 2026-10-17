@@ -110,7 +110,7 @@
     # fw13-specific programs
     programs.joplin-desktop = {
       enable = true;
-      settings.editor = "${pkgs.kitty} ${config.home.sessionVariables.EDITOR}";
+      settings.editor = "${pkgs.kitty}/bin/kitty ${config.home.sessionVariables.EDITOR}";
     };
 
     home.packages = [pkgs.ticktick];

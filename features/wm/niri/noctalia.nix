@@ -93,6 +93,7 @@
           behavior_order = ["lock" "screen-off" "lock-and-suspend"];
         };
         location = {auto_locate = true;};
+        lockscreen.transition = ["zoom"];
         lockscreen_widgets = {
           enabled = false;
           grid = {
