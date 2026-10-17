@@ -47,7 +47,6 @@
 
     # Backup config
     backupOpts = {
-      repo = "ssh://borg@borg:2222/backup";
       paths = [
         "/etc"
         "/home"
@@ -58,7 +57,7 @@
 
     # Services to monitor for failures
     services.failureNotify.units = [
-      "borgbackup-job-local"
+      "borgmatic"
     ];
 
     # Networking

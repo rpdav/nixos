@@ -83,9 +83,9 @@
 
     # Backup config
     backupOpts = {
-      repo = "ssh://borg@borg:2222/backup";
       paths = [
         "${persistVol}/etc"
+        "${persistVol}/var/lib"
       ];
       patterns = [
         # Run `borg help patterns` for guidance on exclusion patterns
@@ -147,7 +147,7 @@
 
     # Services to monitor for failures
     services.failureNotify.units = [
-      "borgbackup-job-local"
+      "borgmatic"
       "rclone-appdata"
       "rclone-borg"
       "rclone-media"

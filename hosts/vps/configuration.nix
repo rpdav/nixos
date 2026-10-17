@@ -60,7 +60,6 @@
 
     # Backup config
     backupOpts = {
-      repo = "ssh://borg@borg:2222/backup";
       paths = [
         "${persistVol}/etc"
       ];
@@ -111,7 +110,7 @@
 
     # Services to monitor for failures
     services.failureNotify.units = [
-      "borgbackup-job-local"
+      "borgmatic"
     ];
 
     # VPS monitoring

@@ -69,7 +69,7 @@
 
     # Services to monitor for failures
     services.failureNotify.units = [
-      # "borgbackup-job-local" # comment out while transitioning to borg
+      "borgmatic"
     ];
 
     # light mode specialization
@@ -79,7 +79,6 @@
 
     # Backup config
     backupOpts = {
-      repo = "ssh://borg@borg:2222/backup";
       paths = [
         "${persistVol}/etc"
         "${persistVol}/var/lib"
