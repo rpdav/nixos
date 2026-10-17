@@ -7,7 +7,9 @@
     pkgs,
     config,
     ...
-  }: {
+  }: let
+    inherit (self.deploy.nodes) nas vps retropi;
+  in {
     ## This file contains NixOS configuration common to all hosts
 
     imports = [
@@ -27,9 +29,9 @@
     # config-wide hosts file
     networking.hosts = {
       # hosts
-      "10.10.1.17" = ["nas" "borg"];
-      "10.10.1.10" = ["retropi"];
-      "${inputs.nix-secrets.vps.ip}" = ["vps"];
+      ${nas.hostname} = ["nas" "borg"];
+      ${retropi.hostname} = ["retropi"];
+      ${vps.hostname} = ["vps"];
 
       # networking infrastructure
       "10.10.1.1" = ["opnsense"];

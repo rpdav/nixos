@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.system-nas = {
     lib,
     config,
@@ -17,7 +21,7 @@
           macAddress = "00:DB:61:CA:AD:BE";
           ipv4.addresses = [
             {
-              address = "10.10.1.17";
+              address = self.deploy.nodes.nas.hostname;
               prefixLength = 24;
             }
           ];

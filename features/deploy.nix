@@ -9,6 +9,7 @@
       hostname = "10.10.1.17";
       profiles.system = {
         user = "root";
+        sshUser = "root";
         path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nas;
       };
     };
@@ -16,7 +17,16 @@
       hostname = "100.111.223.13";
       profiles.system = {
         user = "root";
+        sshUser = "root";
         path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.vps;
+      };
+    };
+    retropi = {
+      hostname = "10.10.1.10";
+      profiles.system = {
+        user = "root";
+        sshUser = "root";
+        path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.vps;
       };
     };
   };

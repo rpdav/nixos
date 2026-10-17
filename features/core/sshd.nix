@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{self, ...}: {
   flake.nixosModules.core = {
     config,
     lib,
@@ -36,12 +36,9 @@
     programs.ssh.extraConfig = ''
       Host nas
         User ryan
-        Port 22
 
-      Host pi
-        HostName 10.10.1.10
-        User pi
-        Port 22
+      Host vps
+        User ryan
 
       Host retropi
         User ryan

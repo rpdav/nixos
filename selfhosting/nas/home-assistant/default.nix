@@ -27,7 +27,7 @@
 
     # Create swag proxy configs
     virtualisation.oci-containers.proxyConfs."home-assistant" = {
-      container = "10.10.1.17"; # use host IP since using host networking
+      container = "172.26.0.1"; # proxynet gateway IP to access nas
       subdomain = "home";
       port = 8123;
       protocol = "http";
