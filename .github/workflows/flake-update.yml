@@ -91,7 +91,7 @@ jobs:
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
           echo "$matrix"
 
-      - uses: actions/upload-artifact@v8
+      - uses: actions/upload-artifact@v7
         with:
           name: lockfiles
           path: |
