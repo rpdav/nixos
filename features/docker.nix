@@ -43,6 +43,17 @@
 
     virtualisation.oci-containers.backend = "docker";
 
+    # Add a prefix for docker networks to wait until the daemon is up
+    # compose2nix doesn't add this, and this removes the need to add the `.after`
+    # entry to every new service.
+    systemd.packages = [
+      (pkgs.writeTextDir "etc/systemd/system/docker-network-.service.d/10-docker-order.conf" ''
+        [Unit]
+        After=docker.service docker.socket
+        Wants=docker.service
+      '')
+    ];
+
     # Open firewall port for dns resolution
     networking.firewall = {
       allowedUDPPorts = [53];
