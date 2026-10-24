@@ -1,4 +1,4 @@
-{self, ...}: {
+{
   flake.nixosModules.core = {
     config,
     lib,
@@ -53,7 +53,7 @@
 
     # Enable remote passwordless sudo
     # this doesn't work :(
-    security.pam.services.sudo = {config, ...}: {
+    security.pam.services.sudo = {
       rules.auth.rssh = {
         order = config.rules.auth.ssh_agent_auth.order - 1;
         control = "sufficient";

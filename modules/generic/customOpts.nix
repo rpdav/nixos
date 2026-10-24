@@ -156,7 +156,7 @@
       backupOpts = {
         repo = mkOption {
           type = types.str;
-          default = "ssh://borg@borg:2222/backup";
+          default = "ssh://borg/backup";
           description = ''
             Local backup target
           '';

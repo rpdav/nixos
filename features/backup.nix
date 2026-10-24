@@ -40,7 +40,11 @@
           IdentitiesOnly yes
           IdentityAgent none
       '';
-      knownHosts."[borg]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4g3UjhXc1bngjSuUhDJm1aioym5kjbggI/UoAbE7kv root@7d4566122ec5";
+      knownHosts = {
+        "[borg]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4g3UjhXc1bngjSuUhDJm1aioym5kjbggI/UoAbE7kv root@7d4566122ec5";
+        # Have to declare both the hostname and the IP. Not sure why
+        "[${self.deploy.nodes.nas.hostname}]:2222".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4g3UjhXc1bngjSuUhDJm1aioym5kjbggI/UoAbE7kv root@7d4566122ec5";
+      };
     };
 
     services.borgmatic = {
