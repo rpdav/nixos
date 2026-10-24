@@ -16,7 +16,6 @@
           })
         ];
       };
-      initrd.systemd.enable = true; # needed for plymouth display during initrd crypt unlock
 
       # quiet boot. Works best with gdm for smooth transition.
       kernelParams = [
@@ -26,7 +25,6 @@
         "rd.udev.log_level=3"
         "udev.log_priority=3"
       ];
-      initrd.verbose = false;
     };
   };
 }
