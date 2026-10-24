@@ -33,12 +33,5 @@
     # but is not in the service config. No github issue yet.
     # from serviceModules.home-assistant
     services.esphome.package = pkgs-stable.esphome;
-
-    # Blacklist eMudhra certs with insecure private keys
-    # https://emudhra.we-have-a-problem.com/
-    security.pki.caCertificateBlacklist = [
-      "Comodo AAA Services root"
-      "emSign ECC Root CA - G3"
-    ];
   };
 }
