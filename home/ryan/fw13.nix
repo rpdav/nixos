@@ -82,6 +82,18 @@
         variable-refresh-rate = true;
         enable = true;
       };
+      # Classroom 4/5 TV
+      "Sony SONY TV  *30 0x01010101" = {
+        mode = {
+          width = 3840;
+          height = 2160;
+        };
+        position = {
+          x = 5280;
+          y = 0;
+        };
+        scale = 2.0;
+      };
     };
 
     backupOpts = {
@@ -111,6 +123,7 @@
       enable = true;
       settings.editor = "${pkgs.kitty}/bin/kitty ${config.home.sessionVariables.EDITOR}";
     };
+    programs.claude-code.enable = true;
 
     home.packages = [pkgs.ticktick];
 
