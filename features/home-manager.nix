@@ -5,8 +5,8 @@
       inputs.home-manager.nixosModules.home-manager
     ];
     home-manager = {
-      useUserPackages = false;
-      useGlobalPkgs = false;
+      useUserPackages = true;
+      useGlobalPkgs = true;
     };
   };
 }

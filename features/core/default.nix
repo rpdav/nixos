@@ -105,9 +105,6 @@
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
 
-    # Allow unfree packages
-    nixpkgs.config.allowUnfree = true;
-
     # In system, this is in a separate packages.nix - consider matching?
     home.packages = (
       with pkgs;
