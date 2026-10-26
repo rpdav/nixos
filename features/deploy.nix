@@ -3,7 +3,7 @@
   self,
   ...
 }: {
-  flake.nixosModules.core = {pkgs, ...}: {environment.systemPackages = [pkgs.deploy-rs];};
+  flake.nixosModules.admin = {pkgs, ...}: {environment.systemPackages = [inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.deploy-rs];};
   flake.deploy.nodes = {
     nas = {
       hostname = "10.10.1.17";
