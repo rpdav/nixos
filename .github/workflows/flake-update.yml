@@ -2,9 +2,9 @@
 # Save as: .github/workflows/flake-update.yml in rpdav/nixos
 #
 # Proposes the weekly update: bumps flake.lock + uptix.lock, commits, pushes a branch,
-# opens a PR. Does NOT run `nix flake check` or build any hosts - that's ci.yml's job,
-# triggered automatically as a check on the PR this workflow opens (and on any later
-# pushes to it, including your own local debugging commits).
+# opens a PR, and enables auto-merge on it. ci.yml runs as a required status check on
+# that PR (and on any later pushes to it, including your own local debugging commits);
+# the PR only actually merges once check+build pass there - see repo-setting notes below.
 #
 # Required repo secrets:
 #   NIX_SECRETS_DEPLOY_KEY  - read-only SSH deploy key for rpdav/nix-secrets
@@ -12,8 +12,16 @@
 #                              github: inputs (nixpkgs, uptix); no longer grants secrets access
 #   TS_OAUTH_CLIENT_ID, TS_AUDIENCE - Tailscale OIDC/workload-identity federation
 #   ATTIC_TOKEN             - push/pull token for the `ci` attic client identity
-# Required repo setting: Settings -> Actions -> General -> Workflow permissions ->
-#                        "Allow GitHub Actions to create and approve pull requests"
+#
+# Required one-time repo settings (General -> Pull Requests):
+#   - "Allow auto-merge" enabled
+#   - "Automatically delete head branches" enabled (optional, tidiness only)
+# Required branch protection rule on `main` (Settings -> Branches):
+#   - Require status checks to pass before merging: `check`, `build`
+#   - No required review approvals - a bot can't review its own PR, and you're the sole
+#     contributor, so this would just deadlock auto-merge
+# This status-check requirement is what makes auto-merge safe: without it, auto-merge
+# has nothing to wait on and will merge essentially immediately regardless of outcome.
 
 name: Weekly flake update
 
@@ -100,13 +108,20 @@ jobs:
           {
             echo "Automated weekly update."
             echo
-            echo '```'
-            cat update.log
-            echo '```'
+            # Keep only the "• Added/Updated/Removed input ..." summary blocks -
+            # i.e. each bullet line plus its indented continuation line(s) - and
+            # drop everything else `nix flake update` prints (progress, warnings).
+            awk '
+              /^•/ { p=1; print; next }
+              p && /^[[:space:]]/ { print; next }
+              { p=0 }
+            ' update.log
           } > pr-body.md
 
-      - uses: peter-evans/create-pull-request@v7
+      - name: Open PR
+        id: cpr
         if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
         with:
           branch: ${{ env.UPDATE_BRANCH }}
           delete-branch: true
@@ -116,3 +131,9 @@ jobs:
           commit-message: "chore: weekly flake + uptix update"
           title: "chore: weekly flake + uptix update"
           body-path: pr-body.md
+
+#      - name: Enable auto-merge
+#        if: steps.diff.outputs.changed == 'true'
+#        run: gh pr merge --auto --squash "${{ steps.cpr.outputs.pull-request-number }}"
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
