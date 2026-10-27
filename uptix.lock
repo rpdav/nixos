@@ -103,11 +103,11 @@
     "metadata": {
       "name": "jhonderson/actual-http-api",
       "selected_version": "latest",
-      "resolved_version": "sha256:9147533895544c50d663ca712216fe2c295aeb230074c4af392413be7d907989",
+      "resolved_version": "sha256:5f61c9fa7a2aa980c9701ae314031e92976c673272fac26286b77d2f85790918",
       "dep_type": "docker",
       "description": "Docker image jhonderson/actual-http-api:latest from registry-1.docker.io"
     },
-    "lock": "sha256:9147533895544c50d663ca712216fe2c295aeb230074c4af392413be7d907989"
+    "lock": "sha256:5f61c9fa7a2aa980c9701ae314031e92976c673272fac26286b77d2f85790918"
   },
   "louislam/uptime-kuma:1": {
     "metadata": {
@@ -213,21 +213,21 @@
     "metadata": {
       "name": "searxng/searxng",
       "selected_version": "latest",
-      "resolved_version": "sha256:23482d8ecf7ddf66029479468ea04c1bb11d2b65785a17a7e629e2ffd13296ca",
+      "resolved_version": "sha256:64936ab0847aae6494d37edf688ce792b262e8467d48ad844c0bf3f899a45249",
       "dep_type": "docker",
       "description": "Docker image searxng/searxng:latest from registry-1.docker.io"
     },
-    "lock": "sha256:23482d8ecf7ddf66029479468ea04c1bb11d2b65785a17a7e629e2ffd13296ca"
+    "lock": "sha256:64936ab0847aae6494d37edf688ce792b262e8467d48ad844c0bf3f899a45249"
   },
   "valkey/valkey:8-alpine": {
     "metadata": {
       "name": "valkey/valkey",
       "selected_version": "8-alpine",
-      "resolved_version": "sha256:081c2f5cb575efc901aa80ff9cdbd1ec6a301682fd35e1ebb4b0990a4a4a8507",
+      "resolved_version": "sha256:2602ace2be6569bc2bbb06f873776516ab9089821525be34f4305c67eb9db02a",
       "dep_type": "docker",
       "description": "Docker image valkey/valkey:8-alpine from registry-1.docker.io"
     },
-    "lock": "sha256:081c2f5cb575efc901aa80ff9cdbd1ec6a301682fd35e1ebb4b0990a4a4a8507"
+    "lock": "sha256:2602ace2be6569bc2bbb06f873776516ab9089821525be34f4305c67eb9db02a"
   },
   "vaultwarden/server": {
     "metadata": {
