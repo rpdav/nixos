@@ -143,11 +143,11 @@
     "metadata": {
       "name": "linuxserver/jellyfin",
       "selected_version": "latest",
-      "resolved_version": "sha256:4212ca390fbc6bd5002048d2d2ce2b8a5b1ad278ec4cbabe6519869117404308",
+      "resolved_version": "sha256:3894d9eae88418d3cf9ac6349392d2c4dad818365a59565d19edc38098897044",
       "dep_type": "docker",
       "description": "Docker image linuxserver/jellyfin:latest from lscr.io"
     },
-    "lock": "sha256:4212ca390fbc6bd5002048d2d2ce2b8a5b1ad278ec4cbabe6519869117404308"
+    "lock": "sha256:3894d9eae88418d3cf9ac6349392d2c4dad818365a59565d19edc38098897044"
   },
   "lscr.io/linuxserver/mariadb": {
     "metadata": {
@@ -173,11 +173,11 @@
     "metadata": {
       "name": "linuxserver/speedtest-tracker",
       "selected_version": "latest",
-      "resolved_version": "sha256:14b7850d1a0c06cc49e14546717f93996ad44e90127bb01418af293ae2d98fc7",
+      "resolved_version": "sha256:8d3c2826b708c18be7fb46c1afebc6bb3b1ab7c519473df1be89f5ecaa8bb31f",
       "dep_type": "docker",
       "description": "Docker image linuxserver/speedtest-tracker:latest from lscr.io"
     },
-    "lock": "sha256:14b7850d1a0c06cc49e14546717f93996ad44e90127bb01418af293ae2d98fc7"
+    "lock": "sha256:8d3c2826b708c18be7fb46c1afebc6bb3b1ab7c519473df1be89f5ecaa8bb31f"
   },
   "lscr.io/linuxserver/swag:latest": {
     "metadata": {
@@ -213,11 +213,11 @@
     "metadata": {
       "name": "searxng/searxng",
       "selected_version": "latest",
-      "resolved_version": "sha256:7c7cbe509429e82755104b2a95f52085a98633c95d53f44e4e905fa3a59f08c8",
+      "resolved_version": "sha256:23482d8ecf7ddf66029479468ea04c1bb11d2b65785a17a7e629e2ffd13296ca",
       "dep_type": "docker",
       "description": "Docker image searxng/searxng:latest from registry-1.docker.io"
     },
-    "lock": "sha256:7c7cbe509429e82755104b2a95f52085a98633c95d53f44e4e905fa3a59f08c8"
+    "lock": "sha256:23482d8ecf7ddf66029479468ea04c1bb11d2b65785a17a7e629e2ffd13296ca"
   },
   "valkey/valkey:8-alpine": {
     "metadata": {
@@ -243,10 +243,10 @@
     "metadata": {
       "name": "zwavejs/zwavejs2mqtt",
       "selected_version": "latest",
-      "resolved_version": "sha256:37a963feeac73bbdba034bf2b238cd18b9ef3f4d42045e62c85d2e304b46d985",
+      "resolved_version": "sha256:98a5f8c12f91acc0254957cf094dc4a6ff099d7dcd00c140d6fb6cfc466464be",
       "dep_type": "docker",
       "description": "Docker image zwavejs/zwavejs2mqtt:latest from registry-1.docker.io"
     },
-    "lock": "sha256:37a963feeac73bbdba034bf2b238cd18b9ef3f4d42045e62c85d2e304b46d985"
+    "lock": "sha256:98a5f8c12f91acc0254957cf094dc4a6ff099d7dcd00c140d6fb6cfc466464be"
   }
 }
