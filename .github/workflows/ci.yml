@@ -1,0 +1,167 @@
+# Built with Claude
+#
+# Runs `nix flake check` and a per-host build as PR status checks. Triggers on any PR
+# against main - including the weekly auto-update branch flake-update.yml opens, and any
+# later pushes to it (e.g. your own local debugging fixups), as well as your own manual
+# PRs. Does NOT run on direct pushes to main - see NIX_CONFIG below for why: you push to
+# your own branches often and didn't want this firing on every incremental commit.
+#
+# Required repo secrets: same NIX_SECRETS_DEPLOY_KEY / NIX_SECRETS_PAT / TS_OAUTH_CLIENT_ID /
+# TS_AUDIENCE / ATTIC_TOKEN as flake-update.yml.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  # New pushes to the same PR cancel whatever's still running for it, so a debugging
+  # fixup doesn't queue behind a stale run.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NIX_CONFIG: extra-experimental-features = pipe-operators
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Work out which hosts exist and their architectures, for the build matrix.
+  # Pure eval - no cache substitution needed, so no tailscale/attic steps here.
+  # ---------------------------------------------------------------------------
+  prepare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      matrix: ${{ steps.hosts.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS_DEPLOY_KEY }}
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          extra_nix_config: |
+            trusted-users = root runner
+
+      - name: Build host/runner matrix
+        id: hosts
+        run: |
+          # {"host": "system", ...} - evaluating (not building) other-arch configs is fine on x86
+          systems=$(nix eval --json .#nixosConfigurations \
+            --apply 'c: builtins.mapAttrs (_: v: v.pkgs.stdenv.hostPlatform.system) c')
+          matrix=$(jq -c '[to_entries[] | {
+              host: .key,
+              runner: (if .value == "aarch64-linux" then "ubuntu-24.04-arm" else "ubuntu-latest" end)
+            }]' <<< "$systems")
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "$matrix"
+
+  # ---------------------------------------------------------------------------
+  # nix flake check (evaluates every host, runs x86_64 `checks.*` outputs)
+  # ---------------------------------------------------------------------------
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS_DEPLOY_KEY }}
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          extra_nix_config: |
+            trusted-users = root runner
+
+      - name: Connect to tailnet
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
+          args: --accept-dns=false
+
+      - name: Configure attic cache
+        run: |
+          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run nixpkgs#attic-client -- use nixos-cache
+
+      - name: flake check
+        run: |
+          nix run nixpkgs#attic-client -- watch-store nixos-cache &
+          echo "watcher_pid=$!" >> "$GITHUB_ENV"
+          nix flake check --keep-going --print-build-logs
+
+      - name: Stop cache watcher
+        if: always()
+        run: kill -INT "$watcher_pid" 2>/dev/null && wait "$watcher_pid" 2>/dev/null || true
+
+  # ---------------------------------------------------------------------------
+  # Build each host's system closure on a native runner for its architecture.
+  # attic watch-store runs for the whole build, so anything that builds
+  # successfully is pushed as it finishes - a failure elsewhere in the closure
+  # doesn't cost you that work, in CI or on your next local rebuild.
+  # ---------------------------------------------------------------------------
+  build:
+    needs: prepare
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS_DEPLOY_KEY }}
+
+      - uses: jlumbroso/free-disk-space@main
+        if: runner.arch == 'X64' # tuned for x86 images; skip on arm
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          extra_nix_config: |
+            trusted-users = root runner
+
+      - name: Connect to tailnet
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
+          args: --accept-dns=false
+
+      - name: Configure attic cache
+        run: |
+          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
+          nix run nixpkgs#attic-client -- use nixos-cache
+
+      - name: Build ${{ matrix.host }}
+        env:
+          HOST: ${{ matrix.host }}
+        run: |
+          nix run nixpkgs#attic-client -- watch-store nixos-cache &
+          echo "watcher_pid=$!" >> "$GITHUB_ENV"
+          nix build --keep-going --no-link --print-build-logs \
+            ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
+
+      - name: Stop cache watcher
+        if: always()
+        run: kill -INT "$watcher_pid" 2>/dev/null && wait "$watcher_pid" 2>/dev/null || true

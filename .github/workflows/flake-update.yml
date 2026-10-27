@@ -1,4 +1,19 @@
 # Built with Claude
+# Save as: .github/workflows/flake-update.yml in rpdav/nixos
+#
+# Proposes the weekly update: bumps flake.lock + uptix.lock, commits, pushes a branch,
+# opens a PR. Does NOT run `nix flake check` or build any hosts - that's ci.yml's job,
+# triggered automatically as a check on the PR this workflow opens (and on any later
+# pushes to it, including your own local debugging commits).
+#
+# Required repo secrets:
+#   NIX_SECRETS_DEPLOY_KEY  - read-only SSH deploy key for rpdav/nix-secrets
+#   NIX_SECRETS_PAT         - kept only to reduce GitHub API rate limiting on public
+#                              github: inputs (nixpkgs, uptix); no longer grants secrets access
+#   TS_OAUTH_CLIENT_ID, TS_AUDIENCE - Tailscale OIDC/workload-identity federation
+#   ATTIC_TOKEN             - push/pull token for the `ci` attic client identity
+# Required repo setting: Settings -> Actions -> General -> Workflow permissions ->
+#                        "Allow GitHub Actions to create and approve pull requests"
 
 name: Weekly flake update
 
@@ -22,29 +37,27 @@ env:
   NIX_CONFIG: extra-experimental-features = pipe-operators
 
 jobs:
-  # ---------------------------------------------------------------------------
-  # 1. Update lock files, work out which hosts exist (and their architectures)
-  # ---------------------------------------------------------------------------
   update:
     runs-on: ubuntu-latest
-    outputs:
-      changed: ${{ steps.diff.outputs.changed }}
-      matrix: ${{ steps.hosts.outputs.matrix }}
     permissions:
-      contents: read
-      id-token: write
+      contents: write
+      pull-requests: write
+      id-token: write # lets the Tailscale action request a GitHub OIDC token
     steps:
       - uses: actions/checkout@v5
+
       - uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_DEPLOY_KEY }}
+
       - uses: cachix/install-nix-action@v31
         with:
-          # This PAT is no longer used for secrets access. But keeping
-          # it around to reduce rate limiting for other repos
+          # Rate-limit mitigation only - nix-secrets access now comes from the ssh-agent
+          # step above (flake input is git+ssh://git@github.com/rpdav/nix-secrets).
           github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
           extra_nix_config: |
             trusted-users = root runner
+
       - name: Connect to tailnet
         uses: tailscale/github-action@v4
         with:
@@ -52,6 +65,7 @@ jobs:
           audience: ${{ secrets.TS_AUDIENCE }}
           tags: tag:ci
           args: --accept-dns=false
+
       - name: Configure attic cache
         run: |
           nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
@@ -65,6 +79,8 @@ jobs:
         run: nix run github:luizribeiro/uptix -- update
 
       - name: Push uptix to cache
+        # Single small derivation from `nix run` above - a direct push is simpler than
+        # standing up a watch-store watcher for one already-realized path.
         run: |
           nix run nixpkgs#attic-client -- push nixos-cache \
             "$(nix path-info github:luizribeiro/uptix)"
@@ -78,130 +94,11 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Build host/runner matrix
-        id: hosts
-        run: |
-          # {"host": "system", ...} - evaluating (not building) other-arch configs is fine on x86
-          systems=$(nix eval --json .#nixosConfigurations \
-            --apply 'c: builtins.mapAttrs (_: v: v.pkgs.stdenv.hostPlatform.system) c')
-          matrix=$(jq -c '[to_entries[] | {
-              host: .key,
-              runner: (if .value == "aarch64-linux" then "ubuntu-24.04-arm" else "ubuntu-latest" end)
-            }]' <<< "$systems")
-          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
-          echo "$matrix"
-
-      - uses: actions/upload-artifact@v7
-        with:
-          name: lockfiles
-          path: |
-            flake.lock
-            uptix.lock
-            update.log
-
-  # ---------------------------------------------------------------------------
-  # 2a. nix flake check (evaluates every host, runs x86_64 `checks.*` outputs)
-  # ---------------------------------------------------------------------------
-  check:
-    needs: update
-    if: needs.update.outputs.changed == 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v8
-        with:
-          name: lockfiles
-      - uses: cachix/install-nix-action@v31
-        with:
-          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
-          extra_nix_config: |
-            trusted-users = root runner
-      - name: Connect to tailnet
-        uses: tailscale/github-action@v4
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          audience: ${{ secrets.TS_AUDIENCE }}
-          tags: tag:ci
-          args: --accept-dns=false
-      - name: Configure attic cache
-        run: |
-          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
-          nix run nixpkgs#attic-client -- use nixos-cache
-      - run: nix flake check --print-build-logs
-
-  # ---------------------------------------------------------------------------
-  # 2b. Build each host's system closure on a native runner for its architecture
-  # ---------------------------------------------------------------------------
-  build:
-    needs: update
-    if: needs.update.outputs.changed == 'true'
-    runs-on: ${{ matrix.runner }}
-    permissions:
-      contents: read
-      id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJSON(needs.update.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v8
-        with:
-          name: lockfiles
-      - uses: jlumbroso/free-disk-space@main
-        if: runner.arch == 'X64' # tuned for x86 images; skip on arm
-      - uses: cachix/install-nix-action@v31
-        with:
-          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
-          extra_nix_config: |
-            trusted-users = root runner
-      - name: Connect to tailnet
-        uses: tailscale/github-action@v4
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          audience: ${{ secrets.TS_AUDIENCE }}
-          tags: tag:ci
-          args: --accept-dns=false
-      - name: Configure attic cache
-        run: |
-          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
-          nix run nixpkgs#attic-client -- use nixos-cache
-      - name: Build ${{ matrix.host }}
-        env:
-          HOST: ${{ matrix.host }}
-        run: |
-          nix build --no-link --print-build-logs \
-            ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
-      - name: Push ${{ matrix.host }} to cache
-        env:
-          HOST: ${{ matrix.host }}
-        run: |
-          nix run nixpkgs#attic-client -- push nixos-cache \
-            "$(nix path-info ".#nixosConfigurations.${HOST}.config.system.build.toplevel")"
-
-  # ---------------------------------------------------------------------------
-  # 3. Everything passed -> open/refresh the PR
-  # ---------------------------------------------------------------------------
-  pull-request:
-    needs: [update, check, build]
-    if: needs.update.outputs.changed == 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v8
-        with:
-          name: lockfiles
-
       - name: Compose PR body
+        if: steps.diff.outputs.changed == 'true'
         run: |
           {
-            echo "Automated weekly update. \`nix flake check\` and a full build of every host passed."
+            echo "Automated weekly update."
             echo
             echo '```'
             cat update.log
@@ -209,6 +106,7 @@ jobs:
           } > pr-body.md
 
       - uses: peter-evans/create-pull-request@v7
+        if: steps.diff.outputs.changed == 'true'
         with:
           branch: ${{ env.UPDATE_BRANCH }}
           delete-branch: true
