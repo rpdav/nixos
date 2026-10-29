@@ -1,4 +1,6 @@
 # NixOS Config
+[![Flake check](https://github.com/rpdav/nixos/actions/workflows/flake-check.yml/badge.svg)](https://github.com/rpdav/nixos/actions/workflows/flake-check.yml)
+[![System builds](https://github.com/rpdav/nixos/actions/workflows/ci.yml/badge.svg)](https://github.com/rpdav/nixos/actions/workflows/ci.yml)
 
 This is my NixOS configuration. I'm a newbie to Nix and this is my first public repo. Caveat emptor.
 
