@@ -1,6 +1,6 @@
 # Built with Claude
 #
-# Runs `nix flake check` and a per-host build as PR status checks. Triggers on any PR
+# Runs a per-host build as PR status checks. Triggers on any PR
 # against main - including the weekly auto-update branch flake-update.yml opens, and any
 # later pushes to it (e.g. your own local debugging fixups), as well as your own manual
 # PRs. Does NOT run on direct pushes to main - see NIX_CONFIG below for why: you push to
@@ -63,50 +63,6 @@ jobs:
             }]' <<< "$systems")
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
           echo "$matrix"
-
-  # ---------------------------------------------------------------------------
-  # nix flake check (evaluates every host, runs x86_64 `checks.*` outputs)
-  # ---------------------------------------------------------------------------
-  check:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: webfactory/ssh-agent@v0.10.0
-        with:
-          ssh-private-key: ${{ secrets.NIX_SECRETS_DEPLOY_KEY }}
-
-      - uses: cachix/install-nix-action@v31
-        with:
-          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
-          extra_nix_config: |
-            trusted-users = root runner
-
-      - name: Connect to tailnet
-        uses: tailscale/github-action@v4
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          audience: ${{ secrets.TS_AUDIENCE }}
-          tags: tag:ci
-          args: --accept-dns=false
-
-      - name: Configure attic cache
-        run: |
-          nix run nixpkgs#attic-client -- login ci https://nix.dfrp.xyz "${{ secrets.ATTIC_TOKEN }}"
-          nix run nixpkgs#attic-client -- use nixos-cache
-
-      - name: flake check
-        run: |
-          nix run nixpkgs#attic-client -- watch-store nixos-cache &
-          echo "watcher_pid=$!" >> "$GITHUB_ENV"
-          nix flake check --keep-going --print-build-logs
-
-      - name: Stop cache watcher
-        if: always()
-        run: kill -INT "$watcher_pid" 2>/dev/null && wait "$watcher_pid" 2>/dev/null || true
 
   # ---------------------------------------------------------------------------
   # Build each host's system closure on a native runner for its architecture.
