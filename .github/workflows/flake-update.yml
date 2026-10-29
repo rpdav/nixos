@@ -25,9 +25,7 @@ concurrency:
 
 env:
   UPDATE_BRANCH: auto/flake-update
-  # Your config uses `|>`, which is gated behind an experimental feature. Nix reads NIX_CONFIG in
-  # every job/step; the `extra-` prefix appends to (rather than replaces) the features the
-  # install action already enables. Requires Nix >= 2.24.
+  # need pipe operators for this repo
   NIX_CONFIG: extra-experimental-features = pipe-operators
 
 jobs:
@@ -46,8 +44,7 @@ jobs:
 
       - uses: cachix/install-nix-action@v31
         with:
-          # Rate-limit mitigation only - nix-secrets access now comes from the ssh-agent
-          # step above (flake input is git+ssh://git@github.com/rpdav/nix-secrets).
+          # Rate-limit mitigation only
           github_access_token: ${{ secrets.CI_PAT }}
           extra_nix_config: |
             trusted-users = root runner
@@ -72,9 +69,9 @@ jobs:
       - name: Update uptix.lock
         run: nix run github:luizribeiro/uptix -- update
 
+      # The only derivation built here is the uptix binary. This will push
+      # it to the attic cache for later CI builds.
       - name: Push uptix to cache
-        # Single small derivation from `nix run` above - a direct push is simpler than
-        # standing up a watch-store watcher for one already-realized path.
         run: |
           nix run nixpkgs#attic-client -- push nixos-cache \
             "$(nix path-info github:luizribeiro/uptix)"
@@ -119,8 +116,8 @@ jobs:
           title: "chore: weekly flake + uptix update"
           body-path: pr-body.md
 
-#      - name: Enable auto-merge
-#        if: steps.diff.outputs.changed == 'true'
-#        run: gh pr merge --auto --squash "${{ steps.cpr.outputs.pull-request-number }}"
-#        env:
-#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Enable auto-merge
+        if: steps.diff.outputs.changed == 'true'
+        run: gh pr merge --auto --squash "${{ steps.cpr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
