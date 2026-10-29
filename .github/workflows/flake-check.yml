@@ -1,21 +1,13 @@
 # Built with Claude
 #
-# Save as: .github/workflows/flake-check.yml in rpdav/nixos
+# Perform a `nix flake check` on every push
 #
-# Fast feedback on every push: just `nix flake check`, no host builds. Skips the
-# auto/flake-update branch deliberately - that branch already gets a full check+build
-# via ci.yml once flake-update.yml opens its PR, so running this too would be redundant.
-# Keep this branch name in sync with UPDATE_BRANCH in flake-update.yml if you rename it.
-#
-# Required repo secrets: same NIX_SECRETS_DEPLOY_KEY / NIX_SECRETS_PAT / TS_OAUTH_CLIENT_ID /
+# Required repo secrets: same NIX_SECRETS_DEPLOY_KEY / CI_PAT / TS_OAUTH_CLIENT_ID /
 # TS_AUDIENCE / ATTIC_TOKEN as the other workflows.
 
 name: Flake check
 
-on:
-  push:
-    branches-ignore:
-      - auto/flake-update
+on: push
 
 permissions:
   contents: read
@@ -43,7 +35,7 @@ jobs:
 
       - uses: cachix/install-nix-action@v31
         with:
-          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          github_access_token: ${{ secrets.CI_PAT }}
           extra_nix_config: |
             trusted-users = root runner
 

@@ -1,12 +1,8 @@
 # Built with Claude
 #
-# Runs a per-host build as PR status checks. Triggers on any PR
-# against main - including the weekly auto-update branch flake-update.yml opens, and any
-# later pushes to it (e.g. your own local debugging fixups), as well as your own manual
-# PRs. Does NOT run on direct pushes to main - see NIX_CONFIG below for why: you push to
-# your own branches often and didn't want this firing on every incremental commit.
+# Build against all hosts on pull request and push built derivations to attic cache
 #
-# Required repo secrets: same NIX_SECRETS_DEPLOY_KEY / NIX_SECRETS_PAT / TS_OAUTH_CLIENT_ID /
+# Required repo secrets: same NIX_SECRETS_DEPLOY_KEY / CI_PAT / TS_OAUTH_CLIENT_ID /
 # TS_AUDIENCE / ATTIC_TOKEN as flake-update.yml.
 
 name: CI
@@ -47,7 +43,7 @@ jobs:
 
       - uses: cachix/install-nix-action@v31
         with:
-          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          github_access_token: ${{ secrets.CI_PAT }}
           extra_nix_config: |
             trusted-users = root runner
 
@@ -92,7 +88,7 @@ jobs:
 
       - uses: cachix/install-nix-action@v31
         with:
-          github_access_token: ${{ secrets.NIX_SECRETS_PAT }}
+          github_access_token: ${{ secrets.CI_PAT }}
           extra_nix_config: |
             trusted-users = root runner
 
