@@ -117,3 +117,20 @@ jobs:
       - name: Stop cache watcher
         if: always()
         run: kill -INT "$watcher_pid" 2>/dev/null && wait "$watcher_pid" 2>/dev/null || true
+
+  ci-success:
+    needs: [prepare, build]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require all upstream jobs to have succeeded
+        env:
+          RESULTS: ${{ toJSON(needs.*.result) }}
+        run: |
+          echo "upstream results: $RESULTS"
+          if echo "$RESULTS" | jq -e 'all(. == "success")' > /dev/null; then
+            echo "all green"
+          else
+            echo "one or more jobs did not succeed" >&2
+            exit 1
+          fi
