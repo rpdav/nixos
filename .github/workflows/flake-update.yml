@@ -104,7 +104,7 @@ jobs:
       - name: Open PR
         id: cpr
         if: steps.diff.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: ${{ env.UPDATE_BRANCH }}
           token: ${{ secrets.CI_PAT }}
