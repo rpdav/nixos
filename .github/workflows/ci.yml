@@ -118,6 +118,14 @@ jobs:
         if: always()
         run: kill -INT "$watcher_pid" 2>/dev/null && wait "$watcher_pid" 2>/dev/null || true
 
+  # ---------------------------------------------------------------------------
+  # Single stable status for branch protection / auto-merge to wait on.
+  # `build` is a matrix, so its checks are named per host ("build (vps, ...)") and
+  # change whenever you add a host; this job gives branch protection one fixed name
+  # that only goes green when check AND every matrix build leg succeeded.
+  # `if: always()` is essential: without it, a failed dependency makes this job get
+  # *skipped*, and GitHub treats a skipped required check as passing.
+  # ---------------------------------------------------------------------------
   ci-success:
     needs: [prepare, build]
     if: always()
