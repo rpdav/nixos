@@ -41,6 +41,7 @@
 
       # host-specific
       self.modules.nixos.rgb
+      self.modules.nixos.displaylinkConsole
 
       # self-hosted services
       self.serviceModules.swag
@@ -183,6 +184,19 @@
       autostart = {
         enable = true;
         mode = "color shift";
+      };
+    };
+
+    # Displaylink Console
+    services.displaylinkConsole = {
+      enable = true;
+      acceptEula = true;
+      loginUser = "ryan";
+      src = {
+        name = "displaylink-630.zip";
+        url = "https://www.synaptics.com/sites/default/files/exe_files/2026-06/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.3-EXE.zip";
+        versionPrefix = "6.3";
+        hash = "sha256-cmmFbHUnBgxRMhXOG1o2/vB02Oicq4m8qxPfNCrM4Jg=";
       };
     };
 
