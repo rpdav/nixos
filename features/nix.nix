@@ -73,7 +73,7 @@ in {
             echo "Deploying host: ''${host} (Mode: ''${run_mode})"
             echo "========================================"
 
-            nixos-rebuild --flake ${config_location}#"''${host}" --target-host root@"''${host}" "''${run_mode}"
+            nixos-rebuild --flake ${config_location}#"''${host}" --target-host root@"''${host}" "''${run_mode}" |& ${pkgs.nix-output-monitor}/bin/nom
         }
 
         # Loop through hostnames if provided hostname is "all"

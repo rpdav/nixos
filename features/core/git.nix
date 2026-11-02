@@ -1,5 +1,5 @@
 {...}: {
-  flake.homeModules.core = {...}: {
+  flake.homeModules.core = {
     programs.git = {
       enable = true;
       signing.format = "openpgp";
@@ -15,7 +15,7 @@
     programs.lazygit = {
       enable = true;
       settings = {
-        git.autoFetch = false; # too many "yubikey waiting for touch" prompts
+        git.autoFetch = true;
       };
     };
   };
