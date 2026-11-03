@@ -11,6 +11,10 @@
     # Best practice is to use mkIf to make sure the overrides only apply to systems that need it.
     # Check this periodically after updating lock file to see if patches are still needed.
 
+    nixpkgs.config.problems.handlers = {
+      "gtk+".broken = "warn"; # downgrade gtk2 error to warning; too many packages not fixed yet
+    };
+
     environment.systemPackages = [
       # librewolf # 24-Jun-26 - missing committer on unstable; just commenting out for now. from nixosModules.core
     ];
