@@ -134,7 +134,6 @@
             # text editors and office
             typora
             kdePackages.ghostwriter
-            onlyoffice-desktopeditors
             libreoffice-stable
 
             # utilities
@@ -144,7 +143,7 @@
         ++ lib.lists.optionals osConfig.systemOpts.gui (
           with pkgs-stable; [
             jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
-            #bitwarden-desktop # electron 39.8.10 marked insecure even on stable
+            onlyoffice-desktopeditors # gtk 2 is EOL; package is not updated for that yet
           ]
         )
     );
