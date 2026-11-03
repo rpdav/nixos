@@ -21,8 +21,10 @@
       text = ''
         for _ in $(seq 1 60); do
           for c in /sys/class/drm/card*-*; do
-            [ -e "$c/device/driver" ] || continue
-            [ "$(basename "$(readlink -f "$c/device/driver")")" = evdi ] || continue
+            case "$(readlink -f "$c")" in
+              */platform/evdi.*/*) ;;
+              *) continue ;;
+            esac
             [ "$(cat "$c/status")" = connected ] && exit 0
           done
           sleep 1
