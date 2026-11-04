@@ -144,6 +144,8 @@
         wants = ["dlm.service"];
         serviceConfig = {
           ExecStartPre = [(lib.getExe waitForOutput)];
+          # Auto-restart if session is closed cleanly
+          Restart = "on-success";
           RestartSec = 5;
         };
       };

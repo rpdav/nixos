@@ -143,6 +143,7 @@
     # Create impermanent directories
     environment.persistence.${persistVol} = lib.mkIf impermanent {
       directories = [
+        "/var/lib/displaylink"
       ];
     };
 
