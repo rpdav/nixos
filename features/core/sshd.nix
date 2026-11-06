@@ -50,18 +50,5 @@
       Host github.com
         User git
     '';
-
-    # Enable remote passwordless sudo
-    # this doesn't work :(
-    security.pam.services.sudo = {
-      rules.auth.rssh = {
-        order = config.rules.auth.ssh_agent_auth.order - 1;
-        control = "sufficient";
-        modulePath = "${pkgs.pam_rssh}/lib/libpam_rssh.so";
-        settings.authorized_keys_command = pkgs.writeShellScript "get-authorized-keys" ''
-          cat "/etc/ssh/authorized_keys.d/$1"
-        '';
-      };
-    };
   };
 }

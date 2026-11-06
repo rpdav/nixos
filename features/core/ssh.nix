@@ -25,7 +25,6 @@
       enableDefaultConfig = false; #this will eventually be deprecated and can be removed
       settings."*" = {
         userKnownHostsFile = "${osConfig.systemOpts.persistVol}${homeDirectory}/.ssh/known_hosts";
-        forwardAgent = false;
         serverAliveInterval = 0;
         serverAliveCountMax = 3;
         compression = false;

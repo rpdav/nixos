@@ -1,16 +1,14 @@
 # Got this from EmergentMind - see https://unmovedcentre.com/posts/improving-qol-on-nixos-with-yubikey/ for full guide to set up
-{...}: {
+# This module makes use of a custom option `config.systemOpts.primaryUser`.
+# This can be substituted with a hard-coded user.
+{
   flake.modules.nixos.yubikey = {
     config,
     pkgs,
     lib,
     ...
   }: let
-    inherit (config) systemOpts;
-    homeDirectory =
-      if pkgs.stdenv.hostPlatform.isLinux
-      then "/home/${systemOpts.primaryUser}"
-      else "/Users/${systemOpts.primaryUser}";
+    homeDirectory = "/home/${config.systemOpts.primaryUser}";
     yubikey-up = let
       yubikeyIds = lib.concatStringsSep " " (
         lib.mapAttrsToList (name: id: "[${name}]=\"${toString id}\"") config.yubikey.identifiers
@@ -82,7 +80,6 @@
             (pkgs)
             yubioath-flutter # gui-based authenticator tool. yubioath-desktop on older nixpkg channels
             yubikey-manager # cli-based authenticator tool. accessed via `ykman`
-
             pam_u2f # for yubikey with sudo
             ;
         })
@@ -94,58 +91,23 @@
       # Yubikey 4/5 U2F+CCID
       # SUBSYSTEM == "usb", ATTR{idVendor}=="1050", ENV{ID_SECURITY_TOKEN}="1", GROUP="wheel"
       # We already have a yubikey rule that sets the ENV variable
-
-      # This is linux only
       services.udev.extraRules = ''
         # Link/unlink ssh key on yubikey add/remove
         SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="1050", RUN+="${lib.getBin yubikey-up}/bin/yubikey-up"
-        # NOTE: Yubikey 4 has a ID_VENDOR_ID on remove, but not Yubikey 5 BIO, whereas both have a HID_NAME.
-        # Yubikey 5 HID_NAME uses "YubiKey" whereas Yubikey 4 uses "Yubikey", so matching on "Yubi" works for both
         SUBSYSTEM=="hid", ACTION=="remove", ENV{HID_NAME}=="Yubico Yubi*", RUN+="${lib.getBin yubikey-down}/bin/yubikey-down"
-
-        ##
-        # Yubikey 4
-        ##
-
-        # Lock the device if you remove the yubikey (use udevadm monitor -p to debug)
-        # #ENV{ID_MODEL_ID}=="0407", # This doesn't match all the newer keys
-        # script that does smarter checks
-        # ACTION=="remove",\
-        #  ENV{ID_BUS}=="usb",\
-        #  ENV{ID_VENDOR_ID}=="1050",\
-        #  ENV{ID_VENDOR}=="Yubico",\
-        #  RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
-
-        ##
-        # Yubikey 5 BIO
-        #
-        # NOTE: The remove event for the bio doesn't include the ID_VENDOR_ID for some reason, but we can use the
-        # hid name instead. Some HID_NAME might be "Yubico YubiKey OTP+FIDO+CCID" or "Yubico YubiKey FIDO", etc so just
-        # match on "Yubico YubiKey"
-        ##
-
-        # SUBSYSTEM=="hid",\
-        #  ACTION=="remove",\
-        #  ENV{HID_NAME}=="Yubico YubiKey FIDO",\
-        #  RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
-
-        # SUBSYSTEM=="hid",\
-        #  ACTION=="add",\
-        #  ENV{HID_NAME}=="Yubico YubiKey FIDO",\
-        #  RUN+="${pkgs.systemd}/bin/loginctl activate 1"
-        #  #RUN+="${lib.getBin pkgs.xset}/bin/xset dpms force on"
       '';
 
-      # Yubikey required services and config. See Dr. Duh NixOS config for
-      # reference
+      # Yubikey required services and config. See Dr. Duh NixOS config for reference
       services.pcscd.enable = true; # smartcard service
       services.udev.packages = [pkgs.yubikey-personalization];
 
-      services.yubikey-agent.enable = true;
-
       # yubikey login / sudo
-      security.pam = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+      security.pam = {
         sshAgentAuth.enable = true;
+        rssh = {
+          enable = true;
+          settings.auth_key_file = "/etc/ssh/authorized_keys.d/\${user}";
+        };
         u2f = {
           enable = true;
           settings = {
@@ -158,7 +120,9 @@
           sudo = {
             u2fAuth = true;
             sshAgentAuth = true; # Use SSH_AUTH_SOCK for sudo
+            rssh = true;
           };
+          polkit-1.rssh = true;
         };
       };
     };
