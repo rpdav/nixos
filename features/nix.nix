@@ -124,7 +124,7 @@ in {
         '';
         # Set nixpkgs to drop unused channel path
         # which causes eval warnings
-        settings.nix-path = ["nixpkgs=flake:nixpkgs"];
+        settings.nix-path = ["nixpkgs=${inputs.nixpkgs}"];
       };
 
       # Binary cache
