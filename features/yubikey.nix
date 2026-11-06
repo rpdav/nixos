@@ -22,8 +22,8 @@
   };
 
   flake.homeModules.yubikey = {
-    lib,
     config,
+    lib,
     ...
   }: let
     homeDir = config.home.homeDirectory;
