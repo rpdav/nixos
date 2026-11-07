@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.homeModules.chromium = {
     config,
     osConfig,
