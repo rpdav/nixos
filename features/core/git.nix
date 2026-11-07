@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.homeModules.core = {
     programs.git = {
       enable = true;
@@ -8,6 +8,7 @@
           name = "ryan";
           email = "105075689+rpdav@users.noreply.github.com";
         };
+        pull.rebase = true;
         init.defaultBranch = "main";
       };
     };
