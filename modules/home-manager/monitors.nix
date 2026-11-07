@@ -1,4 +1,4 @@
-{...}: {
+ {
   # This module declares options for monitor layouts and imports
   # them into either hyprland or niri if either or both are enabled.
   flake.modules.homeManager.monitors = {

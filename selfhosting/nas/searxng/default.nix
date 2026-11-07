@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.searxng = {config, ...}: let
     inherit (config.serviceOpts) dockerDir;
   in {

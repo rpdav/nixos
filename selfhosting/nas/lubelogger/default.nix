@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.lubelogger = {config, ...}: {
 
     virtualisation.oci-containers.mounts."lubelogger" = {};

@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.homeModules.wlogout = {
     config,
     osConfig,

@@ -1,5 +1,5 @@
-{...}: {
-  flake.serviceModules.albyhub = {...}: {
+ {
+  flake.serviceModules.albyhub =  {
 
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts."albyhub" = {};

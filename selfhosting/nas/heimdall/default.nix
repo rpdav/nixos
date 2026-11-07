@@ -1,5 +1,5 @@
-{...}: {
-  flake.serviceModules.heimdall = {...}: {
+ {
+  flake.serviceModules.heimdall =  {
 
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts."heimdall" = {};

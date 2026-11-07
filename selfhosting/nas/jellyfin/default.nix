@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.jellyfin = {config, ...}: {
 
     # Create/chmod appdata directories to mount

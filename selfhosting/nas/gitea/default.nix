@@ -1,5 +1,5 @@
-{...}: {
-  flake.serviceModules.gitea = {...}: {
+ {
+  flake.serviceModules.gitea =  {
 
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts."gitea" = {};

@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.flatnotes = {config, ...}: {
 
     # Create/chmod appdata directories to mount

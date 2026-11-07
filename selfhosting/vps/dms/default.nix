@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.dms = {config, ...}: let
     inherit (config) serviceOpts;
   in {

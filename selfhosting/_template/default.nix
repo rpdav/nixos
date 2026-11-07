@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.containerName = {config, ...}: let
     inherit (config) serviceOpts;
   in {

@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.duplicati = {config, ...}: {
 
     # Create/chmod appdata directories to mount

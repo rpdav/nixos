@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.nixosModules.plymouth = {
     lib,
     pkgs,

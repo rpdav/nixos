@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.nextcloud = {config, ...}: let
     inherit (config.serviceOpts) dockerDir dockerUser;
   in {

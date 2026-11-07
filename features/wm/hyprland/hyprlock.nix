@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.homeModules.hyprlock = {lib, ...}: {
     programs.hyprlock = {
       enable = true;

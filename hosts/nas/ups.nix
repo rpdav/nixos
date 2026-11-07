@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.nixosModules.system-nas = {
     config,
     pkgs,

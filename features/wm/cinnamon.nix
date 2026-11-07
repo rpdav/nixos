@@ -1,5 +1,5 @@
-{...}: {
-  flake.nixosModules.cinnamon = {...}: {
+ {
+  flake.nixosModules.cinnamon =  {
     services.displayManager.defaultSession = "cinnamon";
 
     services.xserver = {

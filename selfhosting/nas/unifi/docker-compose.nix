@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.unifi =
     # Auto-generated using compose2nix v0.3.2-pre.
     {

@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.homeModules.waybar = {
     osConfig,
     pkgs,

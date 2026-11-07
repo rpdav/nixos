@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.speedtest = {config, ...}: let
     inherit (config) serviceOpts;
   in {

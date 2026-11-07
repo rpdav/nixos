@@ -1,4 +1,4 @@
-{...}: {
+ {
   perSystem = {pkgs, ...}: {
     packages = {
       nix-search-tv = pkgs.writeShellScriptBin "ns" ''

@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.homeModules.swayidle = {
     pkgs,
     osConfig,

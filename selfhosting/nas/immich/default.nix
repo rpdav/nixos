@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.immich = {config, ...}: let
     inherit (config.serviceOpts) dockerDir dockerUser;
   in {

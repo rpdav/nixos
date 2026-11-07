@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.home-assistant = {
     pkgs,
     lib,

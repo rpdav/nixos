@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.sunshine = {config, ...}: {
     # No actual service here, just a reverse proxy for win10 vm
     # sunshine gamestream service

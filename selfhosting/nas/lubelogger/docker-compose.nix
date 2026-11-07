@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.lubelogger =
     # Auto-generated using compose2nix v0.3.3-pre.
     {

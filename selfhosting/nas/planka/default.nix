@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.planka = {config, ...}: let
     inherit (config.serviceOpts) dockerDir dockerUser;
     plankaDir = "${dockerDir}/planka";

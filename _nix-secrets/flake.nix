@@ -1,5 +1,5 @@
 {
-  outputs = {...}: {
+  outputs =  {
     user1 = {
       personal-mail = {
         address = "";

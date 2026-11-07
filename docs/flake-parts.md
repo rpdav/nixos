@@ -68,7 +68,7 @@ Packages are handled differently from other outputs since they need to know what
 
 ```nix
 # packages.nix
-{...}:{
+{
   systems = ["x86_64-linux" "aarch64-linux"]; # This is the list of systems for which you will build packages.
   perSystem = {pkgs, ...}:{
     packages = {
@@ -128,7 +128,7 @@ This will work:
 
 This will **not** work:
 ```nix
-{...}:{ 
+{ 
   flake.nixosModules.myModule = {config, self, ...}: { # nixosModules does not know what `self` is without it being passed in specialArgs
     imports = [self.nixosModules.anotherModule];
     foo = config.bar;

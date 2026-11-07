@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.modules.nixos.proxyConfs = {
     lib,
     config,

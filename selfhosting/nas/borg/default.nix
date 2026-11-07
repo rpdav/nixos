@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.serviceModules.borg = {config, ...}: {
     # decrypt server key
     sops.secrets."selfhosting/borg/ssh_server_key" = {};

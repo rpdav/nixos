@@ -1,4 +1,4 @@
-{...}: {
+ {
   flake.nixosModules.retroarch = {
     config,
     pkgs,
@@ -29,7 +29,7 @@
       };
     };
   };
-  flake.homeModules.retroarch = {...}: {
+  flake.homeModules.retroarch =  {
     programs.retroarch = {
       enable = true;
       settings = {

@@ -1,5 +1,5 @@
-{...}: {
-  flake.serviceModules.kuma = {...}: {
+ {
+  flake.serviceModules.kuma =  {
 
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts."uptime-kuma" = {};

@@ -1,5 +1,5 @@
-{...}: {
-  flake.serviceModules.vaultwarden = {...}: {
+ {
+  flake.serviceModules.vaultwarden =  {
 
     # Create/chmod appdata directories to mount
     virtualisation.oci-containers.mounts."vaultwarden" = {};
