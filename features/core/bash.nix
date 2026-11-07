@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.homeModules.core = {
     config,
     osConfig,
