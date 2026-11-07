@@ -1,5 +1,5 @@
-{...}: {
-  flake.homeModules.defaultApps = {...}: {
+{
+  flake.homeModules.defaultApps = {
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
