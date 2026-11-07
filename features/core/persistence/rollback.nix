@@ -1,15 +1,8 @@
-{...}: {
-  flake.nixosModules.core = {
-    lib,
-    config,
-    pkgs,
-    ...
-  }: let
-    systemd = config.boot.initrd.systemd.enable;
-  in {
+{
+  flake.nixosModules.core = {pkgs, ...}: {
     boot.initrd.systemd = {
-      initrdBin = with pkgs; [
-        util-linux
+      initrdBin = [
+        pkgs.util-linux
       ];
       services."rollback" = {
         description = "Create a snapshoot of root and then rollback";
