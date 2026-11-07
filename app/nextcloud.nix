@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.homeModules.nextcloud = {lib, ...}: {
     services.nextcloud-client = {
       enable = true;
