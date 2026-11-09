@@ -117,7 +117,6 @@
           ]
           ++ lib.lists.optionals osConfig.systemOpts.gui [
             # extra browsers
-            brave
             tor-browser
 
             # extra terminals
@@ -143,6 +142,7 @@
         )
         ++ lib.lists.optionals osConfig.systemOpts.gui (
           with pkgs-stable; [
+            brave
             jellyfin-media-player # qtwebengine-5.15.19 flagged insecure in unstable
             #bitwarden-desktop # electron 39.8.10 marked insecure even on stable
           ]
