@@ -27,7 +27,7 @@
 
     environment.systemPackages = [
       inputs.uptix.packages.${pkgs.stdenv.hostPlatform.system}.uptix
-      inputs.compose2nix.packages.${pkgs.stdenv.hostPlatform.system}.default
+      pkgs.compose2nix
     ];
 
     # Enable docker
