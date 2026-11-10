@@ -117,8 +117,8 @@
           ]
           ++ lib.lists.optionals osConfig.systemOpts.gui [
             # extra browsers
-            brave
             tor-browser
+            # brave # unmaintained as of 09-Nov-26
 
             # extra terminals
             alacritty
