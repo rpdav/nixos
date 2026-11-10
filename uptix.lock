@@ -59,6 +59,16 @@
     },
     "lock": "sha256:14367bfb374b8576ddf49abd67c5ca0190a4c7fcf6303cdad65d7f7bf1a50bc2"
   },
+  "ghcr.io/immich-app/immich-machine-learning:v3": {
+    "metadata": {
+      "name": "immich-app/immich-machine-learning",
+      "selected_version": "v3",
+      "resolved_version": "sha256:14367bfb374b8576ddf49abd67c5ca0190a4c7fcf6303cdad65d7f7bf1a50bc2",
+      "dep_type": "docker",
+      "description": "Docker image immich-app/immich-machine-learning:v3 from ghcr.io"
+    },
+    "lock": "sha256:14367bfb374b8576ddf49abd67c5ca0190a4c7fcf6303cdad65d7f7bf1a50bc2"
+  },
   "ghcr.io/immich-app/immich-server:release": {
     "metadata": {
       "name": "immich-app/immich-server",
@@ -66,6 +76,16 @@
       "resolved_version": "sha256:e1981983b1c13f6024b57d72e7ecae3342eed1581201ab09fb248932d86c593a",
       "dep_type": "docker",
       "description": "Docker image immich-app/immich-server:release from ghcr.io"
+    },
+    "lock": "sha256:e1981983b1c13f6024b57d72e7ecae3342eed1581201ab09fb248932d86c593a"
+  },
+  "ghcr.io/immich-app/immich-server:v3": {
+    "metadata": {
+      "name": "immich-app/immich-server",
+      "selected_version": "v3",
+      "resolved_version": "sha256:e1981983b1c13f6024b57d72e7ecae3342eed1581201ab09fb248932d86c593a",
+      "dep_type": "docker",
+      "description": "Docker image immich-app/immich-server:v3 from ghcr.io"
     },
     "lock": "sha256:e1981983b1c13f6024b57d72e7ecae3342eed1581201ab09fb248932d86c593a"
   },

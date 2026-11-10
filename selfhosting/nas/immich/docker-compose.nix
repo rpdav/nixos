@@ -1,206 +1,211 @@
- {
-  flake.serviceModules.immich =
-    # Auto-generated using compose2nix v0.3.2-pre.
-    {
-      pkgs,
-      lib,
-      config,
-      uptix,
-      ...
-    }: let
-      inherit (config) serviceOpts;
-    in {
-      # Containers
-      virtualisation.oci-containers.containers."immich_machine_learning" = {
-        image = uptix.dockerImage "ghcr.io/immich-app/immich-machine-learning:release";
-        environment = {
-          "DB_DATABASE_NAME" = "immich";
-          "DB_DATA_LOCATION" = "${serviceOpts.dockerDir}/immich/db";
-          "DB_USERNAME" = "postgres";
-          "IMMICH_VERSION" = "release";
-          "UPLOAD_LOCATION" = "/mnt/docker/photos/immich";
-          "TZ" = config.time.timeZone;
-        };
-        volumes = [
-          "${serviceOpts.dockerDir}/immich/model-cache:/cache:rw"
-        ];
-        environmentFiles = [
-          "/run/secrets/selfhosting/immich/env-app"
-        ];
-        log-driver = "journald";
-        extraOptions = [
-          "--network-alias=immich-machine-learning"
-          "--network=immich_default"
-        ];
+{
+  flake.serviceModules.immich = {
+    pkgs,
+    lib,
+    config,
+    uptix,
+    ...
+  }: let
+    inherit (config) serviceOpts;
+  in {
+    # Containers
+    virtualisation.oci-containers.containers."immich_machine_learning" = {
+      image = uptix.dockerImage "ghcr.io/immich-app/immich-machine-learning:v3";
+      environment = {
+        "DB_DATABASE_NAME" = "immich";
+        "DB_DATA_LOCATION" = "${config.serviceOpts.dockerDir}/immich/db";
+        "DB_USERNAME" = "postgres";
+        "TZ" = config.time.timeZone;
+        "UPLOAD_LOCATION" = "/mnt/docker/photos/immich";
       };
-      systemd.services."docker-immich_machine_learning" = {
-        serviceConfig = {
-          Restart = lib.mkOverride 90 "always";
-          RestartMaxDelaySec = lib.mkOverride 90 "1m";
-          RestartSec = lib.mkOverride 90 "100ms";
-          RestartSteps = lib.mkOverride 90 9;
-        };
-        after = [
-          "docker-network-immich_default.service"
-        ];
-        requires = [
-          "docker-network-immich_default.service"
-        ];
-        partOf = [
-          "docker-compose-immich-root.target"
-        ];
-        wantedBy = [
-          "docker-compose-immich-root.target"
-        ];
-      };
-      virtualisation.oci-containers.containers."immich_postgres" = {
-        image = "docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0";
-        environment = {
-          "POSTGRES_DB" = "immich";
-          "POSTGRES_INITDB_ARGS" = "--data-checksums";
-          "POSTGRES_USER" = "postgres";
-        };
-        volumes = [
-          "${serviceOpts.dockerDir}/immich/db:/var/lib/postgresql/data:rw"
-        ];
-        environmentFiles = [
-          "/run/secrets/selfhosting/immich/env-db"
-        ];
-        cmd = ["postgres" "-c" "shared_preload_libraries=vectors.so" "-c" "search_path=\"$user\", public, vectors" "-c" "logging_collector=on" "-c" "max_wal_size=2GB" "-c" "shared_buffers=512MB" "-c" "wal_compression=on"];
-        log-driver = "journald";
-        extraOptions = [
-          "--health-cmd=pg_isready --dbname=\"\${POSTGRES_DB}\" --username=\"\${POSTGRES_USER}\" || exit 1; Chksum=\"$(psql --dbname=\"\${POSTGRES_DB}\" --username=\"\${POSTGRES_USER}\" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')\"; echo \"checksum failure count is $Chksum\"; [ \"$Chksum\" = '0' ] || exit 1"
-          "--health-interval=5m0s"
-          "--health-start-interval=30s"
-          "--health-start-period=5m0s"
-          "--network-alias=database"
-          "--network=immich_default"
-        ];
-      };
-      systemd.services."docker-immich_postgres" = {
-        serviceConfig = {
-          Restart = lib.mkOverride 90 "always";
-          RestartMaxDelaySec = lib.mkOverride 90 "1m";
-          RestartSec = lib.mkOverride 90 "100ms";
-          RestartSteps = lib.mkOverride 90 9;
-        };
-        after = [
-          "docker-network-immich_default.service"
-        ];
-        requires = [
-          "docker-network-immich_default.service"
-        ];
-        partOf = [
-          "docker-compose-immich-root.target"
-        ];
-        wantedBy = [
-          "docker-compose-immich-root.target"
-        ];
-      };
-      virtualisation.oci-containers.containers."immich_redis" = {
-        image = "docker.io/redis:6.2-alpine@sha256:eaba718fecd1196d88533de7ba49bf903ad33664a92debb24660a922ecd9cac8";
-        log-driver = "journald";
-        extraOptions = [
-          "--health-cmd=redis-cli ping || exit 1"
-          "--network-alias=redis"
-          "--network=immich_default"
-        ];
-      };
-      systemd.services."docker-immich_redis" = {
-        serviceConfig = {
-          Restart = lib.mkOverride 90 "always";
-          RestartMaxDelaySec = lib.mkOverride 90 "1m";
-          RestartSec = lib.mkOverride 90 "100ms";
-          RestartSteps = lib.mkOverride 90 9;
-        };
-        after = [
-          "docker-network-immich_default.service"
-        ];
-        requires = [
-          "docker-network-immich_default.service"
-        ];
-        partOf = [
-          "docker-compose-immich-root.target"
-        ];
-        wantedBy = [
-          "docker-compose-immich-root.target"
-        ];
-      };
-      virtualisation.oci-containers.containers."immich_server" = {
-        image = uptix.dockerImage "ghcr.io/immich-app/immich-server:release";
-        environment = {
-          "DB_DATABASE_NAME" = "immich";
-          "DB_DATA_LOCATION" = "${serviceOpts.dockerDir}/immich/db";
-          "DB_USERNAME" = "postgres";
-          "IMMICH_VERSION" = "release";
-          "UPLOAD_LOCATION" = "/mnt/docker/photos/immich";
-          "TZ" = config.time.timeZone;
-        };
-        volumes = [
-          "/etc/localtime:/etc/localtime:ro"
-          "/mnt/docker/photos/immich:/usr/src/app/upload:rw"
-        ];
-        environmentFiles = [
-          "/run/secrets/selfhosting/immich/env-app"
-        ];
-        ports = [
-          "2283:2283/tcp"
-        ];
-        dependsOn = [
-          "immich_postgres"
-          "immich_redis"
-        ];
-        log-driver = "journald";
-        extraOptions = [
-          "--network-alias=immich-server"
-          "--network=immich_default"
-          "--network=proxynet"
-        ];
-      };
-      systemd.services."docker-immich_server" = {
-        serviceConfig = {
-          Restart = lib.mkOverride 90 "always";
-          RestartMaxDelaySec = lib.mkOverride 90 "1m";
-          RestartSec = lib.mkOverride 90 "100ms";
-          RestartSteps = lib.mkOverride 90 9;
-        };
-        after = [
-          "docker-network-immich_default.service"
-        ];
-        requires = [
-          "docker-network-immich_default.service"
-        ];
-        partOf = [
-          "docker-compose-immich-root.target"
-        ];
-        wantedBy = [
-          "docker-compose-immich-root.target"
-        ];
-      };
-
-      # Networks
-      systemd.services."docker-network-immich_default" = {
-        path = [pkgs.docker];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          ExecStop = "docker network rm -f immich_default";
-        };
-        script = ''
-          docker network inspect immich_default || docker network create immich_default
-        '';
-        partOf = ["docker-compose-immich-root.target"];
-        wantedBy = ["docker-compose-immich-root.target"];
-      };
-
-      # Root service
-      # When started, this will automatically create all resources and start
-      # the containers. When stopped, this will teardown all resources.
-      systemd.targets."docker-compose-immich-root" = {
-        unitConfig = {
-          Description = "Root target generated by compose2nix.";
-        };
-        wantedBy = ["multi-user.target"];
-      };
+      environmentFiles = [config.sops.secrets."selfhosting/immich/env-app".path];
+      volumes = [
+        "${serviceOpts.dockerDir}/immich/model-cache:/cache:rw"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network-alias=immich-machine-learning"
+        "--network=immich_default"
+      ];
     };
+    systemd.services."docker-immich_machine_learning" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      unitConfig.Description = "Container immich_machine_learning generated by compose2nix.";
+      after = [
+        "docker-network-immich_default.service"
+        "docker-volume-immich_model-cache.service"
+      ];
+      requires = [
+        "docker-network-immich_default.service"
+        "docker-volume-immich_model-cache.service"
+      ];
+      partOf = [
+        "docker-compose-immich-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-immich-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."immich_postgres" = {
+      image = "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23";
+      environment = {
+        "POSTGRES_DB" = "immich";
+        "POSTGRES_INITDB_ARGS" = "--data-checksums";
+        "POSTGRES_USER" = "postgres";
+      };
+      environmentFiles = [config.sops.secrets."selfhosting/immich/env-db".path];
+      volumes = [
+        "${config.serviceOpts.dockerDir}/immich/db:/var/lib/postgresql/data:rw"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network-alias=database"
+        "--network=immich_default"
+        "--shm-size=134217728"
+      ];
+    };
+    systemd.services."docker-immich_postgres" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      unitConfig.Description = "Container immich_postgres generated by compose2nix.";
+      after = [
+        "docker-network-immich_default.service"
+      ];
+      requires = [
+        "docker-network-immich_default.service"
+      ];
+      partOf = [
+        "docker-compose-immich-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-immich-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."immich_redis" = {
+      image = "docker.io/valkey/valkey:9@sha256:c123e3715db63d06d4ad6964884037aa0d5d4d703939b9929954112889708e1d";
+      log-driver = "journald";
+      extraOptions = [
+        "--health-cmd=redis-cli ping | grep -q PONG || exit 1"
+        "--network-alias=redis"
+        "--network=immich_default"
+      ];
+    };
+    systemd.services."docker-immich_redis" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      unitConfig.Description = "Container immich_redis generated by compose2nix.";
+      after = [
+        "docker-network-immich_default.service"
+      ];
+      requires = [
+        "docker-network-immich_default.service"
+      ];
+      partOf = [
+        "docker-compose-immich-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-immich-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."immich_server" = {
+      image = uptix.dockerImage "ghcr.io/immich-app/immich-server:v3";
+      environment = {
+        "DB_DATABASE_NAME" = "immich";
+        "DB_DATA_LOCATION" = "${config.serviceOpts.dockerDir}/immich/db";
+        "DB_USERNAME" = "postgres";
+        "TZ" = config.time.timeZone;
+        "UPLOAD_LOCATION" = "/mnt/docker/photos/immich";
+      };
+      environmentFiles = [config.sops.secrets."selfhosting/immich/env-app".path];
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+        "/mnt/docker/photos/immich:/data:rw"
+      ];
+      dependsOn = [
+        "immich_postgres"
+        "immich_redis"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network-alias=immich-server"
+        "--network=immich_default"
+        "--network=proxynet"
+      ];
+    };
+    systemd.services."docker-immich_server" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      unitConfig.Description = "Container immich_server generated by compose2nix.";
+      after = [
+        "docker-network-immich_default.service"
+      ];
+      requires = [
+        "docker-network-immich_default.service"
+      ];
+      partOf = [
+        "docker-compose-immich-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-immich-root.target"
+      ];
+    };
+
+    # Networks
+    systemd.services."docker-network-immich_default" = {
+      unitConfig.Description = "Network immich_default generated by compose2nix.";
+      path = [pkgs.docker];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStop = "docker network rm -f immich_default";
+      };
+      script = ''
+        docker network inspect immich_default || docker network create immich_default
+      '';
+      partOf = ["docker-compose-immich-root.target"];
+      wantedBy = ["docker-compose-immich-root.target"];
+    };
+
+    # Volumes
+    systemd.services."docker-volume-immich_model-cache" = {
+      unitConfig.Description = "Volume immich_model-cache generated by compose2nix.";
+      path = [pkgs.docker];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        docker volume inspect immich_model-cache || docker volume create immich_model-cache
+      '';
+      partOf = ["docker-compose-immich-root.target"];
+      wantedBy = ["docker-compose-immich-root.target"];
+    };
+
+    # Root service
+    # When started, this will automatically create all resources and start
+    # the containers. When stopped, this will teardown all resources.
+    systemd.targets."docker-compose-immich-root" = {
+      unitConfig = {
+        Description = "Root target generated by compose2nix.";
+      };
+      wantedBy = ["multi-user.target"];
+    };
+  };
 }
