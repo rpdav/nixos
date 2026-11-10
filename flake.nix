@@ -50,6 +50,10 @@
       url = "github:luizribeiro/uptix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    compose2nix = {
+      url = "github:aksiksi/compose2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
