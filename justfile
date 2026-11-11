@@ -54,7 +54,9 @@ anywhere host ip:
 
 [no-cd]
 compose output='docker-compose.nix':
-  compose2nix -write_nix_setup=false -runtime docker -project=$(echo ${PWD##*/}) -output={{output}}
+  # Use current directory to name service
+  # Use parent directory to identify sops file
+  compose2nix -write_nix_setup=false -runtime docker -project=$(echo ${PWD##*/}) --sops_file ~/nix-secrets/$(basename "$(dirname "$PWD")").yaml -output={{output}}
 
 ############################################################################
 #
