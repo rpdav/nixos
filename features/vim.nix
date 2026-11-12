@@ -35,6 +35,10 @@
               format.enable = true;
             };
             markdown.enable = true;
+            yaml.enable = true;
+            toml.enable = true;
+            just.enable = true;
+            css.enable = true;
           };
         };
       };
