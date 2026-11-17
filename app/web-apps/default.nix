@@ -21,7 +21,7 @@
         theme = config.stylix.polarity;
       };
     in {
-      # id must be a unique integer. Note that the default firefox profile is 0, so start with 1.
+      # id must be a unique, sequential integer. Note that the default firefox profile is 0, so start with 1.
       # extensions will need to be manually enabled in about:addons. Any extensions that need auth (like password managers) will need to be individually signed on, but should stay signed in after that.
 
       actual =
@@ -77,7 +77,7 @@
       sketchup =
         commonConfig
         // {
-          id = 6;
+          id = 5;
           url = "https:app.sketchup.com";
           name = "Sketchup";
           genericName = "3D Design App";
@@ -89,7 +89,7 @@
       flatnotes =
         commonConfig
         // {
-          id = 7;
+          id = 6;
           url = "https://notes.${domain}";
           name = "Flatnotes";
           genericName = "Note Taking";
