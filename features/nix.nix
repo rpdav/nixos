@@ -114,6 +114,9 @@ in {
         mode = "0444"; # needed for non-sudo nix operations like remote deploy and nix flake check
       };
 
+      # Stable packages
+      _module.args.pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+
       nix = {
         extraOptions = ''
           experimental-features = nix-command flakes pipe-operators

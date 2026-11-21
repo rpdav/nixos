@@ -10,6 +10,7 @@
     lib,
     pkgs,
     config,
+    pkgs-stable,
     ...
   }:
   ## This file contains host-specific NixOS configuration for host retropi
@@ -86,6 +87,7 @@
 
     services.tang = {
       enable = true;
+      package = pkgs-stable.tang;
       ipAddressAllow = ["10.10.1.0/24"];
     };
 

@@ -90,10 +90,9 @@
     osConfig,
     lib,
     pkgs,
+    pkgs-stable,
     ...
-  }: let
-    pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  in {
+  }: {
     imports = [
       self.modules.generic.customOptions
       self.modules.generic.failureNotify

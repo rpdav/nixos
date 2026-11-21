@@ -1,14 +1,13 @@
-{inputs, ...}: {
+{
   # This file contains short-term fixes for upstream bugs that haven't been patched.
   # Best practice is to use mkIf to make sure the overrides only apply to systems that need it.
   # Check this periodically after updating lock file to see if patches are still needed.
   flake.nixosModules.core = {
     config,
     lib,
-    pkgs,
+    pkgs-stable,
     ...
   }: let
-    pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   in {
     nixpkgs.config.problems.handlers = {
       "gtk+".broken = "warn"; # downgrade gtk2 error to warning; too many packages not fixed yet
@@ -33,7 +32,7 @@
     # from serviceModules.home-assistant
     services.esphome.package = pkgs-stable.esphome;
   };
-  flake.homeModules.core = {pkgs, ...}: {
+  flake.homeModules.core = {
     # 23-Nov-26: wayprompt package removed from upstream but not yet removed from stylix.
     # https://github.com/nix-community/stylix/issues/2556
     stylix.targets.wayprompt.enable = false;
