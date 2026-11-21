@@ -1,6 +1,11 @@
 {
-  flake.nixosModules.core = {pkgs, ...}: {
-    boot.initrd.systemd = {
+  flake.nixosModules.core = {
+    pkgs,
+    lib,
+    config,
+    ...
+  }: {
+    boot.initrd.systemd = lib.mkIf config.systemOpts.impermanent {
       initrdBin = [
         pkgs.util-linux
       ];

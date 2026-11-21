@@ -69,7 +69,9 @@
       unitConfig.ConditionACPower = "";
       serviceConfig = {
         ExecStartPre = [
-          ""
+          "" # Override upstream `sleep 1m` ExecStartPre
+          # Ensure repo is initialized
+          "${pkgs.borgmatic}/bin/borgmatic repo-create --encryption repokey-blake2 --verbosity 1"
           (pkgs.writeShellScript "borgmatic-pre" ''
             # Wait until ping succeeds before backing up
             echo "Checking network connectivity..."

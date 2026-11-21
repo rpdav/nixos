@@ -24,6 +24,7 @@
       # optional
       self.nixosModules.vim
       self.nixosModules.retroarch
+      self.nixosModules.backup
       self.nixosModules.wifi
       self.nixosModules.yubikey
 
@@ -49,9 +50,13 @@
     backupOpts = {
       paths = [
         "/etc"
-        "/home"
+        "/var/lib"
+        "/home" # minimal user backup; just do it here instead of user backup
       ];
       patterns = [
+        # Run `borg help patterns` for guidance on exclusion patterns
+        "- */home/*/.git/**" # can be restored from repo
+        "- */var/**"
       ];
     };
 
@@ -87,6 +92,27 @@
       pulse.enable = true;
     };
 
+    # Disable wifi when on lan
+    networking.networkmanager.dispatcherScripts = [
+      {
+        source = pkgs.writeText "wifi-wired-exclusive" ''
+          if [ "$1" = "end0" ]; then
+            case "$2" in
+              up)
+                ${pkgs.networkmanager}/bin/nmcli radio wifi off
+                ;;
+              down)
+                ${pkgs.networkmanager}/bin/nmcli radio wifi on
+                ;;
+            esac
+          fi
+        '';
+        type = "basic";
+      }
+    ];
+    # use same mac as lan so the same IP gets assigned whether on lan or wifi
+    networking.networkmanager.wifi.macAddress = "e4:5f:01:0c:fa:b0";
+
     ### Fix wifi not connecting due to broadcom bug
     networking.localCommands = ''
       ${pkgs.iw}/bin/iw reg set US
@@ -95,8 +121,6 @@
       # Disable OBSS scanning feature which triggers chanspec -52 failure
       options brcmfmac feature_disable=0x200000
     '';
-    networking.networkmanager = {
-      wifi.scanRandMacAddress = false; # Disables randomization during background scans
-    };
+    networking.networkmanager.wifi.scanRandMacAddress = false; # Disables randomization during background scans
   };
 }
