@@ -1,14 +1,13 @@
-{inputs, ...}: {
+{
   # This file contains short-term fixes for upstream bugs that haven't been patched.
   # Best practice is to use mkIf to make sure the overrides only apply to systems that need it.
   # Check this periodically after updating lock file to see if patches are still needed.
   flake.nixosModules.core = {
     config,
     lib,
-    pkgs,
+    pkgs-stable,
     ...
   }: let
-    pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   in {
     nixpkgs.config.problems.handlers = {
       "gtk+".broken = "warn"; # downgrade gtk2 error to warning; too many packages not fixed yet
