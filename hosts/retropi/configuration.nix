@@ -84,6 +84,11 @@
       openssh.authorizedKeys.keyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
     };
 
+    services.tang = {
+      enable = true;
+      ipAddressAllow = ["10.10.1.0/24"];
+    };
+
     # RPi-specific Hardware config
     hardware.graphics.enable = true;
     hardware.bluetooth.enable = true;
