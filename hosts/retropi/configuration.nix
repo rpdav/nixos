@@ -87,9 +87,11 @@
 
     services.tang = {
       enable = true;
+      # unstable tang has failing gtksourceview dep as of 21-Nov-26
       package = pkgs-stable.tang;
-      ipAddressAllow = ["10.10.1.0/24"];
+      ipAddressAllow = ["10.10.1.0/24" "127.0.0.1/32" "::1/128"];
     };
+    networking.firewall.allowedTCPPorts = [7654];
 
     # RPi-specific Hardware config
     hardware.graphics.enable = true;
