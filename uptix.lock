@@ -23,51 +23,51 @@
     "metadata": {
       "name": "docker-mailserver/docker-mailserver",
       "selected_version": "latest",
-      "resolved_version": "sha256:6cd2d4dbfb41ce3b8108968d266fb41b950ad27220979c67bda8a31bd1f6611d",
+      "resolved_version": "sha256:cb6a732753d6db4a0e77c9621cb8e0d440762f41bc8c179497b4b2756621663c",
       "dep_type": "docker",
       "description": "Docker image docker-mailserver/docker-mailserver:latest from ghcr.io"
     },
-    "lock": "sha256:6cd2d4dbfb41ce3b8108968d266fb41b950ad27220979c67bda8a31bd1f6611d"
+    "lock": "sha256:cb6a732753d6db4a0e77c9621cb8e0d440762f41bc8c179497b4b2756621663c"
   },
   "ghcr.io/getalby/hub:latest": {
     "metadata": {
       "name": "getalby/hub",
       "selected_version": "latest",
-      "resolved_version": "sha256:7e3de6dac330fb8a426c02a247d81ebaf07deece22634e97d8f20dd48c3a8e38",
+      "resolved_version": "sha256:b8a24a55b733717b45605633e864d92e81f85470d8ce4e2040d3e2e42acad460",
       "dep_type": "docker",
       "description": "Docker image getalby/hub:latest from ghcr.io"
     },
-    "lock": "sha256:7e3de6dac330fb8a426c02a247d81ebaf07deece22634e97d8f20dd48c3a8e38"
+    "lock": "sha256:b8a24a55b733717b45605633e864d92e81f85470d8ce4e2040d3e2e42acad460"
   },
   "ghcr.io/hargata/lubelogger:latest": {
     "metadata": {
       "name": "hargata/lubelogger",
       "selected_version": "latest",
-      "resolved_version": "sha256:483a9d7582c4e6258615fd822b3de4193b4fcc4230d0a92432c6d407faf75af2",
+      "resolved_version": "sha256:cdfd841eea84b652cca5401dc7edfca9f400970ab472025246f92323b2ce36e1",
       "dep_type": "docker",
       "description": "Docker image hargata/lubelogger:latest from ghcr.io"
     },
-    "lock": "sha256:483a9d7582c4e6258615fd822b3de4193b4fcc4230d0a92432c6d407faf75af2"
+    "lock": "sha256:cdfd841eea84b652cca5401dc7edfca9f400970ab472025246f92323b2ce36e1"
   },
   "ghcr.io/immich-app/immich-machine-learning:v3": {
     "metadata": {
       "name": "immich-app/immich-machine-learning",
       "selected_version": "v3",
-      "resolved_version": "sha256:8adebf414256f6e4f837bfbb66fa94f14f4da7260e3a1d65cbba49e4e35d8764",
+      "resolved_version": "sha256:739405742a79bd7447227c553bb62ed5491aa36acf00bc667af7f9c93b6fae91",
       "dep_type": "docker",
       "description": "Docker image immich-app/immich-machine-learning:v3 from ghcr.io"
     },
-    "lock": "sha256:8adebf414256f6e4f837bfbb66fa94f14f4da7260e3a1d65cbba49e4e35d8764"
+    "lock": "sha256:739405742a79bd7447227c553bb62ed5491aa36acf00bc667af7f9c93b6fae91"
   },
   "ghcr.io/immich-app/immich-server:v3": {
     "metadata": {
       "name": "immich-app/immich-server",
       "selected_version": "v3",
-      "resolved_version": "sha256:7c489add298fc2f92cda4c777de6462aa206877e04087b815f62c7664af0b53b",
+      "resolved_version": "sha256:fc880c1bf665b4aab1e74c15e56ab871225989cd546536e6b77e771869af06bd",
       "dep_type": "docker",
       "description": "Docker image immich-app/immich-server:v3 from ghcr.io"
     },
-    "lock": "sha256:7c489add298fc2f92cda4c777de6462aa206877e04087b815f62c7664af0b53b"
+    "lock": "sha256:fc880c1bf665b4aab1e74c15e56ab871225989cd546536e6b77e771869af06bd"
   },
   "ghcr.io/plankanban/planka:2.0.0-rc.3": {
     "metadata": {
@@ -93,11 +93,11 @@
     "metadata": {
       "name": "homeassistant/home-assistant",
       "selected_version": "latest",
-      "resolved_version": "sha256:6785d1eca68747a524c156faae1b139ed415c07357386ae6fe17291986e59e82",
+      "resolved_version": "sha256:24e541ddae5818bf8eb27898b9ba00d0c344a655aa5097e9e9bd4b19356be847",
       "dep_type": "docker",
       "description": "Docker image homeassistant/home-assistant:latest from registry-1.docker.io"
     },
-    "lock": "sha256:6785d1eca68747a524c156faae1b139ed415c07357386ae6fe17291986e59e82"
+    "lock": "sha256:24e541ddae5818bf8eb27898b9ba00d0c344a655aa5097e9e9bd4b19356be847"
   },
   "jhonderson/actual-http-api:latest": {
     "metadata": {
@@ -123,81 +123,81 @@
     "metadata": {
       "name": "linuxserver/duplicati",
       "selected_version": "latest",
-      "resolved_version": "sha256:ea137d806f2c0556468f2c620bcac963f0825bf45876de274988b42ff13b453a",
+      "resolved_version": "sha256:db8a6ca2f2b5f8767cfdfbce18dc9439bb0a570c91878288b62cbc8549b61c5e",
       "dep_type": "docker",
       "description": "Docker image linuxserver/duplicati:latest from lscr.io"
     },
-    "lock": "sha256:ea137d806f2c0556468f2c620bcac963f0825bf45876de274988b42ff13b453a"
+    "lock": "sha256:db8a6ca2f2b5f8767cfdfbce18dc9439bb0a570c91878288b62cbc8549b61c5e"
   },
   "lscr.io/linuxserver/heimdall": {
     "metadata": {
       "name": "linuxserver/heimdall",
       "selected_version": "latest",
-      "resolved_version": "sha256:47f70751f900be4499017a48c01206c02ab9d18f34a580c6213a13d24cdc1a4a",
+      "resolved_version": "sha256:51693bcb3a46e619592a4f7aad65d6610f8bda80c3b167d03254a96a944e8aed",
       "dep_type": "docker",
       "description": "Docker image linuxserver/heimdall:latest from lscr.io"
     },
-    "lock": "sha256:47f70751f900be4499017a48c01206c02ab9d18f34a580c6213a13d24cdc1a4a"
+    "lock": "sha256:51693bcb3a46e619592a4f7aad65d6610f8bda80c3b167d03254a96a944e8aed"
   },
   "lscr.io/linuxserver/jellyfin:latest": {
     "metadata": {
       "name": "linuxserver/jellyfin",
       "selected_version": "latest",
-      "resolved_version": "sha256:2f708001387aa9853e744a4a4d572d9970927c479c56d6c9e199f789c5173535",
+      "resolved_version": "sha256:b10044530553b2506f06279bf0b5223f9534f434f87a277da4b8fa8ac386cb58",
       "dep_type": "docker",
       "description": "Docker image linuxserver/jellyfin:latest from lscr.io"
     },
-    "lock": "sha256:2f708001387aa9853e744a4a4d572d9970927c479c56d6c9e199f789c5173535"
+    "lock": "sha256:b10044530553b2506f06279bf0b5223f9534f434f87a277da4b8fa8ac386cb58"
   },
   "lscr.io/linuxserver/mariadb": {
     "metadata": {
       "name": "linuxserver/mariadb",
       "selected_version": "latest",
-      "resolved_version": "sha256:cc9c523dead7690487d5892419b5c513c78bf398fe03b115e43a652ab75a237c",
+      "resolved_version": "sha256:4d9fb8985c06b2099d8421fb4070c4db0f61f3973e3b6828f6607cb0853f292d",
       "dep_type": "docker",
       "description": "Docker image linuxserver/mariadb:latest from lscr.io"
     },
-    "lock": "sha256:cc9c523dead7690487d5892419b5c513c78bf398fe03b115e43a652ab75a237c"
+    "lock": "sha256:4d9fb8985c06b2099d8421fb4070c4db0f61f3973e3b6828f6607cb0853f292d"
   },
   "lscr.io/linuxserver/nextcloud": {
     "metadata": {
       "name": "linuxserver/nextcloud",
       "selected_version": "latest",
-      "resolved_version": "sha256:1c3cfb00eb8653e03042653065e848523edf177498b439fcfdddff5ecd355e1a",
+      "resolved_version": "sha256:c95efa1a926b652b737d9ea68197419bc9f432f93d31bb126fc2fc32e0c6f1b4",
       "dep_type": "docker",
       "description": "Docker image linuxserver/nextcloud:latest from lscr.io"
     },
-    "lock": "sha256:1c3cfb00eb8653e03042653065e848523edf177498b439fcfdddff5ecd355e1a"
+    "lock": "sha256:c95efa1a926b652b737d9ea68197419bc9f432f93d31bb126fc2fc32e0c6f1b4"
   },
   "lscr.io/linuxserver/speedtest-tracker": {
     "metadata": {
       "name": "linuxserver/speedtest-tracker",
       "selected_version": "latest",
-      "resolved_version": "sha256:b7833e43bcf53859efd08605a48740a5cfa741916019373e4dbe730fc59bedf0",
+      "resolved_version": "sha256:132d35a355474be17822e2ff3df4866407187ca978a768935fea06f52ae24493",
       "dep_type": "docker",
       "description": "Docker image linuxserver/speedtest-tracker:latest from lscr.io"
     },
-    "lock": "sha256:b7833e43bcf53859efd08605a48740a5cfa741916019373e4dbe730fc59bedf0"
+    "lock": "sha256:132d35a355474be17822e2ff3df4866407187ca978a768935fea06f52ae24493"
   },
   "lscr.io/linuxserver/swag:latest": {
     "metadata": {
       "name": "linuxserver/swag",
       "selected_version": "latest",
-      "resolved_version": "sha256:34ca26b0b04130a2db511d871f224343b545792aa834bfc61b84199326cad170",
+      "resolved_version": "sha256:11df3a68820e5c6afa1906c2b9119e77c92ce51502b79fd3946ee394aa3cea9e",
       "dep_type": "docker",
       "description": "Docker image linuxserver/swag:latest from lscr.io"
     },
-    "lock": "sha256:34ca26b0b04130a2db511d871f224343b545792aa834bfc61b84199326cad170"
+    "lock": "sha256:11df3a68820e5c6afa1906c2b9119e77c92ce51502b79fd3946ee394aa3cea9e"
   },
   "lscr.io/linuxserver/unifi-network-application": {
     "metadata": {
       "name": "linuxserver/unifi-network-application",
       "selected_version": "latest",
-      "resolved_version": "sha256:f782b39e005d4c104b2cfa3185594ce93b3c9bd4b0622cc6559d417844d2d037",
+      "resolved_version": "sha256:053a608b25f578bb92b7b4f59e3835f6cc6dd0c7500c30b24ac0e27e1742ab20",
       "dep_type": "docker",
       "description": "Docker image linuxserver/unifi-network-application:latest from lscr.io"
     },
-    "lock": "sha256:f782b39e005d4c104b2cfa3185594ce93b3c9bd4b0622cc6559d417844d2d037"
+    "lock": "sha256:053a608b25f578bb92b7b4f59e3835f6cc6dd0c7500c30b24ac0e27e1742ab20"
   },
   "nold360/borgserver:latest": {
     "metadata": {
@@ -213,21 +213,21 @@
     "metadata": {
       "name": "searxng/searxng",
       "selected_version": "latest",
-      "resolved_version": "sha256:932f69dca010db9880bddebb2171f05d8e1a25d04a59149ff65409993d680024",
+      "resolved_version": "sha256:a7fc607aa6723f5a8982105bcc5ffba4d1b9fc7c6922a31a88d6e4cba49ef12a",
       "dep_type": "docker",
       "description": "Docker image searxng/searxng:latest from registry-1.docker.io"
     },
-    "lock": "sha256:932f69dca010db9880bddebb2171f05d8e1a25d04a59149ff65409993d680024"
+    "lock": "sha256:a7fc607aa6723f5a8982105bcc5ffba4d1b9fc7c6922a31a88d6e4cba49ef12a"
   },
   "valkey/valkey:8-alpine": {
     "metadata": {
       "name": "valkey/valkey",
       "selected_version": "8-alpine",
-      "resolved_version": "sha256:2602ace2be6569bc2bbb06f873776516ab9089821525be34f4305c67eb9db02a",
+      "resolved_version": "sha256:9971099af41c36e887aabdfe22b80c0fe45df949163dfc9cb434febc57cfc3fc",
       "dep_type": "docker",
       "description": "Docker image valkey/valkey:8-alpine from registry-1.docker.io"
     },
-    "lock": "sha256:2602ace2be6569bc2bbb06f873776516ab9089821525be34f4305c67eb9db02a"
+    "lock": "sha256:9971099af41c36e887aabdfe22b80c0fe45df949163dfc9cb434febc57cfc3fc"
   },
   "vaultwarden/server": {
     "metadata": {
