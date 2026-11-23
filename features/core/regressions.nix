@@ -1,4 +1,7 @@
 {inputs, ...}: {
+  # This file contains short-term fixes for upstream bugs that haven't been patched.
+  # Best practice is to use mkIf to make sure the overrides only apply to systems that need it.
+  # Check this periodically after updating lock file to see if patches are still needed.
   flake.nixosModules.core = {
     config,
     lib,
@@ -7,17 +10,9 @@
   }: let
     pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   in {
-    # This file contains short-term fixes for upstream bugs that haven't been patched.
-    # Best practice is to use mkIf to make sure the overrides only apply to systems that need it.
-    # Check this periodically after updating lock file to see if patches are still needed.
-
     nixpkgs.config.problems.handlers = {
       "gtk+".broken = "warn"; # downgrade gtk2 error to warning; too many packages not fixed yet
     };
-
-    environment.systemPackages = [
-      # librewolf # 24-Jun-26 - missing committer on unstable; just commenting out for now. from nixosModules.core
-    ];
 
     # Bug in libvirtd causes libvirtd.service to fail.
     # Deleting /var/lib/libvirt/secrets contents seems to fix it
@@ -29,7 +24,7 @@
     ];
 
     # 24-Jun-26: fwupd-2.1.5 fails to build on unstable
-    services.fwupd.package = pkgs-stable.fwupd;
+    #services.fwupd.package = pkgs-stable.fwupd;
 
     # 31-Aug-26: after flake update, esphome.service fails to start.
     # It says dashboard has been removed from the esphome binary and
@@ -37,5 +32,10 @@
     # but is not in the service config. No github issue yet.
     # from serviceModules.home-assistant
     services.esphome.package = pkgs-stable.esphome;
+  };
+  flake.homeModules.core = {pkgs, ...}: {
+    # 23-Nov-26: wayprompt package removed from upstream but not yet removed from stylix.
+    # https://github.com/nix-community/stylix/issues/2556
+    stylix.targets.wayprompt.enable = false;
   };
 }
