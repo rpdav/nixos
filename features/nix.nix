@@ -115,7 +115,10 @@ in {
       };
 
       # Stable packages
-      _module.args.pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      _module.args.pkgs-stable = import inputs.nixpkgs-stable {
+        inherit (pkgs.stdenv.hostPlatform) system;
+        inherit (config.nixpkgs) config;
+      };
 
       nix = {
         extraOptions = ''
