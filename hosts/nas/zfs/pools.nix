@@ -1,5 +1,5 @@
- {
-  flake.nixosModules.system-nas =  {
+{
+  flake.nixosModules.system-nas = {...}: {
     # Unlock secondary drives
     boot.initrd.luks.devices = {
       storage1.device = "/dev/disk/by-uuid/d364a03e-44cc-4b76-b088-a1ac234672f2"; # 4TB WD Red HDD
@@ -7,6 +7,8 @@
       docker1.device = "/dev/disk/by-uuid/8c643622-6836-4752-9d99-df8b977ddeca"; # 250 GB TEAM SATA SSD
       docker2.device = "/dev/disk/by-uuid/21a20fd8-9bdd-4332-8cdd-30df985ebac4"; # 250 GB TEAM SATA SSD
     };
+
+    boot.zfs.forceImportRoot = false;
 
     # import zpools
     # at least one fileSystems parameter must be set, otherwise, boot.zfs.extraPools will not be imported.
