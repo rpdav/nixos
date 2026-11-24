@@ -176,6 +176,13 @@
       };
     };
 
+    # Clevis auto-unlock
+    boot.initrd.clevis = {
+      enable = true;
+      useTang = true;
+      devices.crypt.secretFile = "${inputs.nix-secrets}/nas-root.jwe";
+    };
+
     # RGB control
     services.hardware.openrgb = {
       enable = true;

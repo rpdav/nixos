@@ -10,6 +10,7 @@
     lib,
     pkgs,
     config,
+    pkgs-stable,
     ...
   }:
   ## This file contains host-specific NixOS configuration for host retropi
@@ -83,6 +84,14 @@
     users.users.root = {
       openssh.authorizedKeys.keyFiles = config.users.users.ryan.openssh.authorizedKeys.keyFiles;
     };
+
+    services.tang = {
+      enable = true;
+      # unstable tang has failing gtksourceview dep as of 21-Nov-26
+      package = pkgs-stable.tang;
+      ipAddressAllow = ["10.10.1.0/24" "127.0.0.1/32" "::1/128"];
+    };
+    networking.firewall.allowedTCPPorts = [7654];
 
     # RPi-specific Hardware config
     hardware.graphics.enable = true;
