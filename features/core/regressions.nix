@@ -23,9 +23,6 @@
       "r /var/lib/libvirt/secrets/secrets-encryption-key"
     ];
 
-    # 24-Jun-26: fwupd-2.1.5 fails to build on unstable
-    #services.fwupd.package = pkgs-stable.fwupd;
-
     # 31-Aug-26: after flake update, esphome.service fails to start.
     # It says dashboard has been removed from the esphome binary and
     # has been replaced by esphome-device-builder. EDB is in nixpkgs
@@ -33,9 +30,13 @@
     # from serviceModules.home-assistant
     services.esphome.package = pkgs-stable.esphome;
   };
-  flake.homeModules.core = {pkgs, ...}: {
+  flake.homeModules.core = {pkgs-stable, ...}: {
     # 23-Nov-26: wayprompt package removed from upstream but not yet removed from stylix.
     # https://github.com/nix-community/stylix/issues/2556
     stylix.targets.wayprompt.enable = false;
+
+    # 25-Nov-26: unstable joplin-desktop can't copy/paste
+    # No issues found on source or nixpkgs githubs
+    programs.joplin-desktop.package = pkgs-stable.joplin-desktop;
   };
 }
