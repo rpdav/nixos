@@ -80,9 +80,6 @@
         serverAliveCountMax = 3;
         compression = false;
         hashKnownHosts = false;
-        controlMaster = "no";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-        controlPersist = "no";
       };
     };
 

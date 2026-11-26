@@ -118,12 +118,11 @@
       ];
     };
 
-    programs.ssh.extraConfig = ''
-      Host vps nas retropi
-        ControlMaster auto
-        ControlPath ~/.ssh/cm-%C
-        ControlPersist 30m
-    '';
+    programs.ssh.settings."nas retropi vps" = {
+      ControlMaster = "auto";
+      ControlPath = "~/.ssh/cm-%C";
+      ControlPersist = "30m";
+    };
 
     # fw13-specific programs
     programs.joplin-desktop = {
