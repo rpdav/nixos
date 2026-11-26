@@ -45,38 +45,51 @@ in {
       config_location = config.programs.nixos-cli.settings.config_location;
       # Not putting buildScript into flake.perSystem because it depends on config
       buildScript = pkgs.writeShellScriptBin "nixos-deploy" ''
-        set -e
+        set -eo pipefail
 
-        # Assign arguments to variables
         hostname="''${1}"
         mode="''${2:-switch}" # Default to "switch" if not provided
 
-        # Check if the hostname argument was provided
         if [ -z "$hostname" ]; then
             echo "Error: Hostname argument is required."
             echo "Usage: $0 <hostname|all> [mode]"
             exit 1
         fi
 
-        # Function to build and deploy a single host
-        run_nixos_commands() {
-            local host="$1"
-            local run_mode="$2"
+        # Make nixos-rebuild's ssh/nix-copy calls reuse the masters opened by ssh_auth.
+        # The ControlPath must match your ssh config.
+        export NIX_SSHOPTS="-o ControlMaster=auto -o ControlPath=$HOME/.ssh/cm-%C -o ControlPersist=30m"
 
+        ssh_auth() {
+            local host="$1"
+            echo "========================================"
+            echo "Authenticating host: ''${host}"
+            echo "========================================"
+            ssh root@"$host" true
+        }
+
+        build_host() {
+            local host="$1"
             echo "========================================"
             echo "Building host: ''${host}"
             echo "========================================"
+            nix build --log-format internal-json -v \
+              -o ~/hosts/"''${host}"/build \
+              ${config_location}#nixosConfigurations."''${host}".config.system.build.toplevel \
+              |& ${pkgs.nix-output-monitor}/bin/nom --json
+        }
 
-            nixos apply ${config_location}#"''${host}" --no-boot --no-activate -o ~/hosts/"''${host}"/build
-
+        deploy_host() {
+            local host="$1"
+            local run_mode="$2"
             echo "========================================"
             echo "Deploying host: ''${host} (Mode: ''${run_mode})"
             echo "========================================"
-
             nixos-rebuild --flake ${config_location}#"''${host}" --target-host root@"''${host}" "''${run_mode}" |& ${pkgs.nix-output-monitor}/bin/nom
         }
 
-        # Loop through hostnames if provided hostname is "all"
+        # Collect hosts
+        hosts=()
         if [ "$hostname" = "all" ]; then
             hosts_dir="$HOME/hosts"
 
@@ -94,15 +107,43 @@ in {
                         continue
                     fi
 
-                    run_nixos_commands "$base_dir" "$mode"
+                    hosts+=("$base_dir")
                 fi
             done
         else
-            run_nixos_commands "$hostname" "$mode"
+            hosts=("$hostname")
+        fi
+
+        # Close the persistent masters when the script ends
+        cleanup() {
+            for h in "''${hosts[@]}"; do
+                ssh -O exit root@"$h" 2>/dev/null || true
+            done
+        }
+        trap cleanup EXIT
+
+        # Phase 1: all touches up front
+        for h in "''${hosts[@]}"; do ssh_auth "$h"; done
+
+        # Phase 2: build everything
+        for h in "''${hosts[@]}"; do build_host "$h"; done
+
+        # Phase 3: deploy everything
+        failed=()
+        for h in "''${hosts[@]}"; do
+            if ! deploy_host "$h" "$mode"; then
+                echo "!!! Deployment FAILED for host: ''${h}" >&2
+                failed+=("$h")
+            fi
+        done
+        
+        if [ "''${#failed[@]}" -gt 0 ]; then
+            echo "========================================" >&2
+            echo "Deployment failed for: ''${failed[*]}" >&2
+            exit 1
         fi
 
         echo "Deployment complete"
-
       '';
     in {
       # Decrypt and set up github PAT for use by nix
